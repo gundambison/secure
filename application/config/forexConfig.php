@@ -11,6 +11,7 @@ if(defined('LOCAL')){
 		
 	);
 	$config['api_url']='localhost/forex/api';
+	$config['forexKey']='unknown';
 }
 else{ 
 	$config['urlForex']=array( 
@@ -18,5 +19,5 @@ else{
 		'activation'=>'http://nfx.posismo.com/api/account/activeAccount'
 	);
 	$config['api_url']='http://dev.salmaforex.com/forex/api';
-
+	$config['forexKey']='SalmaFX1234567*';
 }

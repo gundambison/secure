@@ -15,6 +15,12 @@ class Demo extends CI_Controller {
 		
 	}
 	
+	function register(){
+		$txt=$this->load->view('api/forexRegister_data.php',$this->param,true);
+		$arr=json_decode($txt);
+		echo '<pre>'.print_r($arr,1);
+	}
+	
 	private function showView(){
 		$name=$this->uri->segment(2,'');
 		
@@ -88,9 +94,18 @@ class Demo extends CI_Controller {
 			'js/envision-2.0.9.4/lib/js/jquery.flexslider.js',			
 			 
 		);
-
-
-		
+		date_default_timezone_set('Asia/Jakarta');
+		$this->param['today']=date('Y-m-d');
+		$this->param['folder']='forex/';
+		$this->load->helper('form');
+		$this->load->helper('formtable');
+		$this->load->helper('language');
+		$this->load->helper('api');
+		$this->load->helper('db');
+		$this->load->model('forex_model','forex');
+		$this->load->model('country_model','country');
+		$defaultLang="english";
+		$this->lang->load('forex', $defaultLang);
 		$this->param['description']="Trade now with the best and most transparent forex STP broker";
 		 
 	}

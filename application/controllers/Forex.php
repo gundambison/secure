@@ -20,7 +20,7 @@ class Forex extends CI_Controller {
 			if(!isset($res)&&!isset($row['id'])){
 				
 				logCreate('forex code not valid code:'.$kode,'error');
-				$this->param['content'][]= 'activationError' ;
+				$this->param['content'][]= 'data/activationError' ;
 				$res=true;
 			}
 			
@@ -32,7 +32,7 @@ class Forex extends CI_Controller {
 			}
 		}else{		
 			$this->param['post']=$_POST;
-			$this->param['content'][]= 'activationData' ;
+			$this->param['content'][]= 'data/activation' ;
 		}
 		$this->showView();
 	}
@@ -45,10 +45,20 @@ class Forex extends CI_Controller {
 		}
 	}
 	public function fake($status='none'){ 
+		if($this->input->get('privatekey')!=$this->forex->forexKey()){
+			$message="there is nothing to see but us tree";
+			$this->errorMessage('341',$message);
+		}
+		
 		if(defined('LOCAL')){
 			if($status=='none'){
-				$res= "1;11001724"; 
-				
+				$res=array(
+					'responsecode'=>0,
+					'accountid'=>999,
+					'masterpassword'=>'xxx',
+					'investorpassword'=>'xxx1',
+				);//$res= "1;11001724"; 
+				 
 			}
 			
 			if($status=='activation'){
@@ -62,7 +72,7 @@ class Forex extends CI_Controller {
 				$id=$this->forex->accountActivation(5,$raw);
 				$res.="id:$id";
 			}
-			echo $res;
+			$this->succesMessage($res);
 		}else{ 
 			echo "no respond";
 		}
@@ -130,7 +140,7 @@ class Forex extends CI_Controller {
 			//$respon['html']=$this->load->view($this->param['folder'].'liveTable_view',$this->param,true);
 			*/
 			if($stat!==false){
-				$respon['html']="<h3>berhasil</h3> Silakan Menunggu Konfirmasi dari Email anda";
+				$respon['html']="Silakan Menunggu Konfirmasi dari Email anda";
 				$ok=1;
 				$url=$this->config->item('api_url');		
 				$param['app_code']=$this->config->item('app_code')[0];
@@ -215,6 +225,7 @@ class Forex extends CI_Controller {
 			$json['data']=$data;
 		
 		echo json_encode($json);
+		logCreate($json,"error");
 		
 		exit();
 	}
