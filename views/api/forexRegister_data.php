@@ -20,14 +20,21 @@ foreach($register as $row){
 	
 	$param=array( );
 	$param['privatekey']	=$this->forex->forexKey();
-	//username 
+//======Required 
 	$param['username']	=$dt0['username'];	
-	$param['address']	=$dt['address'];	
-	$param['zip_code']	=$dt['zipcode'];	
-	$param['email']		=$dt['email'];
-	$param['country']	=$dt['country']['name'];
-	$param['phone']		=$dt['phone'];
-	$param['agentid']	=$dt0['agent'];	
+//======Optional	
+	if($dt['address']!='')
+		$param['address']	=$dt['address'];	
+	if($dt['zipcode']!='')
+		$param['zip_code']	=$dt['zipcode'];	
+	if($dt['email']!='')
+		$param['email']		=$dt['email'];
+	if($dt['country']['name']!='')
+		$param['country']	=$dt['country']['name'];
+	if($dt['phone']!='')
+		$param['phone']		=$dt['phone'];
+	if($dt0['agent']!='')
+		$param['agentid']	=$dt0['agent'];	
  
 	$url.="?".http_build_query($param);
 	$arr['param']=$param;
