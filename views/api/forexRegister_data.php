@@ -7,23 +7,27 @@ $register=$this->forex->regisAll(30);
 logCreate($register);
 $data=array();
 foreach($register as $row){
-	$dt=$this->forex->regisDetail($row['id']);
-	logCreate("register ".json_encode($dt));	
-	if($dt['status']!=1) continue;
-	$arr=array( 'raw'=>$dt);
+	$dt0=$this->forex->regisDetail($row['id']);
+	logCreate("register id:".$row['id'].json_encode($dt0));	
+	if($dt0['status']!=1){
+		logCreate("register status:".$dt0['status'],'info');
+		continue;
+	}
+	$arr=array( 'raw'=>$dt0);
+	$dt=$dt0['detail'];
 //=================send
-	$url=$this->forex->forexUrl();
+	$url=$this->forex->forexUrl('register');
 	
 	$param=array( );
 	$param['privatekey']	=$this->forex->forexKey();
 	//username 
-	$param['username']	=$dt['username'];	
+	$param['username']	=$dt0['username'];	
 	$param['address']	=$dt['address'];	
 	$param['zip_code']	=$dt['zipcode'];	
 	$param['email']		=$dt['email'];
 	$param['country']	=$dt['country']['name'];
 	$param['phone']		=$dt['phone'];
-	$param['agentid']	=$dt['agent'];	
+	$param['agentid']	=$dt0['agent'];	
  
 	$url.="?".http_build_query($param);
 	$arr['param']=$param;
@@ -37,10 +41,11 @@ foreach($register as $row){
 	}
 	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==0){
-		$id=$this->forex->accountActivation($row['id'],$result);
-		$arr['accountActivation']=$id; 
 		logCreate('url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1)	.'|url:'.$url, 
 			'info');
+		$id=$this->forex->accountActivation($row['id'],$result);
+		$arr['accountActivation']=$id; 
+		
 /*
 		PENGIRIMAN EMAIL ==> PENDING
 */			

@@ -54,9 +54,9 @@ class Forex extends CI_Controller {
 			if($status=='none'){
 				$res=array(
 					'responsecode'=>0,
-					'accountid'=>999,
-					'masterpassword'=>'xxx',
-					'investorpassword'=>'xxx1',
+					'accountid'=>'9'.date("Ymdhis"),
+					'masterpassword'=>date("his"),
+					'investorpassword'=>date("dmy"),
 				);//$res= "1;11001724"; 
 				 
 			}
@@ -64,11 +64,15 @@ class Forex extends CI_Controller {
 			if($status=='activation'){
 				$res="1";
 			}
-			//
+			if($status=='update'){
+				$res="0";
+			}
+			$raw=array();
 			if(!isset($res)){ 
 				$res='1;11001724';
 				//echo $raw."<br/>".base64_encode($raw);
 				//MTsxMTAwMTcyNA==
+				
 				$id=$this->forex->accountActivation(5,$raw);
 				$res.="id:$id";
 			}

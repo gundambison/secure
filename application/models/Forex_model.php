@@ -4,48 +4,11 @@ class Forex_model extends CI_Model {
 public $tableRegis='mujur_register'; 
 public $tableWorld='mujur_country'; 
 public $tableAccount='mujur_account';
+public $tableAccountDetail='mujur_accountdetail';
 public $tableActivation='mujur_activation';
+public $tablePassword='mujur_password';
 public $url="http://localhost/forex/fake";
-public $demo=1;
-        public function __construct()
-        {
-            $this->load->database();
-//=========UPDATE REGISTER			
-			$sql="select count(reg_id) tot from {$this->tableRegis}";
-			$dt=dbFetchOne($sql);
-			if($dt['tot']==0){
-				$arr=array('reg_id'=>0,'reg_status'=>-1);
-				$this->db->insert($this->tableRegis,$arr);
-			}
-			$sql="select * from {$this->tableRegis} limit 1";
-			$dt=dbFetchOne($sql);
-			if(!isset($dt['reg_investorpassword'])){
-				$sql="ALTER TABLE `{$this->tableRegis}` ADD `reg_investorpassword` VARCHAR(100) NOT NULL AFTER `reg_password`;";
-				dbQuery($sql,1);
-			}
-			
-//=========UPDATE ACCOUNT			
-			$sql="select count(id) tot from {$this->tableAccount}";
-			$dt=dbFetchOne($sql);
-			if($dt['tot']==0){
-				$arr=array('id'=>0,'created'=>date("Y-m-d"));
-				$this->db->insert($this->tableAccount,$arr);
-			}
-			$sql="select * from {$this->tableAccount} limit 1";
-			$dt=dbFetchOne($sql);
-			if(!isset($dt['investorpassword'])){
-				$sql="ALTER TABLE `{$this->tableAccount}` 
-				ADD `investorpassword` VARCHAR(100) NOT NULL, 
-				ADD `masterpassword` VARCHAR(100) NOT NULL, 
-				ADD `reg_id` BIGINT(20) NOT NULL ;";
-				dbQuery($sql,1);
-				$sql="ALTER TABLE `{$this->tableAccount}` CHANGE `username` `username` VARCHAR(50) NOT NULL;";
-				dbQuery($sql,1);
-				
-			}
-			
-        }
-		
+public $demo=1; 
 	function forexUrl($name='default'){
 		$url=$aAppcode=$this->config->item('urlForex');
 		
@@ -59,33 +22,48 @@ public $demo=1;
 /***
 ACCOUNT
 ***/	 
-	function accountCreate($id,$raw=''){
+	function accountCreate($id,$raw='')
+	{
 		$detail=$this->regisDetail($id);
 		if(defined('LOCAL')){
-			$sql="select count(id) c from {$this->tableAccount} where id=$id";
+		$sql="select count(id) c from {$this->tableAccount} where username like '{$detail['username']}'";
 			$row=dbFetchOne($sql);
 			if($row['c']!=0){
-				$sql="delete from {$this->tableAccount} where id=$id";
+				$sql="delete from {$this->tableAccount} where username like '{$detail['username']}'";
+				dbQuery($sql,1);
+				$sql="delete from {$this->tableAccountDetail} where username like '{$detail['username']}'";
 				dbQuery($sql,1);
 			}
 		}
-/*
-	[accountid] => 999
-    [masterpassword] => xxx
-    [investorpassword] => xxx1
-*/	
+
 		$dt=array(
 			'reg_id'=>$id,
 			'username'=>$detail['username'],
-			'investorpassword'=>$raw['investorpassword'],
-			'masterpassword'=>$raw['masterpassword'],
-			'id'=>$raw['accountid'],
+			'investorpassword'=>trim($raw['investorpassword']),
+			'masterpassword'=>trim($raw['masterpassword']),
+			'accountid'=>$raw['accountid'],
 			//'raw'=>$raw,
 			//'activation'=>base64_encode($raw),
 			'created'=>date("Y-m-d")
 		);
+		$accid=date("ym000");
+		$sql="select max(id) max from {$this->tableAccount}";
+		$dt2=dbFetchOne($sql);
+		if($dt2['max'] > (int)$accid){
+			$accid=$dt2['max'];
+		}
+		$dt['id']=$accid+1;
+		
 		$sql=$this->db->insert_string($this->tableAccount,$dt);
 		dbQuery($sql,1);
+//===========Account Detail  
+		$dt=array(
+			'id'=>$accid,
+			'username'=>$detail['username'],
+			'detail'=>json_encode($detail['detail']),
+			
+		);
+		$sql=$this->db->insert_string($this->tableAccountDetail,$dt);
 		
 		$sql="select id from {$this->tableActivation} where userid=$id";
 		$data=dbFetch($sql);
@@ -93,9 +71,36 @@ ACCOUNT
 			$idActive=$row['id'];
 			$this->activationUpdate($idActive, 1); //close activation
 		}
+		
 		$data = array('reg_status' => 0);
 		$where = "reg_id=$id";
 		$sql = $this->db->update_string($this->tableRegis, $data, $where);
+		dbQuery($sql,1);
+		//===============Change Password===============
+		$sql="select password from {$this->tablePassword} order by rand() limit 2";
+		$data=dbFetch($sql);
+		$invPass=$data[0]['password'];
+		$masterPass=$data[1]['password'];
+		
+		$param=array( );
+		$param['privatekey']	=$this->forex->forexKey();
+		$param['accountid']=$raw['accountid'];
+		$param['masterpassword']=$masterPass.($raw['accountid']%1000+1992);
+		$param['investorpassword']=$invPass.($raw['accountid']%1000 +1991) ;
+ 
+		$url=$this->forex->forexUrl('update');
+		$url.="?".http_build_query($param);
+		$arr['param']=$param;
+		$arr['url']=$url;
+		$result0= _runApi($url );
+		logCreate("update password result:".print_r($result0,1));
+		$data = array(
+			'investorpassword' => $param['investorpassword'],
+			'masterpassword'=>$param['masterpassword']
+		);
+		$where = "reg_id=$id";
+		
+		$sql = $this->db->update_string($this->tableAccount, $data, $where);
 		dbQuery($sql,1);
 	}
 
@@ -104,7 +109,8 @@ ACTIVATION
 
 ***/	
 	function accountActivation($id,$raw0){
-		logCreate('create :'.$id." raw:".print_r($raw0,1));		
+		logCreate('create :'.$id." raw:".print_r($raw0,1));
+		
 		$sql="select reg_id id from {$this->tableRegis} where reg_id like '$id'";
 		$row= $this->db->query($sql)->row_array();
 		$idActive=sprintf("%s%05s",dbId('activation', 200005),$row['id']);
@@ -162,7 +168,6 @@ ACTIVATION
 
 /***
 REGISTER
-
 ***/	
 	function regisAll($limit=10)
 	{
@@ -199,15 +204,16 @@ REGISTER
 		unset($res['reg_id']);
 		$dt2=json_decode($res['detail'],1);
 		ksort($dt2);
+		unset($res['detail']);
 		foreach($dt2 as $nm=>$val){
 			if($nm=='citizen'){
 				$dt=$this->country->getData($val);
 				$val=$dt['name'];
-				$res['country']=$dt;
+				$res['detail']['country']=$dt;
 			}
-			$res[$nm]=$val;
+			$res['detail'][$nm]=$val;
 		}
-		unset($res['detail']);
+		
 		return $res;
 	}
 		
@@ -245,5 +251,85 @@ REGISTER
 		$message='Your account successfull registered';
 		return true;
 	}
-		
+//=====================================
+		public function __construct()
+        {
+            $this->load->database();
+			$this->load->dbforge();
+//=========UPDATE REGISTER			
+			$sql="select count(reg_id) tot from {$this->tableRegis}";
+			$dt=dbFetchOne($sql);
+			if($dt['tot']==0){
+				$arr=array('reg_id'=>0,'reg_status'=>-1);
+				$this->db->insert($this->tableRegis,$arr);
+			}
+			$sql="select * from {$this->tableRegis} limit 1";
+			$dt=dbFetchOne($sql);
+			if(!isset($dt['reg_investorpassword'])){
+				$sql="ALTER TABLE `{$this->tableRegis}` ADD `reg_investorpassword` VARCHAR(100) NOT NULL AFTER `reg_password`;";
+				dbQuery($sql,1);			
+			}
+//=========UPDATE ACCOUNT			
+			$sql="select count(id) tot from {$this->tableAccount}";
+			$dt=dbFetchOne($sql);
+			if($dt['tot']==0){
+				$arr=array('id'=>0,'created'=>date("Y-m-d"));
+				$this->db->insert($this->tableAccount,$arr);
+			}
+			$sql="select * from {$this->tableAccount} limit 1";
+			$dt=dbFetchOne($sql);
+			if(!isset($dt['investorpassword'])){
+				$sql="ALTER TABLE `{$this->tableAccount}` 
+				ADD `investorpassword` VARCHAR(100) NOT NULL, 
+				ADD `masterpassword` VARCHAR(100) NOT NULL, 
+				ADD `reg_id` BIGINT(20) NOT NULL ;";
+				dbQuery($sql,1);
+				$sql="ALTER TABLE `{$this->tableAccount}` CHANGE `username` `username` VARCHAR(50) NOT NULL;";
+				dbQuery($sql,1);				
+			}
+			if(!isset($dt['accountid'])){
+				echo '<pre>';var_dump($dt);
+				$sql="ALTER TABLE `{$this->tableAccount}` ADD `accountid` bigint NOT NULL DEFAULT '1';";
+				dbQuery($sql,1);
+			}
+//=========Menambah Account Detail			
+			if(!$this->db->table_exists($this->tableAccountDetail)){
+				$fields = array(
+				  'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE), 		   
+				  'username'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '100'),
+				  'detail'=>array( 'type' => 'text'),
+				  'modified'=>array( 'type' => 'timestamp'),
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table($this->tableAccountDetail,TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();	
+			}
+//==========Menambah mujur_api
+			if(!$this->db->table_exists('mujur_api')){
+				$fields = array(
+				  'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE), 		   
+				  'url'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '200'),
+				  'parameter'=>array( 'type' => 'text'),
+				  'response'=>array( 'type' => 'text'),
+				  'error'=>array( 'type' => 'boolean'),
+				  'created'=>array( 'type' => 'timestamp'),
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table('mujur_api',TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();	
+			}
+			
+        }
 }
