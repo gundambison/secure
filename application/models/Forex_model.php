@@ -104,6 +104,38 @@ ACCOUNT
 		dbQuery($sql,1);
 	}
 
+	function accountDetail($id,$field='id'){
+		$id=addslashes($id);
+		$sql="select count(id) c from {$this->tableAccount} where `{$field}`='$id'";
+		$res=dbFetchOne($sql);
+		if($res['c']==0)
+			return false;
+		
+		$sql="select * from {$this->tableAccount} where `{$field}`='$id'";
+		$res=dbFetchOne($sql);
+		$this->accountDetailRepair($res);
+		
+		$sql="select a.*,ad.detail raw from {$this->tableAccount} a 
+		left join {$this->tableAccountDetail} ad on a.username like ad.username
+		where a.`{$field}`='$id'";
+		$data= dbFetchOne($sql);
+		$data['detail']=json_decode($data['raw'],true); unset($data['raw']);
+		return $data;
+	}
+	
+	function accountDetailRepair($data=array()){
+		$username=$data['username'];
+		$sql="select count(id) c  from {$this->tableAccountDetail} where `username`='$username'";
+		$res=dbFetchOne($sql);
+		if($res['c']==1)
+			return true;
+		
+		$reg=$this->regisDetail($data['reg_id']);
+		$detail=json_encode($reg['detail']);
+		$sql="insert into {$this->tableAccountDetail}(username,detail) values('$username','$detail')";
+		dbQuery($sql);
+		return true;
+	}
 /***
 ACTIVATION
 
@@ -132,8 +164,8 @@ ACTIVATION
 		
 		$data = array(
 			'reg_status' => 2, 
-			'reg_password'=>$raw0['masterpassword'], 
-			'reg_investorpassword'=>$raw0['investorpassword']
+			'reg_password'=>md5($raw0['masterpassword']), 
+			'reg_investorpassword'=>md5($raw0['investorpassword'])
 		);
 		$where = "reg_id=$id";
 		$sql = $this->db->update_string($this->tableRegis, $data, $where);

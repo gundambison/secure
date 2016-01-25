@@ -5,16 +5,20 @@ function clearModal(){
 function createLiveUser(){
 	var url=siteUrl+"forex/data";
 	var formData=jQuery("#frmLiveAccount").serializeArray();
+	
 	params={type:"request",data:formData}
 	stat=checkInput();
+    clearModal();
 	if(stat==0){
-		alert('please check your input');
+		//alert('please check your input');
+		jQuery("#myModal").modal({show: true}).css("height","150%");
+		jQuery(".modal-title").html("WARNING");
+		jQuery(".modal-body").html("please check your input");
 		return false;
 	}
 	
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
-		  clearModal();
 		if(result.status==true){ 
 			jQuery(".modal-title").html(result.data.title);
 			jQuery(".modal-body").html(result.data.html);
