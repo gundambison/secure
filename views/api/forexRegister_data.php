@@ -55,7 +55,8 @@ foreach($register as $row){
 		
 /*
 		PENGIRIMAN EMAIL ==> PENDING
-*/			
+*/			 
+		
 	}
 	else{ 
 		$arr['accountActivation']=false;

@@ -3,7 +3,44 @@ ob_start();
 	$responce=array('post'=>$post);
 	$responce['detail']=$detail=$this->forex->accountDetail($post['username'],'username');
 	if($detail!==false){
-		if(md5($post['password'])==$detail['masterpassword']){
+		if($detail['masterpassword']==''){
+			$responce['code']=9;
+			$sql="select password from {$this->forex->tablePassword} order by rand() limit 2";
+			$data=dbFetch($sql);
+			$invPass=$data[0]['password'];
+			$masterPass=$data[1]['password'];
+			
+			$param=array( );
+			
+			$param['accountid']=$detail['accountid'];
+			$param['masterpassword']=$masterPass.($detail['accountid']%100000 +19939);
+			$param['investorpassword']=$invPass.($detail['accountid'] %100000 +19919) ;
+			
+			$data = array(
+				'investorpassword' => md5( $param['investorpassword'] ),
+				'masterpassword'=>md5( $param['masterpassword'] )
+			);
+			$where = "id=".(int)$detail['id'];
+			
+			$sql = $this->db->update_string($this->forex->tableAccount, $data, $where);
+			dbQuery($sql,1);
+		
+			$param2=array( 
+				'username'=>$detail['username'],
+				'masterpassword'=>$param['masterpassword'],
+				'investorpassword'=>$param['investorpassword'],
+				'email'=>$detail['email']
+			);
+			
+			$this->load->view('member/emailAccount_view',$param2);
+			$responce['error']='Your password have been update. Please Check Your Email ('.$detail['email'].')';
+		}
+		else{ 
+			$ok=1;
+		}
+		
+		if($ok==1){
+			if(md5($post['password'])==$detail['masterpassword']){
 			$responce['error']=false;
 			$array=array( 
 				'username'=>$post['username'],
@@ -11,10 +48,12 @@ ob_start();
 			);
 			$this->session->set_userdata($array);
 			
-		}
-		else{
-			$responce['error']='Please Check Your Username and Password';			
-		}
+			}
+			else{
+				$responce['error']='Please Check Your Username and Password';			
+			}
+		}else{}
+		
 		unset($responce['detail']);
 	}
 	else{ 
@@ -22,21 +61,32 @@ ob_start();
 	}
 $warning = ob_get_contents();
 ob_end_clean();
-if($warning!='')
+if($warning!=''){
 	$responce['warning']=$warning;     
+}
 
 if($responce['error']===false){
-	$responce['result']=array('message'=>'Klik to continue','title'=>'Welcome','status'=>true);
+	$responce['result']=array(
+		'message'=>'Klik to continue',
+		'title'=>'Welcome',
+		'status'=>true
+	);
+	
 }
 else{
-	$responce['result']=array('message'=>$responce['error'],'status'=>false);
+	$responce['result']=array(
+		'message'=>$responce['error'],
+		'status'=>false
+	);
+	if(isset($responce['code'])){
+		$responce['result']['code']= $responce['code'];
+	}else{}
 }
 
 
 $responce['-']=$_SERVER;
 logCreate($responce);
-if(isset($responce['result'])){
-	//$responce['body']=json_encode($responce['result']);	
+if(isset($responce['result'])){ 
 	echo json_encode($responce['result']);
 }else{
 	echo json_encode(array());

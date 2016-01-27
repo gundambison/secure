@@ -11,6 +11,7 @@ class Member extends MY_Controller {
 			logCreate('no username','error');
 			redirect("login");			
 		}
+		else{ }
 		if($session['password']==$detail['masterpassword']){			
 			$array=array( 
 				'username'=>$session['username'],

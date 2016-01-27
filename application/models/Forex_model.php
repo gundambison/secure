@@ -42,6 +42,7 @@ ACCOUNT
 			'investorpassword'=>trim($raw['investorpassword']),
 			'masterpassword'=>trim($raw['masterpassword']),
 			'accountid'=>$raw['accountid'],
+			'email'=>$detail['email'],
 			//'raw'=>$raw,
 			//'activation'=>base64_encode($raw),
 			'created'=>date("Y-m-d")
@@ -85,9 +86,9 @@ ACCOUNT
 		$param=array( );
 		$param['privatekey']	=$this->forex->forexKey();
 		$param['accountid']=$raw['accountid'];
-		$param['masterpassword']=$masterPass.($raw['accountid']%1000+1992);
-		$param['investorpassword']=$invPass.($raw['accountid']%1000 +1991) ;
- 
+		$param['masterpassword']=$masterPass.($raw['accountid']%100000 +19939);
+		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919) ; 
+		
 		$url=$this->forex->forexUrl('update');
 		$url.="?".http_build_query($param);
 		$arr['param']=$param;
@@ -95,13 +96,23 @@ ACCOUNT
 		$result0= _runApi($url );
 		logCreate("update password result:".print_r($result0,1));
 		$data = array(
-			'investorpassword' => $param['investorpassword'],
-			'masterpassword'=>$param['masterpassword']
+			'investorpassword' => md5( $param['investorpassword'] ),
+			'masterpassword'=>md5( $param['masterpassword'] )
 		);
 		$where = "reg_id=$id";
 		
 		$sql = $this->db->update_string($this->tableAccount, $data, $where);
 		dbQuery($sql,1);
+		
+		$param2=array( 
+			'username'=>$detail['username'],
+			'masterpassword'=>$param['masterpassword'],
+			'investorpassword'=>$param['investorpassword'],
+			'email'=>$detail['email']
+		);
+		
+		$this->load->view('member/emailRegister_view',$param2);
+		
 	}
 
 	function accountDetail($id,$field='id'){
@@ -209,7 +220,7 @@ REGISTER
 	
 	function regisDetail($id,$stat=false)
 	{
-		$sql="select reg_username username, reg_password password, reg_detail detail, reg_status status,reg_agent agent from {$this->tableRegis} where reg_id=$id";
+		$sql="select reg_username username, reg_password password, reg_detail detail, reg_status status,reg_agent agent,reg_email email from {$this->tableRegis} where reg_id=$id";
 		$res=dbFetchOne($sql);//$this->db->query($sql)->row_array();
 		if($res['username']==''&&$stat==false){			
 			$res['username']=9578990+$id;		
