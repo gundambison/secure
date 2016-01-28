@@ -66,13 +66,14 @@ function checkInput(){
 	}
 	return stat;
 }
-
+/*
 function checkEmail(target){
 	return true;
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(target.val());
 	
 }
+*/
 function checkMoreThan(target, length){
 	console.log(target);
 	if(target.val().length<=length){

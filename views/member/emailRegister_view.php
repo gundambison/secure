@@ -198,7 +198,7 @@ support@salmaforex.com<br />
 $message = ob_get_contents();
 ob_end_clean();
 //echo  $detail;
-$to = $email;
+$to = trim($email);
 
 $subject = 'Welcome to SalmaForex ';
 

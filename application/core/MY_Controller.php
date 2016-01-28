@@ -23,19 +23,23 @@
 			'html'=>print_r($_REQUEST,1), 
 		);
 		$type=$this->input->post('type','unknown'); 
+		if($type=='unknown'||$type=='')$type=$this->input->get('type','unknown');
 		$message='unknown data type';
 		$open= $this->param['folder']."data/".$type."_data";
 		if(is_file('views/'.$open.".php")){
 			$param=array(
 				'post'=>$this->convertData(),
 				'get'=>$this->input->get(),
+				'post0'=>$this->input->post()
 			);
 			$raw=$this->load->view($open, $param, true);
 			$ar=json_decode($raw,true);
 			if(is_array($ar)){
-				$respon=$ar;
-				
+				$respon=$ar;				
 				logCreate($respon);
+				if(!isset($respon['status'])){ 
+					echo json_encode($respon);exit(); 
+				}
 				if($respon['status']==true){
 					$ok=1;
 				}
@@ -45,7 +49,7 @@
 			}
 			else{
 				logCreate("unknown :".htmlentities($raw));
-				$this->errorMessage('266',$message);
+				$this->errorMessage('267',$message);
 			}
 		}
 		else{
@@ -62,9 +66,11 @@
 	protected function convertData()
 	{
 	$post=array();
-		foreach($this->input->post('data') as $data){
-			$post[$data['name']]=$data['value'];
-		}
+		if(is_array($this->input->post('data'))){
+			foreach($this->input->post('data') as $data){
+				$post[$data['name']]=$data['value'];
+			}
+		}else{}
 		return $post;
 	}
 	

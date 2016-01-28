@@ -11,6 +11,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                                                 <div id="top-bar-text" class="top-bar-sides abs-right">
                             <a href="<?=!isset($detail['id'])?base_url("login"):base_url("member/logout");?>"  block="0" lightbox="0" title="Live Account" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/open-account.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"><?php 
 							echo isset($detail['id'])?'Logout':'Login';?></a>
+<?php 
+if(isset($detail)&&$detail['type']=='admin'){
+?>
+<a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/listApi");?>"  block="0" lightbox="0" title="Live Account" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/open-account.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"><?php 
+							echo isset($detail['id'])?'API':'unknown';?></a>
+<?php 
+}else{}
+?>							
 <div class="helper--seperator"></div>
 <a href="http://www.salmaforex.com/deposit-form/" target="_blank" block="0" lightbox="0" title="Demo Account" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"> Deposit</a>
 <div class="helper--seperator"></div>

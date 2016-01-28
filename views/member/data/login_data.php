@@ -21,10 +21,18 @@ ob_start();
 				'masterpassword'=>md5( $param['masterpassword'] )
 			);
 			$where = "id=".(int)$detail['id'];
+			 
+			$param['privatekey']	=$this->forex->forexKey();
+			
+			$url=$this->forex->forexUrl('update');
+			$url.="?".http_build_query($param);
+			 
+			$result0= _runApi($url );
+			logCreate("update password result:".print_r($result0,1));
 			
 			$sql = $this->db->update_string($this->forex->tableAccount, $data, $where);
-			dbQuery($sql,1);
-		
+			dbQuery($sql,1); 
+			
 			$param2=array( 
 				'username'=>$detail['username'],
 				'masterpassword'=>$param['masterpassword'],

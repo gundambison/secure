@@ -6,7 +6,7 @@
 			<div class="frame-form-basic">
 			<h2>Detail</h2>
 <?php $detail1=$detail['detail']; 
-/*echo '<pre>'.print_r($detail1,1);*/ 
+//echo '<pre>'.print_r($detail,1); 
 ?>
 		<table class='formBasic' border="0">
 		<?=bsInput( lang('forex_firstname'),'firstname',$detail1['firstname'], lang('forex_inputsuggestion'), 1);?>

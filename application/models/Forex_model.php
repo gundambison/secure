@@ -7,6 +7,7 @@ public $tableAccount='mujur_account';
 public $tableAccountDetail='mujur_accountdetail';
 public $tableActivation='mujur_activation';
 public $tablePassword='mujur_password';
+public $tableAdmin='mujur_admin';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 	function forexUrl($name='default'){
@@ -117,20 +118,32 @@ ACCOUNT
 
 	function accountDetail($id,$field='id'){
 		$id=addslashes($id);
-		$sql="select count(id) c from {$this->tableAccount} where `{$field}`='$id'";
+		$sql="select count(id) c from {$this->tableAccount}
+		where `{$field}`='$id'";
 		$res=dbFetchOne($sql);
 		if($res['c']==0)
 			return false;
 		
-		$sql="select * from {$this->tableAccount} where `{$field}`='$id'";
+		$sql="select a.* from {$this->tableAccount} a  
+		
+		where `{$field}`='$id'";
 		$res=dbFetchOne($sql);
 		$this->accountDetailRepair($res);
-		
-		$sql="select a.*,ad.detail raw from {$this->tableAccount} a 
-		left join {$this->tableAccountDetail} ad on a.username like ad.username
+			
+		$sql="select a.*,ad.detail raw,adm.adm_type type from {$this->tableAccount} a 
+		left join {$this->tableAccountDetail} ad 
+			on a.username like ad.username
+		left join {$this->tableAdmin} adm 
+			on adm_username like a.username
 		where a.`{$field}`='$id'";
 		$data= dbFetchOne($sql);
-		$data['detail']=json_decode($data['raw'],true); unset($data['raw']);
+		if($data['type']==7){
+			$data['type']='admin';
+		}else{
+			$data['type']=false;
+		}
+		$data['detail']=json_decode($data['raw'],true); 
+		unset($data['raw']);
 		return $data;
 	}
 	

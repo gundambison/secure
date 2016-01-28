@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member extends MY_Controller {
 	public $param;	
-	 
+	  
 	private function checkLogin(){
 		$session=$this->param['session'];
 		$detail=$this->forex->accountDetail($session['username'],'username');
@@ -11,7 +11,9 @@ class Member extends MY_Controller {
 			logCreate('no username','error');
 			redirect("login");			
 		}
-		else{ }
+		else{ 
+			
+		}		
 		if($session['password']==$detail['masterpassword']){			
 			$array=array( 
 				'username'=>$session['username'],
@@ -24,6 +26,29 @@ class Member extends MY_Controller {
 			logCreate('wrong password','error');
 			redirect("login");			
 		}
+	}
+	
+	public function forgot(){
+		$this->param['title']='Recover your Live Account'; 
+		$this->param['content']=array(
+			'modal',
+			'forgot', 
+		);
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+	}
+	public function listApi(){
+		$this->checkLogin();
+		$this->param['title']='Recover your Live Account'; 
+		$this->param['content']=array(
+			'modal',
+			'api', 
+		);
+//datatables		
+		$this->param['footerJS'][]='js/jquery.dataTables.min.js';
+		$this->param['footerJS'][]='js/api.js';
+		$this->param['fileCss']['dataTable']='css/jquery.dataTables.min.css';
+		$this->showView(); 
 	}
 	
 	public function logout()
