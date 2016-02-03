@@ -14,7 +14,8 @@ class Forex extends CI_Controller {
 		echo $def;
 	}
 	
-	public function activation($kode='null'){
+	public function activation($kode='null')
+	{
 		$this->param['title']='OPEN LIVE ACCOUNT ACTIVATION'; 
 		$this->param['content']=array(  );
 		 
@@ -47,7 +48,7 @@ class Forex extends CI_Controller {
 		}
 		$this->showView();
 	}
-	
+/*	
 	public function sendmail(){
 		if(defined('LOCAL')){
 			echo 'no email send';
@@ -55,7 +56,9 @@ class Forex extends CI_Controller {
 			mail("gundambison@gmail.com","test","----this is a test----");
 		}
 	}
-	public function fake($status='none'){ 
+	
+	public function fake($status='none')
+	{ 
 		if($this->input->get('privatekey')!=$this->forex->forexKey()){
 			$message="there is nothing to see but us tree";
 			$this->errorMessage('341',$message);
@@ -92,6 +95,7 @@ class Forex extends CI_Controller {
 			echo "no respond";
 		}
 	}
+
 	public function runApi(){
 		$url=$this->config->item('api_url');		
 		$param['app_code']='9912310';
@@ -101,7 +105,7 @@ class Forex extends CI_Controller {
 		echo 'run:'.$url.'<pre>';
 		var_dump($result);
 	}
-	
+*/	
 	public function listUser()
 	{
 		$this->param['title']='OPEN LIVE ACCOUNT'; 

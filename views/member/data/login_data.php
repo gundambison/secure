@@ -39,8 +39,9 @@ ob_start();
 				'investorpassword'=>$param['investorpassword'],
 				'email'=>$detail['email']
 			);
+			$param2['emailAdmin']=$this->forex->emailAdmin;
 			
-			$this->load->view('member/emailAccount_view',$param2);
+			$this->load->view('member/email/emailAccount_view',$param2);
 			$responce['error']='Your password have been update. Please Check Your Email ('.$detail['email'].')';
 		}
 		else{ 

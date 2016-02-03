@@ -221,6 +221,8 @@ if(defined('LOCAL')){
 }
 else{
 	mail($to, $subject, $message, $headers);
+	$subject = "[SalmaForex] Update Account";
+	mail($emailAdmin, $subject, $message, $headers);
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);

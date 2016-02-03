@@ -28,7 +28,7 @@ ob_start();
 					<?=$username;?></td>
                   </tr>
                   <tr id="yui_3_16_0_1_1450323941636_3322">
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>Password Trading</strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>Password Trading</strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> 
 					<strong>: </strong>
 					<?=$masterpassword;?></td>
@@ -43,7 +43,8 @@ ob_start();
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong>Salmaforex-server (<a href="https://download.mql5.com/cdn/web/6796/mt4/salmaforex4setup.exe" target="_blank">Download Salmaforex MT4</a>)</td>
                   </tr>
 				  <tr>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>Website </strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>
+					Website</strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong>Salmaforex-server (<a href="https://secure.salmaforex.com/login" target="_blank">Web Login</a>)</td>
                   </tr>
                 </tbody>
@@ -224,6 +225,8 @@ else{
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
+	$subject = "[SalmaForex] Register Baru";
+	mail($emailAdmin, $subject, $message, $headers);
 	$data=array( 'url'=>$to,
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2

@@ -13,6 +13,9 @@ public $tableFlowlog='mujur_flowlog';
 public $tableAPI='mujur_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
+
+public $emailAdmin='admin@secure.salmaforex.com';
+
 	function forexUrl($name='default'){
 		$url=$aAppcode=$this->config->item('urlForex');
 		
@@ -189,8 +192,9 @@ ACCOUNT
 			'investorpassword'=>$param['investorpassword'],
 			'email'=>$detail['email']
 		);
-		
-		$this->load->view('member/emailRegister_view',$param2);
+		$param2['emailAdmin']=$this->emailAdmin;
+			
+		$this->load->view('member/email/emailRegister_view',$param2);
 		
 	}
 

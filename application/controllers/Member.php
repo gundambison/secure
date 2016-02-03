@@ -1,4 +1,9 @@
 <?php 
+/*
+Password untuk kotak surat admin02@salmaforex.com adalah ZL9EXgVoQZ
+
+
+*/
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member extends MY_Controller {
@@ -132,7 +137,7 @@ class Member extends MY_Controller {
 			$data['userlogin']=$this->param['userlogin'];
 			$data['rate']=$rate;
 			$this->forex->flowInsert('deposit', $data);
-			$this->param['emailAdmin']='admin@salmaforex.com';
+			$this->param['emailAdmin']='admin@secure.salmaforex.com';
 			
 			//kirim email 1
 			$this->load->view('member/email/emailDepositAdmin_view',$this->param);			
