@@ -54,9 +54,7 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT',"production");
-//	isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-//	define('_DEV_',1); //hapus jika bukan Development
+	define('ENVIRONMENT',"production"); 
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
