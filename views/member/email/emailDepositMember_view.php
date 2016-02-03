@@ -100,13 +100,13 @@ if(isset($post0['phone'])&&$post0['phone']!=''){?>
           <tbody>
             <tr>
               <td width="373" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44" /></td>
-              <td width="10" bgcolor="#FFFFFF"> </td>
+              <td width="10" bgcolor="#FFFFFF">&nbsp;</td>
               <td width="367" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44" /></td>
             </tr>
             <tr>
-              <td align="center" bgcolor="#E9EAEC"> </td>
-              <td bgcolor="#FFFFFF"> </td>
-              <td valign="top" bgcolor="#EAE9EE"> </td>
+              <td align="center" bgcolor="#E9EAEC">&nbsp;</td>
+              <td bgcolor="#FFFFFF">&nbsp;</td>
+              <td valign="top" bgcolor="#EAE9EE">&nbsp;</td>
             </tr>
             <tr>
               <td align="center" bgcolor="#E9EAEC"><table width="340" border="0" cellpadding="2" cellspacing="2">
@@ -123,12 +123,12 @@ if(isset($post0['phone'])&&$post0['phone']!=''){?>
                       <a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26" /></a></td>
                   </tr>
                   <tr>
-                    <td> </td>
-                    <td align="left" valign="top"> </td>
+                    <td>&nbsp;</td>
+                    <td align="left" valign="top">&nbsp;</td>
                   </tr>
                 </tbody>
               </table></td>
-              <td bgcolor="#FFFFFF"> </td>
+              <td bgcolor="#FFFFFF">&nbsp;</td>
               <td rowspan="3" align="center" valign="top" bgcolor="#E9EAEC"><table width="340" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
                   <tr>
@@ -143,23 +143,23 @@ if(isset($post0['phone'])&&$post0['phone']!=''){?>
                             <a href="https://www.salmaforex.com/about-us/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26" /></a></td>
                         </tr>
                         <tr>
-                          <td bgcolor="#E9EAEC"> </td>
-                          <td align="left" valign="top" bgcolor="#E9EAEC"> </td>
+                          <td bgcolor="#E9EAEC">&nbsp;</td>
+                          <td align="left" valign="top" bgcolor="#E9EAEC">&nbsp;</td>
                         </tr>
                       </tbody>
                     </table></td>
                   </tr>
                   <tr>
-                    <td bgcolor="#E9EAEC"> </td>
+                    <td bgcolor="#E9EAEC">&nbsp;</td>
                   </tr>
                   <tr>
                     <td bgcolor="#E9EAEC"><img src="https://ci3.googleusercontent.com/proxy/BRAZITFgWtlYXFkiXRtSaScf85waxMn_t8WFNqvNvZUVqfGBg1VQS80ESIw6ntrHO75E9t-T0SWDPrQE-2fYgmqZGHBZriQCQWFViP_fB_KVtr5kXCcB=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/red-divider.jpg" alt="" width="373" height="10" /></td>
                   </tr>
                   <tr>
-                    <td bgcolor="#E9EAEC"> </td>
+                    <td bgcolor="#E9EAEC">&nbsp;</td>
                   </tr>
                   <tr>
-                    <td bgcolor="#E9EAEC"> </td>
+                    <td bgcolor="#E9EAEC">&nbsp;</td>
                   </tr>
                   <tr>
                     <td align="center" bgcolor="#E9EAEC"><table width="300" border="0" cellspacing="0" cellpadding="0">
@@ -171,7 +171,7 @@ if(isset($post0['phone'])&&$post0['phone']!=''){?>
                           <td align="left" bgcolor="#E9EAEC">Call us, Send your query by e-mail or Chat Online from our Website. We answer all your questions!</td>
                         </tr>
                         <tr>
-                          <td align="center"> </td>
+                          <td align="center">&nbsp;</td>
                         </tr>
                       </tbody>
                     </table></td>
@@ -195,11 +195,11 @@ support@salmaforex.com<br />
                   </tr>
                 </tbody>
               </table></td>
-              <td bgcolor="#FFFFFF"> </td>
+              <td bgcolor="#FFFFFF">&nbsp;</td>
             </tr>
             <tr>
-              <td align="center" bgcolor="#E9EAEC"> </td>
-              <td bgcolor="#FFFFFF"> </td>
+              <td align="center" bgcolor="#E9EAEC">&nbsp;</td>
+              <td bgcolor="#FFFFFF">&nbsp;</td>
             </tr>
           </tbody>
         </table>
