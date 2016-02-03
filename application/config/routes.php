@@ -51,5 +51,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'forex';
 $route['login'] = 'member/login';
+$route['forgot_password'] = 'member/forgot';
+$route['deposit-form'] = 'member/deposit';
+$route['withdrawal-form'] = 'member/withdrawal';
+$route['rupiah_deposit'] = 'forex/deposit_value';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -3,6 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Forex extends CI_Controller {
 	public $param;	
+	
+	public function deposit_value()	
+	{
+		$def=14000;
+		$res=$this->forex->rateNow('deposit');
+		if(isset($res['value'])){
+			$def=$res['value'];
+		}else{}
+		echo $def;
+	}
+	
 	public function activation($kode='null'){
 		$this->param['title']='OPEN LIVE ACCOUNT ACTIVATION'; 
 		$this->param['content']=array(  );

@@ -20,7 +20,7 @@ class Member extends MY_Controller {
 				'password'=>($session['password'])
 			);
 			$this->session->set_userdata($array);
-			$this->param['detail']=$detail;
+			$this->param['detail']=$this->param['userlogin']=$detail;
 		}
 		else{
 			logCreate('wrong password','error');
@@ -38,8 +38,10 @@ class Member extends MY_Controller {
 		$this->showView(); 
 	}
 	public function listApi(){
-		$this->checkLogin();
-		$this->param['title']='Recover your Live Account'; 
+		if(!defined('LOCAL')){
+			$this->checkLogin();
+		}
+		$this->param['title']='List API'; 
 		$this->param['content']=array(
 			'modal',
 			'api', 
@@ -47,6 +49,34 @@ class Member extends MY_Controller {
 //datatables		
 		$this->param['footerJS'][]='js/jquery.dataTables.min.js';
 		$this->param['footerJS'][]='js/api.js';
+		$this->param['fileCss']['dataTable']='css/jquery.dataTables.min.css';
+		$this->showView(); 
+	}
+	
+	public function tarif(){
+		if(!defined('LOCAL')){
+			$this->checkLogin();
+		}
+		if($this->input->post('rate')){
+			$post= $this->input->post();
+			$stat=$this->forex->rateUpdate($post);
+			if($stat===false)die('error');
+			redirect(base_url('member/tarif'));
+			exit();
+		}else{}
+		$this->param['title']='Tarif'; 
+		$this->param['content']=array(
+			'modal',
+			'tarif', 
+		);
+		$this->param['rate']=array(
+			'mean'=>ceil( ($this->forex->rateNow('deposit')+$this->forex->rateNow('widtdrawal'))/2),
+			'deposit'=>$this->forex->rateNow('deposit'),
+			'widtdrawal'=>$this->forex->rateNow('widtdrawal')
+		);
+//datatables		
+		$this->param['footerJS'][]='js/jquery.dataTables.min.js';
+		$this->param['footerJS'][]='js/tarif.js';
 		$this->param['fileCss']['dataTable']='css/jquery.dataTables.min.css';
 		$this->showView(); 
 	}
@@ -75,6 +105,55 @@ class Member extends MY_Controller {
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
 		$this->param['content']=array(
 			'detail', 
+		);
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+		
+	}	
+	
+	public function deposit($status='none')
+	{	
+		$this->checkLogin();
+		$this->param['content']=array();
+		if($status=='done'){
+			$this->param['content'][]='done' ;
+		}
+		if($this->input->post('orderDeposit')){
+			$this->param['post0']=$post0=$this->input->post();
+			$this->param['rate']=$rate=$this->forex->rateNow('deposit');
+			$data=array( 'url'=>'Deposit',
+				'parameter'=>json_encode($post0),
+				'error'=>2,
+				'response'=>"rate:$rate\n".print_r($this->param['userlogin'],1)
+			);
+			$this->db->insert('mujur_api',$data);
+			
+			$data=$post0;
+			$data['userlogin']=$this->param['userlogin'];
+			$data['rate']=$rate;
+			$this->forex->flowInsert('deposit', $data);
+			$this->param['emailAdmin']='admin@salmaforex.com';
+			
+			//kirim email 1
+			$this->load->view('member/email/emailDepositAdmin_view',$this->param);			
+			//kirim email 2
+			$this->load->view('member/email/emailDepositMember_view',$this->param);
+			redirect(site_url('member/deposit/done'));
+		}
+		else{ 
+			$this->param['title']='OPEN LIVE ACCOUNT'; 
+			$this->param['content'][]='deposit' ;
+		}
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+		
+	}	
+	public function withdrawal()
+	{
+		$this->checkLogin();
+		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['content']=array(
+			'widtdrawal', 
 		);
 		$this->param['footerJS'][]='js/login.js';
 		$this->showView(); 

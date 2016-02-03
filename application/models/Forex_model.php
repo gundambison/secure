@@ -8,6 +8,9 @@ public $tableAccountDetail='mujur_accountdetail';
 public $tableActivation='mujur_activation';
 public $tablePassword='mujur_password';
 public $tableAdmin='mujur_admin';
+public $tablePrice='mujur_price';
+public $tableFlowlog='mujur_flowlog';
+public $tableAPI='mujur_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 	function forexUrl($name='default'){
@@ -19,6 +22,81 @@ public $demo=1;
 	function forexKey(){
 		$key=$this->config->item('forexKey');		
 		return isset($key)?$key:false;
+		
+	}
+//=================FLOW LOG
+	function flowInsert($type='',$data=array() ){
+		if(!$this->db->table_exists($this->tableFlowlog)){
+				$fields = array(
+				  'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE), 		   
+				  'types'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '200'),
+				  'param'=>array( 'type' => 'text'),				   
+				  'created'=>array( 'type' => 'timestamp'),
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table($this->tableFlowlog,TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();	
+				 
+			}
+		if($type=='')return false;
+		$dt=array('types'=>$type);
+		$dt['param']=json_encode($data);
+		$this->db->insert($this->tableFlowlog,$dt);
+		return true;
+	}
+//=================Rate	
+	function rateUpdate($raw){
+		$data=array( 
+			'types'=>$raw['types'],
+			'price'=>$raw['rate']
+		);
+		if($raw['types']==''||$raw['rate']=='') return false;
+		$rate0=$this->rateNow($raw['type']);
+		$this->db->insert($this->tablePrice,$data);
+		
+		$data=array( 'url'=>'updateRate',
+				'parameter'=>json_encode($data),
+				'error'=>2,
+				'response'=>"rate0:$rate0\nuser:".print_r($this->param['userlogin'],1)
+			);
+		$this->db->insert($this->tableAPI,$data);
+	}
+
+	function rateNow($types=''){
+//==========Menambah mujur_price
+			if(!$this->db->table_exists($this->tablePrice)){
+				$fields = array(
+				  'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE), 		   
+				  'types'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '200'),
+				  'price'=>array( 'type' => 'integer'),				   
+				  'created'=>array( 'type' => 'timestamp'),
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table($this->tablePrice,TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();	
+				$this->db->insert('mujur_price', 
+					array('types'=>'deposit', 'price'=>14000));
+				$this->db->insert('mujur_price', 
+					array('types'=>'widtdrawal', 'price'=>13500));
+			}
+			
+		$types=addslashes($types);
+		$row= $this->db	
+		->query('select price `value` from mujur_price where types="'.$types.'" order by created desc limit 1')
+		->row_array();
+		return $row['value'];
 	}
 /***
 ACCOUNT
@@ -386,6 +464,8 @@ REGISTER
 				logConfig("create table:$str");
 				$this->db->reset_query();	
 			}
-			
+
+			$this->rateNow();
+			$this->flowInsert('');
         }
 }

@@ -1,6 +1,23 @@
 function clearModal(){
 	jQuery(".modal-title, .modal-body").empty();
 }
+
+jQuery("#input_orderDeposit").keyup(function(){
+	orderDeposit();
+});
+jQuery("#input_orderDeposit").blur(function(){
+	orderDeposit();
+});
+
+function orderDeposit(){
+	target0=jQuery("#input_orderDeposit");
+	dolar=0;
+	jQuery.post(urlDeposit,function(dolar){
+		target=jQuery("#input_order1");
+		target.val( target0.val() * dolar);
+	});
+}
+
 /* FOREX */
 function createLiveUser(){
 	var url=siteUrl+"forex/data";
