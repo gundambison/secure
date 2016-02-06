@@ -121,9 +121,9 @@ function depositApprove(id){
 	url=urlData+"?type=depositProcess";
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
-		
+		dataTable.draw();
 	});
-	dataTable.draw();
+	
 }
 
 function depositCancel(id){
@@ -132,9 +132,9 @@ function depositCancel(id){
 	url=urlData+"?type=depositProcess";
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
-		
+		dataTable.draw();
 	});
-	dataTable.draw();
+	
 }
 //===============Widthdrawal
 function widtdrawalApprove(id){
@@ -143,9 +143,9 @@ function widtdrawalApprove(id){
 	url=urlData+"?type=widtdrawalProcess";
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
-		
+		dataTable.draw();
 	});
-	dataTable.draw();
+	
 }
 
 function widtdrawalCancel(id){
@@ -154,7 +154,7 @@ function widtdrawalCancel(id){
 	url=urlData+"?type=widtdrawalProcess";
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
-		
+		dataTable.draw();
 	});
-	dataTable.draw();
+	
 }
