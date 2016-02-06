@@ -12,6 +12,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
             <div id="top-bar-text" class="top-bar-sides abs-right">
               <a href="<?=!isset($detail['id'])?base_url("login "):base_url("member/logout ");?>" block="0" lightbox="0" title="Live Account" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/open-account.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"><?php 
 							echo isset($detail['id'])?'Logout':'Login';?></a>
+			<div class="helper--seperator"></div>
+			<a href="<?=base_url("member/detail");?>" block="0" lightbox="0" title="Detail" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/contact.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Detail</a>
+            <div class="helper--seperator"></div>				  
               <?php 
 if(isset($detail)&&$detail['type']=='admin'){
 ?>
@@ -25,9 +28,10 @@ if(isset($detail)&&$detail['type']=='admin'){
 }else{}
 ?>
                   <div class="helper--seperator"></div>
-                  <a href="<?=base_url("deposit-form ");?>" block="0" lightbox="0" title="Demo Account" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"> Deposit</a>
+                  <a href="<?=base_url("deposit-form ");?>" block="0" lightbox="0" title="Form Deposit" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"> Deposit</a>
                   <div class="helper--seperator"></div>
-                  <a href="<?=base_url("withdrawal-form ");?>" block="0" lightbox="0" title="Partners Account" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/contact.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Withdrawal</a>
+				  
+                  <a href="<?=base_url("widtdrawal-form");?>" block="0" lightbox="0" title="Form Widtdrawal" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/contact.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Withdrawal</a>
                   <div class="helper--seperator"></div>
             </div>
 

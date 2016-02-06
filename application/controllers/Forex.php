@@ -12,6 +12,18 @@ class Forex extends CI_Controller {
 			$def=$res['value'];
 		}else{}
 		echo $def;
+		exit();
+	}
+	
+	public function widtdrawal_value()	
+	{
+		$def=13000;
+		$res=$this->forex->rateNow('widtdrawal');
+		if(isset($res['value'])){
+			$def=$res['value'];
+		}else{}
+		echo $def;
+		exit();
 	}
 	
 	public function activation($kode='null')
@@ -145,8 +157,7 @@ class Forex extends CI_Controller {
 			$respon['title']='NEW LIVE ACCOUNT (CREATED)';
 			$param['data']=$this->convertData();
 			$stat=$this->forex->saveData($param['data'],$message);
-//======SAVE TO DATABASE
-			
+//======SAVE TO DATABASE			
 			/*
 			$param['module']='liveuser';
 			$param['task']='create';
@@ -335,6 +346,8 @@ class Forex extends CI_Controller {
 		);
  
 		$this->param['description']="Trade now with the best and most transparent forex STP broker";
+		 
+		$this->param['emailAdmin']=$this->forex->emailAdmin; 
 		 
 		if($this->input->post())
 			logCreate($this->input->post(),'post');

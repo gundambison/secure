@@ -9,6 +9,8 @@ $config['app_code']=array(
 [15/01/2016 17:01:06] ndthien: Please send me your page for testing
 */
 
+$config['emailAdmin']=array('admin@secure.salmaforex.com');
+
 if(defined('LOCAL')){
 	$config['urlForex']=array( 
 		'default'=>			'localhost/forex/fake',

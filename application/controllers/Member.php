@@ -42,15 +42,22 @@ class Member extends MY_Controller {
 		$this->param['footerJS'][]='js/login.js';
 		$this->showView(); 
 	}
-	public function listApi(){
+	public function listApi($type='api'){
+	$types=array('api','deposit','widtdrawal');	
 		if(!defined('LOCAL')){
 			$this->checkLogin();
 		}
 		$this->param['title']='List API'; 
 		$this->param['content']=array(
-			'modal',
-			'api', 
-		);
+			'modal',			
+		) ;
+		
+		if(in_array($type,$types)){
+			$this->param['content']='api/'.$type;
+		}
+		else{ 
+			$this->param['content']='api/api';
+		}
 //datatables		
 		$this->param['footerJS'][]='js/jquery.dataTables.min.js';
 		$this->param['footerJS'][]='js/api.js';
@@ -121,29 +128,33 @@ class Member extends MY_Controller {
 		$this->checkLogin();
 		$this->param['content']=array();
 		if($status=='done'){
-			$this->param['content'][]='done' ;
+			$info=$this->session->flashdata('info');
+			if($info==1)
+				$this->param['content'][]='done' ;
 		}
+		
 		if($this->input->post('orderDeposit')){
 			$this->param['post0']=$post0=$this->input->post();
-			$this->param['rate']=$rate=$this->forex->rateNow('deposit');
+			$this->param['rate']=$rate=$this->forex->rateNow('deposit')['value'];
+			$this->param['post0']['order1']=$rate * $post0['orderDeposit'];
 			$data=array( 'url'=>'Deposit',
 				'parameter'=>json_encode($post0),
 				'error'=>2,
-				'response'=>"rate:$rate\n".print_r($this->param['userlogin'],1)
+				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
 			);
 			$this->db->insert('mujur_api',$data);
 			
 			$data=$post0;
 			$data['userlogin']=$this->param['userlogin'];
 			$data['rate']=$rate;
-			$this->forex->flowInsert('deposit', $data);
-			$this->param['emailAdmin']='admin@secure.salmaforex.com';
-			
+			$this->forex->flowInsert('deposit', $data); 
+			$this->session->set_flashdata('info', '1');
 			//kirim email 1
 			$this->load->view('member/email/emailDepositAdmin_view',$this->param);			
 			//kirim email 2
 			$this->load->view('member/email/emailDepositMember_view',$this->param);
-			redirect(site_url('member/deposit/done'));
+			redirect(base_url('member/deposit/done/'.rand(100,999) ),true);
+			exit();
 		}
 		else{ 
 			$this->param['title']='OPEN LIVE ACCOUNT'; 
@@ -153,13 +164,47 @@ class Member extends MY_Controller {
 		$this->showView(); 
 		
 	}	
-	public function withdrawal()
+	public function widtdrawal($status='none')
 	{
 		$this->checkLogin();
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
-		$this->param['content']=array(
-			'widtdrawal', 
-		);
+		$this->param['title']='OPEN LIVE ACCOUNT';
+		$this->param['content']=array();
+		if($status=='done'){
+			$info=$this->session->flashdata('info');
+			if($info==1)
+				$this->param['content'][]='done' ;
+		}
+		
+		if($this->input->post('orderWidtdrawal')){
+			$this->param['post0']=$post0=$this->input->post();
+			$this->param['rate']=$rate=$this->forex->rateNow('widtdrawal')['value'];
+			$this->param['post0']['order1']=$rate * $post0['orderWidtdrawal'];
+			
+			$data=array( 'url'=>'widtdrawal',
+				'parameter'=>json_encode($post0),
+				'error'=>2,
+				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
+			);
+			$this->db->insert('mujur_api',$data);
+			
+			$data=$post0;
+			$data['userlogin']=$this->param['userlogin'];
+			$data['rate']=$rate;
+			$this->forex->flowInsert('widtdrawal', $data); 
+			$this->session->set_flashdata('info', '1');
+			//kirim email 1
+			$this->load->view('member/email/emailWidtdrawalAdmin_view',$this->param);			
+			//kirim email 2
+			$this->load->view('member/email/emailWidtdrawalMember_view',$this->param);
+			redirect(base_url('member/widtdrawal/done/'.rand(100,999) ),true);
+			
+			exit();
+		}
+		else{ 	
+			$this->param['content'][]='widtdrawal';
+			
+		}
+		
 		$this->param['footerJS'][]='js/login.js';
 		$this->showView(); 
 		
@@ -225,6 +270,8 @@ class Member extends MY_Controller {
 		);
  
 		$this->param['description']="Trade now with the best and most transparent forex STP broker";
+		
+		$this->param['emailAdmin']=$this->forex->emailAdmin;
 		 
 		$this->param['session']=$this->session-> all_userdata(); 
 		if($this->input->post())

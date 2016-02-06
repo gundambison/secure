@@ -221,15 +221,19 @@ if(defined('LOCAL')){
 	$this->db->insert('mujur_api',$data);
 }
 else{
-	mail($to, $subject, $message, $headers);
+	mail(trim($to), $subject, $message, $headers);
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
 	$subject = "[SalmaForex] Register Baru";
-	mail($emailAdmin, $subject, $message, $headers);
 	$data=array( 'url'=>$to,
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
 	$this->db->insert('mujur_api',$data);
+	foreach($emailAdmin as $to){
+		mail(trim($to), $subject, $message, $headers);
+	}
+	
+	
 }

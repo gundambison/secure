@@ -1,13 +1,51 @@
+try{
+	target0=jQuery("#input_orderDeposit");
+	target0.val(10);
+	orderDeposit();
+}
+catch(err){
+	console.log(err);
+	console.log('not Deposit');
+}
+
+try{
+	target0=jQuery("#input_orderWidtdrawal");
+	target0.val(10);
+	orderWidtdrawal();
+}
+catch(err){
+	console.log(err);
+	console.log('not Widtdrawal');
+}
+
 function clearModal(){
 	jQuery(".modal-title, .modal-body").empty();
 }
 
-jQuery("#input_orderDeposit").keyup(function(){
+jQuery("#input_orderDeposit,#input_order1").keyup(function(){
 	orderDeposit();
 });
-jQuery("#input_orderDeposit").blur(function(){
+jQuery("#input_orderDeposit,#input_order1").blur(function(){
 	orderDeposit();
 });
+
+jQuery("#input_orderWidtdrawal,#input_order1").keyup(function(){
+	orderWidtdrawal();
+});
+jQuery("#input_orderWidtdrawal,#input_order1").blur(function(){
+	orderWidtdrawal();
+});
+
+function orderWidtdrawal(){
+	target0=jQuery("#input_orderWidtdrawal");
+	dolar=0;
+	jQuery.post(urlWidtdrawal,function(dolar){
+		target=jQuery("#input_order1");
+		target.val( target0.val() * dolar);
+		target=jQuery("#input_rate");
+		target.html(  "Rp "+ dolar);
+	});
+}
 
 function orderDeposit(){
 	target0=jQuery("#input_orderDeposit");
@@ -15,6 +53,8 @@ function orderDeposit(){
 	jQuery.post(urlDeposit,function(dolar){
 		target=jQuery("#input_order1");
 		target.val( target0.val() * dolar);
+		target=jQuery("#input_rate");
+		target.html(  "Rp "+ dolar);
 	});
 }
 
