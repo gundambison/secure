@@ -82,9 +82,9 @@ class Member extends MY_Controller {
 			'tarif', 
 		);
 		$this->param['rate']=array(
-			'mean'=>ceil( ($this->forex->rateNow('deposit')+$this->forex->rateNow('widtdrawal'))/2),
-			'deposit'=>$this->forex->rateNow('deposit'),
-			'widtdrawal'=>$this->forex->rateNow('widtdrawal')
+			'mean'=>ceil( ($this->forex->rateNow('deposit')['value'] + $this->forex->rateNow('widtdrawal')['value']	)/2),
+			'deposit'=>$this->forex->rateNow('deposit')['value'],
+			'widtdrawal'=>$this->forex->rateNow('widtdrawal')['value']
 		);
 //datatables		
 		$this->param['footerJS'][]='js/jquery.dataTables.min.js';
