@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-if ( ! function_exists('logFile')){ logFile('model','account_model.php','model'); };
+if (   function_exists('logFile')){ logFile('model','account_model.php','model'); };
 
 class Account_model extends CI_Model {
 public $tableRegis='mujur_register'; 
