@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-if ( ! function_exists('logFile')){ logFile('model','forex_model.php','model'); };
+if ( function_exists('logFile')){ logFile('model','forex_model.php','model'); };
 class Forex_model extends CI_Model {
 public $tableRegis='mujur_register'; 
 public $tableWorld='mujur_country'; 
