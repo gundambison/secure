@@ -1,10 +1,13 @@
 <?php 
 ob_start();
+ 
+$name=!isset($raw['name'])?$raw['detail']['firstname']." ".$raw['detail']['lastname']:$raw['name'];
+ 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>SalmaForex</title>
+<title>Untitled Document</title>
 </head>
 
 <body>
@@ -14,67 +17,19 @@ ob_start();
       <td width="568" colspan="2"><a href="https://www.salmaforex.com/"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/unnamed-copy.jpg" width="750" height="225" /></a></td>
     </tr>
     <tr>
-      <td colspan="2" valign="bottom"><table width="750" border="0" cellspacing="10" cellpadding="10">
+      <td colspan="2" valign="bottom"><table width="740" border="0" cellspacing="10" cellpadding="10">
         <tbody>
           <tr>
-            <td><h3>Account Trading Detail</h3>
-              <p>You have just made a right decision to become a client of SalmaForex and choose us as your broker. We are sure that from now on your trading experience with us will be positive and profitable. Your Account Trading Detail are as follows: <br />
-                </p>
-              <table align="center" id="yui_3_16_0_1_1450323941636_3312">
-                <tbody id="yui_3_16_0_1_1450323941636_3311">
-                  <tr id="yui_3_16_0_1_1450323941636_3324">
-                    <td width="363" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3323"><strong>Account Trading</strong></td>
-                    <td width="337" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337"><strong>:</strong>
-					<?=$username;?></td>
-                  </tr>
-                  <tr id="yui_3_16_0_1_1450323941636_3322">
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>Password Trading</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> 
-					<strong>: </strong>
-					<?=$masterpassword;?></td>
-                  </tr>
-                  <tr>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_"><strong>Password Investor</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>: </strong>
-					<?=$investorpassword;?></td>
-                  </tr>
-                  <tr>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>Server </strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong>Salmaforex-server (<a href="https://download.mql5.com/cdn/web/6796/mt4/salmaforex4setup.exe" target="_blank">Download Salmaforex MT4</a>)</td>
-                  </tr>
-				  <tr>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>
-					Website</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong>Salmaforex-server (<a href="<?php 
-if(defined('LOCAL') || defined('_DEV_')){?>https://dev.salmaforex.com<?php
-}
-else{ ?>https://secure.salmaforex.com<?php 
-} ?>/login" target="_blank">Web Login</a>)</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p><br />
+            <td><h3>Recovery Password</h3>
+              <p>Dear <?=$name;?>,</p>
+              <p id="yui_3_16_0_1_1443010679159_2033">Thank you for submitting Recovery form, Here your detail:.<br />
+              </p>
+              <p><a href='<?=base_url()."recover/{$recoverid}";?>'>Click Here to Generate Your New Password</a>. The link Expired Soon<br />
+              <br />
+			  Ignore if you not request this
                 <br />
-                Your Personal Area at 
-<?php 
-if(defined('LOCAL') || defined('_DEV_')){?>
-https://dev.salmaforex.com 
-<?php
-}
-else{ ?>
-https://secure.salmaforex.com 
-<?php 
-} ?>
-				is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
-                </p>
-              <p>Right now you can login to your Personal Area, deposit your account and start your trading.<br />
-                </p>
-              <p><strong>Technical and advisory support</strong></p>
-              <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
-              <p id="yui_3_16_0_1_1443010679159_2163">Wishing you luck and profitable trading! </p>
-              <p><strong>Thank you for choosing SalmaForex to provide you with brokerage services on the forex market! We wish you every success in your trading!</strong></p>
-              <p>Sincerely,<br />
-              Customer Service</p></td>
+               <p>Sincerely,<br />
+              System</p></td>
           </tr>
         </tbody>
       </table>
@@ -213,41 +168,41 @@ support@salmaforex.com<br />
 $message = ob_get_contents();
 ob_end_clean();
 //echo  $detail;
-$to = trim($email);
+$to = array(trim( $post['email'] ));
+foreach($this->forex->emailAdmin as $email){
+	$to[]=$email;
+}
 
-$subject = 'Welcome to SalmaForex ';
-
+$subject = '[SalmaForex] Confirmation to Deposit ';
+ 
 $headers = "From: noreply@salmaforex.com\r\n";
-$headers .= "Reply-To: noreply@salmaforex.com\r\n";
-//$headers .= "CC: susan@example.com\r\n";
+$headers .= "Reply-To: noreply@salmaforex.com\r\n"; 
 $headers .= "MIME-Version: 1.0\r\n";
 
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-if(defined('LOCAL')){
+if(defined('LOCAL')){	
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	$data=array( 'url'=>$to,
+	$data=array( 'url'=>json_encode($to),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
 	$this->db->insert('mujur_api',$data);
+	//die($message );
+	echo "OK";
 }
 else{
-	mail(trim($to), $subject, $message, $headers);
+	foreach($to as $email){
+		mail($email, $subject, $message, $headers);
+	}
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	$subject = "[SalmaForex] Register Baru";
-	$data=array( 'url'=>$to,
+	$data=array( 'url'=>json_encode($to),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
 	$this->db->insert('mujur_api',$data);
-	foreach($emailAdmin as $to){
-		mail(trim($to), $subject, $message, $headers);
-	}
-	
-	
 }

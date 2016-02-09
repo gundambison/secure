@@ -1,4 +1,5 @@
 <?php 
+if (   function_exists('logFile')){ logFile('view/member/data','widtdrawal_data.php','data'); };
 ob_start();
 //api_data
 $respon=array( 'draw'=>isset($_POST['draw'])?$_POST['draw']:1);

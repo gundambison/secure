@@ -1,5 +1,7 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');?>
+defined('BASEPATH') OR exit('No direct script access allowed');
+if ( ! function_exists('logFile')){ logFile('view/member','header_view.php','view'); };
+?>
 
 <header id="page-header" class="clearfix">
 

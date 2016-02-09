@@ -97,7 +97,9 @@ if( ! function_exists('bsButton')){
 		foreach($aData as $nm=>$val){
 			$oth.="\t$nm=\"".addslashes($val)."\"";
 		}
-	return sprintf($str, $typeButton,$classButton,$oth, $value);
-	
+	$inp= sprintf($str, $typeButton,$classButton,$oth, $value);
+	$str='<tr><td>&nbsp;</td><td>&nbsp;</td>
+		<td><div class="form-group">'.$inp.'</div></td></tr>';
+	return $str;
 	}
 }else{}

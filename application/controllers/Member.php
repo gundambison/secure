@@ -1,37 +1,71 @@
 <?php 
-/*
+/***
+in progress
+forgot
+reset 
+
+Deposit : form deposit
+widtdrawal : form widtdrawal
+login 
+logout
+detail
+-----------
+listApi
+
 Password untuk kotak surat admin02@salmaforex.com adalah ZL9EXgVoQZ
-
-
-*/
+***/
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member extends MY_Controller {
 	public $param;	
-	  
-	private function checkLogin(){
-		$session=$this->param['session'];
-		$detail=$this->forex->accountDetail($session['username'],'username');
-		if($detail==false){
-			logCreate('no username','error');
-			redirect("login");			
+	
+	public function edit(){
+		$this->checkLogin();
+		if($this->input->post('rand')){
+			$this->param['post']=$this->input->post();
+ 
+			$url=base_url("member/data");
+			$param=array(
+				'type'=>'updateDetail',
+				'data'=>array(					 
+				),
+				'recover'=>true
+			);
+			foreach($this->input->post() as $name=>$value){
+				$param['data'][]=array( 'name'=>$name, 'value'=>$value);
+			}
+			$param['data'][]=array( 'name'=>'detail','value'=>$this->param['detail']['detail']);
+			$param['data'][]=array( 'name'=>'username','value'=>$this->param['detail']['username']);
+//----------UPDATE Agar dapat di LOG			
+			$result= _runApi($url,$param);
+			if($result['code']==9){
+				redirect(base_url('member/detail'));
+			}
+			else{ 
+					redirect(base_url('member/edit'));
+			}
 		}
 		else{ 
-			
-		}		
-		if($session['password']==$detail['masterpassword']){			
-			$array=array( 
-				'username'=>$session['username'],
-				'password'=>($session['password'])
+			$this->param['title']='OPEN LIVE ACCOUNT'; 
+			$this->param['content']=array(
+				'detailEdit', 
 			);
-			$this->session->set_userdata($array);
-			$this->param['detail']=$this->param['userlogin']=$detail;
+			$this->param['footerJS'][]='js/login.js';
+			$this->showView(); 
 		}
-		else{
-			logCreate('wrong password','error');
-			redirect("login");			
-		}
+		
 	}
+	
+	public function editPassword(){
+		$this->checkLogin();
+		$this->param['title']='Edit Password'; 
+		$this->param['content']=array(
+			'passwordEdit', 
+		);
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+		
+	}	
 	
 	public function forgot(){
 		$this->param['title']='Recover your Live Account'; 
@@ -42,6 +76,153 @@ class Member extends MY_Controller {
 		$this->param['footerJS'][]='js/login.js';
 		$this->showView(); 
 	}
+	
+	public function recover($id=0){
+		$this->param['title']='Recover your Live Account'; 
+		$this->param['content']=array(
+			'modal',
+			'recover', 
+		);
+		$this->param['recoverId']=$id;
+		$detail=$this->account->recoverId($id);
+		
+		if($detail!=false){ 	
+			$url=base_url("member/data");
+			//reset 
+			$this->account->noPass($detail['id']);
+			$param=array(
+				'type'=>'login',
+				'data'=>array(
+					array('name'=>'username', 'value'=>$detail['username'])
+				),
+				'recover'=>true
+			);
+//-----------LAKUKAN POST KE SITE UTAMA			
+			$result= _runApi($url,$param);
+			$this->param['raw']=$result;
+		}
+		else{ 
+			$this->param['raw']=array('invalid');
+		}
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+	}
+
+//==================	
+	public function deposit($status='none'){	
+		$this->checkLogin();
+		$this->param['content']=array();
+		if($status=='done'){
+			$info=$this->session->flashdata('info');
+			if($info==1)
+				$this->param['content'][]='done' ;
+		}
+		
+		if($this->input->post('orderDeposit')){
+			$this->param['post0']=$post0=$this->input->post();
+			$this->param['rate']=$rate=$this->forex->rateNow('deposit')['value'];
+			$this->param['post0']['order1']=$rate * $post0['orderDeposit'];
+			$data=array( 'url'=>'Deposit',
+				'parameter'=>json_encode($post0),
+				'error'=>2,
+				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
+			);
+			$this->db->insert('mujur_api',$data);
+			
+			$data=$post0;
+			$data['userlogin']=$this->param['userlogin'];
+			$data['rate']=$rate;
+			$this->forex->flowInsert('deposit', $data); 
+			$this->session->set_flashdata('info', '1');
+			//kirim email 1
+			$this->load->view('member/email/emailDepositAdmin_view',$this->param);			
+			//kirim email 2
+			$this->load->view('member/email/emailDepositMember_view',$this->param);
+			redirect(base_url('member/deposit/done/'.rand(100,999) ),true);
+			exit();
+		}
+		else{ 
+			$this->param['title']='OPEN LIVE ACCOUNT'; 
+			$this->param['content'][]='deposit' ;
+		}
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+		
+	}	
+
+	public function widtdrawal($status='none'){
+		$this->checkLogin();
+		$this->param['title']='OPEN LIVE ACCOUNT';
+		$this->param['content']=array();
+		if($status=='done'){
+			$info=$this->session->flashdata('info');
+			if($info==1)
+				$this->param['content'][]='done' ;
+		}
+		
+		if($this->input->post('orderWidtdrawal')){
+			$this->param['post0']=$post0=$this->input->post();
+			$this->param['rate']=$rate=$this->forex->rateNow('widtdrawal')['value'];
+			$this->param['post0']['order1']=$rate * $post0['orderWidtdrawal'];
+			
+			$data=array( 'url'=>'widtdrawal',
+				'parameter'=>json_encode($post0),
+				'error'=>2,
+				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
+			);
+			$this->db->insert('mujur_api',$data);
+			
+			$data=$post0;
+			$data['userlogin']=$this->param['userlogin'];
+			$data['rate']=$rate;
+			$this->forex->flowInsert('widtdrawal', $data); 
+			$this->session->set_flashdata('info', '1');
+			//kirim email 1
+			$this->load->view('member/email/emailWidtdrawalAdmin_view',$this->param);			
+			//kirim email 2
+			$this->load->view('member/email/emailWidtdrawalMember_view',$this->param);
+			redirect(base_url('member/widtdrawal/done/'.rand(100,999) ),true);
+			
+			exit();
+		}
+		else{ 	
+			$this->param['content'][]='widtdrawal';
+			
+		}
+		
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+		
+	}	
+  
+	public function login(){
+		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['content']=array(
+			'modal',
+			'login', 
+		);
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+		
+	}
+
+	public function logout(){
+		$_SESSION['username']='';
+		$_SESSION['password']='';
+		redirect("login");
+	}
+	 
+	public function detail(){
+		$this->checkLogin();
+		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['content']=array(
+			'detail', 
+		);
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+		
+	}	
+
 	public function listApi($type='api'){
 	$types=array('api','deposit','widtdrawal');	
 		if(!defined('LOCAL')){
@@ -93,123 +274,31 @@ class Member extends MY_Controller {
 		$this->showView(); 
 	}
 	
-	public function logout()
-	{
-		$_SESSION['username']='';
-		$_SESSION['password']='';
-		redirect("login");
-	}
-	public function login()
-	{
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
-		$this->param['content']=array(
-			'modal',
-			'login', 
-		);
-		$this->param['footerJS'][]='js/login.js';
-		$this->showView(); 
-		
-	}
-	 
-	public function detail()
-	{
-		$this->checkLogin();
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
-		$this->param['content']=array(
-			'detail', 
-		);
-		$this->param['footerJS'][]='js/login.js';
-		$this->showView(); 
-		
-	}	
 	
-	public function deposit($status='none')
-	{	
-		$this->checkLogin();
-		$this->param['content']=array();
-		if($status=='done'){
-			$info=$this->session->flashdata('info');
-			if($info==1)
-				$this->param['content'][]='done' ;
-		}
-		
-		if($this->input->post('orderDeposit')){
-			$this->param['post0']=$post0=$this->input->post();
-			$this->param['rate']=$rate=$this->forex->rateNow('deposit')['value'];
-			$this->param['post0']['order1']=$rate * $post0['orderDeposit'];
-			$data=array( 'url'=>'Deposit',
-				'parameter'=>json_encode($post0),
-				'error'=>2,
-				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
-			);
-			$this->db->insert('mujur_api',$data);
-			
-			$data=$post0;
-			$data['userlogin']=$this->param['userlogin'];
-			$data['rate']=$rate;
-			$this->forex->flowInsert('deposit', $data); 
-			$this->session->set_flashdata('info', '1');
-			//kirim email 1
-			$this->load->view('member/email/emailDepositAdmin_view',$this->param);			
-			//kirim email 2
-			$this->load->view('member/email/emailDepositMember_view',$this->param);
-			redirect(base_url('member/deposit/done/'.rand(100,999) ),true);
-			exit();
+	private function checkLogin(){
+		$session=$this->param['session'];
+		$detail=$this->account->detail($session['username'],'username');
+		if($detail==false){
+			logCreate('no username','error');
+			redirect("login");			
 		}
 		else{ 
-			$this->param['title']='OPEN LIVE ACCOUNT'; 
-			$this->param['content'][]='deposit' ;
-		}
-		$this->param['footerJS'][]='js/login.js';
-		$this->showView(); 
-		
-	}	
-	public function widtdrawal($status='none')
-	{
-		$this->checkLogin();
-		$this->param['title']='OPEN LIVE ACCOUNT';
-		$this->param['content']=array();
-		if($status=='done'){
-			$info=$this->session->flashdata('info');
-			if($info==1)
-				$this->param['content'][]='done' ;
-		}
-		
-		if($this->input->post('orderWidtdrawal')){
-			$this->param['post0']=$post0=$this->input->post();
-			$this->param['rate']=$rate=$this->forex->rateNow('widtdrawal')['value'];
-			$this->param['post0']['order1']=$rate * $post0['orderWidtdrawal'];
 			
-			$data=array( 'url'=>'widtdrawal',
-				'parameter'=>json_encode($post0),
-				'error'=>2,
-				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
+		}		
+		if($session['password']==$detail['masterpassword']){			
+			$array=array( 
+				'username'=>$session['username'],
+				'password'=>($session['password'])
 			);
-			$this->db->insert('mujur_api',$data);
-			
-			$data=$post0;
-			$data['userlogin']=$this->param['userlogin'];
-			$data['rate']=$rate;
-			$this->forex->flowInsert('widtdrawal', $data); 
-			$this->session->set_flashdata('info', '1');
-			//kirim email 1
-			$this->load->view('member/email/emailWidtdrawalAdmin_view',$this->param);			
-			//kirim email 2
-			$this->load->view('member/email/emailWidtdrawalMember_view',$this->param);
-			redirect(base_url('member/widtdrawal/done/'.rand(100,999) ),true);
-			
-			exit();
+			$this->session->set_userdata($array);
+			$this->param['detail']=$this->param['userlogin']=$detail;
 		}
-		else{ 	
-			$this->param['content'][]='widtdrawal';
-			
+		else{
+			logCreate('wrong password','error');
+			redirect("login");			
 		}
-		
-		$this->param['footerJS'][]='js/login.js';
-		$this->showView(); 
-		
-	}	
-		
+	}
+	
 	function __CONSTRUCT(){
 	parent::__construct(); 
 		
@@ -223,6 +312,7 @@ class Member extends MY_Controller {
 		$this->load->helper('db');
 		$this->load->model('forex_model','forex');
 		$this->load->model('country_model','country');
+		$this->load->model('account_model','account');
 		$defaultLang="english";
 		$this->lang->load('forex', $defaultLang);
 		$this->param['fileCss']=array(	

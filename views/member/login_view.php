@@ -28,10 +28,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
             </button>
           </div>
           <div class='clear'></div> 
-        </div>
-      </form>
-    </div>
      
+			</div>
+      </form> 
+	  <h3 style='width:600px;text-align:center;margin:20px auto 40px'>
+	  Forget your Password? 
+	  <a href='<?=base_url('member/forgot');?>'>Click Here to Reset.</a>
+       </h3>
 </div>
 <script>
 

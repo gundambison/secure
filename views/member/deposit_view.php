@@ -1,14 +1,7 @@
 <?php 
 //deposit_view.php
-/*
-Array
-(
-    [0] => glory.lombok@gmail.com
-    [1] => enjoy21939
-    [2] => room21919
-    [3] => 2000
-)
-*/
+if (  function_exists('logFile')){ logFile('view/member/data','widtdrawalProcess_data.php','data'); };
+
 $uDetail=$userlogin['detail'];
 defined('BASEPATH') OR exit('No direct script access allowed');?>
 <style>

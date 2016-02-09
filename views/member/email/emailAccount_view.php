@@ -18,8 +18,18 @@ ob_start();
         <tbody>
           <tr>
             <td><h3>Account Trading Detail</h3>
-              <p>You have just made a right decision to become a client of SalmaForex and choose us as your broker. We are sure that from now on your trading experience with us will be positive and profitable. Your Account Trading Detail are as follows: <br />
-                </p>
+<?php 		
+if(isset($post0['recover'])){?>
+	<p>Your Password Have been Updated. 
+<?php 
+}
+else{ ?>
+			<p>You have just made a right decision to become a client of SalmaForex and choose us as your broker. We are sure that from now on your trading experience with us will be positive and profitable. 
+<?php 
+}
+?>
+			Your Account Trading Detail are as follows: <br />	
+              </p>
               <table align="center" id="yui_3_16_0_1_1450323941636_3312">
                 <tbody id="yui_3_16_0_1_1450323941636_3311">
                   <tr id="yui_3_16_0_1_1450323941636_3324">

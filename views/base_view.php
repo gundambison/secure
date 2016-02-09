@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?><!DOCTYPE html>
 	$this->load->view($load_view);
 ?>
  <!-- CONTENT-WRAPPER SECTION START-->
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="salma-main">
 <?php 
 if(isset($content)){
 	if(is_array($content)){
@@ -27,6 +27,7 @@ if(isset($content)){
 }else{}
 ?>
 	</div>
+	<div id='bgAjax'>&nbsp;</div>
 <!-- CONTENT-WRAPPER SECTION END-->
 	<!-- FOOTER SECTION START-->
 <?php 

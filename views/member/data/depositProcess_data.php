@@ -1,4 +1,5 @@
 <?php 
+if (  function_exists('logFile')){ logFile('view/member/data','depositProcess_data.php','data'); };
 ob_start();
 $respon['post']=$_POST;
 

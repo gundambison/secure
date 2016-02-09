@@ -1,4 +1,6 @@
 <?php 
+if (  function_exists('logFile')){ logFile('view/member/api','deposit_view.php','view'); };
+
 ?>
 <div class='container'>
     <div style='margin-top:30px;'>

@@ -1,5 +1,7 @@
 <?php 
 ob_start();
+if (  function_exists('logFile')){ logFile('view/member/data','widtdrawalProcess_data.php','data'); };
+
 $respon['post']=$_POST;
 
 $id=isset($_POST['id'])?addslashes($_POST['id']):0;

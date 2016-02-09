@@ -31,7 +31,7 @@ catch(err){
 }
 
 try{	
-	dataTable=jQuery('#tableDeposit').DataTable( {
+	tableDeposit=jQuery('#tableDeposit').DataTable( {
 		"columnDefs": [
             { 
 			
@@ -53,13 +53,14 @@ try{
             { "data": "action" },             
         ]
     } );
+	console.log('table deposit ready');
 }
 catch(err){
 	console.log('not table Deposit');
 }	
 
 try{	
-	dataTable=jQuery('#tableWidtdrawal').DataTable( {
+	tableWidtdrawal=jQuery('#tableWidtdrawal').DataTable( {
 		"columnDefs": [
             { 
 			
@@ -81,6 +82,7 @@ try{
             { "data": "action" },             
         ]
     } );
+	console.log('table widtdrawal ready');
 }
 catch(err){
 	console.log('not table Widtdrawal');
@@ -115,24 +117,24 @@ function detail(id){
 }
 
 //===============DEPOSIT
-function depositApprove(id){
-	console.log('approve');
+function depositApprove(id){	
 	params={status:"approve",id:id}
 	url=urlData+"?type=depositProcess";
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
-		dataTable.draw();
+		tableDeposit.draw();
+		console.log('approve');
 	});
 	
 }
 
-function depositCancel(id){
-	console.log('cancel');
+function depositCancel(id){	
 	params={status:"cancel",id:id}
 	url=urlData+"?type=depositProcess";
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
-		dataTable.draw();
+		tableDeposit.draw();
+		console.log('cancel');
 	});
 	
 }
@@ -143,7 +145,7 @@ function widtdrawalApprove(id){
 	url=urlData+"?type=widtdrawalProcess";
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
-		dataTable.draw();
+		tableWidtdrawal.draw();
 	});
 	
 }
@@ -154,7 +156,7 @@ function widtdrawalCancel(id){
 	url=urlData+"?type=widtdrawalProcess";
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
-		dataTable.draw();
+		tableWidtdrawal.draw();
 	});
 	
 }

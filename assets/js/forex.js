@@ -159,6 +159,7 @@ jQuery(function() {
  
 
 function sendAjax(url,params){
+	jQuery("#bgAjax").show();
 	var request = jQuery.ajax({
           url: url,
           type: "POST",
@@ -167,6 +168,14 @@ function sendAjax(url,params){
 		  cache:false,
 		  timeout:20000, 
     });
+	request.success(function(){
+		jQuery("#bgAjax").hide();
+		console.log("ajax end");
+	});
+	request.error(function(){
+		jQuery("#bgAjax").hide();
+		console.log("ajax end");
+	});
 	
 	return request;
 }

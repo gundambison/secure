@@ -29,7 +29,7 @@ echo bsInput('Nama Pemilik Rekening','namerek', trim($name) ,'Please Input Valid
 echo bsInput('Jumlah Widtdrawal ($)','orderWidtdrawal', 0 ,'Minimal $10' );
 echo bsInput('Rate ($)','orderDeposit', 
 '<div id="input_rate">0</div>' ,'Minimal $10',true );
-echo bsInput('Jumlah Transfer (Rp)','order1', '' ,'Nominal Hanya Estimasi Saja' );
+echo bsInput('Jumlah Widtdrawal(Rp)','order1', '' ,'Nominal Hanya Estimasi Saja' );
 
 ?>             
             <tr><td colspan=3> 

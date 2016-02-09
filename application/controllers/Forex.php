@@ -1,6 +1,14 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
+/***
+Register 
+---
+Deposit_value
+Widthrawal_value
+---
+data 
 
+***/
 class Forex extends CI_Controller {
 	public $param;	
 	
@@ -25,7 +33,7 @@ class Forex extends CI_Controller {
 		echo $def;
 		exit();
 	}
-	
+//===========DELETE DI PRODUCTION	
 	public function activation($kode='null')
 	{
 		$this->param['title']='OPEN LIVE ACCOUNT ACTIVATION'; 
@@ -60,15 +68,8 @@ class Forex extends CI_Controller {
 		}
 		$this->showView();
 	}
-/*	
-	public function sendmail(){
-		if(defined('LOCAL')){
-			echo 'no email send';
-		}else{
-			mail("gundambison@gmail.com","test","----this is a test----");
-		}
-	}
-	
+
+//===========DELETE DI PRODUCTION
 	public function fake($status='none')
 	{ 
 		if($this->input->get('privatekey')!=$this->forex->forexKey()){
@@ -107,6 +108,17 @@ class Forex extends CI_Controller {
 			echo "no respond";
 		}
 	}
+	
+	/*	
+	public function sendmail(){
+		if(defined('LOCAL')){
+			echo 'no email send';
+		}else{
+			mail("gundambison@gmail.com","test","----this is a test----");
+		}
+	}
+	
+	
 
 	public function runApi(){
 		$url=$this->config->item('api_url');		
@@ -118,6 +130,7 @@ class Forex extends CI_Controller {
 		var_dump($result);
 	}
 */	
+//=========HAPUS DI PRODUCTION
 	public function listUser()
 	{
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
@@ -176,6 +189,7 @@ class Forex extends CI_Controller {
 				$param['app_code']=$this->config->item('app_code')[0];
 				$param['module']='forex';
 				$param['task']='register';
+//-------------------TESTED				
 				$result=_runApi($url, $param);
 			}
 		}
@@ -299,6 +313,7 @@ class Forex extends CI_Controller {
 		$this->load->helper('api');
 		$this->load->helper('db');
 		$this->load->model('forex_model','forex');
+		$this->load->model('account_model','account');
 		$this->load->model('country_model','country');
 		$defaultLang="english";
 		$this->lang->load('forex', $defaultLang);
