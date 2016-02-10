@@ -35,18 +35,18 @@ else{ ?>
                   <tr id="yui_3_16_0_1_1450323941636_3324">
                     <td width="363" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3323"><strong>Account Trading</strong></td>
                     <td width="337" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337"><strong>:</strong>
-					<?=$username;?></td>
+					<?=trim($username);?></td>
                   </tr>
                   <tr id="yui_3_16_0_1_1450323941636_3322">
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>Password Trading</strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> 
-					<strong>: </strong>
-					<?=$masterpassword;?></td>
+					<strong>: </strong><br/>
+					<?=trim($masterpassword);?><br/></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_"><strong>Password Investor</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>: </strong>
-					<?=$investorpassword;?></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>: </strong><br/>
+					<?=trim($investorpassword);?><br/></td>
                   </tr>
                    
 				  <tr>
@@ -243,7 +243,6 @@ else{
 	
 	foreach($emailAdmin as $to){ //email admin lebih dari 1
 		mail(trim($to), $subject, $message, $headers);
-	}
-	
+	} 
 	
 }
