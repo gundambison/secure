@@ -34,33 +34,45 @@ else{ ?>
                 <tbody id="yui_3_16_0_1_1450323941636_3311">
                   <tr id="yui_3_16_0_1_1450323941636_3324">
                     <td width="363" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3323"><strong>Account Trading</strong></td>
-                    <td width="337" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337">
-					<strong>:</strong></td>
-					<td><?=trim($username);?></td>
+                    <td width="337" bgcolor="#CCCCCC" 
+					id="yui_3_16_0_1_1450323941636_3337"><?=trim($username);?></td>
                   </tr>
                   <tr id="yui_3_16_0_1_1450323941636_3322">
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>PasswordTrading</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> 
-					<strong>: </strong></td>
-					<td><?=trim($masterpassword);?></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"><?=trim($masterpassword);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_"><strong>Password Investor</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>: </strong></td>
-					<td><?=trim($investorpassword);?></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><?=trim($investorpassword);?></td>
                   </tr>
                    
 				  <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3">
 					<strong>Website</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>:</strong></td>
-					<td>Salmaforex-server (<a href="https://secure.salmaforex.com/login" target="_blank">Web Login</a>)</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4">Salmaforex-server (<a 
+					href="<?php 
+if(defined('LOCAL') || defined('_DEV_')){?>
+https://dev.salmaforex.com 
+<?php
+}
+else{ ?>
+https://secure.salmaforex.com 
+<?php 
+} ?>/login" target="_blank">Web Login</a>)</td>
                   </tr>
                 </tbody>
               </table>
               <p><br />
                 <br />
-                Your Personal Area athttps://secure.salmaforex.comis your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
+                Your Personal Area at <?php 
+if(defined('LOCAL') || defined('_DEV_')){?>
+https://dev.salmaforex.com 
+<?php
+}
+else{ ?>
+https://secure.salmaforex.com 
+<?php 
+} ?> is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
                 </p>
               <p>Right now you can login to your Personal Area, deposit your account and start your trading.<br />
                 </p>
@@ -247,5 +259,6 @@ else{
 	foreach($emailAdmin as $to){ //email admin lebih dari 1
 		mail(trim($to), $subject, $message, $headers);
 	}
-		
+	
+	
 }

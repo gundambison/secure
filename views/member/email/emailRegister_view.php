@@ -46,9 +46,11 @@ ob_start();
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>
 					Website</strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong>Salmaforex-server (<a href="<?php 
-if(defined('LOCAL') || defined('_DEV_')){?>https://dev.salmaforex.com<?php
+if(defined('LOCAL') || defined('_DEV_')){
+	?>https://dev.salmaforex.com<?php
 }
-else{ ?>https://secure.salmaforex.com<?php 
+else{ 
+	?>https://secure.salmaforex.com<?php 
 } ?>/login" target="_blank">Web Login</a>)</td>
                   </tr>
                 </tbody>
