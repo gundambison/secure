@@ -20,24 +20,30 @@ public $demo=1;
 
 	function recoverId($id=0){		 
 		$now=date("Y-m-d H:i:s");
-		$sql="select count(id) c from {$this->tableAccountRecover} where id='{$id}' and expired > '$now'";
+		$sql="select count(id) c from {$this->tableAccountRecover} 
+		where id='{$id}' 
+		and expired > '$now'";
 		$row=$this->db->query($sql)->row_array();
 		 
 		if($row['c']==0) return false;
-		$sql="select params from {$this->tableAccountRecover} where id='{$id}'";
+		$sql="select params from `{$this->tableAccountRecover}` 
+		where id='{$id}'";
 		$row=$this->db->query($sql)->row_array();
 		$raw=base64_decode($row['params']);
 		$detail='click from :'.$_SERVER['HTTP_REFERER'];
-		$sql="update {$this->tableAccountRecover} set expired='$now',detail='$detail' where 
-		id='$id'";
+		$sql="update `{$this->tableAccountRecover}` 
+		set expired='$now',detail='$detail' 
+		where id='$id'";
 		dbQuery($sql,1);
 		return json_decode($raw,true);
 	}
 	
 	function noPass($id){
 		$id=addslashes($id);
-		$sql="update {$this->tableAccount} set investorpassword='',masterpassword='' where 
-		id='$id'";
+		$sql="update `{$this->tableAccount}` 
+		set 
+		investorpassword='',masterpassword='' 
+		where id='$id'";
 		dbQuery($sql,1);
 		logCreate("reset password |id:".$id);		
 		return true;
@@ -69,7 +75,8 @@ public $demo=1;
 		$data=array('id'=>dbId('recover',date('Ym000'),rand(13,29)));
 		$data['params']=base64_encode(json_encode($detail));
 		$data['detail']=defined("_DEV_")||defined("LOCAL")?json_encode($detail):'';
-		$data['expired']=date("Y-m-d H:i",strtotime("+12 hours"));
+		date_default_timezone_set('Asia/Jakarta');
+		$data['expired']=date("Y-m-d H:i",strtotime("+22 hours"));
 		$this->db->insert($this->tableAccountRecover,$data);
 		return $data['id'];
 		
@@ -79,12 +86,15 @@ public $demo=1;
 	{
 		$detail=$this->regisDetail($id);
 		if(defined('LOCAL')){
-		$sql="select count(id) c from {$this->tableAccount} where username like '{$detail['username']}'";
+			$sql="select count(id) c from `{$this->tableAccount}` 
+		where username like '{$detail['username']}'";
 			$row=dbFetchOne($sql);
 			if($row['c']!=0){
-				$sql="delete from {$this->tableAccount} where username like '{$detail['username']}'";
+				$sql="delete from `{$this->tableAccount}` 
+				where username like '{$detail['username']}'";
 				dbQuery($sql,1);
-				$sql="delete from {$this->tableAccountDetail} where username like '{$detail['username']}'";
+				$sql="delete from `{$this->tableAccountDetail}` 
+				where username like '{$detail['username']}'";
 				dbQuery($sql,1);
 			}
 		}
@@ -96,12 +106,12 @@ public $demo=1;
 			'masterpassword'=>trim($raw['masterpassword']),
 			'accountid'=>$raw['accountid'],
 			'email'=>$detail['email'],
-			//'raw'=>$raw,
-			//'activation'=>base64_encode($raw),
+//			'raw'=>$raw,
+//			'activation'=>base64_encode($raw),
 			'created'=>date("Y-m-d")
 		);
 		$accid=date("ym000");
-		$sql="select max(id) max from {$this->tableAccount}";
+		$sql="select max(id) max from `{$this->tableAccount}`";
 		$dt2=dbFetchOne($sql);
 		if($dt2['max'] > (int)$accid){
 			$accid=$dt2['max'];
@@ -119,7 +129,8 @@ public $demo=1;
 		);
 		$sql=$this->db->insert_string($this->tableAccountDetail,$dt);
 		
-		$sql="select id from {$this->tableActivation} where userid=$id";
+		$sql="select id from `{$this->tableActivation}` 
+		where userid=$id";
 		$data=dbFetch($sql);
 		foreach($data as $row){
 			$idActive=$row['id'];
@@ -130,7 +141,7 @@ public $demo=1;
 		$where = "reg_id=$id";
 		$sql = $this->db->update_string($this->tableRegis, $data, $where);
 		dbQuery($sql,1);
-		//===============Change Password===============
+//===============Change Password===============
 		$sql="select password from {$this->tablePassword} order by rand() limit 2";
 		$data=dbFetch($sql);
 		$invPass=$data[0]['password'];
@@ -171,24 +182,26 @@ public $demo=1;
 	}
 
 	function detail($id,$field='id'){
-		//$id=addslashes($id);
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
-		$sql="select count(id) c from `{$this->tableAccount}`  where `{$field}` like '{$id}';"; 
+		$sql="select count(id) c 
+		from `{$this->tableAccount}`  
+		where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
-			return false;//$sql.print_r($res,1) ;
+			return false;
+//			$sql.print_r($res,1) ;
 		}
 		
-		$sql="select a.* from {$this->tableAccount} a  		
+		$sql="select a.* from `{$this->tableAccount}` a  		
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql);
-		//$this->accountDetailRepair($res);
+//		$this->accountDetailRepair($res);
 			
-		$sql="select a.*,ad.detail raw,adm.adm_type type from {$this->tableAccount} a 
-		left join {$this->tableAccountDetail} ad 
+		$sql="select a.*,ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
+		left join `{$this->tableAccountDetail}` ad 
 			on a.username like ad.username
-		left join {$this->tableAdmin} adm 
+		left join `{$this->tableAdmin}` adm 
 			on adm_username like a.username
 		where a.`{$field}` like '$id'";
 		$data= dbFetchOne($sql);
@@ -206,7 +219,7 @@ public $demo=1;
 	
 	function detailRepair($data=array()){
 		$username=$data['username'];
-		$sql="select count(id) c  from {$this->tableAccountDetail} where `username`='$username'";
+		$sql="select count(id) c  from `{$this->tableAccountDetail}` where `username`='$username'";
 		$res=dbFetchOne($sql);
 		if($res['c']==1){
 			return true;
@@ -215,12 +228,12 @@ public $demo=1;
 		if($data['reg_id']!=0){
 			$reg=$this->regisDetail($data['reg_id']);
 			$detail=json_encode($reg['detail']);
-			$sql="insert into {$this->tableAccountDetail}(username,detail) values('$username','$detail')";
+			$sql="insert into `{$this->tableAccountDetail}`(username,detail) values('$username','$detail')";
 			dbQuery($sql);
 		}else{}
 		return true;
 	}
-	//=====================================
+//=====================================
 		public function __construct()
         {
             $this->load->database();
