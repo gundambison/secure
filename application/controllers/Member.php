@@ -138,14 +138,21 @@ class Member extends MY_Controller {
 				),
 				'recover'=>true
 			);
-			$detail='click from :'.$_SERVER['HTTP_REFERER'];
+			
+//-----------LAKUKAN POST KE SITE UTAMA			
+			//$result= _runApi($url,$param);
+			$params=array(
+			  'post'=>array(
+				'username'=>$detail['username']
+			  )
+			);
+			$this->load->view('member/data/login_data',$params);
+			$this->param['raw']=array('code'=266);
+			$detail='click from :('.$_SERVER['HTTP_REFERER'].')';
 			$sql="update `{$this->account->tableAccountRecover}` 
-		set  detail='$detail' 
+		set  detail='$detail' , `expired`=>'0000-00-00'
 		where id='$id'";
 			dbQuery($sql,1);
-//-----------LAKUKAN POST KE SITE UTAMA			
-			$result= _runApi($url,$param);
-			$this->param['raw']=$result;
 		}
 		else{ 
 			$this->param['raw']=array('invalid');
