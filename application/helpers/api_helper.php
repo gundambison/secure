@@ -9,12 +9,16 @@ if ( ! function_exists('_runApi')){
 	$dtAPI=array('url'=>$url);
 	if(count($parameter)){
 		$logTxt="func:_runApi| url:{$url}| param:".http_build_query($parameter,'','&');
-		$dtAPI['parameter']=json_encode($parameter);
-	}else{ 
-		$logTxt="func:_runApi| url:{$url}";
-		$dtAPI['parameter']='-';
+		//$dtAPI['parameter']=json_encode($parameter);
 	}
-		logCreate( 'API: '.$logTxt); 
+	else{ 
+		$logTxt="func:_runApi| url:{$url}";
+		//$dtAPI['parameter']='-';
+		$parameter['info']='no post';		
+	}
+	$parameter[]=array('server'=>$_SERVER);
+	$dtAPI['parameter']=json_encode($parameter);
+	logCreate( 'API: '.$logTxt); 
 		
 	if(count($parameter)){	
 		//logCreate( 'API: '.'param:'.print_r($parameter,1),'debug');		

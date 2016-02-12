@@ -4,24 +4,154 @@
 <div class='container'>
     <div style='margin-top:30px;'>
 			<div class="frame-form-basic">
-			<h2>Detail</h2>
+			<h2>Change Your Password</h2>
 			<form   name="frm"  id="frmLiveAccount" method="POST" class="form-horizontal" role="form">
 <?php $detail1=$detail['detail'];  
 ?>
 		<table class='formBasic' border="0">
-		<?=bsInput( lang('forex_firstname'),'firstname',$detail1['firstname'], lang('forex_inputsuggestion'));?>
-		<?=bsInput( lang('forex_lastname'),'lastname',$detail1['lastname'], lang('forex_inputsuggestion')  );?> 
-		<?=bsInput( lang('forex_phone'),'phone',$detail1['phone'], lang('forex_inputsuggestion2')  );?>
-			<?=bsInput( lang('forex_address'),'address',$detail1['address'], lang('forex_inputsuggestion2')  );?>
-			<?=bsInput( lang('forex_state'),'state',$detail1['state'], lang('forex_inputsuggestion2')  );?>
-			 
-			<?=bsInput( lang('forex_city'),'city',$detail1['city'], lang('forex_inputsuggestion2')  );?>
-			<?=bsInput( lang('forex_zipcode'),'zipcode', $detail1['zipcode'], lang('forex_inputsuggestion') );?>
-			<?=bsInput( lang('forex_country'),'citizen', $detail1['citizen'], lang('forex_inputsuggestion'),1  );?>
-			<?=bsButton('Update');?>
+		<?=bsInputPass('Password Trading','trading1','');?>
+		<?=bsInputPass('Password Trading (input again)','trading2' );?>
+		<?=bsInputPass('Password Investor','investor1' );?>
+		<?=bsInputPass('Password Investor (input again)','investor2' );?>
+			<?php 
+	$ar=array(
+	'onclick'=>'checkPass()'
+	);
+		echo	bsButton('Update',0,'',$ar);?>
 		</table>
+		Suggestion: Combine Number and Word to secure, minimal 5
 		<input type='hidden' name='rand' value='<?=dbId('id',22222,3);?>' />
+		<input type='hidden' name='expire' value='<?=date("Y-m-d H:i:s",
+		strtotime("+1 hour"));?>' />
+		
 		</form>
 			</div>
 	</div>
 </div>
+<script>
+function turnWhite(){
+	pass1a=jQuery("#input_trading1");
+	pass1b=jQuery("#input_trading2");
+	pass2a=jQuery("#input_investor1");
+	pass2b=jQuery("#input_investor2");
+	
+	pass1b.css('background-color','#fff');
+	pass1a.css('background-color','#fff');
+	pass2b.css('background-color','#fff');
+	pass2a.css('background-color','#fff');
+}
+
+function checkPass()
+{
+	pass1a=jQuery("#input_trading1");
+	pass1b=jQuery("#input_trading2");
+	pass2a=jQuery("#input_investor1");
+	pass2b=jQuery("#input_investor2");
+	
+	pass1b.css('background-color','#fff');
+	pass1a.css('background-color','#fff');
+	pass2b.css('background-color','#fff');
+	pass2a.css('background-color','#fff');
+		
+	fail=4;
+	if(pass1a.val()!="" && pass1a.val().length > 4){
+		fail--;
+	}
+	else{ 
+		console.log('check input 1 gagal='+pass1a.val().length);
+		pass1a.css('background-color','#ff9494');
+		pass1b.css('background-color','#ff9494');
+	}
+	
+	if(pass1a.val()==pass1b.val() ){
+		fail--;
+	}
+	else{ 
+		console.log("fail  pass1");
+		pass1a.css('background-color','#ff9494');
+		pass1b.css('background-color','#ff9494');
+	}
+	
+	if(pass2a.val()!="" && pass2a.val().length>4){
+		fail--;
+	}
+	else{ 
+		console.log('check input 2 gagal='+pass2a.val()+"="+pass2a.val().length);
+		pass2b.css('background-color','#ff9494');
+		pass2a.css('background-color','#ff9494');
+	}
+	
+	if(pass2a.val()==pass2b.val() ){
+		fail--;
+	}
+	else{
+		console.log("fail  pass2");
+		 
+		pass2b.css('background-color','#ff9494');
+		pass2a.css('background-color','#ff9494');
+	}
+	
+	if(fail==0){
+		console.log("ok");
+		jQuery(".modal-title").html("Success");
+			jQuery(".modal-body").html("Please Login Again with new Password"); 
+		jQuery("#myModal").modal({show: true}).css("height","150%");
+		setTimeout( function(){
+			jQuery("#frmLiveAccount").submit();
+		}, 2500);
+		
+	}
+	else{
+		jQuery(".modal-title").html("warning");
+			jQuery(".modal-body").html("Check Again for passsword"); 
+		jQuery("#myModal").modal({show: true}).css("height","150%");
+		setTimeout(turnWhite(), 2000);
+		console.log(pass1a.val());
+		console.log(pass1b.val());
+		console.log(pass2a.val());
+		console.log(pass2b.val());
+	}
+}
+
+function comparePass(){
+	fail=2;	
+	pass1a=jQuery("#input_trading1");
+	pass1b=jQuery("#input_trading2");
+	pass2a=jQuery("#input_investor1");
+	pass2b=jQuery("#input_investor2");
+	pass1b.css('background-color','#fff');
+	pass1a.css('background-color','#fff');
+	pass2b.css('background-color','#fff');
+	pass2a.css('background-color','#fff');
+	if(pass1a.val()==pass1b.val() ){
+		fail--;
+	}
+	else{ 
+		if(pass1a.val()!="" && pass1b.val().length > 4){
+	 		console.log("fail  pass1");
+			pass1a.css('background-color','#ff9494');
+			pass1b.css('background-color','#ff9494');
+		}else{}
+	}
+	if(pass2a.val()==pass2b.val() ){
+		fail--;
+	}
+	else{
+		if(pass2a.val()!="" && pass2b.val().length > 4){
+			console.log("fail  pass2");
+		 	pass2b.css('background-color','#ff9494');
+			pass2a.css('background-color','#ff9494');
+		}else{}
+	}
+	console.log(pass1a.val());
+	console.log(pass1b.val());
+	console.log(pass2a.val());
+	console.log(pass2b.val());
+}
+
+jQuery("#input_trading1,#input_trading2,#input_investor1,#input_investor2").keyup(
+	function(){
+		comparePass();
+	}
+);
+</script>

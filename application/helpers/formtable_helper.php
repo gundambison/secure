@@ -50,8 +50,7 @@ if ( ! function_exists('bsInputPass')){
 	
 	}
 }else{}
-
-
+ 
 if( ! function_exists('bsText')){
 	function bsText($title,$name, $value='',$rows=0,$cols=0){
 		$cols=$cols==0?60:$cols;

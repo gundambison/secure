@@ -58,9 +58,50 @@ class Member extends MY_Controller {
 	
 	public function editPassword(){
 		$this->checkLogin();
+		if($this->input->post('rand')){
+			$post=$this->input->post();
+			$data=array( 
+				'investor'=>$post['investor1'],
+				'trading'=>$post['trading1']
+			);
+			//$data[]=current_url(); 
+			//$data[]=$_SERVER['HTTP_REFERER'];
+			//$data['server']=$_SERVER;
+			
+		if( $post['expire'] > date("Y-m-d H:i:s") && $post['expire'] < date("Y-m-d H:i:s",
+		strtotime("+2 hour"))){
+			$data['member']=$this->param['detail'];
+			//echo 'valid';
+			$data['now']=date("Y-m-d H:i:s", strtotime("+2 hour"));
+			
+			$url=base_url("member/data");	 
+			$param=array(
+				'type'=>'updatePassword',
+				'raw'=>$data,
+				'recover'=>true
+			);
+//-----------LAKUKAN POST KE SITE UTAMA			
+			$data['result']= _runApi($url,$param);
+//-----------EMAIL
+			$param2=array( 
+				'username'=>	$this->param['detail']['username'],
+				'masterpassword'=>		$data['trading'],
+				'investorpassword'=>	$data['investor'],
+				'email'=>		$this->param['detail']['email']
+			);
+			$param2['emailAdmin']=array();//$this->forex->emailAdmin;
+			
+			$this->load->view('member/email/emailPasswordChange_view',$param2);
+			
+			
+		}else{ 
+			echo 'not valid';redirect(base_url("member/editPassword"));
+		}
+			redirect(base_url('member/logout'));//decho '<pre>';print_r($data);die();
+		}
 		$this->param['title']='Edit Password'; 
 		$this->param['content']=array(
-			'passwordEdit', 
+			'passwordEdit', 'modal'
 		);
 		$this->param['footerJS'][]='js/login.js';
 		$this->showView(); 
@@ -209,7 +250,7 @@ class Member extends MY_Controller {
 	public function logout(){
 		$_SESSION['username']='';
 		$_SESSION['password']='';
-		redirect("login");
+		redirect(base_url("login"));
 	}
 	 
 	public function detail(){
