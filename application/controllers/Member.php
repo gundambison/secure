@@ -147,10 +147,10 @@ class Member extends MY_Controller {
 			  )
 			);
 			$this->load->view('member/data/login_data',$params);
-			$this->param['raw']=array('code'=266);
+			$this->param['raw']=array('code'=>266,'message'=>'Your Password Has Been update');
 			$detail='click from :('.$_SERVER['HTTP_REFERER'].')';
 			$sql="update `{$this->account->tableAccountRecover}` 
-		set  detail='$detail' , `expired`=>'0000-00-00'
+		set  detail='$detail' , `expired`='0000-00-00'
 		where id='$id'";
 			dbQuery($sql,1);
 		}

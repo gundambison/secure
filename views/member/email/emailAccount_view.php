@@ -51,13 +51,11 @@ else{ ?>
 					<strong>Website</strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4">Salmaforex-server (<a 
 					href="<?php 
-if(defined('LOCAL') || defined('_DEV_')){?>
-https://dev.salmaforex.com 
-<?php
+if(defined('LOCAL') || defined('_DEV_')){
+	?>http://dev.salmaforex.com<?php
 }
-else{ ?>
-https://secure.salmaforex.com 
-<?php 
+else{ 
+?>https://secure.salmaforex.com<?php 
 } ?>/login" target="_blank">Web Login</a>)</td>
                   </tr>
                 </tbody>
@@ -65,14 +63,13 @@ https://secure.salmaforex.com 
               <p><br />
                 <br />
                 Your Personal Area at <?php 
-if(defined('LOCAL') || defined('_DEV_')){?>
-https://dev.salmaforex.com 
-<?php
+if(defined('LOCAL') || defined('_DEV_')){
+	?>https://dev.salmaforex.com<?php
 }
-else{ ?>
-https://secure.salmaforex.com 
-<?php 
-} ?> is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
+else{ 
+?>https://secure.salmaforex.com<?php 
+} ?>
+is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
                 </p>
               <p>Right now you can login to your Personal Area, deposit your account and start your trading.<br />
                 </p>
