@@ -138,6 +138,7 @@ class Member extends MY_Controller {
 				),
 				'recover'=>true
 			);
+			$detail='click from :'.$_SERVER['HTTP_REFERER'];
 			$sql="update `{$this->account->tableAccountRecover}` 
 		set  detail='$detail' 
 		where id='$id'";
