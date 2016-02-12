@@ -146,8 +146,12 @@ class Member extends MY_Controller {
 				'username'=>$detail['username']
 			  )
 			);
-			$this->load->view('member/data/login_data',$params);
-			$this->param['raw']=array('code'=>266,'message'=>'Your Password Has Been update');
+			$tmp=$this->load->view('member/data/login_data',$params,true);
+			$respon=json_decode($tmp);
+			$this->param['raw']=array(
+			  'code'=>266,
+			  'message'=>$respon->message
+			);
 			$detail='click from :('.$_SERVER['HTTP_REFERER'].')';
 			$sql="update `{$this->account->tableAccountRecover}` 
 		set  detail='$detail' , `expired`='0000-00-00'
