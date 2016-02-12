@@ -32,7 +32,7 @@ public $demo=1;
 		$raw=base64_decode($row['params']);
 		$detail='click from :'.$_SERVER['HTTP_REFERER'];
 		$sql="update `{$this->tableAccountRecover}` 
-		set expired='$now',detail='$detail' 
+		set  detail='$detail' 
 		where id='$id'";
 		dbQuery($sql,1);
 		return json_decode($raw,true);
@@ -76,7 +76,7 @@ public $demo=1;
 		$data['params']=base64_encode(json_encode($detail));
 		$data['detail']=defined("_DEV_")||defined("LOCAL")?json_encode($detail):'';
 		date_default_timezone_set('Asia/Jakarta');
-		$data['expired']=date("Y-m-d H:i",strtotime("+22 hours"));
+		$data['expired']=date("Y-m-d H:i",strtotime("+25hours"));
 		$this->db->insert($this->tableAccountRecover,$data);
 		return $data['id'];
 		

@@ -138,6 +138,10 @@ class Member extends MY_Controller {
 				),
 				'recover'=>true
 			);
+			$sql="update `{$this->account->tableAccountRecover}` 
+		set  detail='$detail' 
+		where id='$id'";
+			dbQuery($sql,1);
 //-----------LAKUKAN POST KE SITE UTAMA			
 			$result= _runApi($url,$param);
 			$this->param['raw']=$result;
