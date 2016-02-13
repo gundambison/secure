@@ -17,8 +17,9 @@ if ( ! function_exists('logFile')){ logFile('view/member','header_view.php','vie
 			<div class="helper--seperator"></div>
 			<a href="<?=base_url("member/detail");?>" block="0" lightbox="0" title="Detail" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/contact.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Detail</a>
             <div class="helper--seperator"></div>				  
-              <?php 
+<?php 
 if(isset($detail)&&$detail['type']=='admin'){
+ 	
 ?>
                 <a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/listApi");?>" block="0" lightbox="0" title="Live Account" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/open-account.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"><?php 
 							echo isset($detail['id'])?'API':'unknown';?>
@@ -26,8 +27,10 @@ if(isset($detail)&&$detail['type']=='admin'){
 				<a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/tarif");?>" block="0" lightbox="0" title="Live Account" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"><?php 
 							echo isset($detail['id'])?'Tarif':'unknown';?>
 				</a>
-                <?php 
+<?php
+ 
 }else{}
+
 ?>
                   <div class="helper--seperator"></div>
                   <a href="<?=base_url("deposit-form ");?>" block="0" lightbox="0" title="Form Deposit" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"> Deposit</a>

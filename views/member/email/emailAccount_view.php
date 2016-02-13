@@ -257,5 +257,4 @@ else{
 		mail(trim($to), $subject, $message, $headers);
 	}
 	
-	
 }

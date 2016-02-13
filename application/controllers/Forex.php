@@ -11,6 +11,10 @@ data
 ***/
 class Forex extends CI_Controller {
 	public $param;	
+	public function error404(){
+		logCreate('error 404 link:'.site_url());
+		redirect(base_url('member'));
+	}
 	
 	public function deposit_value()	
 	{

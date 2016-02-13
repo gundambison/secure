@@ -106,5 +106,145 @@ if(isset($fileJs)){
 }
 
 ?>
+<!--=======MENU============ 
+<style type="text/css">
+#panelMenu{
+	min-width:99px;width:150px;padding:10px 5px;
+	float:left;margin:0 15px 0 50px;
+}
+.list-group-item{
+	padding:5px 0;
+	border-bottom:4px rgba(0, 0, 0, 0.075) solid;
+	list-style:none;
+}
+.panel-default{
+	border-color: #AAC842 !important;
+}
+.panel{
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+}
+.panel-default > .panel-heading {
+    background-image: linear-gradient(to bottom, #AAC842 0px, #8CB400 100%) !important;
+    background-repeat: repeat-x;
+}
+.panel-heading{
+	padding: 10px 15px;
+	border-bottom: 1px solid transparent;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.list-group {
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.075);
+	margin:0px;
+}
+.menutitle{
+	cursor:pointer;
+	margin-bottom: 5px;
+	background-color:#ECECFF;
+	color:#000000;
+	width:140px;
+	padding:2px;
+	text-align:center;
+	font-weight:bold;
+	/*/*/border:1px solid #000000;/* */
+	}
 
+.submenu{
+	margin-bottom: 0.5em;
+}
+.container-detail{
+	width:800px;float:left;
+}
+.clear{
+	clear:both;
+}
+body{
+	background:rgba(234, 252, 237, 0.5);
+}
+</style>
+
+<script type="text/javascript">
+
+/***********************************************
+* Switch Menu script- by Martial B of http://getElementById.com/
+* Modified by Dynamic Drive for format & NS4/IE4 compatibility
+* Visit http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+	var persistmenu="yes" //"yes" or "no". Make sure each SPAN content contains an incrementing ID starting at 1 (id="sub1", id="sub2", etc)
+	var persisttype="sitewide" //enter "sitewide" for menu to persist across site, "local" for this page only
+
+	if (document.getElementById){ //DynamicDrive.com change
+	document.write('<style type="text/css">\n')
+	document.write('.submenu{display: none;}\n')
+	document.write('</style>\n')
+	}
+
+	function SwitchMenu(obj){
+		if(document.getElementById){
+		var el = document.getElementById(obj);
+		var ar = document.getElementById("masterdiv").getElementsByTagName("span"); //DynamicDrive.com change
+			if(el.style.display != "block"){ //DynamicDrive.com change
+				for (var i=0; i<ar.length; i++){
+					if (ar[i].className=="submenu") //DynamicDrive.com change
+					ar[i].style.display = "none";
+				}
+				el.style.display = "block";
+			}else{
+				el.style.display = "none";
+			}
+		}
+	}
+
+	function get_cookie(Name) { 
+	var search = Name + "="
+	var returnvalue = "";
+	if (document.cookie.length > 0) {
+	offset = document.cookie.indexOf(search)
+	if (offset != -1) { 
+	offset += search.length
+	end = document.cookie.indexOf(";", offset);
+	if (end == -1) end = document.cookie.length;
+	returnvalue=unescape(document.cookie.substring(offset, end))
+	}
+	}
+	return returnvalue;
+	}
+
+	function onloadfunction(){
+	if (persistmenu=="yes"){
+	var cookiename=(persisttype=="sitewide")? "switchmenu" : window.location.pathname
+	var cookievalue=get_cookie(cookiename)
+	if (cookievalue!="")
+	document.getElementById(cookievalue).style.display="block"
+	}
+	}
+
+	function savemenustate(){
+	var inc=1, blockid=""
+	while (document.getElementById("sub"+inc)){
+	if (document.getElementById("sub"+inc).style.display=="block"){
+	blockid="sub"+inc
+	break
+	}
+	inc++
+	}
+	var cookiename=(persisttype=="sitewide")? "switchmenu" : window.location.pathname
+	var cookievalue=(persisttype=="sitewide")? blockid+";path=/" : blockid
+	document.cookie=cookiename+"="+cookievalue
+	}
+
+	if (window.addEventListener)
+	window.addEventListener("load", onloadfunction, false)
+	else if (window.attachEvent)
+	window.attachEvent("onload", onloadfunction)
+	else if (document.getElementById)
+	window.onload=onloadfunction
+
+	if (persistmenu=="yes" && document.getElementById)
+	window.onunload=savemenustate
+
+</script>
+-->
 </head>
