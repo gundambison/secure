@@ -15,7 +15,7 @@ public $tableAPI='mujur_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 
-public $emailAdmin='admin@secure.salmaforex.com';
+public $emailAdmin='admin@dev.salmaforex.com';
 
 	function emailAdmin($name='default'){
 		$url=$aAppcode=$this->config->item('emailAdmin');
