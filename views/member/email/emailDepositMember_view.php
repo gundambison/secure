@@ -240,9 +240,7 @@ $headers .= "MIME-Version: 1.0\r\n";
 
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-if(defined('LOCAL')){
-	
-	
+if(defined('LOCAL')){	
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
@@ -254,7 +252,7 @@ if(defined('LOCAL')){
 	//die($message );
 }
 else{
-	mail($to, $subject, $message, $headers);
+	mail(trim($to), $subject, $message, $headers);
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);

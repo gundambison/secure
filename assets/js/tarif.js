@@ -35,13 +35,14 @@ function detail(id){
 		
 		//jQuery("#myModal").modal({show: true}).css("height","150%");	
 		jQuery("#preview").html(result.data.html);
-		console.log("success");	console.log(result);			
+		//console.log("success");	
+		//console.log(result);			
 	});
 	respon.error(function(xhr,status,msg){			
-			console.log("Error");
-			console.log(status);
-			console.log(msg);
-			console.log(xhr);
+			//console.log("Error");
+			//console.log(status);
+			//console.log(msg);
+			//console.log(xhr);
 			
 	});
 }

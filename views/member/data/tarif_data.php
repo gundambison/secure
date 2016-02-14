@@ -1,4 +1,5 @@
 <?php 
+if (   function_exists('logFile')){ logFile('view/member/data','tarif_data.php','data'); };
 ob_start();
 //api_data
 $respon=array( 'draw'=>$_POST['draw']);

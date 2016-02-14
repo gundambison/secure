@@ -50,8 +50,7 @@ if ( ! function_exists('bsInputPass')){
 	
 	}
 }else{}
-
-
+ 
 if( ! function_exists('bsText')){
 	function bsText($title,$name, $value='',$rows=0,$cols=0){
 		$cols=$cols==0?60:$cols;
@@ -97,7 +96,9 @@ if( ! function_exists('bsButton')){
 		foreach($aData as $nm=>$val){
 			$oth.="\t$nm=\"".addslashes($val)."\"";
 		}
-	return sprintf($str, $typeButton,$classButton,$oth, $value);
-	
+	$inp= sprintf($str, $typeButton,$classButton,$oth, $value);
+	$str='<tr><td>&nbsp;</td><td>&nbsp;</td>
+		<td><div class="form-group">'.$inp.'</div></td></tr>';
+	return $str;
 	}
 }else{}

@@ -49,41 +49,41 @@ if(isset($post['kode'])){
 			$param['email']=$dataRegis['email'];
 			$param['activecode']=$activecode;
 			
-			$url.="?".http_build_query($param);//===echo $url."<br>";
-			$result= _runApi($url );	//===echo print_r($result,1)."<br>";
+			$url.="?".http_build_query($param); 
+//=========ACTIVATION			
+			$result= _runApi($url );	 
 			if(!isset($res)&&(int)$result==25){
 				logCreate('not valid code url:'.$url,'error');
 				logCreate('url:'.$url.'|respon:'.$result,'error');
 				$res=lang('forex_activation_not_valid');
-			}
+			}else{}
 			
 			if(!isset($res)&&(int)$result==99){
 				logCreate('Account had been actived url:'.$url,'error');
 				logCreate('url:'.$url.'|respon:'.$result,'error');
 				$res=lang('forex_activation_account_active');
-			}
+			}else{}
 			
 			if(!isset($res)&&(int)$result==1){
 				$this->forex->accountCreate($data['userid']);
 				$res=lang('forex_done');
 				$this->forex->activationUpdateUser($data['userid'], 2);
 				$this->forex->activationUpdate( $data['id'], 1);
-			}
+			}else{}
 			
 			if(!isset($res)&&(int)$result!=1){
 				$res=lang('forex_activation_not_valid');
 				logCreate('url:'.$url.'|respon:'.$result,'error');
 				logCreate('not valid url:'.$url,'error');
-			}
-		} 
+			}else{}
+		}else{}  
 		
-		
- 
 		if(!isset($res)){
 			//print lang('forex_done') ;
 		}else{
 			print  "<br/>".$res;
 		}
+		
 	}else{
 		
 	}

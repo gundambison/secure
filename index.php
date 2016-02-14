@@ -54,8 +54,7 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', 'production');
-	//define('_DEV_',1); //hapus jika bukan Development
+	define('ENVIRONMENT', 'production'); 
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

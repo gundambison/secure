@@ -45,13 +45,29 @@ ob_start();
 				  <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>
 					Website</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong>Salmaforex-server (<a href="https://secure.salmaforex.com/login" target="_blank">Web Login</a>)</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong>Salmaforex-server (<a href="<?php 
+if(defined('LOCAL') || defined('_DEV_')){
+	?>https://dev.salmaforex.com<?php
+}
+else{ 
+	?>https://secure.salmaforex.com<?php 
+} ?>/login" target="_blank">Web Login</a>)</td>
                   </tr>
                 </tbody>
               </table>
               <p><br />
                 <br />
-                Your Personal Area at https://secure.salmaforex.com is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
+                Your Personal Area at 
+<?php 
+if(defined('LOCAL') || defined('_DEV_')){?>
+https://dev.salmaforex.com 
+<?php
+}
+else{ ?>
+https://secure.salmaforex.com 
+<?php 
+} ?>
+				is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
                 </p>
               <p>Right now you can login to your Personal Area, deposit your account and start your trading.<br />
                 </p>
@@ -221,15 +237,19 @@ if(defined('LOCAL')){
 	$this->db->insert('mujur_api',$data);
 }
 else{
-	mail($to, $subject, $message, $headers);
+	mail(trim($to), $subject, $message, $headers);
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	$subject = "[SalmaForex] Register Baru";
-	mail($emailAdmin, $subject, $message, $headers);
+	$subject = "[SalmaForex] New Register";
 	$data=array( 'url'=>$to,
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
 	$this->db->insert('mujur_api',$data);
+	foreach($emailAdmin as $to){
+		mail(trim($to), $subject, $message, $headers);
+	}
+	
+	
 }
