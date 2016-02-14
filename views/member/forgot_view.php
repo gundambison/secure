@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
               <input class="form-control" id="myUser" type="text" name="email" />
             </div> 
              
-            <button type="button" class="btn btn-default submitLogin" onclick="login()">
+            <button type="button" class="btn btn-default submitLogin" onclick="forgotpass()">
               Recover  
             </button>
           </div>

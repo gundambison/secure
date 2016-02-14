@@ -5,6 +5,12 @@ membutuhkan config logConfig.php
 
 */
  
+if ( ! function_exists('logFile'))
+{ 
+	function logFile(){
+		return true;
+	}
+}
 if ( ! function_exists('logConfig'))
 {
   function logConfig($txt,$config0='',$type='debug'){

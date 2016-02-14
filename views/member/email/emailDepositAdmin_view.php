@@ -203,7 +203,7 @@ support@salmaforex.com<br />
 $message = ob_get_contents();
 ob_end_clean();
 //echo  $detail;
-$to = trim( $emailAdmin );
+$to =   $emailAdmin  ;
 
 $subject = '[System] Deposit by '.$name;
 
@@ -220,18 +220,22 @@ if(defined('LOCAL')){
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	$data=array( 'url'=>$to,
+	$data=array( 'url'=>print_r($to,1),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
 	$this->db->insert('mujur_api',$data);
 }
 else{
-	mail($to, $subject, $message, $headers);
+	$emailAdmin[]='finance@salmaforex.com';
+	foreach($emailAdmin as $to){
+		mail(trim($to), $subject, $message, $headers);
+	}
+	
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	$data=array( 'url'=>$to,
+	$data=array( 'url'=>print_r($emailAdmin,1),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);

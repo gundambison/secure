@@ -155,7 +155,8 @@
 			}else{}
 			//$this->checkView( $this->param['load_view'] );
 			
-		}else{ 
+		}
+		else{ 
 			//$controller=$this->uri->segment(1);
 			//if($controller=='')$controller='forex';
 			//redirect(base_url().$controller."/index","refresh");	

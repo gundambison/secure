@@ -1,5 +1,6 @@
 <?php 
 ob_start();
+if ( function_exists('logFile')){ logFile('view/member/data','api_data.php','data'); };
 //api_data
 $respon=array( 'draw'=>$_POST['draw']);
 /*

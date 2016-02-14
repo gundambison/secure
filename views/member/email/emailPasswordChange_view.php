@@ -18,16 +18,14 @@ ob_start();
         <tbody>
           <tr>
             <td><h3>Account Trading Detail</h3>
-<?php 		
-if(isset($post0['recover'])){?>
+ 
 	<p>Your Password Have been Updated. 
-<?php 
-}
-else{ ?>
-	Welcome to <a href="https://www.salmaforex.com/">SalmaForex</a>.	
-<?php 
-}
-?>			<p>You have just made a right decision to become a client of <a href="https://www.salmaforex.com/">SalmaForex</a> and choose us as your broker. We are sure that from now on your trading experience with us will be positive and profitable. </p>
+ 
+			<p>You have just made a right decision to become a client of 
+			<a href="https://www.salmaforex.com/">SalmaForex</a> 
+			and choose us as your broker. 
+			We are sure that from now on your trading experience with us will be positive and profitable. 
+ 
 			Your Account Trading Detail are as follows: <br />	
               </p>
               <table align="center" id="yui_3_16_0_1_1450323941636_3312">
@@ -51,11 +49,13 @@ else{ ?>
 					<strong>Website</strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4">Salmaforex-server (<a 
 					href="<?php 
-if(defined('LOCAL') || defined('_DEV_')){
-	?>http://dev.salmaforex.com<?php
+if(defined('LOCAL') || defined('_DEV_')){?>
+https://dev.salmaforex.com 
+<?php
 }
-else{ 
-?>https://secure.salmaforex.com<?php 
+else{ ?>
+https://secure.salmaforex.com 
+<?php 
 } ?>/login" target="_blank">Web Login</a>)</td>
                   </tr>
                 </tbody>
@@ -63,13 +63,14 @@ else{
               <p><br />
                 <br />
                 Your Personal Area at <?php 
-if(defined('LOCAL') || defined('_DEV_')){
-	?>https://dev.salmaforex.com<?php
+if(defined('LOCAL') || defined('_DEV_')){?>
+https://dev.salmaforex.com 
+<?php
 }
-else{ 
-?>https://secure.salmaforex.com<?php 
-} ?>
-is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
+else{ ?>
+https://secure.salmaforex.com 
+<?php 
+} ?> is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
                 </p>
               <p>Right now you can login to your Personal Area, deposit your account and start your trading.<br />
                 </p>
@@ -256,5 +257,6 @@ else{
 	foreach($emailAdmin as $to){ //email admin lebih dari 1
 		mail(trim($to), $subject, $message, $headers);
 	}
+	
 	
 }

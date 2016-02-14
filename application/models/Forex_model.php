@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+if (   function_exists('logFile')){ logFile('model','forex_model.php','model'); };
 class Forex_model extends CI_Model {
 public $tableRegis='mujur_register'; 
 public $tableWorld='mujur_country'; 
@@ -16,6 +17,12 @@ public $demo=1;
 
 public $emailAdmin='admin@secure.salmaforex.com';
 
+	function emailAdmin($name='default'){
+		$url=$aAppcode=$this->config->item('emailAdmin');
+		
+		$this->emailAdmin=isset($url)?$url:false;
+	}
+	
 	function forexUrl($name='default'){
 		$url=$aAppcode=$this->config->item('urlForex');
 		
@@ -46,7 +53,14 @@ public $emailAdmin='admin@secure.salmaforex.com';
 				logConfig("create table:$str");
 				$this->db->reset_query();	
 				 
-			}
+		}
+		$sql="select * from {$this->tableFlowlog} limit 1";
+		$row=$this->db->query($sql)->row_array();
+		if(!isset($row['status'])){
+			$sql="ALTER TABLE `{$this->tableFlowlog}` ADD `status` tinyint default 0;";
+				dbQuery($sql,1);			
+		}
+		
 		if($type=='')return false;
 		$dt=array('types'=>$type);
 		$dt['param']=json_encode($data);
@@ -98,12 +112,21 @@ public $emailAdmin='admin@secure.salmaforex.com';
 		$types=addslashes($types);
 		$row= $this->db	
 		->query('select price `value` from mujur_price where types="'.$types.'" order by created desc limit 1')
-		->row_array();
-		return $row['value'];
+		->row_array(); 
+		return $row ;
 	}
 /***
 ACCOUNT
+
+SEMUA dipindah ke model ACCOUNT
 ***/	 
+	function accountRecover($detail=false){
+		if($detail==false){
+			
+			return true;
+		}
+	}
+	
 	function accountCreate($id,$raw='')
 	{
 		$detail=$this->regisDetail($id);
@@ -199,16 +222,17 @@ ACCOUNT
 	}
 
 	function accountDetail($id,$field='id'){
-		$id=addslashes($id);
-		$sql="select count(id) c from {$this->tableAccount}
-		where `{$field}`='$id'";
+		//$id=addslashes($id);
+		$id=addslashes(trim($id));
+		if($field=='email')$id.="%";
+		$sql="select count(id) c from `{$this->tableAccount}`  where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
-		if($res['c']==0)
-			return false;
+		if($res['c']==0){
+			return $sql.print_r($res,1) ;
+		}
 		
-		$sql="select a.* from {$this->tableAccount} a  
-		
-		where `{$field}`='$id'";
+		$sql="select a.* from {$this->tableAccount} a  		
+		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql);
 		$this->accountDetailRepair($res);
 			
@@ -217,14 +241,16 @@ ACCOUNT
 			on a.username like ad.username
 		left join {$this->tableAdmin} adm 
 			on adm_username like a.username
-		where a.`{$field}`='$id'";
+		where a.`{$field}` like '$id'";
 		$data= dbFetchOne($sql);
 		if($data['type']==7){
 			$data['type']='admin';
 		}else{
 			$data['type']=false;
 		}
-		$data['detail']=json_decode($data['raw'],true); 
+		if(isset($data['raw'])){
+			$data['detail']=json_decode($data['raw'],true); 
+		}
 		unset($data['raw']);
 		return $data;
 	}
@@ -233,13 +259,16 @@ ACCOUNT
 		$username=$data['username'];
 		$sql="select count(id) c  from {$this->tableAccountDetail} where `username`='$username'";
 		$res=dbFetchOne($sql);
-		if($res['c']==1)
+		if($res['c']==1){
 			return true;
+		}
 		
-		$reg=$this->regisDetail($data['reg_id']);
-		$detail=json_encode($reg['detail']);
-		$sql="insert into {$this->tableAccountDetail}(username,detail) values('$username','$detail')";
-		dbQuery($sql);
+		if($data['reg_id']!=0){
+			$reg=$this->regisDetail($data['reg_id']);
+			$detail=json_encode($reg['detail']);
+			$sql="insert into {$this->tableAccountDetail}(username,detail) values('$username','$detail')";
+			dbQuery($sql);
+		}else{}
 		return true;
 	}
 /***
@@ -405,7 +434,7 @@ REGISTER
 			$dt=dbFetchOne($sql);
 			if(!isset($dt['reg_investorpassword'])){
 				$sql="ALTER TABLE `{$this->tableRegis}` ADD `reg_investorpassword` VARCHAR(100) NOT NULL AFTER `reg_password`;";
-				dbQuery($sql,1);			
+				dbQuery($sql,1);
 			}
 //=========UPDATE ACCOUNT			
 			$sql="select count(id) tot from {$this->tableAccount}";
@@ -471,5 +500,7 @@ REGISTER
 
 			$this->rateNow();
 			$this->flowInsert('');
+			$this->emailAdmin();
+			$this->accountRecover();
         }
 }

@@ -1,14 +1,7 @@
 <?php 
 //deposit_view.php
-/*
-Array
-(
-    [0] => glory.lombok@gmail.com
-    [1] => enjoy21939
-    [2] => room21919
-    [3] => 2000
-)
-*/
+if (  function_exists('logFile')){ logFile('view/member/data','widtdrawalProcess_data.php','data'); };
+
 $uDetail=$userlogin['detail'];
 defined('BASEPATH') OR exit('No direct script access allowed');?>
 <style>
@@ -16,7 +9,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	width:100% !important;
 }
 </style>
-<?php //echo '<pre>'.print_r($userlogin['detail'],1).'</pre>'; ?>
+<?php 
+//echo '<pre>'.print_r($userlogin,1).'</pre>'; 
+?>
 <div class='container'>
     <div style='margin-top:30px;'>
         <form novalidate="novalidate" name="frm" id0="frm"   method="POST"  class="form-horizontal" role="form"> 
@@ -26,16 +21,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
             <table> 
 <?php 
 $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']; 
-$name1=$name.'<input type="hidden" name="accountid" value="'.$userlogin['accountid'].'" />'.'<input type="hidden" name="name" value="'.$name.'" />';
-echo bsInput('Akun Instaforex','akun', $name1 ,'',true);
+$name1='<input type="hidden" name="accountid" value="'.$userlogin['accountid'].'" />
+<input type="hidden" name="name" value="'.$name.'" />
+<input type="hidden" name="username" value="'.$userlogin['username'].'" />';
+echo bsInput('Akun Salmaforex','akun', $userlogin['username'] ,'',true);
+echo bsInput('Name','name', $name.$name1 ,'',true);
 echo bsInput('Phone','phone', trim($uDetail['phone']) ,'Please Input Valid Phonenumber' );
 echo bsInput('Nama Bank','bank', '' ,'BCA, Mandiri, BNI, BII, etc' );
 echo bsInput('No Rekening','norek', '' ,'999 999 999 9' );
 echo bsInput('Nama Pemilik Rekening','namerek', trim($name) ,'Please Input Valid Name' );
 
-echo bsInput('Jumlah Order ($)','orderDeposit', '' ,'Minimal $10' );
+echo bsInput('Jumlah Order ($)','orderDeposit', 0 ,'Minimal $10' );
+echo bsInput('Rate ($)','orderDeposit', 
+'<div id="input_rate">0</div>' ,'Minimal $10',true );
 echo bsInput('Jumlah Transfer (Rp)','order1', '' ,'Nominal Hanya Estimasi Saja' );
-
 
 ?>             
             <tr><td colspan=3> 

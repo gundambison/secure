@@ -11,22 +11,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');?><!DOCTYPE html>
 	$this->load->view($load_view);
 ?>
  <!-- CONTENT-WRAPPER SECTION START-->
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="salma-main">	
 <?php 
+//$this->load->view('menu_view');
 if(isset($content)){
-	if(is_array($content)){
-		foreach($content as $viewFile){
+	if(!is_array($content)){
+		$contents=array($content);		
+	}
+	else{ 
+		$contents=$content;
+	}
+	foreach($contents as $viewFile){
 			$load_view= $folder.$viewFile.'_view';
 			$this->load->view($load_view);
-		}		
-	}else{
-		$load_view= $folder.$content.'_view';
-		$this->load->view($load_view);
 	}
-	
 }else{}
 ?>
 	</div>
+	<div class='clear'></div>
+	<div id='bgAjax'>&nbsp;</div>
+	
 <!-- CONTENT-WRAPPER SECTION END-->
 	<!-- FOOTER SECTION START-->
 <?php 

@@ -39,6 +39,7 @@ foreach($register as $row){
 	$url.="?".http_build_query($param);
 	$arr['param']=$param;
 	$arr['url']=$url;
+//--------- PERINTAH PEMBUATAN	
 	$result0= _runApi($url );
 	if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
 		$result=(array)$result0['data'];
@@ -48,22 +49,18 @@ foreach($register as $row){
 	}
 	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==0){
-		logCreate('url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1)	.'|url:'.$url, 
+		logCreate('register member |url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1)	.'|url:'.$url, 
 			'info');
 		$id=$this->forex->accountActivation($row['id'],$result);
 		$arr['accountActivation']=$id; 
-		
-/*
-		PENGIRIMAN EMAIL ==> PENDING
-*/			 
-		
+ 
 	}
 	else{ 
 		$arr['accountActivation']=false;
 		$num=isset($result['responsecode'])?$result['responsecode']:'unknown';
 		if(lang('resApi_'.$num)=='')$num='unknown';
-		logCreate('num:'.$num.' |message:'.lang('resApi_'.$num),'error');
-		logCreate('url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1).'|url:'.$url, 
+		logCreate('register member |num:'.$num.' |message:'.lang('resApi_'.$num),'error');
+		logCreate('register member |url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1).'|url:'.$url, 
 			'error');
 		
 	}
