@@ -4,7 +4,7 @@ $config['app_code']=array(
 );
  
 
-$config['emailAdmin']=array('admin@dev.salmaforex.com');
+$config['emailAdmin']=array('admin@secure.salmaforex.com');
 
 if(defined('LOCAL')){
 	$config['urlForex']=array( 
