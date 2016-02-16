@@ -198,6 +198,34 @@ class Forex extends CI_Controller {
 			}
 		}
 		
+		$open= $this->param['folder']."data/".$type."_data";
+		if(is_file('views/'.$open.".php")){
+			$param=array(
+				'post'=>$this->convertData(),
+				'get'=>$this->input->get(),
+				'post0'=>$this->input->post()
+			);
+			$raw=$this->load->view($open, $param, true);
+			$ar=json_decode($raw,true);
+			if(is_array($ar)){
+				$respon=$ar;				
+				logCreate($respon);
+				if(!isset($respon['status'])){ 
+					echo json_encode($respon);exit(); 
+				}
+				if($respon['status']==true){
+					$ok=1;
+				}
+				else{
+					$message=$respon['message'];
+				}
+			}
+			else{
+				logCreate("unknown :".htmlentities($raw));
+				$this->errorMessage('267',$raw,$message);
+			}
+		
+		}
 		if(!isset($ok)){
 			$this->errorMessage('266',$message);
 		}
@@ -208,9 +236,11 @@ class Forex extends CI_Controller {
 	private function convertData()
 	{
 	$post=array();
+	if(isset($this->input->post('data'))){
 		foreach($this->input->post('data') as $data){
 			$post[$data['name']]=$data['value'];
 		}
+	}
 		return $post;
 	}
 	

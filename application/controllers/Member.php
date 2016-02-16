@@ -24,7 +24,8 @@ class Member extends MY_Controller {
 		if($this->input->post('rand')){
 			$this->param['post']=$this->input->post();
  
-			$url=base_url("member/data");
+			$url=$this->forex->forexUrl('local');
+			//base_url("member/data");
 			$param=array(
 				'type'=>'updateDetail',
 				'data'=>array(					 
@@ -42,7 +43,7 @@ class Member extends MY_Controller {
 				redirect(base_url('member/detail'));
 			}
 			else{ 
-					redirect(base_url('member/edit'));
+				redirect(base_url('member/edit'));
 			}
 		}
 		else{ 
@@ -74,7 +75,7 @@ class Member extends MY_Controller {
 			//echo 'valid';
 			$data['now']=date("Y-m-d H:i:s", strtotime("+2 hour"));
 			
-			$url=base_url("member/data");	 
+			$url=$this->forex->forexUrl('local');//base_url("member/data");	 
 			$param=array(
 				'type'=>'updatePassword',
 				'raw'=>$data,

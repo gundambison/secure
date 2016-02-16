@@ -37,4 +37,6 @@ if(defined('_DEV_')){
 	$config['api_url']='http://dev.salmaforex.com/forex/api';
 	$config['urlForex']['updateBalance']=
 	  'http://secure.salmaforex.com/forex/fake/updateBalance';
-}
+}else{} 
+
+$config['urlForex']['local']='localhost/forex/data';
