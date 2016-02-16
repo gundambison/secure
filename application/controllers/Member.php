@@ -22,24 +22,35 @@ class Member extends MY_Controller {
 	public function edit(){
 		$this->checkLogin();
 		if($this->input->post('rand')){
-			$this->param['post']=$this->input->post();
- 
-			$url=$this->forex->forexUrl('local');
-			//base_url("member/data");
 			$param=array(
 				'type'=>'updateDetail',
 				'data'=>array(					 
 				),
 				'recover'=>true
 			);
+			$this->param['post']=$param['post']=$this->input->post();
+			$param['username']= $this->param['detail']['username'];
+			$param['post']['detail']= $this->param['detail']['detail'];
+			
+ 
+			$url=$this->forex->forexUrl('local');
+			//base_url("member/data");
+/*			
+			
 			foreach($this->input->post() as $name=>$value){
 				$param['data'][]=array( 'name'=>$name, 'value'=>$value);
 			}
 			$param['data'][]=array( 'name'=>'detail','value'=>$this->param['detail']['detail']);
 			$param['data'][]=array( 'name'=>'username','value'=>$this->param['detail']['username']);
+*/
+			$param['data']=$this->convertData();
 //----------UPDATE Agar dapat di LOG			
-			$result= _runApi($url,$param);
-			if($result['code']==9){
+//			$result= _runApi($url,$param); //not run
+			//echo '<pre>'.print_r($param,1);
+			$result=$this->load->view('member/data/updateDetail_data',$param,true);
+			$ar=json_decode($result);
+			// die(print_r($ar,1));	
+			if($result['status']==true){
 				redirect(base_url('member/detail'));
 			}
 			else{ 
@@ -79,10 +90,16 @@ class Member extends MY_Controller {
 			$param=array(
 				'type'=>'updatePassword',
 				'raw'=>$data,
-				'recover'=>true
+				'recover'=>true,
+				'post'=> $this->input->post() 
 			);
+			$param['member']= $this->param['detail'] ;
 //-----------LAKUKAN POST KE SITE UTAMA			
-			$data['result']= _runApi($url,$param);
+			//$data['result']= _runApi($url,$param); //not run
+			//print_r($_POST);
+			$result=$this->load->view('member/data/updatePassword_data',$param,true);
+			//print_r($result);
+			//die();
 //-----------EMAIL
 			$param2=array( 
 				'username'=>	$this->param['detail']['username'],
@@ -141,7 +158,7 @@ class Member extends MY_Controller {
 			);
 			
 //-----------LAKUKAN POST KE SITE UTAMA			
-			//$result= _runApi($url,$param);
+			//$result= _runApi($url,$param); //not run
 			$params=array(
 			  'post'=>array(
 				'username'=>$detail['username']

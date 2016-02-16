@@ -124,12 +124,12 @@ class Forex extends CI_Controller {
 	
 	
 
-	public function runApi(){
+	public function runApi(){ //not run 
 		$url=$this->config->item('api_url');		
 		$param['app_code']='9912310';
 		$param['module']='forex';
 		$param['task']='register';
-		$result=_runApi($url, $param);
+		$result=_runApi($url, $param); //not run
 		echo 'run:'.$url.'<pre>';
 		var_dump($result);
 	}
@@ -180,7 +180,7 @@ class Forex extends CI_Controller {
 			$param['task']='create';
 			logCreate( 'param:'.print_r($param,1));
 			$param['app_code']='9912310';
-			$result=_runApi($url, $param);
+			$result=_runApi($url, $param); //not run
 			$this->param['result']=$result;
 			logCreate( 'param:'.print_r($result,1));
 			//$respon['result']=$result;
@@ -194,7 +194,7 @@ class Forex extends CI_Controller {
 				$param['module']='forex';
 				$param['task']='register';
 //-------------------TESTED				
-				$result=_runApi($url, $param);
+				$result=_runApi($url, $param); //test
 			}
 		}
 		

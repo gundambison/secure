@@ -5,21 +5,21 @@ if ( function_exists('logFile')){ logFile('view/member/data','updatePassword_dat
 $respon=array( );
 
 //$respon['data']=$post0; 
-$post=$post0['raw'];
+//$post=$post0['raw'];
 //===========
-$pass1=addslashes( $post['trading'] );
-$pass2=addslashes( $post['investor'] );
+$pass1=addslashes( $post['trading1'] );
+$pass2=addslashes( $post['investor1'] );
 
 $sql=sprintf("update `%s` set `investorpassword`= md5('%s'), `masterpassword`= md5('%s')
 where username like '%s'",
-$this->account->tableAccount, $pass2,$pass1, $post['member']['username']);
-dbQuery($sql,1);
+$this->account->tableAccount, $pass2,$pass1, $member['username'] );
+ dbQuery($sql,1);
 $respon['ok']=true;
 //$respon['sql']=$sql;
 
 $param=array( );
 			
-			$param['accountid']=$post['member']['accountid'];
+			$param['accountid']=$member['accountid'];
 			$param['masterpassword']=$pass1;
 			$param['investorpassword']=$pass2; 			 
 			$param['privatekey']	=$this->forex->forexKey();
