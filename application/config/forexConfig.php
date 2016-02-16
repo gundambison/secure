@@ -39,4 +39,4 @@ if(defined('_DEV_')){
 	  'http://secure.salmaforex.com/forex/fake/updateBalance';
 }else{} 
 
-$config['urlForex']['local']='localhost/forex/data';
+$config['urlForex']['local']='localhost/index.php/forex/data';
