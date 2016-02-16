@@ -236,11 +236,11 @@ class Forex extends CI_Controller {
 	private function convertData()
 	{
 	$post=array();
-	if(isset($this->input->post('data'))){
-		foreach($this->input->post('data') as $data){
-			$post[$data['name']]=$data['value'];
+		if( $this->input->post('data') ){
+			foreach($this->input->post('data') as $data){
+				$post[$data['name']]=$data['value'];
+			}
 		}
-	}
 		return $post;
 	}
 	
