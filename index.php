@@ -1,6 +1,8 @@
 <?php
 	date_default_timezone_set('Asia/Jakarta');
- 
+function logFile(){
+	return true;
+} 
 	define('ENVIRONMENT', 'production'); 
  
 switch (ENVIRONMENT)
