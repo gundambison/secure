@@ -12,17 +12,42 @@ $dt['raw']=json_decode($dt['param'],1);
 $dt['userlogin']= $dt['raw']['userlogin'];
 $dt['statusConfirm']=$_POST['status'];
 $this->param['deposit']=$dt;
-//======KIRIM EMAIL
-$this->load->view('member/email/emailDepositStatus_view',$dt);
+//======KIRIM EMAIL 
 			
 if(isset($_POST['status'])){
 	if($_POST['status']=='approve'){
-		$sql="update mujur_flowlog set status=1 where id=$id";
-	}else{
-		$sql="update mujur_flowlog set status=2 where id=$id";
+		$param=array( );
+		if(defined('_DEV_')){
+			$param['dev']=true;
+		}
+		$vol=(int)$dt['raw']['orderDeposit'];		
+		$param['accountid']		=	$dt['raw']['accountid'];
+		$param['volume']		=	$vol."+"; 			 
+		$param['privatekey']	=	$this->forex->forexKey();
+		
+		$url=$this->forex->forexUrl('updateBalance');
+		$url.="?".http_build_query($param);
+		$respon['server']=$tmp= _runApi($url );
+		if($tmp['data']===0){
+			logCreate('deposit Approve');
+			$this->load->view('member/email/emailDepositStatus_view',$dt);
+			$sql="update mujur_flowlog set status=1 where id=$id";
+			dbQuery($sql,1);
+		}
+		else{
+			logCreate('deposit canceled');
+		} 	
+		
 	}
-	dbQuery($sql,1);
+	else{
+		$sql="update mujur_flowlog set status=2 where id=$id";
+		dbQuery($sql,1);
+		logCreate('deposit disaproved');
+		$this->load->view('member/email/emailDepositStatus_view',$dt);
+	}
+	
 }else{}	
+ 
 $warning = ob_get_contents();
 ob_end_clean();
 if($warning!=''){

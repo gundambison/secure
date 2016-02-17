@@ -1,12 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
- 
+
 if(!defined('_DEV_')){	
 	$route['default_controller'] = 'forex';
 }
 else{ 
 	$route['default_controller'] = 'member/login';
 }
+
+$route['register/(:any)'] = 'forex/register/$1';
 $route['login'] = 'member/login';
 $route['forgot_password'] = 'member/forgot';
 $route['deposit-form'] = 'member/deposit';

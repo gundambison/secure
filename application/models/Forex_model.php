@@ -15,7 +15,7 @@ public $tableAPI='mujur_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 
-public $emailAdmin='admin@secure.salmaforex.com';
+public $emailAdmin='admin@dev.salmaforex.com';
 
 	function emailAdmin($name='default'){
 		$url=$aAppcode=$this->config->item('emailAdmin');
@@ -116,8 +116,7 @@ public $emailAdmin='admin@secure.salmaforex.com';
 		return $row ;
 	}
 /***
-ACCOUNT
-
+ACCOUNT 
 SEMUA dipindah ke model ACCOUNT
 ***/	 
 	function accountRecover($detail=false){
@@ -272,8 +271,7 @@ SEMUA dipindah ke model ACCOUNT
 		return true;
 	}
 /***
-ACTIVATION
-
+ACTIVATION 
 ***/	
 	function accountActivation($id,$raw0){
 		logCreate('create :'.$id." raw:".print_r($raw0,1));

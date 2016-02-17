@@ -11,7 +11,7 @@ public $table='mujur_country';
 	{
 		$sql="select 
 		 `country_id` id from {$this->table}";
-		return dbFetch($sql);//$this->db->query($sql)->result_array();
+		return dbFetch($sql); 
 	}
 /*	
 	If not valid, Create New

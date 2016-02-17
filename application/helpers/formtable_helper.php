@@ -15,14 +15,12 @@ if ( ! function_exists('bsInput')){
 			'placeholder'	=> $info
 		);
 		if($disable!==false){
-			$inp=$value; 
-			//var_dump($disable);
+			$inp=$value;  
 		}
 		else{
 			$inp= form_input($data);
 		}
-		
-		//$inp= form_input($data); 
+		 
 		$str='<tr><td><label for="input_'.$name.'">'.$title.'</label></td><td>&nbsp;</td>
 		<td><div class="form-group">'.$inp.'</div></td></tr>';
 	return $str;

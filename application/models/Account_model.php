@@ -105,9 +105,7 @@ public $demo=1;
 			'investorpassword'=>trim($raw['investorpassword']),
 			'masterpassword'=>trim($raw['masterpassword']),
 			'accountid'=>$raw['accountid'],
-			'email'=>$detail['email'],
-//			'raw'=>$raw,
-//			'activation'=>base64_encode($raw),
+			'email'=>$detail['email'], 
 			'created'=>date("Y-m-d")
 		);
 		$accid=date("ym000");
@@ -189,14 +187,12 @@ public $demo=1;
 		where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
-			return false;
-//			$sql.print_r($res,1) ;
+			return false; 
 		}
 		
 		$sql="select a.* from `{$this->tableAccount}` a  		
 		where `{$field}` like '$id'";
-		$res=dbFetchOne($sql);
-//		$this->accountDetailRepair($res);
+		$res=dbFetchOne($sql); 
 			
 		$sql="select a.*,ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
 		left join `{$this->tableAccountDetail}` ad 

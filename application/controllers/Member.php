@@ -1,17 +1,4 @@
 <?php 
-/***
-in progress
-forgot
-reset 
-
-Deposit : form deposit
-widtdrawal : form widtdrawal
-login 
-logout
-detail
------------
-listApi 
-***/
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member extends MY_Controller {
@@ -20,27 +7,29 @@ class Member extends MY_Controller {
 	public function edit(){
 		$this->checkLogin();
 		if($this->input->post('rand')){
-			$this->param['post']=$this->input->post();
- 
-			$url=base_url("member/data");
 			$param=array(
 				'type'=>'updateDetail',
 				'data'=>array(					 
 				),
 				'recover'=>true
 			);
-			foreach($this->input->post() as $name=>$value){
-				$param['data'][]=array( 'name'=>$name, 'value'=>$value);
-			}
-			$param['data'][]=array( 'name'=>'detail','value'=>$this->param['detail']['detail']);
-			$param['data'][]=array( 'name'=>'username','value'=>$this->param['detail']['username']);
-//----------UPDATE Agar dapat di LOG			
-			$result= _runApi($url,$param);
-			if($result['code']==9){
+			$this->param['post']=$param['post']=$this->input->post();
+			$param['username']= $this->param['detail']['username'];
+			$param['post']['detail']= $this->param['detail']['detail'];
+			
+ 
+			$url=$this->forex->forexUrl('local');
+ 
+			$param['data']=$this->convertData();
+ 
+			$result=$this->load->view('member/data/updateDetail_data',$param,true);
+			$ar=json_decode($result); 
+			
+			if(isset($result['status'])&&$result['status']==true){
 				redirect(base_url('member/detail'));
 			}
 			else{ 
-					redirect(base_url('member/edit'));
+				redirect(base_url('member/edit'));
 			}
 		}
 		else{ 
@@ -65,18 +54,19 @@ class Member extends MY_Controller {
 			
 		if( $post['expire'] > date("Y-m-d H:i:s") && $post['expire'] < date("Y-m-d H:i:s",
 		strtotime("+2 hour"))){
-			$data['member']=$this->param['detail'];
-			//echo 'valid';
+			$data['member']=$this->param['detail']; 
 			$data['now']=date("Y-m-d H:i:s", strtotime("+2 hour"));
 			
-			$url=base_url("member/data");	 
+			$url=$this->forex->forexUrl('local'); 
 			$param=array(
 				'type'=>'updatePassword',
 				'raw'=>$data,
-				'recover'=>true
+				'recover'=>true,
+				'post'=> $this->input->post() 
 			);
-//-----------LAKUKAN POST KE SITE UTAMA			
-			$data['result']= _runApi($url,$param);
+			$param['member']= $this->param['detail'] ; 
+			$result=$this->load->view('member/data/updatePassword_data',$param,true);
+ 
 //-----------EMAIL
 			$param2=array( 
 				'username'=>	$this->param['detail']['username'],
@@ -87,12 +77,14 @@ class Member extends MY_Controller {
 			$param2['emailAdmin']=array();//$this->forex->emailAdmin;
 			
 			$this->load->view('member/email/emailPasswordChange_view',$param2);
-						
+			
+			
 		}else{ 
 			echo 'not valid';redirect(base_url("member/editPassword"));
 		}
-			redirect(base_url('member/logout'));//decho '<pre>';print_r($data);die();
+			redirect(base_url('member/logout'));//echo '<pre>';print_r($data);die();
 		}
+		
 		$this->param['title']='Edit Password'; 
 		$this->param['content']=array(
 			'passwordEdit', 'modal'
@@ -133,8 +125,7 @@ class Member extends MY_Controller {
 				'recover'=>true
 			);
 			
-//-----------LAKUKAN POST KE SITE UTAMA			
-			//$result= _runApi($url,$param);
+//-----------LAKUKAN POST KE SITE UTAMA
 			$params=array(
 			  'post'=>array(
 				'username'=>$detail['username']
@@ -354,6 +345,8 @@ class Member extends MY_Controller {
 			);
 			$this->session->set_userdata($array);
 			$this->param['detail']=$this->param['userlogin']=$detail;
+			$uniqid=url_title(trim($detail['id']).' '.$session['username'],'-');
+			$this->param['urlAffiliation']=base_url('register/'.$uniqid);
 		}
 		else{
 			logCreate('wrong password','error');
