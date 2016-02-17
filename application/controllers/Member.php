@@ -22,8 +22,8 @@ class Member extends MY_Controller {
  
 			$param['data']=$this->convertData();
  
-			$result=$this->load->view('member/data/updateDetail_data',$param,true);
-			$ar=json_decode($result); 
+			$ar=$this->load->view('member/data/updateDetail_data',$param,true);
+			$result=json_decode($ar,1); 
 			
 			if(isset($result['status'])&&$result['status']==true){
 				redirect(base_url('member/detail'));
