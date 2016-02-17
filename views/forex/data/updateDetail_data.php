@@ -5,15 +5,15 @@ ob_start();
  
 $data= $post['detail'] ;
 foreach($post as $name=>$value){
-//	if(isset($data[$name]))
+	if(isset($data[$name]))
 		$data[$name]=$value;
 }
 
-//$username=$post['username'];
+$username=$post['username'];
 unset($data['username']);
 unset($data['rand']);
 $responce['data']=json_encode($data);
-	$sql="update `{$this->account->tableAccountDetail}` set detail='".
+	$sql="update {$this->account->tableAccountDetail} set detail='".
 	addslashes(json_encode($data))."' where username like '$username'";
 	dbQuery($sql);
 $warning = ob_get_contents();
@@ -27,7 +27,6 @@ if($responce['error']===false){
 		'message'=>'Klik to continue',
 		'title'=>'Welcome',
 		'status'=>true,
-		'sql'=>$sql
 		
 	);
 	
@@ -43,7 +42,7 @@ else{
 }
  
  
-$responce['result']['raw']=$responce;
+//$responce['result']['raw']=$responce;
 //logCreate($responce);
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result']);

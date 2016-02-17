@@ -4,7 +4,7 @@ $config['app_code']=array(
 );
  
 
-$config['emailAdmin']=array('admin@secure.salmaforex.com');
+$config['emailAdmin']=array('admin@dev.salmaforex.com','admin@secure.salmaforex.com');
 
 if(defined('LOCAL')){
 	$config['urlForex']=array( 
@@ -17,7 +17,7 @@ if(defined('LOCAL')){
 	);
 	
 	$config['api_url']='localhost/forex/api';
-	$config['forexKey']='unknown';
+	$config['forexKey']='unknown99';
 }
 else{ 
 	$config['urlForex']=array( 
@@ -27,7 +27,7 @@ else{
 		'updateBalance'=>	'http://nfx.posismo.com/api/account/activeAccount'
 	);
 	
-	$config['api_url']='https://secure.salmaforex.com/forex/api';
+	$config['api_url']='http://secure.salmaforex.com/forex/api';
 	$config['forexKey']='SalmaFX1234567*';
 	
 }
@@ -37,4 +37,6 @@ if(defined('_DEV_')){
 	$config['api_url']='http://dev.salmaforex.com/forex/api';
 	$config['urlForex']['updateBalance']=
 	  'http://dev.salmaforex.com/forex/fake/updateBalance';
-}
+}else{} 
+
+$config['urlForex']['local']='localhost/index.php/forex/data';

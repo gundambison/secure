@@ -8,20 +8,17 @@ if ( ! function_exists('_runApi')){
 	$CI =& get_instance();
 	$dtAPI=array('url'=>$url);
 	if(count($parameter)){
-		$logTxt="func:_runApi| url:{$url}| param:".http_build_query($parameter,'','&');
-		//$dtAPI['parameter']=json_encode($parameter);
+		$logTxt="func:_runApi| url:{$url}| param:".http_build_query($parameter,'','&'); 
 	}
 	else{ 
-		$logTxt="func:_runApi| url:{$url}";
-		//$dtAPI['parameter']='-';
+		$logTxt="func:_runApi| url:{$url}"; 
 		$parameter['info']='no post';		
 	}
 	$parameter[]=array('server'=>$_SERVER);
 	$dtAPI['parameter']=json_encode($parameter);
 	logCreate( 'API: '.$logTxt); 
 		
-	if(count($parameter)){	
-		//logCreate( 'API: '.'param:'.print_r($parameter,1),'debug');		
+	if(count($parameter)){	 	
 		logCreate( 'API: '."url:{$url}| param:".print_r($parameter,1),'debug');
 	}else{ 
 		logCreate( 'API: param:'.print_r(parse_url($url),1),'debug');
@@ -69,5 +66,6 @@ if ( ! function_exists('_runApi')){
 		
 	    $CI->db->insert('mujur_api',$dtAPI);	
 		return $response;
+			
 	}
 } else{}

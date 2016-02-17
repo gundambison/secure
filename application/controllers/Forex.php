@@ -38,8 +38,21 @@ class Forex extends CI_Controller {
 		exit();
 	}
 	
-	public function register()
+	public function register($raw='0')
 	{
+		$this->load->library('session');
+		if($raw!='0'){
+			$ar=explode("-",$raw);
+			logCreate("agent ref:$raw id:{$ar[0]}","info");
+			$num=trim($ar[0]);
+			$this->session->set_flashdata('agent', $num);
+			redirect(base_url('forex/register'),1);
+			exit();
+		}
+		else{
+			$num=$info=$this->session->flashdata('agent');
+			$this->param['agent']=$num!=''?$num:'';
+		}
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
 		$this->param['content']=array(
 			'modal',
@@ -67,7 +80,7 @@ class Forex extends CI_Controller {
 			$respon['title']='NEW LIVE ACCOUNT (CREATED)';
 			$param['data']=$this->convertData();
 			$stat=$this->forex->saveData($param['data'],$message);
- 
+
 			if($stat!==false){
 				$respon['html']="Silakan Menunggu Konfirmasi dari Email anda";
 				$ok=1;
@@ -76,10 +89,38 @@ class Forex extends CI_Controller {
 				$param['module']='forex';
 				$param['task']='register';
 //-------------------TESTED				
-				$result=_runApi($url, $param);
+				$result=_runApi($url, $param); //test
 			}
 		}
 		
+		$open= $this->param['folder']."data/".$type."_data";
+		if(is_file('views/'.$open.".php")){
+			$param=array(
+				'post'=>$this->convertData(),
+				'get'=>$this->input->get(),
+				'post0'=>$this->input->post()
+			);
+			$raw=$this->load->view($open, $param, true);
+			$ar=json_decode($raw,true);
+			if(is_array($ar)){
+				$respon=$ar;				
+				logCreate($respon);
+				if(!isset($respon['status'])){ 
+					echo json_encode($respon);exit(); 
+				}
+				if($respon['status']==true){
+					$ok=1;
+				}
+				else{
+					$message=$respon['message'];
+				}
+			}
+			else{
+				logCreate("unknown :".htmlentities($raw));
+				$this->errorMessage('267',$raw,$message);
+			}
+		
+		}
 		if(!isset($ok)){
 			$this->errorMessage('266',$message);
 		}
@@ -90,8 +131,10 @@ class Forex extends CI_Controller {
 	private function convertData()
 	{
 	$post=array();
-		foreach($this->input->post('data') as $data){
-			$post[$data['name']]=$data['value'];
+		if( $this->input->post('data') ){
+			foreach($this->input->post('data') as $data){
+				$post[$data['name']]=$data['value'];
+			}
 		}
 		return $post;
 	}
@@ -105,8 +148,7 @@ class Forex extends CI_Controller {
 		if(array_search($appcode, $aAppcode)!==false){
 			$this->load->model('forex_model','modelku');
 			$param=$this->input->post('data');
-			$function= strtolower($module ).ucfirst(strtolower($task ));
-			//	$respon=$this->modelku->$function($param );
+			$function= strtolower($module ).ucfirst(strtolower($task )); 
 			$file='views/api/'.$function.'_data.php';
 			if(is_file($file)){
 				$res =$this->load->view('api/'.$function.'_data', $param,true);
@@ -168,15 +210,13 @@ class Forex extends CI_Controller {
 			$this->param['script']=$this->param['type']=$name;
 			
 			$this->param['openScript']=$jsScript;
-			logCreate('open script:'.$jsScript.'|data:'. $this->uri->segment(1)."_".$name  );
-			
+ 			
 			if(isset($this->param['content'])&&!is_array($this->param['content'])){
 				$this->param['load_view']= 
 					$this->param['folder'].$this->param['content'].'_view';
 				
 			}else{}
-			//$this->checkView( $this->param['load_view'] );
-			
+ 			
 		}else{ 
 			$controller=$this->uri->segment(1);
 			if($controller=='')$controller='forex';
