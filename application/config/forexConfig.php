@@ -17,7 +17,7 @@ if(defined('LOCAL')){
 	);
 	
 	$config['api_url']='localhost/forex/api';
-	$config['forexKey']='unknown';
+	$config['forexKey']='unknown99';
 }
 else{ 
 	$config['urlForex']=array( 
@@ -36,7 +36,7 @@ else{
 if(defined('_DEV_')){
 	$config['api_url']='http://dev.salmaforex.com/forex/api';
 	$config['urlForex']['updateBalance']=
-	  'http://secure.salmaforex.com/forex/fake/updateBalance';
+	  'http://dev.salmaforex.com/forex/fake/updateBalance';
 }else{} 
 
 $config['urlForex']['local']='localhost/index.php/forex/data';

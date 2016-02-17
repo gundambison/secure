@@ -29,7 +29,7 @@
 		</div>
 		</td>
 		</tr>
-		<?=bsInput( lang('forex_agent'),'agent','', lang('forex_inputsuggestion') );?>	
+		<?=bsInput( lang('forex_agent'),'agent',$agent, lang('forex_inputsuggestion') );?>	
 		</table>
 		</div>
 		<div class="frame-form-basic">

@@ -1,18 +1,18 @@
 <?php 
-
+defined('BASEPATH') OR exit('No direct script access allowed');
  class MY_Controller extends CI_Controller {
 	function __CONSTRUCT(){
 		parent::__construct(); 
 		$this->load->library('session');
 	}
+//---------Tidak diketahui kegunaannya?	
 	public function runApi(){
 		$url=$this->config->item('api_url');		
 		$param['app_code']='9912310';
 		$param['module']='forex';
 		$param['task']='register';
 		$result=_runApi($url, $param);
-		//echo 'run:'.$url.'<pre>';
-		//var_dump($result);
+ 
 	} 
 	
 	public function data()
@@ -49,7 +49,7 @@
 			}
 			else{
 				logCreate("unknown :".htmlentities($raw));
-				$this->errorMessage('267',$message);
+				$this->errorMessage('267',$raw,$message);
 			}
 		}
 		else{
@@ -68,7 +68,9 @@
 	$post=array();
 		if(is_array($this->input->post('data'))){
 			foreach($this->input->post('data') as $data){
-				$post[$data['name']]=$data['value'];
+				if(isset($data['name'])){
+					$post[$data['name']]=$data['value'];
+				}
 			}
 		}else{}
 		return $post;

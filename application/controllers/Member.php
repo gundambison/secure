@@ -378,6 +378,8 @@ class Member extends MY_Controller {
 			);
 			$this->session->set_userdata($array);
 			$this->param['detail']=$this->param['userlogin']=$detail;
+			$uniqid=url_title(trim($detail['id']).' '.$session['username'],'-');
+			$this->param['urlAffiliation']=base_url('register/'.$uniqid);
 		}
 		else{
 			logCreate('wrong password','error');

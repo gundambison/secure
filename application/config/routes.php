@@ -56,6 +56,7 @@ if(!defined('_DEV_')){
 else{ 
 	$route['default_controller'] = 'member/login';
 }
+$route['register/(:any)'] = 'forex/register/$1';
 $route['login'] = 'member/login';
 $route['forgot_password'] = 'member/forgot';
 $route['deposit-form'] = 'member/deposit';

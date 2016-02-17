@@ -98,6 +98,9 @@ class Forex extends CI_Controller {
 			if($status=='update'){
 				$res="0";
 			}
+			if($status=='updateBalance'){
+				$res="0";
+			}
 			$raw=array();
 			if(!isset($res)){ 
 				$res='1;11001724';
@@ -145,8 +148,21 @@ class Forex extends CI_Controller {
 		
 	}
 	
-	public function register()
+	public function register($raw='0')
 	{
+		$this->load->library('session');
+		if($raw!='0'){
+			$ar=explode("-",$raw);
+			logCreate("agent ref:$raw id:{$ar[0]}","info");
+			$num=trim($ar[0]);
+			$this->session->set_flashdata('agent', $num);
+			redirect(base_url('forex/register'),1);
+			exit();
+		}
+		else{
+			$num=$info=$this->session->flashdata('agent');
+			$this->param['agent']=$num!=''?$num:'';
+		}
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
 		$this->param['content']=array(
 			'modal',
@@ -316,7 +332,7 @@ class Forex extends CI_Controller {
 			$this->param['script']=$this->param['type']=$name;
 			
 			$this->param['openScript']=$jsScript;
-			logCreate('open script:'.$jsScript.'|data:'. $this->uri->segment(1)."_".$name  );
+//			logCreate('open script:'.$jsScript.'|data:'. $this->uri->segment(1)."_".$name  );
 			
 			if(isset($this->param['content'])&&!is_array($this->param['content'])){
 				$this->param['load_view']= 

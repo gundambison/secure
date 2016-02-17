@@ -26,6 +26,8 @@
 			<?=bsInput( lang('forex_country'),'citizen', $detail1['citizen'], lang('forex_inputsuggestion'),1 );?>
 			
 		</table>
+		Link Affiliation:<br/>
+		<?=anchor_popup($urlAffiliation,$urlAffiliation);?>
 			</div>
 	</div>
 </div>
