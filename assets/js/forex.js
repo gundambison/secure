@@ -171,6 +171,12 @@ function sendAjax(url,params){
 	
 	return request;
 }
-
+function checkEmail(target){
+	return true;
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(target.val());
+	
+}
 jQuery("#myModal").modal({show: false});	
 //jQuery( ".datepicker, #input_dob" ).datepicker({ dateFormat:'yy-mm-dd'});
+

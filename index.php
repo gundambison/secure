@@ -1,6 +1,8 @@
 <?php
 	date_default_timezone_set('Asia/Jakarta');
- 
+function logFile(){
+	return true;
+} 
 	define('ENVIRONMENT', 'production'); 
  
 switch (ENVIRONMENT)
@@ -39,7 +41,7 @@ switch (ENVIRONMENT)
 	$view_folder = 'views';
 
 
-b            n// --------------------------------------------------------------------
+// --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
 // --------------------------------------------------------------------
 
