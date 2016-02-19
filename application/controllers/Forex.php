@@ -11,6 +11,12 @@ data
 ***/
 class Forex extends CI_Controller {
 	public $param;	
+	public function registerApi(){
+		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
+		$res=json_decode($tmp, true);
+		print_r($res);
+	}
+	
 	public function error404(){
 		logCreate('error 404 link:'.site_url());
 		redirect(base_url('member'));
