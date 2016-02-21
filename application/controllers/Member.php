@@ -394,7 +394,7 @@ class Member extends MY_Controller {
 			
 		);
 		
-		$this->param['shortlink']=site_url();
+		$this->param['shortlink']=base_url();
 		$this->param['footerJS']=array(			
 			'js/envision-2.0.9.4/lib/js/common.js',
 			'js/envision-2.0.9.4/lib/js/modernizr-2.6.2-respond-1.1.0.min.js',
