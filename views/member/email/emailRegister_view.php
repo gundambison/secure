@@ -241,7 +241,7 @@ else{
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	$subject = "[SalmaForex] New Register";
+	$subject = "[SalmaForex] Register Baru";
 	$data=array( 'url'=>$to,
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2

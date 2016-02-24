@@ -173,7 +173,7 @@ foreach($this->forex->emailAdmin as $email){
 	$to[]=$email;
 }
 
-$subject = '[SalmaForex] Confirmation for Recovery Password';
+$subject = '[SalmaForex] Confirmation to Recover Password';
  
 $headers = "From: noreply@salmaforex.com\r\n";
 $headers .= "Reply-To: noreply@salmaforex.com\r\n"; 
