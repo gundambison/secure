@@ -44,9 +44,15 @@ class Forex extends CI_Controller {
 		exit();
 	}
 	
-	public function register($raw='0')
+	public function register($raw=false,$agent=false)
 	{
 		$this->load->library('session');
+		$this->param['statAccount']='member';
+		if($agent!=false){
+			$this->param['fullregis']=true;
+			$this->param['statAccount']='agent';
+		}
+		
 		if($raw!='0'){
 			$ar=explode("-",$raw);
 			logCreate("agent ref:$raw id:{$ar[0]}","info");
@@ -66,6 +72,11 @@ class Forex extends CI_Controller {
 		);
 		$this->showView(); 
 		
+	}
+	
+	public function agent()
+	{
+		$this->register(false,true);
 	}
 	
 	public function index()
@@ -301,4 +312,50 @@ class Forex extends CI_Controller {
 			logCreate($this->input->post(),'post');
 	}
 	
+	public function fake($status='none')
+	{ 
+		if(!defined('LOCAL')){
+			redirect(site_url());
+		}
+		if($this->input->get('privatekey')!=$this->forex->forexKey()){
+			$message="there is nothing to see but us tree";
+			$this->errorMessage('341',$message);
+		}
+		
+		if(defined('LOCAL')){
+			if($status=='none'){
+				$res=array(
+					'responsecode'=>0,
+					'accountid'=>'9'.date("Ymdhis"),
+					'masterpassword'=>date("his"),
+					'investorpassword'=>date("dmy"),
+				);//$res= "1;11001724"; 
+				 
+			}
+			
+			if($status=='activation'){
+				$res="1";
+			}
+			if($status=='update'){
+				$res="0";
+			}
+			if($status=='updateBalance'){
+				$res="0";
+			}
+			$raw=array();
+			if(!isset($res)){ 
+				$res='1;11001724';
+				//echo $raw."<br/>".base64_encode($raw);
+				//MTsxMTAwMTcyNA==
+				
+				$id=$this->forex->accountActivation(5,$raw);
+				$res.="id:$id";
+			}
+			$this->succesMessage($res);
+		}else{ 
+			echo "no respond";
+		}
+	}
+	
+	 
 }

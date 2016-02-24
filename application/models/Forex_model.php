@@ -139,7 +139,9 @@ SEMUA dipindah ke model ACCOUNT
 				dbQuery($sql,1);
 			}
 		}
-
+		logCreate("register id:$id |".print_r($detail,1));
+		if(!isset($detail['detail']['statusMember']))
+			$detail['detail']['statusMember']='MEMBER';
 		$dt=array(
 			'reg_id'=>$id,
 			'username'=>$detail['username'],
@@ -147,6 +149,7 @@ SEMUA dipindah ke model ACCOUNT
 			'masterpassword'=>trim($raw['masterpassword']),
 			'accountid'=>$raw['accountid'],
 			'email'=>$detail['email'],
+			'type'=>strtoupper($detail['detail']['statusMember']),
 			//'raw'=>$raw,
 			//'activation'=>base64_encode($raw),
 			'created'=>date("Y-m-d")
@@ -415,6 +418,7 @@ REGISTER
 		dbQuery($sql);
 		$message='Your account successfull registered';
 		return true;
+		
 	}
 //=====================================
 		public function __construct()
@@ -452,8 +456,13 @@ REGISTER
 				$sql="ALTER TABLE `{$this->tableAccount}` CHANGE `username` `username` VARCHAR(50) NOT NULL;";
 				dbQuery($sql,1);				
 			}
-			if(!isset($dt['accountid'])){
-				echo '<pre>';var_dump($dt);
+			if(!isset($dt['type'])){ 
+				$sql="ALTER TABLE `{$this->tableAccount}` ADD `type` varchar(20) 
+				NOT NULL 
+				DEFAULT 'MEMBER';";
+				dbQuery($sql,1);
+			}
+			if(!isset($dt['accountid'])){ 
 				$sql="ALTER TABLE `{$this->tableAccount}` ADD `accountid` bigint NOT NULL DEFAULT '1';";
 				dbQuery($sql,1);
 			}

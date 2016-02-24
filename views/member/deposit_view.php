@@ -31,7 +31,7 @@ echo bsInput('Nama Bank','bank', '' ,'BCA, Mandiri, BNI, BII, etc' );
 echo bsInput('No Rekening','norek', '' ,'999 999 999 9' );
 echo bsInput('Nama Pemilik Rekening','namerek', trim($name) ,'Please Input Valid Name' );
 
-echo bsInput('Jumlah Order ($)','orderDeposit', 0 ,'Minimal $10' );
+echo bsInput('Jumlah Order ($)','orderDeposit', 10 ,'Minimal $10' );
 echo bsInput('Rate ($)','orderDeposit', 
 '<div id="input_rate">0</div>' ,'Minimal $10',true );
 echo bsInput('Jumlah Transfer (Rp)','order1', '' ,'Nominal Hanya Estimasi Saja' );

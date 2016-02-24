@@ -30,7 +30,7 @@ if(isset($_POST['status'])){
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
 		$respon['server']=$tmp= _runApi($url );
-		echo $url;
+		//echo $url;
 		if($tmp['data']===0){
 			$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
 			$sql="update mujur_flowlog set status=1 where id=$id";
@@ -39,16 +39,19 @@ if(isset($_POST['status'])){
 		}
 		else{ 
 			logCreate('widtdrawal Canceled');
+			
 		}
 		
-	}else{
+	}
+	else{
 		$sql="update mujur_flowlog set status=2 where id=$id";
 		dbQuery($sql,1);
 		$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
 		logCreate('widtdrawal disapprove');
 	}
 	
-}else{}	
+}
+else{}	
  
 $warning = ob_get_contents();
 ob_end_clean();
