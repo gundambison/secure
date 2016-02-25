@@ -24,23 +24,50 @@ if(isset($_POST['status'])){
 		}
 		$vol=(int)$dt['raw']['orderWidtdrawal'];		
 		$param['accountid']		=	$dt['raw']['accountid'];
-		$param['volume']		=	"-".$vol; 			 
+		$param['volume']		=	"-0"; 			 
 		$param['privatekey']	=	$this->forex->forexKey();
 				
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
-		$respon['server']=$tmp= _runApi($url );
+		$respon['server'][]=$tmp= _runApi($url );
 		//echo $url;
  
-		if((int)$tmp['responsecode']===0){ 
-			$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
-			$sql="update mujur_flowlog set status=1 where id=$id";
+		if((int)$tmp['responsecode']===2){
+			$url0=$this->forex->forexUrl('update');	
+			$param2=array();
+			$param2['accountid']=$dt['raw']['accountid'];
+			$param2['allowlogin']	= 1;
+			$param2['allowtrading']	= 1;
+			$param2['privatekey']	=$this->forex->forexKey();
+			$url0.="?".http_build_query($param2);
+			$respon['server'][]=$tmp= _runApi($url0 );
+			$respon['server'][]=$tmp= _runApi($url );
+		}
+ 
+		if((int)$tmp['balance'] < $vol ){
+			$sql="update mujur_flowlog set status=2 where id=$id";
+ 
 			dbQuery($sql,1);
-			logCreate('widtdrawal Approve');
+			$dt['statusConfirm']="Disapprove";
+			$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
+			logCreate('widtdrawal disapprove');
 		}
 		else{ 
-			logCreate('widtdrawal Canceled');
+			$param['volume']		=	"-".$vol; 
+			$url=$this->forex->forexUrl('updateBalance');
+			$url.="?".http_build_query($param);
+			$respon['server'][]=$tmp= _runApi($url );
 			
+			if((int)$tmp['responsecode']===0){ 
+				$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
+				$sql="update mujur_flowlog set status=1 where id=$id";
+				dbQuery($sql,1);
+				logCreate('widtdrawal Approve');
+			}
+			else{ 
+				logCreate('widtdrawal Canceled');
+				
+			}
 		}
 		
 	}
