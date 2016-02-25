@@ -26,7 +26,7 @@ if(isset($_POST['status'])){
 		$param['privatekey']	=	$this->forex->forexKey();
 		
 		$url=$this->forex->forexUrl('updateBalance');
-		$url.="?".http_build_query($param)."$volume={$vol}+";
+		$url.="?".http_build_query($param)."&volume={$vol}+";
 		$respon['server']=$tmp= _runApi($url );
 		if($tmp['data']===0){
 			logCreate('deposit Approve');
