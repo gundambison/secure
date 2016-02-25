@@ -74,6 +74,10 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_12"><strong>: Rp.
 					<?=number_format($raw['order1'],0);?></strong></td>
                   </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_11"><strong>Status</strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_12"><strong><?=$statusConfirm;?></strong></td>
+                  </tr>
                   <!--tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_13"><strong>Rate</strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_14"><strong>: Rp. 
