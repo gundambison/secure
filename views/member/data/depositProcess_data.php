@@ -22,11 +22,11 @@ if(isset($_POST['status'])){
 		}
 		$vol=(int)$dt['raw']['orderDeposit'];		
 		$param['accountid']		=	$dt['raw']['accountid'];
-		$param['volume']		=	$vol; 			 
+		//$param['volume']		=	$vol; 			 
 		$param['privatekey']	=	$this->forex->forexKey();
 		
 		$url=$this->forex->forexUrl('updateBalance');
-		$url.="?".http_build_query($param);
+		$url.="?".http_build_query($param)."$volume={$vol}+";
 		$respon['server']=$tmp= _runApi($url );
 		if($tmp['data']===0){
 			logCreate('deposit Approve');
