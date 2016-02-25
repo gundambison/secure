@@ -35,7 +35,7 @@ if(isset($_POST['status'])){
 		if((int)$tmp['responsecode']===2){
 			$url0=$this->forex->forexUrl('update');	
 			$param2=array();
-			$param2['accountid']=$member['accountid']; 
+			$param2['accountid']=$dt['raw']['accountid'];
 			$param2['allowlogin']	= 1;
 			$param2['allowtrading']	= 1;
 			$param2['privatekey']	=$this->forex->forexKey();
