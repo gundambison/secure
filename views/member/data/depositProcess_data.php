@@ -26,9 +26,9 @@ if(isset($_POST['status'])){
 		$param['privatekey']	=	$this->forex->forexKey();
 		
 		$url=$this->forex->forexUrl('updateBalance');
-		$url.="?".http_build_query($param)."$volume={$vol}+";
+		$url.="?".http_build_query($param)."&volume={$vol}+";
 		$respon['server']=$tmp= _runApi($url );
-		if($tmp['data']===0){
+		if((int)$tmp['responsecode']===0){
 			logCreate('deposit Approve');
 			$this->load->view('member/email/emailDepositStatus_view',$dt);
 			$sql="update mujur_flowlog set status=1 where id=$id";

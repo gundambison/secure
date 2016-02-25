@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-$showForm=isset($fullregis)?true:false;
+$showForm=!isset($fullregis)?true:false;
 $defInput='';
 if($showForm==false) $defInput="...";
-$showForm2=isset($fullregis)?false:true;
+$showForm2=true;//!isset($fullregis)?false:true;
 ?>
 <div class='container'>
     <div style='margin-top:30px;'>
