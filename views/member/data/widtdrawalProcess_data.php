@@ -31,7 +31,7 @@ if(isset($_POST['status'])){
 		$url.="?".http_build_query($param);
 		$respon['server']=$tmp= _runApi($url );
 		//echo $url;
-		if($tmp['responsecode']===0){
+		if((int)$tmp['responsecode']===0){
 			$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
 			$sql="update mujur_flowlog set status=1 where id=$id";
 			dbQuery($sql,1);
