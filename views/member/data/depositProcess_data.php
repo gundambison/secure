@@ -22,7 +22,7 @@ if(isset($_POST['status'])){
 		}
 		$vol=(int)$dt['raw']['orderDeposit'];		
 		$param['accountid']		=	$dt['raw']['accountid'];
-		$param['volume']		=	$vol."+"; 			 
+		$param['volume']		=	$vol; 			 
 		$param['privatekey']	=	$this->forex->forexKey();
 		
 		$url=$this->forex->forexUrl('updateBalance');
