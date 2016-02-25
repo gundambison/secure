@@ -43,9 +43,10 @@ if(isset($_POST['status'])){
 			$respon['server'][]=$tmp= _runApi($url0 );
 			$respon['server'][]=$tmp= _runApi($url );
 		}
-		
+ 
 		if((int)$tmp['balance'] < $vol ){
 			$sql="update mujur_flowlog set status=2 where id=$id";
+ 
 			dbQuery($sql,1);
 			$dt['statusConfirm']="Disapprove";
 			$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
