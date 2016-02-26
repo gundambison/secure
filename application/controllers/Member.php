@@ -198,8 +198,10 @@ class Member extends MY_Controller {
 		$this->param['content']=array();
 		if($status=='done'){
 			$info=$this->session->flashdata('info');
-			if($info==1)
+			if($info==1){
 				$this->param['content'][]='done' ;
+				
+			}
 		}
 		
 		if($this->input->post('orderWidtdrawal')){

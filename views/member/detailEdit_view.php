@@ -9,8 +9,9 @@
 <?php $detail1=$detail['detail'];  
 ?>
 		<table class='formBasic' border="0">
-		<?=bsInput( lang('forex_firstname'),'firstname',$detail1['firstname'], lang('forex_inputsuggestion'));?>
-		<?=bsInput( lang('forex_lastname'),'lastname',$detail1['lastname'], lang('forex_inputsuggestion')  );?> 
+		<?=bsInput( lang('forex_firstname'),'firstname',$detail1['firstname'], lang('forex_inputsuggestion'),true);?>
+		<?=bsInput( lang('forex_lastname'),'lastname',$detail1['lastname'], 
+		lang('forex_inputsuggestion'), true  );?> 
 		<?=bsInput( lang('forex_phone'),'phone',$detail1['phone'], lang('forex_inputsuggestion2')  );?>
 			<?=bsInput( lang('forex_address'),'address',$detail1['address'], lang('forex_inputsuggestion2')  );?>
 			<?=bsInput( lang('forex_state'),'state',$detail1['state'], lang('forex_inputsuggestion2')  );?>

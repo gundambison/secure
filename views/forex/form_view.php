@@ -2,14 +2,14 @@
 $showForm=!isset($fullregis)?true:false;
 $defInput='';
 if($showForm==false) $defInput="...";
-$showForm2=true;//!isset($fullregis)?false:true;
+$showAgent=isset($statAccount)&&$statAccount=="agent"?false:true;
 ?>
 <div class='container'>
     <div style='margin-top:30px;'>
         <form novalidate="novalidate" name="frm" id0="frm" id="frmLiveAccount" method="POST"  class="form-horizontal" role="form">
 		<input type='hidden' name='type' value='request' />
 			<div class="frame-form-basic">
-			<h2>Personal Data</h2>
+			<h2><?=strtoupper($formTitle);?></h2>
 			<table class='formBasic' border="0">
 			<?=bsInput( lang('forex_firstname'),'firstname','', lang('forex_inputsuggestion') );?> 
 			<?=bsInput( lang('forex_lastname'),'lastname','', lang('forex_inputsuggestion') );?> 
@@ -38,7 +38,7 @@ $showForm2=true;//!isset($fullregis)?false:true;
 				</td>
 		</tr>
  	
-		<?=bsInput( lang('forex_agent'),'agent',$agent, lang('forex_inputsuggestion'),false, $showForm2  );?>	
+		<?=bsInput( lang('forex_agent'),'agent',$agent, lang('forex_inputsuggestion'),false, $showAgent  );?>	
 		</table>
 		</div>
 		<div class="frame-form-basic">

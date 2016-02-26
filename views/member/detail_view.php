@@ -1,12 +1,14 @@
 <?php 
 ///detail 
+$rand_url=url_title("{$detail['accountid']}-{$detail['detail']['firstname']}","-");
+	$urlAffiliation=base_url("register/{$rand_url}");
 ?>
 <div class='container'>
     <div style='margin-top:30px;'>
 			<div class="frame-form-basic">
 			<h2>Detail</h2>
 <?php $detail1=$detail['detail']; 
-//echo '<pre>'.print_r($detail,1); 
+ //echo '<pre>'.print_r($detail,1); 
 ?>
 		<a href='<?=base_url('member/edit');?>'>
 		<input type='button' value='Edit Detail' />
@@ -26,8 +28,12 @@
 			<?=bsInput( lang('forex_country'),'citizen', $detail1['citizen'], lang('forex_inputsuggestion'),1 );?>
 			
 		</table>
+<?php 
+	if($detail['accounttype']!='MEMBER'){?>
 		Link Affiliation:<br/>
-		<?=anchor_popup($urlAffiliation,$urlAffiliation);?>
+		<?=anchor_popup($urlAffiliation,$urlAffiliation);
+	}else{}	
+		?>
 			</div>
 	</div>
 </div>

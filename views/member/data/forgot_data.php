@@ -9,15 +9,15 @@ $responce['detail']=$detail=$this->account->detail($post['email'],'email');
 		$raw=$this->load->view('member/email/emailRecover_view',$this->param,true);
 	}
 	else{ 
-		$responce['error']="Email Not Registered ";
+		$responce['error']="The Email Not Found in Our Database .  Please check your input.";
 	}
 	
 if($responce['error']===false){
 	$responce['result']=array(
 		'raw'=>$raw,
 		'detail'=>$detail,
-		'message'=>'Check Your Email',
-		'title'=>'Success',
+		'message'=>'You Will receive an e-mail with instruction about how to recover your password in few minutes.',
+		'title'=>'Your Request has been sent Successfully',
 		'status'=>true
 	);
 	

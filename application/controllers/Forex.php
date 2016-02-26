@@ -66,6 +66,8 @@ class Forex extends CI_Controller {
 			$this->param['agent']=$num!=''?$num:'';
 		}
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		if(!isset($this->param['formTitle'])) 
+			$this->param['formTitle']=$this->param['title'];
 		$this->param['content']=array(
 			'modal',
 			'form', 
@@ -76,6 +78,7 @@ class Forex extends CI_Controller {
 	
 	public function agent()
 	{
+		$this->param['formTitle']="Open Patner Account";
 		$this->register(false,true);
 	}
 	
@@ -94,14 +97,25 @@ class Forex extends CI_Controller {
 		);
 		$type=$this->input->post('type','unknown'); 
 		$message='unknown data type';
+		$raw=$this->convertData(); 
+		
 		if($type=='request'){
 			$respon['title']='NEW LIVE ACCOUNT (CREATED)';
+			if($raw['statusMember']=='AGENT'){
+				$respon['title']='NEW PATNER ACCOUNT (CREATED)';
+			}
 			$param['data']=$this->convertData();
 			$stat=$this->forex->saveData($param['data'],$message);
 
 			if($stat!==false){
-				$respon['html']="Silakan Menunggu Konfirmasi dari Email anda";
+				
+				$respon['html']="Your Opening Live Account Was Sent Successfully. Please Check your Email in few minutes. Thanks.<br/>
+				Pembukaan Akun Tranding Anda telah Sukses. Silahkan Cek Kembali Email Anda beberapa saat lagi";
 				$ok=1;
+				if($raw['statusMember']=='AGENT'){
+					$respon['html']='Your Opening Patner Account Was Sent Successfully. Please Check your Email in few minutes. Thanks.<br/>
+				Pembukaan Akun Patner Anda telah Sukses. Silahkan Cek Kembali Email Anda beberapa saat lagi';
+				}
 				$url=$this->config->item('api_url');		
 				$param['app_code']=$this->config->item('app_code')[0];
 				$param['module']='forex';
