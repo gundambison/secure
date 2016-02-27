@@ -218,7 +218,7 @@ SEMUA dipindah ke model ACCOUNT
 			'email'=>$detail['email']
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
-			
+		$param2['accountType']=$detail['detail']['statusMember'];	
 		$this->load->view('member/email/emailRegister_view',$param2);
 		
 	}

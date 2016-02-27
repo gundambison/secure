@@ -358,9 +358,7 @@ class Forex extends CI_Controller {
 			}
 			$raw=array();
 			if(!isset($res)){ 
-				$res='1;11001724';
-				//echo $raw."<br/>".base64_encode($raw);
-				//MTsxMTAwMTcyNA==
+				$res='1;11001724'; 
 				
 				$id=$this->forex->accountActivation(5,$raw);
 				$res.="id:$id";

@@ -1,17 +1,29 @@
 try{
 	target0=jQuery("#input_orderDeposit");
-	target0.val(10);
+//	target0.val(10);
 	orderDeposit();
+	jQuery("#input_orderDeposit,#input_order1").keyup(function(){
+		orderDeposit();
+	});
+	jQuery("#input_orderDeposit,#input_order1").blur(function(){
+		orderDeposit();
+	});
 }
 catch(err){
-	//console.log(err);
-	//console.log('not Deposit');
+	console.log(err);
+	console.log('not Deposit');
 }
 
 try{
 	target0=jQuery("#input_orderWidtdrawal");
 	target0.val(10);
 	orderWidtdrawal();
+	jQuery("#input_orderWidtdrawal,#input_order1").keyup(function(){
+		orderWidtdrawal();
+	});
+	jQuery("#input_orderWidtdrawal,#input_order1").blur(function(){
+		orderWidtdrawal();
+	});
 }
 catch(err){
 	//console.log(err);
@@ -21,21 +33,7 @@ catch(err){
 function clearModal(){
 	jQuery(".modal-title, .modal-body").empty();
 }
-
-jQuery("#input_orderDeposit,#input_order1").keyup(function(){
-	orderDeposit();
-});
-jQuery("#input_orderDeposit,#input_order1").blur(function(){
-	orderDeposit();
-});
-
-jQuery("#input_orderWidtdrawal,#input_order1").keyup(function(){
-	orderWidtdrawal();
-});
-jQuery("#input_orderWidtdrawal,#input_order1").blur(function(){
-	orderWidtdrawal();
-});
-
+ 
 function orderWidtdrawal(){
 	target0=jQuery("#input_orderWidtdrawal");
 	dolar=0;
@@ -49,10 +47,12 @@ function orderWidtdrawal(){
 
 function orderDeposit(){
 	target0=jQuery("#input_orderDeposit");
+	console.log(target0.val());
 	dolar=0;
 	jQuery.post(urlDeposit,function(dolar){
+		console.log(dolar );
 		target=jQuery("#input_order1");
-		target.val( target0.val() * dolar);
+		target.val( parseInt(target0.val()) * dolar);
 		target=jQuery("#input_rate");
 		target.html(  "Rp "+ dolar);
 	});
@@ -97,7 +97,12 @@ function createLiveUser(){
 			
 		});
 }
-
+function checkEmail(target){
+	return true;
+   // var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+   // return re.test(target.val());
+	
+}
 function checkInput(){
 	stat=1
 	//stat=checkMoreThan(jQuery('#input_name'),2);
@@ -126,7 +131,7 @@ function checkInput(){
 }
  
 function checkMoreThan(target, length){
-	//console.log(target);
+	console.log(target);
 	if(target.val().length<=length){
 		//console.log('error :'+target.attr('name'));
 		//console.log('error :'+target.val().length);
@@ -171,12 +176,6 @@ function sendAjax(url,params){
 	
 	return request;
 }
-function checkEmail(target){
-	return true;
-    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    return re.test(target.val());
-	
-}
+
 jQuery("#myModal").modal({show: false});	
 //jQuery( ".datepicker, #input_dob" ).datepicker({ dateFormat:'yy-mm-dd'});
-

@@ -49,7 +49,7 @@ if(isset($_POST['status'])){
  
 			dbQuery($sql,1);
 			$dt['statusConfirm']="Disapprove";
-			$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
+			$this->load->view('member/email/emailWidtdrawalDisapprove_view',$dt);
 			logCreate('widtdrawal disapprove');
 		}
 		else{ 
@@ -59,7 +59,7 @@ if(isset($_POST['status'])){
 			$respon['server'][]=$tmp= _runApi($url );
 			
 			if((int)$tmp['responsecode']===0){ 
-				$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
+				$this->load->view('member/email/emailWidtdrawalApprove_view',$dt);
 				$sql="update mujur_flowlog set status=1 where id=$id";
 				dbQuery($sql,1);
 				logCreate('widtdrawal Approve');
@@ -74,7 +74,7 @@ if(isset($_POST['status'])){
 	else{
 		$sql="update mujur_flowlog set status=2 where id=$id";
 		dbQuery($sql,1);
-		$this->load->view('member/email/emailWidtdrawalStatus_view',$dt);
+		$this->load->view('member/email/emailWidtdrawalDisapprove_view',$dt);
 		logCreate('widtdrawal disapprove');
 	}
 	
