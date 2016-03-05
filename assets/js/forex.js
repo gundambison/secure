@@ -79,6 +79,7 @@ function createLiveUser(){
 		if(result.status==true){ 
 			jQuery(".modal-title").html(result.data.title);
 			jQuery(".modal-body").html(result.data.html);
+//			window.open(url,'_blank');
 		}else{
 			jQuery(".modal-title").html("WARNING");
 			jQuery(".modal-body").html(result.message);

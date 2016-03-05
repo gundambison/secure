@@ -54,5 +54,23 @@ if(isset($footerJS)){
 <script type="text/javascript">try{Typekit.load({
      active: function() {}
 });}catch(e){}</script>
+<?php 
+if(!defined('LOCAL')){?>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5652d61400c5a4a1546218c3/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+<?php 
+}
+?>
 </body>
 </html>
