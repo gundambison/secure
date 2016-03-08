@@ -21,14 +21,14 @@ if(defined('LOCAL')){
 }
 else{ 
 	$config['urlForex']=array( 
-		'default'=>			'http://nfx.posismo.com/api/account/openAccount' ,
-		'register'=>		'http://nfx.posismo.com/rest-api/salma/register',
-		'update'=>			'http://nfx.posismo.com/rest-api/salma/update-account' ,
-		'updateBalance'=>	'http://nfx.posismo.com/rest-api/salma/update-balance'
+		'default'=>			'https://www.natureforex.com/rest-api/salma' ,
+		'register'=>		'https://www.natureforex.com/rest-api/salma/register',
+		'update'=>			'https://www.natureforex.com/rest-api/salma/update-account' ,
+		'updateBalance'=>	'https://www.natureforex.com/rest-api/salma/update-balance'
 	);
 	
 	$config['api_url']='http://secure.salmaforex.com/forex/api';
-	$config['forexKey']='SalmaFX1234567*';
+	$config['forexKey']='SalmaFX123!@#';
 	
 }
 
