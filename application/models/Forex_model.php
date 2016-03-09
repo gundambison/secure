@@ -144,7 +144,7 @@ SEMUA dipindah ke model ACCOUNT
 			$detail['detail']['statusMember']='MEMBER';
 		$dt=array(
 			'reg_id'=>$id,
-			'username'=>$detail['username'],
+			'username'=>$raw['accountid'],
 			'investorpassword'=>trim($raw['investorpassword']),
 			'masterpassword'=>trim($raw['masterpassword']),
 			'accountid'=>$raw['accountid'],
@@ -167,7 +167,7 @@ SEMUA dipindah ke model ACCOUNT
 //===========Account Detail  
 		$dt=array(
 			'id'=>$accid,
-			'username'=>$detail['username'],
+			'username'=>$raw['accountid'],
 			'detail'=>json_encode($detail['detail']),
 			
 		);

@@ -193,7 +193,16 @@ public $demo=1;
 		$sql="select a.* from `{$this->tableAccount}` a  		
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql); 
+		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
+			$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
+			dbQuery($sql);
+			$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
+			dbQuery($sql);
 			
+			$sql="select a.* from `{$this->tableAccount}` a  		
+			where `{$field}` like '$id'";
+			$res=dbFetchOne($sql); 
+		}
 		$sql="select 
 		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid,
 		a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
