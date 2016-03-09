@@ -160,10 +160,13 @@ SEMUA dipindah ke model ACCOUNT
 		if($dt2['max'] > (int)$accid){
 			$accid=$dt2['max'];
 		}
-		$dt['id']=$accid+1;
+		$dt['id']=$id=$accid+1;
 		
 		$sql=$this->db->insert_string($this->tableAccount,$dt);
 		dbQuery($sql,1);
+		$dataRaw = $this->accountDetail($raw['accountid'],'accountid');
+		$dataRaw = $this->accountDetail($id);
+		
 //===========Account Detail  
 		$dt=array(
 			'id'=>$accid,
@@ -184,6 +187,7 @@ SEMUA dipindah ke model ACCOUNT
 		$where = "reg_id=$id";
 		$sql = $this->db->update_string($this->tableRegis, $data, $where);
 		dbQuery($sql,1);
+		//===========UPDATE ACCOUNT
 		//===============Change Password===============
 		$sql="select password from {$this->tablePassword} order by rand() limit 2";
 		$data=dbFetch($sql);
