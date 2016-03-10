@@ -160,12 +160,12 @@ SEMUA dipindah ke model ACCOUNT
 		if($dt2['max'] > (int)$accid){
 			$accid=$dt2['max'];
 		}
-		$dt['id']=$id=$accid+1;
+		$dt['id']=$acc_id=$accid+1;
 		
 		$sql=$this->db->insert_string($this->tableAccount,$dt);
 		dbQuery($sql,1);
 		$dataRaw = $this->accountDetail($raw['accountid'],'accountid');
-		$dataRaw = $this->accountDetail($id);
+		$dataRaw = $this->accountDetail($acc_id);
 		
 //===========Account Detail  
 		$dt=array(
