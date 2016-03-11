@@ -232,7 +232,7 @@ SEMUA dipindah ke model ACCOUNT
 		dbQuery($sql,1);
 		
 		$param2=array( 
-			'username'=>$detail['username'],
+			'username'=>$raw['accountid'],
 			'masterpassword'=>$param['masterpassword'],
 			'investorpassword'=>$param['investorpassword'],
 			'email'=>$detail['email']
