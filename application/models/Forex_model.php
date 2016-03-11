@@ -133,18 +133,22 @@ SEMUA dipindah ke model ACCOUNT
 		$sql="select count(id) c from {$this->tableAccount} where username like '{$detail['username']}'";
 			$row=dbFetchOne($sql);
 			if($row['c']!=0){
+				logCreate("hapus username : {$detail['username']}");
 				$sql="delete from {$this->tableAccount} where username like '{$detail['username']}'";
+				dbQuery($sql,1);
+				$sql="delete from {$this->tableAccount} where reg_id = '{$id}'";
 				dbQuery($sql,1);
 				$sql="delete from {$this->tableAccountDetail} where username like '{$detail['username']}'";
 				dbQuery($sql,1);
 			}
 		}
-		logCreate("register id:$id |".print_r($detail,1));
+		logCreate("register id:$id |detail:".print_r($detail,1));
 		if(!isset($detail['detail']['statusMember']))
 			$detail['detail']['statusMember']='MEMBER';
+		logCreate("register id:$id |raw:".print_r($raw,1));
 		$dt=array(
 			'reg_id'=>$id,
-			'username'=>$raw['accountid'],
+			'username'=>$detail['username'],
 			'investorpassword'=>trim($raw['investorpassword']),
 			'masterpassword'=>trim($raw['masterpassword']),
 			'accountid'=>$raw['accountid'],
@@ -164,44 +168,56 @@ SEMUA dipindah ke model ACCOUNT
 		
 		$sql=$this->db->insert_string($this->tableAccount,$dt);
 		dbQuery($sql,1);
-		$dataRaw = $this->accountDetail($raw['accountid'],'accountid');
-		$dataRaw = $this->accountDetail($acc_id);
+		$dataRaw = $this->account->detail($raw['accountid'],'accountid');
+		$dataRaw = $this->account->detail($acc_id);
 		
 //===========Account Detail  
 		$dt=array(
 			'id'=>$accid,
-			'username'=>$raw['accountid'],
+			'username'=>$dataRaw['accountid'],
 			'detail'=>json_encode($detail['detail']),
 			
 		);
-		$sql=$this->db->insert_string($this->tableAccountDetail,$dt);
+		$sql=$this->db->insert_string($this->tableAccountDetail, $dt);
 		
-		$sql="select id from {$this->tableActivation} where userid=$id";
+		$sql="select id from {$this->tableActivation} where userid=$id and status!=1";
 		$data=dbFetch($sql);
+		logCreate('Close Old Activation:'.json_encode($data) );
 		foreach($data as $row){
 			$idActive=$row['id'];
 			$this->activationUpdate($idActive, 1); //close activation
 		}
-		
+		logCreate('Close Activation');
 		$data = array('reg_status' => 0);
 		$where = "reg_id=$id";
 		$sql = $this->db->update_string($this->tableRegis, $data, $where);
 		dbQuery($sql,1);
 		//===========UPDATE ACCOUNT
-		//===============Change Password===============
+		//===============Change Password===============		
 		$sql="select password from {$this->tablePassword} order by rand() limit 2";
 		$data=dbFetch($sql);
+		logCreate('change password :'.json_encode($data));
 		$invPass=$data[0]['password'];
 		$masterPass=$data[1]['password'];
 		
 		$param=array( );
 		$param['privatekey']	=$this->forex->forexKey();
-		$param['accountid']=$raw['accountid'];
+		$param['accountid']=(int)$raw['accountid'];
 		$param['masterpassword']=$masterPass.($raw['accountid']%100000 +19939);
-		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919) ; 
+		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919);
+		$param['allowlogin']=1;
+		
+		$param['username']=isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?url_title("{$detail['detail']['firstname']} {$detail['detail']['lastname']}",'underscore',FALSE):"";
+		
+		$param['address']=isset($detail['detail']['address'])?$detail['detail']['address']:"";
+		$param['country']=isset($detail['detail']['country']['name'])?$detail['detail']['country']['name']:"";
+		$param['zipcode']=isset($detail['detail']['zipcode'])?$detail['detail']['zipcode']:"";
+		$param['phone']=  isset($detail['detail']['phone'])?$detail['detail']['phone']:"";
+		$param['email']=  isset($detail['email'])?$detail['email']:"";
 		
 		$url=$this->forex->forexUrl('update');
 		$url.="?".http_build_query($param);
+		logCreate("update password param:".print_r($param,1)."|url:$url");
 		$arr['param']=$param;
 		$arr['url']=$url;
 		$result0= _runApi($url );
@@ -210,7 +226,7 @@ SEMUA dipindah ke model ACCOUNT
 			'investorpassword' => md5( $param['investorpassword'] ),
 			'masterpassword'=>md5( $param['masterpassword'] )
 		);
-		$where = "reg_id=$id";
+		$where = "accountid='{$raw['accountid']}'";
 		
 		$sql = $this->db->update_string($this->tableAccount, $data, $where);
 		dbQuery($sql,1);
@@ -229,17 +245,21 @@ SEMUA dipindah ke model ACCOUNT
 
 	function accountDetail($id,$field='id'){
 		//$id=addslashes($id);
+		logCreate("accountDetail id:$id|field:$field");
+		
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
 		$sql="select count(id) c from `{$this->tableAccount}`  where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
-			return $sql.print_r($res,1) ;
+			logCreate("accountDetail id:$id|field:$field | not found");
+			return false; 
+			//$sql.print_r($res,1) ;
 		}
 		
 		$sql="select a.* from {$this->tableAccount} a  		
 		where `{$field}` like '$id'";
-		$res=dbFetchOne($sql);
+		$res=dbFetchOne($sql);		
 		$this->accountDetailRepair($res);
 			
 		$sql="select a.*,ad.detail raw,adm.adm_type type from {$this->tableAccount} a 
@@ -270,6 +290,7 @@ SEMUA dipindah ke model ACCOUNT
 		}
 		
 		if($data['reg_id']!=0){
+			logCreate("account detail id:$id|field:$field create Detail");
 			$reg=$this->regisDetail($data['reg_id']);
 			$detail=json_encode($reg['detail']);
 			$sql="insert into {$this->tableAccountDetail}(username,detail) values('$username','$detail')";
@@ -281,7 +302,7 @@ SEMUA dipindah ke model ACCOUNT
 ACTIVATION 
 ***/	
 	function accountActivation($id,$raw0){
-		logCreate('create :'.$id." raw:".print_r($raw0,1));
+		logCreate('create activation :'.$id." raw:".print_r($raw0,1));
 		
 		$sql="select reg_id id from {$this->tableRegis} where reg_id like '$id'";
 		$row= $this->db->query($sql)->row_array();

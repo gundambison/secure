@@ -180,6 +180,7 @@ public $demo=1;
 	}
 
 	function detail($id,$field='id'){
+	logCreate("account detail id:$id|field:$field");	
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
 		$sql="select count(id) c 
@@ -187,6 +188,7 @@ public $demo=1;
 		where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
+			logCreate("account detail id:$id|field:$field|NOT FOUND","error");
 			return false; 
 		}
 		
@@ -194,6 +196,7 @@ public $demo=1;
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql); 
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
+			logCreate("account detail id:$id|field:$field|update username ","info");
 			$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
 			dbQuery($sql);
 			$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
@@ -203,6 +206,7 @@ public $demo=1;
 			where `{$field}` like '$id'";
 			$res=dbFetchOne($sql); 
 		}
+		
 		$sql="select 
 		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid,
 		a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
@@ -213,6 +217,7 @@ public $demo=1;
 		where a.`{$field}` like '$id'";
 		$data= dbFetchOne($sql);
 		if($data['accounttype']!='MEMBER'){
+			logCreate("account detail id:$id|field:$field|agent","info");
 			$agent=true;
 		}
 		else{ 
@@ -224,7 +229,9 @@ public $demo=1;
 		}else{
 			$data['type']=false;
 		}
+		
 		if(isset($data['raw'])){
+			logCreate("account detail id:$id|field:$field|raw detail","info");
 			$data['detail']=json_decode($data['raw'],true); 
 		}
 		unset($data['raw']);

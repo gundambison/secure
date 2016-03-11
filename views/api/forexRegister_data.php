@@ -3,15 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ob_start();
 $succes=false;
  
-$register=$this->forex->regisAll(30);
-logCreate($register);
+$register=$this->forex->regisAll(40);
+logCreate("register:".json_encode($register));
 $data=array();
 foreach($register as $row){
 	$dt0=$this->forex->regisDetail($row['id']);
-	logCreate("register id:".$row['id'].json_encode($dt0));	
 	if($dt0['status']!=1){
-		logCreate("register status:".$dt0['status'],'info');
+		logCreate("register id:".$row['id']."|status:".$dt0['status'],'info');
 		continue;
+	}
+	else{
+		logCreate("register id:".$row['id']."|".json_encode($dt0));	
+	
 	}
 	$arr=array( 'raw'=>$dt0);
 	$dt=$dt0['detail'];
@@ -21,7 +24,7 @@ foreach($register as $row){
 	$param=array( );
 	$param['privatekey']	=$this->forex->forexKey();
 //======Required 
-	$param['username']	=$dt0['username'];	
+	$param['username']	=   $dt0['detail']['firstname'];	
 //======Optional	
 	if($dt['address']!='')
 		$param['address']	=$dt['address'];	
@@ -40,6 +43,7 @@ foreach($register as $row){
 	$arr['param']=$param;
 	$arr['url']=$url;
 //--------- PERINTAH PEMBUATAN	
+	logCreate("param:".print_r($param,1));
 	$result0= _runApi($url );
 	if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
 		$result=(array)$result0['data'];
