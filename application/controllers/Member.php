@@ -25,10 +25,11 @@ class Member extends MY_Controller {
 			$ar=$this->load->view('member/data/updateDetail_data',$param,true);
 			$result=json_decode($ar,1); 
 			
-			if(isset($result['status'])&&$result['status']==true){
+			if(isset($result['status'])&&(int)$result['status']==1){
 				redirect(base_url('member/detail'));
 			}
 			else{ 
+				print_r($result);die();
 				redirect(base_url('member/edit'));
 			}
 		}

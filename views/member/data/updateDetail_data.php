@@ -30,6 +30,30 @@ if($responce['error']===false){
 		'sql'=>$sql
 		
 	);
+	$detail = $this->account->detail($username,'username');
+	//echo'<pre>';print_r($detail);die();
+		$param=array( );
+		$param['privatekey']	=$this->forex->forexKey();
+		$param['accountid']=(int)$detail['accountid'];
+	 
+		$param['allowlogin']=1;
+		$param['allowtrading']=1;
+		
+		$param['username']=isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?utf8_encode("{$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
+		
+		$param['address']=isset($detail['detail']['address'])?$detail['detail']['address']:"";
+		$param['country']=isset($detail['detail']['country']['name'])?$detail['detail']['country']['name']:"";
+		$param['zipcode']=isset($detail['detail']['zipcode'])?$detail['detail']['zipcode']:"";
+		$param['phone']=  isset($detail['detail']['phone'])?$detail['detail']['phone']:"";
+		$param['email']=  isset($detail['email'])?$detail['email']:"";
+		
+		$url=$this->forex->forexUrl('update');
+		$url.="?".http_build_query($param);
+		logCreate("update password param:".print_r($param,1)."|url:$url");
+		$arr['param']=$param;
+		$arr['url']=$url;
+		$result0= _runApi($url );
+		logCreate("update change detail:".print_r($result0,1));
 	
 }
 else{
@@ -42,9 +66,10 @@ else{
 	}else{}
 }
  
+//print_r($responce);die(); 
  
 $responce['result']['raw']=$responce;
-//logCreate($responce);
+logCreate($responce);
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result']);
 }else{

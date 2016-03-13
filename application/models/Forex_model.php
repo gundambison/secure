@@ -208,7 +208,7 @@ SEMUA dipindah ke model ACCOUNT
 		$param['allowlogin']=1;
 		$param['allowtrading']=1;
 		
-		$param['username']=isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?"utf8_encode({$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
+		$param['username']=isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?utf8_encode("{$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
 		
 		$param['address']=isset($detail['detail']['address'])?$detail['detail']['address']:"";
 		$param['country']=isset($detail['detail']['country']['name'])?$detail['detail']['country']['name']:"";
