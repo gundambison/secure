@@ -206,8 +206,9 @@ SEMUA dipindah ke model ACCOUNT
 		$param['masterpassword']=$masterPass.($raw['accountid']%100000 +19939);
 		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919);
 		$param['allowlogin']=1;
+		$param['allowtrading']=1;
 		
-		$param['username']=isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?url_title("{$detail['detail']['firstname']} {$detail['detail']['lastname']}",'underscore',FALSE):"";
+		$param['username']=isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?"utf8_encode({$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
 		
 		$param['address']=isset($detail['detail']['address'])?$detail['detail']['address']:"";
 		$param['country']=isset($detail['detail']['country']['name'])?$detail['detail']['country']['name']:"";
