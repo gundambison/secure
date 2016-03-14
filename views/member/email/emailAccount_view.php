@@ -55,6 +55,7 @@ else{
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_5"><strong>Client Cabinet</strong></td>
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6">: Secure.salmaforex.com (<a 
 					href="<?php 
 if(defined('LOCAL') || defined('_DEV_')){
