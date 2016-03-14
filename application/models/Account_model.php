@@ -226,7 +226,8 @@ public $demo=1;
 		
 		if($data['type']==7){
 			$data['type']='admin';
-		}else{
+		}
+		else{
 			$data['type']=false;
 		}
 		

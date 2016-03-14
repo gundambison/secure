@@ -4,12 +4,10 @@ ob_start();
 	$responce['error']=false;
  
 $data= $post['detail'] ;
-foreach($post as $name=>$value){
-//	if(isset($data[$name]))
+foreach($post as $name=>$value){ 
 		$data[$name]=$value;
 }
-
-//$username=$post['username'];
+ 
 unset($data['username']);
 unset($data['rand']);
 $responce['data']=json_encode($data);
@@ -30,8 +28,7 @@ if($responce['error']===false){
 		'sql'=>$sql
 		
 	);
-	$detail = $this->account->detail($username,'username');
-	//echo'<pre>';print_r($detail);die();
+	$detail = $this->account->detail($username,'username'); 
 		$param=array( );
 		$param['privatekey']	=$this->forex->forexKey();
 		$param['accountid']=(int)$detail['accountid'];
@@ -72,6 +69,7 @@ $responce['result']['raw']=$responce;
 logCreate($responce);
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result']);
-}else{
+}
+else{
 	echo json_encode(array());
 }

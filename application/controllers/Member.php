@@ -29,7 +29,6 @@ class Member extends MY_Controller {
 				redirect(base_url('member/detail'));
 			}
 			else{ 
-				print_r($result);die();
 				redirect(base_url('member/edit'));
 			}
 		}
