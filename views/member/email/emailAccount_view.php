@@ -35,41 +35,40 @@ else{
                 <tbody id="yui_3_16_0_1_1450323941636_3311">
                   <tr id="yui_3_16_0_1_1450323941636_3324">
                     <td width="322" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3323"><strong>Account Trading (user name)</strong></td>
-                    <td width="378" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337"><strong>:</strong></td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"><?=trim($username);?></td>
+                    <td width="378" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337" width="10"><strong>:</strong></td>
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338" width="500"><?=trim($username);?></td>
                   </tr>
                   <tr id="yui_3_16_0_1_1450323941636_3322">
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>Password Trading (password cabinet)</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> <strong>: </strong> </td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"><?=trim($masterpassword);?></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338" width="10"> <strong>: </strong> </td>
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338" width="500"><?=trim($masterpassword);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_"><strong>Password Investor</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>: </strong> </td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><?=trim($investorpassword);?></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2" width="10"><strong>: </strong> </td>
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2" width="500"><?=trim($investorpassword);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>Server </strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong></td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2">SalmaMarkets-server (<a href="https://www.salmaforex.com/mt4-for-pc/" target="_blank">Download Salmaforex MT4</a>)</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4" width="10"><strong>: </strong></td>
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2" width="500">SalmaMarkets-server (<a href="https://www.salmaforex.com/mt4-for-pc/" target="_blank">Download Salmaforex MT4</a>)</td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_5"><strong>Client Cabinet</strong></td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6">: Secure.salmaforex.com (<a 
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4" width="10"><strong>: </strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6" width="500"><a 
 					href="<?php 
 if(defined('LOCAL') || defined('_DEV_')){
 	?>http://dev.salmaforex.com<?php
 }
 else{ 
 ?>https://secure.salmaforex.com<?php 
-} ?>/login" target="_blank">Web Login</a>)</td>
+} ?>/login" target="_blank">Secure.salmaforex.com (Web Login)</a></td>
                   </tr>
                 </tbody>
               </table>
-              <p><br />
- 
-              <p><br />
+               <br /> 
+               <br />
                 <br />
                 Your Personal Area at <?php 
 if(defined('LOCAL') || defined('_DEV_')){
