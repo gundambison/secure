@@ -16,6 +16,15 @@ foreach($register as $row){
 		logCreate("register id:".$row['id']."|".json_encode($dt0));	
 	
 	}
+	
+	$email=$dt0['email'];
+	
+	$account= $this->forex->accountDetail($email,'email');
+	if($account!==false){
+		$this->forex->regisDelete($dt0['email']);
+		//die('--<pre>'.print_r($dt0,1).print_r($account,1));		
+		continue;
+	}
 	$arr=array( 'raw'=>$dt0);
 	$dt=$dt0['detail'];
 //=================send

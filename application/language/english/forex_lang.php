@@ -17,6 +17,8 @@ $lang['forex_address']='Address';
 
 $lang['forex_email']='Email';
 $lang['forex_phone']='Phone';
+$lang['forex_bank']='Bank Name';
+$lang['forex_bank_norek']='Account Number';
 
 $lang['forex_pass']='Access Password';
 $lang['forex_passconfirm']='Confirm Access Password';

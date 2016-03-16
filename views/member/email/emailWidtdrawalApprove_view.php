@@ -1,7 +1,7 @@
 <?php 
 ob_start();
 $name=!isset($raw['name'])?$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']:$raw['name'];
-$rate=$raw['rate'];
+//$rate=$raw['rate'];
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -59,7 +59,7 @@ $rate=$raw['rate'];
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_13"><strong>Rate</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_14"><strong>: </strong>Rp. <?=$statusConfirm;?></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_14"><strong>: </strong>Rp. <?=number_format($rate['value']);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_15"><strong>Status</strong></td>
@@ -217,7 +217,7 @@ foreach($this->forex->emailAdmin as $email){
 	$to[]=$email;
 }
 
-$subject = '[SalmaForex] Confirmation to Widtdrawal ';
+$subject = '[SalmaForex] Confirmation to Widthdrawal ';
 $subject.= 'Have Been Approve';//:'Have Been Disapprove';
 
 

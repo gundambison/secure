@@ -12,7 +12,9 @@ $dt=$this->db->query($sql)->row_array();
 $dt['raw']=json_decode($dt['param'],1);
 $dt['userlogin']= $dt['raw']['userlogin'];
 $dt['statusConfirm']=$_POST['status'];
+$dt['rate']['value']=$dt['raw']['rate'];
 $this->param['deposit']=$dt;
+
 //======KIRIM EMAIL
 
  		
@@ -26,10 +28,12 @@ if(isset($_POST['status'])){
 		$param['accountid']		=	$dt['raw']['accountid'];
 		$param['volume']		=	"-0"; 			 
 		$param['privatekey']	=	$this->forex->forexKey();
+		$param['description']	= 	'Check Saldo';
 				
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
 		$respon['server'][]=$tmp= _runApi($url );
+		$param['description']	= 	'Widthdrawal';
 		//echo $url;
  
 		if((int)$tmp['responsecode']===2){
@@ -43,10 +47,9 @@ if(isset($_POST['status'])){
 			$respon['server'][]=$tmp= _runApi($url0 );
 			$respon['server'][]=$tmp= _runApi($url );
 		}
- 
+  
 		if((int)$tmp['balance'] < $vol ){
 			$sql="update mujur_flowlog set status=2 where id=$id";
- 
 			dbQuery($sql,1);
 			$dt['statusConfirm']="Disapprove";
 			$this->load->view('member/email/emailWidtdrawalDisapprove_view',$dt);

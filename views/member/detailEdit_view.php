@@ -13,6 +13,10 @@
 		<?=bsInput( lang('forex_lastname'),'lastname',$detail1['lastname'], 
 		lang('forex_inputsuggestion'), true  );?> 
 		<?=bsInput( lang('forex_phone'),'phone',$detail1['phone'], lang('forex_inputsuggestion2')  );?>
+		
+		<?=bsInput( lang('forex_bank'),'bank',isset($detail1['bank'])?$detail1['bank']:'', lang('forex_inputsuggestion2')  );?>
+		<?=bsInput( lang('forex_bank_norek'),'bank_norek',isset($detail1['bank_norek'])?$detail1['bank_norek']:'', lang('forex_inputsuggestion2')  );?>
+		
 			<?=bsInput( lang('forex_address'),'address',$detail1['address'], lang('forex_inputsuggestion2')  );?>
 			<?=bsInput( lang('forex_state'),'state',$detail1['state'], lang('forex_inputsuggestion2')  );?>
 			 

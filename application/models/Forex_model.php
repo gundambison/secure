@@ -291,7 +291,7 @@ SEMUA dipindah ke model ACCOUNT
 		}
 		
 		if($data['reg_id']!=0){
-			logCreate("account detail id:$id|field:$field create Detail");
+			//logCreate("account detail id:$id|field:$field create Detail");
 			$reg=$this->regisDetail($data['reg_id']);
 			$detail=json_encode($reg['detail']);
 			$sql="insert into {$this->tableAccountDetail}(username,detail) values('$username','$detail')";
@@ -362,7 +362,7 @@ ACTIVATION
 
 /***
 REGISTER
-***/	
+***/
 	function regisAll($limit=10)
 	{
 		$sql="select reg_id id from {$this->tableRegis} order by reg_id desc limit $limit";
@@ -410,7 +410,12 @@ REGISTER
 		
 		return $res;
 	}
-		
+	
+	function regisDelete($email){	
+		$sql="update `{$this->tableRegis}` set reg_status='-1' where  `reg_email` like '{$email}%'";
+		dbQuery($sql,1);
+	}
+	
 	function saveData($data, &$message)
 	{
 		if(isset($data['agent'])){

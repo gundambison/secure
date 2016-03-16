@@ -211,7 +211,7 @@ ob_end_clean();
 //echo  $detail;
 $to = trim( $userlogin['email'] );
 
-$subject = '[SalmaForex] Confirmation to Widtdrawal ';
+$subject = '[SalmaForex] Confirmation to Widthdrawal ';
 
 $headers = "From: noreply@salmaforex.com\r\n";
 $headers .= "Reply-To: noreply@salmaforex.com\r\n"; 

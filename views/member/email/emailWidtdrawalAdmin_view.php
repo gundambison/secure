@@ -204,7 +204,7 @@ ob_end_clean();
 //echo  $detail;
 $to =   $emailAdmin  ;
 
-$subject = '[System] Widtdrawal by '.$name;
+$subject = '[System] Widthdrawal by '.$name;
 
 $headers = "From: noreply@salmaforex.com\r\n";
 $headers .= "Reply-To: noreply@salmaforex.com\r\n";

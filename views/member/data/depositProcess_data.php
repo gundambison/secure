@@ -11,6 +11,7 @@ $dt=$this->db->query($sql)->row_array();
 $dt['raw']=json_decode($dt['param'],1);
 $dt['userlogin']= $dt['raw']['userlogin'];
 $dt['statusConfirm']=$_POST['status'];
+$dt['rate']['value']=$dt['raw']['rate'];
 $this->param['deposit']=$dt;
 //======KIRIM EMAIL 
 			
@@ -24,6 +25,7 @@ if(isset($_POST['status'])){
 		$param['accountid']		=	$dt['raw']['accountid'];
 		//$param['volume']		=	$vol; 			 
 		$param['privatekey']	=	$this->forex->forexKey();
+		$param['description']	= 	'Deposit';
 		
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param)."&volume={$vol}+";
@@ -47,6 +49,9 @@ if(isset($_POST['status'])){
 	}
 	
 }else{}	
+
+//echo "\nData:".print_r($dt,1);
+logCreate("data:".print_r($dt,1));
  
 $warning = ob_get_contents();
 ob_end_clean();

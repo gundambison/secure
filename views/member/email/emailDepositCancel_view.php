@@ -2,7 +2,7 @@
 ob_start();
 //var_dump($userlogin);
 $name=!isset($raw['name'])?$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']:$raw['name'];
-$rate=$raw['rate'];
+//$rate=$raw['rate'];
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -20,7 +20,7 @@ $rate=$raw['rate'];
       <td colspan="2" valign="bottom"><table width="740" border="0" cellspacing="10" cellpadding="10">
         <tbody>
           <tr>
-            <td><h3>Deposit Order Success</h3>
+            <td><h3>Deposit Order Disapprove</h3>
               <p>Dear <?=$name;?>,</p>
                <p id="yui_3_16_0_1_1443010679159_2033">Your Deposit Has been Disapprove, Here your order deposit detail:.<br />
               </p>
@@ -63,7 +63,7 @@ $rate=$raw['rate'];
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_13"><strong>Rate</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_14"><strong>: </strong>Rp. <?=number_format($rate['value']);?></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_14"><strong>: </strong>Rp. <?=number_format($rate['value']);  ?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_15"><strong>Status</strong></td>

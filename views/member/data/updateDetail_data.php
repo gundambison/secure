@@ -1,5 +1,6 @@
 <?php
 ob_start();
+unset($post['detail']['detail']);
 	$responce=array('post'=>$post);
 	$responce['error']=false;
  
@@ -11,6 +12,7 @@ foreach($post as $name=>$value){
 unset($data['username']);
 unset($data['rand']);
 $responce['data']=json_encode($data);
+
 	$sql="update `{$this->account->tableAccountDetail}` set detail='".
 	addslashes(json_encode($data))."' where username like '$username'";
 	dbQuery($sql);
@@ -63,7 +65,7 @@ else{
 	}else{}
 }
  
-//print_r($responce);die(); 
+//echo'<pre>';print_r($responce);die(); 
  
 $responce['result']['raw']=$responce;
 logCreate($responce);
