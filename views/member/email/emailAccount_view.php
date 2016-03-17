@@ -28,35 +28,40 @@ else{
 	<h3>Account Trading Detail</h3>
 <?php
 }
-?>			<p>You have just made a right decision to become a client of SalmaForex and choose us as your broker. We are sure that from now on your trading experience with us will be positive and profitable. Your Account Trading Detail are as follows: <br />
-              </p>
+?>	
+<?php 
+if($accountType!='MEMBER'){
+	?>&nbsp;<?php 
+}
+else{
+	?><p>You have just made a right decision to become a client of SalmaForex and choose us as your broker. We are sure that from now on your trading experience with us will be positive and profitable. Your Account Trading Detail are as follows: <br />
+    </p>
+<?php 
+}
+?>
 <!--baru-->
 			<table border="0" align="center" id="yui_3_16_0_1_1450323941636_3312">
                 <tbody id="yui_3_16_0_1_1450323941636_3311">
                   <tr id="yui_3_16_0_1_1450323941636_3324">
                     <td width="322" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3323"><strong>Account Trading (user name)</strong></td>
-                    <td width="378" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337" width="10"><strong>:</strong></td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338" width="500"><?=trim($username);?></td>
+                    
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338" width="500">: <?=trim($username);?></td>
                   </tr>
                   <tr id="yui_3_16_0_1_1450323941636_3322">
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>Password Trading (password cabinet)</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338" width="10"> <strong>: </strong> </td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338" width="500"><?=trim($masterpassword);?></td>
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338" width="500">: <?=trim($masterpassword);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_"><strong>Password Investor</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2" width="10"><strong>: </strong> </td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2" width="500"><?=trim($investorpassword);?></td>
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2" width="500">: <?=trim($investorpassword);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>Server </strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4" width="10"><strong>: </strong></td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2" width="500">SalmaMarkets-server (<a href="https://www.salmaforex.com/mt4-for-pc/" target="_blank">Download Salmaforex MT4</a>)</td>
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2" width="500">: SalmaMarkets-server (<a href="https://www.salmaforex.com/mt4-for-pc/" target="_blank">Download Salmaforex MT4</a>)</td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_5"><strong>Client Cabinet</strong></td>
-					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4" width="10"><strong>: </strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6" width="500"><a 
+					<td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6" width="500">: <a 
 					href="<?php 
 if(defined('LOCAL') || defined('_DEV_')){
 	?>http://dev.salmaforex.com<?php
@@ -70,13 +75,20 @@ else{
                <br /> 
                <br />
                 <br />
-                Your Personal Area at <?php 
-if(defined('LOCAL') || defined('_DEV_')){
-	?>https://dev.salmaforex.com<?php
+<?php 
+if($accountType!='MEMBER'){
+	?>&nbsp;<?php 
 }
-else{ 
-?>https://secure.salmaforex.com<?php 
-} ?>
+else{
+	?>Your Personal Area at 
+<?php 
+	if(defined('LOCAL') || defined('_DEV_')){
+		?>https://dev.salmaforex.com<?php
+	}
+	else{ 
+	?>https://secure.salmaforex.com<?php 
+	} 
+?>
 is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
                 </p>
               <p>Right now you can login to your Personal Area, deposit your account and start your trading.<br />
@@ -85,6 +97,9 @@ is your best tool to manage your account(s). You can deposit your account, withd
               <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
               <p id="yui_3_16_0_1_1443010679159_2163">Wishing you luck and profitable trading! </p>
               <p><strong>Thank you for choosing SalmaForex to provide you with brokerage services on the forex market! We wish you every success in your trading!</strong></p>
+<?php 
+}
+?>
               <p>Sincerely,<br />
               Customer Service</p></td>
           </tr>

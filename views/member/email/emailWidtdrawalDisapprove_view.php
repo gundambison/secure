@@ -217,7 +217,7 @@ foreach($this->forex->emailAdmin as $email){
 	$to[]=$email;
 }
 
-$subject = '[SalmaForex] Confirmation to Widthdrawal ';
+$subject = '[SalmaForex] Confirmation to Withdrawal ';
 $subject.= 'Have Been Disapprove';
 
 

@@ -3,10 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ob_start();
 $succes=false;
  
-$register=$this->forex->regisAll(40);
+$register=$this->forex->regisAll(40,'where reg_status=1');
 logCreate("register:".json_encode($register));
 $data=array();
 foreach($register as $row){
+	$reg_id=$row['id'];
 	$dt0=$this->forex->regisDetail($row['id']);
 	if($dt0['status']!=1){
 		logCreate("register id:".$row['id']."|status:".$dt0['status'],'info');
@@ -17,14 +18,21 @@ foreach($register as $row){
 	
 	}
 	
-	$email=$dt0['email'];
+	$email=trim($dt0['email']);
 	
 	$account= $this->forex->accountDetail($email,'email');
-	if($account!==false){
+	if(trim($email)==''){ //$account!==false||
+		logCreate("register delete ($email) (empty):".print_r($account,1));
 		$this->forex->regisDelete($dt0['email']);
 		//die('--<pre>'.print_r($dt0,1).print_r($account,1));		
 		continue;
+		
 	}
+	else{ 
+		logCreate("register email:($email)");
+		if($email===NULL) logCreate("register email:(NULL)");
+	}
+	
 	$arr=array( 'raw'=>$dt0);
 	$dt=$dt0['detail'];
 //=================send
@@ -53,12 +61,33 @@ foreach($register as $row){
 	$arr['url']=$url;
 //--------- PERINTAH PEMBUATAN	
 	logCreate("param:".print_r($param,1));
-	$result0= _runApi($url );
+	$rawAccount=$this->account->detail($reg_id, 'reg_id');
+	//apabila ada reg_id yang sama maka cancel	
+		if($rawAccount!=false){
+			logCreate("register not continue reg_id exist:".json_encode($rawAccount));
+			continue;
+		}
+		else{
+			$result0= _runApi($url );
+		}
+		
 	if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
 		$result=(array)$result0['data'];
 	}
 	else{
 		$result=$result0;		
+	}
+	
+	if(isset($result['responsecode'])&&(int)$result['responsecode']==5){
+		logCreate("delete Respon code 5");
+		$this->forex->regisDelete($dt0['email'],5); 
+		continue;
+	}
+	
+	if(isset($result['responsecode'])&&(int)$result['responsecode']==8){
+		logCreate("delete Respon code 8");
+		$this->forex->regisDelete($dt0['email'],8); 
+		continue;
 	}
 	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==0){
@@ -98,3 +127,4 @@ if($succes===true)
 	$result['succes']=true;
 
 echo json_encode($result);
+//echo '<pre>'.print_r($result,1);

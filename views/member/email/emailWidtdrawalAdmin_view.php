@@ -18,8 +18,8 @@ $name=!isset($post0['name'])?$userlogin['detail']['firstname']." ".$userlogin['d
       <td colspan="2" valign="bottom"><table width="750" border="0" cellspacing="10" cellpadding="10">
         <tbody>
           <tr>
-            <td><h3>Widtdrawal </h3>
-              <p>Someone Request Widtdrawal<br />
+            <td><h3>Withdrawal </h3>
+              <p>Someone Request Withdrawal<br />
                 </p>
  			
 				
@@ -53,7 +53,7 @@ $name=!isset($post0['name'])?$userlogin['detail']['firstname']." ".$userlogin['d
 						<td><?=$post0['namerek'];?></td>
 					</tr>
 					<tr>
-						<td>Widtdrawal</td><td>:</td>
+						<td>Withdrawal</td><td>:</td>
 						<td>$ <?=number_format($post0['orderWidtdrawal'],2);?> 
 						(Rp <?=number_format($post0['order1'],0);?>)</td>
 					</tr>	
@@ -204,7 +204,7 @@ ob_end_clean();
 //echo  $detail;
 $to =   $emailAdmin  ;
 
-$subject = '[System] Widthdrawal by '.$name;
+$subject = '[System] Withdrawal by '.$name;
 
 $headers = "From: noreply@salmaforex.com\r\n";
 $headers .= "Reply-To: noreply@salmaforex.com\r\n";

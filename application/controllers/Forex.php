@@ -14,6 +14,7 @@ class Forex extends CI_Controller {
 	public function registerApi(){
 		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
 		$res=json_decode($tmp, true);
+		echo '<pre>';
 		print_r($res);
 	}
 	
@@ -357,6 +358,7 @@ class Forex extends CI_Controller {
 				$res="0";
 			}
 			$raw=array();
+		/*	
 			if(!isset($res)){ 
 				$res='1;11001724'; 
 				
@@ -364,6 +366,8 @@ class Forex extends CI_Controller {
 				$res.="id:$id";
 			}
 			$this->succesMessage($res);
+		*/
+			echo json_encode($res);
 		}else{ 
 			echo "no respond";
 		}

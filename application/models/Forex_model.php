@@ -128,7 +128,8 @@ SEMUA dipindah ke model ACCOUNT
 	
 	function accountCreate($id,$raw='')
 	{
-		$detail=$this->regisDetail($id);
+		$reg_id=$id;
+		$detail=$this->regisDetail( $reg_id );
 		if(defined('LOCAL')){
 		$sql="select count(id) c from {$this->tableAccount} where username like '{$detail['username']}'";
 			$row=dbFetchOne($sql);
@@ -136,7 +137,7 @@ SEMUA dipindah ke model ACCOUNT
 				logCreate("hapus username : {$detail['username']}");
 				$sql="delete from {$this->tableAccount} where username like '{$detail['username']}'";
 				dbQuery($sql,1);
-				$sql="delete from {$this->tableAccount} where reg_id = '{$id}'";
+				$sql="delete from {$this->tableAccount} where reg_id = '{$reg_id}'";
 				dbQuery($sql,1);
 				$sql="delete from {$this->tableAccountDetail} where username like '{$detail['username']}'";
 				dbQuery($sql,1);
@@ -146,6 +147,8 @@ SEMUA dipindah ke model ACCOUNT
 		if(!isset($detail['detail']['statusMember']))
 			$detail['detail']['statusMember']='MEMBER';
 		logCreate("register id:$id |raw:".print_r($raw,1));
+		
+		
 		$dt=array(
 			'reg_id'=>$id,
 			'username'=>$detail['username'],
@@ -165,7 +168,13 @@ SEMUA dipindah ke model ACCOUNT
 			$accid=$dt2['max'];
 		}
 		$dt['id']=$acc_id=$accid+1;
-		
+		$sql="select count(id) tot from {$this->tableAccount} where reg_id='$reg_id'";
+		$rawAccount=dbFetchOne($sql);
+	//apabila ada reg_id yang sama maka cancel	
+		if($rawAccount['tot']!=0){
+			logCreate("register not continue account exist:".json_encode($rawAccount));
+			return false;
+		}
 		$sql=$this->db->insert_string($this->tableAccount,$dt);
 		dbQuery($sql,1);
 		$dataRaw = $this->account->detail($raw['accountid'],'accountid');
@@ -175,9 +184,13 @@ SEMUA dipindah ke model ACCOUNT
 		$dt=array(
 			'id'=>$accid,
 			'username'=>$dataRaw['accountid'],
-			'detail'=>json_encode($detail['detail']),
-			
+			'detail'=>json_encode($detail['detail']), 
 		);
+		
+		logCreate("hapus detail sebelumnya:". $dataRaw['accountid']);
+		$sql="delete from $this->tableAccountDetail where username like '{$dataRaw['accountid']}'";
+		dbQuery($sql,0);
+		
 		$sql=$this->db->insert_string($this->tableAccountDetail, $dt);
 		
 		$sql="select id from {$this->tableActivation} where userid=$id and status!=1";
@@ -250,6 +263,7 @@ SEMUA dipindah ke model ACCOUNT
 		
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
+		
 		$sql="select count(id) c from `{$this->tableAccount}`  where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
@@ -363,9 +377,9 @@ ACTIVATION
 /***
 REGISTER
 ***/
-	function regisAll($limit=10)
-	{
-		$sql="select reg_id id from {$this->tableRegis} order by reg_id desc limit $limit";
+	function regisAll($limit=10,$where="")
+	{		
+		$sql="select reg_id id from {$this->tableRegis} $where order by reg_id desc limit $limit";
 		return  dbFetch($sql);//$this->db->query($sql)->result_array();
 	}
 	
@@ -411,8 +425,11 @@ REGISTER
 		return $res;
 	}
 	
-	function regisDelete($email){	
-		$sql="update `{$this->tableRegis}` set reg_status='-1' where  `reg_email` like '{$email}%'";
+	function regisDelete($email,$status=-1){
+		$email=trim($email);
+		if($email!='')$email.='%';
+		logCreate("delete regis by email:$email ");
+		$sql="update `{$this->tableRegis}` set reg_status='$status' where  `reg_email` like '{$email}'";
 		dbQuery($sql,1);
 	}
 	

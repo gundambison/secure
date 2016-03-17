@@ -25,8 +25,17 @@ else{
 	?>Account Trading Detail
 <?php 
 }?></h3>
+<?php 
+if($accountType!='MEMBER'){
+	?>&nbsp;<?php 
+}
+else{
+	?>
               <p>You have just made a right decision to become a client of SalmaForex and choose us as your broker. We are sure that from now on your trading experience with us will be positive and profitable. Your Account Trading Detail are as follows: <br />
                 </p>
+<?php 
+}
+?>
               <table border="0" align="center" id="yui_3_16_0_1_1450323941636_3312">
                 <tbody id="yui_3_16_0_1_1450323941636_3311">
                   <tr id="yui_3_16_0_1_1450323941636_3324">
@@ -60,15 +69,23 @@ else{
               </table>
               <p><br />
                 <br />
-                Your Personal Area at <?php 
-if(defined('LOCAL') || defined('_DEV_')){?>
-https://dev.salmaforex.com 
-<?php
-}
-else{ ?>
-https://secure.salmaforex.com 
 <?php 
-} ?> is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
+if($accountType!='MEMBER'){
+	?>&nbsp;<?php 
+}
+else{
+	?> 
+	Your Personal Area at 
+	<?php 
+	if(defined('LOCAL') || defined('_DEV_')){?>
+	https://dev.salmaforex.com 
+	<?php
+	}
+	else{ ?>
+	https://secure.salmaforex.com 
+	<?php 
+	} ?>
+is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
                 </p>
               <p>Right now you can login to your Personal Area, deposit your account and start your trading.<br />
                 </p>
@@ -76,6 +93,9 @@ https://secure.salmaforex.com 
               <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
               <p id="yui_3_16_0_1_1443010679159_2163">Wishing you luck and profitable trading! </p>
               <p><strong>Thank you for choosing SalmaForex to provide you with brokerage services on the forex market! We wish you every success in your trading!</strong></p>
+<?php 
+}
+?>
               <p>Sincerely,<br />
               Customer Service</p></td>
           </tr>

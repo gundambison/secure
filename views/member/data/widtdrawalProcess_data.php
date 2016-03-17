@@ -26,9 +26,9 @@ if(isset($_POST['status'])){
 		}
 		$vol=(int)$dt['raw']['orderWidtdrawal'];		
 		$param['accountid']		=	$dt['raw']['accountid'];
-		$param['volume']		=	"-0"; 			 
+		$param['volume']		=	"-".$vol;  			 
 		$param['privatekey']	=	$this->forex->forexKey();
-		$param['description']	= 	'Check Saldo';
+		$param['description']	= 	'Withdrawal';
 				
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
@@ -48,7 +48,7 @@ if(isset($_POST['status'])){
 			$respon['server'][]=$tmp= _runApi($url );
 		}
   
-		if((int)$tmp['balance'] < $vol ){
+		if((int)$tmp['responsecode']===2 ){
 			$sql="update mujur_flowlog set status=2 where id=$id";
 			dbQuery($sql,1);
 			$dt['statusConfirm']="Disapprove";
@@ -59,7 +59,7 @@ if(isset($_POST['status'])){
 			$param['volume']		=	"-".$vol; 
 			$url=$this->forex->forexUrl('updateBalance');
 			$url.="?".http_build_query($param);
-			$respon['server'][]=$tmp= _runApi($url );
+			//$respon['server'][]=$tmp= _runApi($url );
 			
 			if((int)$tmp['responsecode']===0){ 
 				$this->load->view('member/email/emailWidtdrawalApprove_view',$dt);
