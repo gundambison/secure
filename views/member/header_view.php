@@ -13,7 +13,7 @@ if ( ! function_exists('logFile')){ logFile('view/member','header_view.php','vie
           <div class="container relative">
             <div id="top-bar-text" class="top-bar-sides abs-right">
 <?php 
-
+/*
 if(isset($detail['accounttype'])&&$detail['accounttype']=='MEMBER'){
 	$rand_url=url_title("{$detail['accountid']}-{$detail['detail']['firstname']}","-");
 	$urlAffiliation=base_url("forex/agent");
@@ -26,6 +26,7 @@ if(isset($detail['accounttype'])&&$detail['accounttype']=='MEMBER'){
 			style="margin-right: 5px;">Register Patners</a>
 <?php 
 }
+*/
 ?>			
               <a 
 			  href="<?=!isset($detail['id'])?base_url("login "):base_url("member/logout ");?>" block="0" lightbox="0" title="Live Account" font="" 

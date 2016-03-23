@@ -14,7 +14,7 @@ class Forex extends CI_Controller {
 	public function registerApi(){
 		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
 		$res=json_decode($tmp, true);
-		echo '<pre>';
+		//echo '<pre>';
 		print_r($res);
 	}
 	

@@ -1,6 +1,20 @@
-<?php 
+<?php  
+defined('BASEPATH') OR exit('No direct script access allowed');
 $uDetail=$userlogin['detail'];
-defined('BASEPATH') OR exit('No direct script access allowed');?>
+if(!isset($uDetail['bank'])||$uDetail['bank']==''){
+	$notAllow=1;
+	$uDetail['bank']='';
+}
+
+if(!isset($uDetail['bank_norek'])||$uDetail['bank_norek']==''){
+	$notAllow=1;
+	$uDetail['bank_norek']='';
+}
+
+if(isset($notAllow)){
+	redirect(site_url("member/edit/warn"),1);
+}
+?>
 <style>
 .form-group{
 	width:100% !important;

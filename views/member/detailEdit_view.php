@@ -6,7 +6,11 @@
 			<div class="frame-form-basic">
 			<h2>Detail</h2>
 			<form   name="frm"  id="frmLiveAccount" method="POST" class="form-horizontal" role="form">
-<?php $detail1=$detail['detail'];  
+<?php 
+$detail1=$detail['detail'];
+if(isset($warning)&&$warning!==0){
+	?><b>SILAKAN LENGKAPI SEMUA DETAIL YANG TERSEDIA</b><?php 
+}
 ?>
 		<table class='formBasic' border="0">
 		<?=bsInput( lang('forex_firstname'),'firstname',$detail1['firstname'], lang('forex_inputsuggestion'),true);?>

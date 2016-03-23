@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Member extends MY_Controller {
 	public $param;	
 	
-	public function edit(){
+	public function edit($warn=0){
 		$this->checkLogin();
 		if($this->input->post('rand')){
 			$param=array(
@@ -38,6 +38,7 @@ class Member extends MY_Controller {
 				'detailEdit', 
 			);
 			$this->param['footerJS'][]='js/login.js';
+			$this->param['warning']=$warn;
 			$this->showView(); 
 		}
 		
