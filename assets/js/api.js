@@ -33,9 +33,7 @@ catch(err){
 try{	
 	tableDeposit=jQuery('#tableDeposit').DataTable( {
 		"columnDefs": [
-            { 
-			
-            }
+            {}
 		],
         "processing": true,
         "serverSide": true,
@@ -49,6 +47,7 @@ try{
             { "data": "raw.username" },
             { "data": "raw.name" },
             { "data": "raw.orderDeposit" },
+			{ "data": "detail" },
             { "data": "status" },
             { "data": "action" },             
         ]
@@ -56,7 +55,8 @@ try{
 	//console.log('table deposit ready');
 }
 catch(err){
-	//console.log('not table Deposit');
+	 console.log('not table Widtdrawal');
+	 console.log(err);
 }	
 
 try{	

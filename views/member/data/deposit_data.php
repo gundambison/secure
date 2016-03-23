@@ -36,10 +36,14 @@ foreach($dt as $row){
 	if($row['status']==2){
 		$status0="cancel";
 	}
+	$row['detail']=$row['raw']->namerek."<br/>".$row['raw']->bank ." (".$row['raw']->norek.")" ;
 	
 	$row['status']=$status0;
-	unset($row['param']);
-	$row['raw']->orderDeposit ='$'.number_format($row['raw']->orderDeposit);
+	//unset($row['param']);
+	if($row['raw']->order1 != $row['raw']->orderDeposit* $row['raw']->rate){
+		$row['raw']->order1=  $row['raw']->orderDeposit* $row['raw']->rate;
+	}
+	$row['raw']->orderDeposit ='$'.number_format($row['raw']->orderDeposit).'<br/>Rp'.number_format($row['raw']->order1) .'<br/>Rate Rp'.number_format($row['raw']->rate);
 	$row['flowid']=sprintf("%s%04s",date("ymd",strtotime($row['created']) ),$row['id']);
 	$data[]=$row;
 }
