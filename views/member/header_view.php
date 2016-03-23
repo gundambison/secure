@@ -16,7 +16,8 @@ if ( ! function_exists('logFile')){ logFile('view/member','header_view.php','vie
 
 if(isset($detail['accounttype'])&&$detail['accounttype']=='MEMBER'){
 	$rand_url=url_title("{$detail['accountid']}-{$detail['detail']['firstname']}","-");
-	$urlAffiliation=base_url("register/{$rand_url}");
+	$urlAffiliation=base_url("forex/agent");
+	//base_url("register/{$rand_url}");
 	?>
 			<a href="<?=$urlAffiliation;?>" 
 			block="0" lightbox="0" title="Detail" font="" color="29a4dd"><img 
