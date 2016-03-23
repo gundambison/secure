@@ -11,11 +11,12 @@ data
 ***/
 class Forex extends CI_Controller {
 	public $param;	
-	public function registerApi(){
+	public function registerApi($stat=1){
 		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
 		$res=json_decode($tmp, true);
 		//echo '<pre>';
-		print_r($res);
+		if($stat==1)
+			print_r($res);
 	}
 	
 	public function error404(){
@@ -123,6 +124,7 @@ class Forex extends CI_Controller {
 				$param['task']='register';
 //-------------------TESTED				
 				$result=_runApi($url, $param); //test
+				$this->registerApi(0);
 			}
 		}
 		
