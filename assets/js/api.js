@@ -78,6 +78,7 @@ try{
             { "data": "raw.username" },
             { "data": "raw.name" },
             { "data": "raw.orderWidtdrawal" },
+            { "data": "detail" },
             { "data": "status" },
             { "data": "action" },             
         ]
@@ -85,7 +86,8 @@ try{
 	//console.log('table widtdrawal ready');
 }
 catch(err){
-	//console.log('not table Widtdrawal');
+	 console.log('not table Widtdrawal');
+	 console.log(err);
 }	
  	
 } );

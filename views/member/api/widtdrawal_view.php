@@ -24,6 +24,7 @@ if (  function_exists('logFile')){ logFile('view/member/api','widtdrawal_view.ph
                 <th>Username</th>
                 <th>Name</th>
                 <th>Deposit</th>
+                <th>Detail</th>
                 <th>Status</th>				
                 <th>Action</th>
             </tr>
@@ -35,6 +36,7 @@ if (  function_exists('logFile')){ logFile('view/member/api','widtdrawal_view.ph
                 <th>Username</th>
                 <th>Name</th>
                 <th>Deposit</th>
+                <th>Detail</th>
                 <th>Status</th>				
                 <th>Action</th>
             </tr>

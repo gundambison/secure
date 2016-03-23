@@ -38,7 +38,7 @@ foreach($dt as $row){
 	if($row['status']==2){
 		$status0="cancel";
 	}
-	
+	$row['detail']=$row['raw']->namerek."<br/>".$row['raw']->bank ." (".$row['raw']->norek.")" ;
 	$row['status']=$status0;
 	unset($row['param']);
 	$row['raw']->orderWidtdrawal ='$'.number_format($row['raw']->orderWidtdrawal);

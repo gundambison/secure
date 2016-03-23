@@ -26,8 +26,8 @@ try{
 	});
 }
 catch(err){
-	//console.log(err);
-	//console.log('not Widtdrawal');
+	console.log(err);
+	console.log('not Widtdrawal');
 }
 
 function clearModal(){
