@@ -13,9 +13,9 @@ if(isset($warning)&&$warning!==0){
 }
 ?>
 		<table class='formBasic' border="0">
-		<?=bsInput( lang('forex_firstname'),'firstname',$detail1['firstname'], lang('forex_inputsuggestion'),true);?>
-		<?=bsInput( lang('forex_lastname'),'lastname',$detail1['lastname'], 
-		lang('forex_inputsuggestion'), true  );?> 
+		<?=bsInput( lang('forex_firstname'),'firstname',isset($detail1['firstname'])?$detail1['firstname']:'', lang('forex_inputsuggestion') );?>
+		<?=bsInput( lang('forex_lastname'),'lastname',isset($detail1['lastname'])?$detail1['lastname']:'', 
+		lang('forex_inputsuggestion')   );?> 
 		<?=bsInput( lang('forex_phone'),'phone',$detail1['phone'], lang('forex_inputsuggestion2')  );?>
 		
 		<?=bsInput( lang('forex_bank'),'bank',isset($detail1['bank'])?$detail1['bank']:'', lang('forex_inputsuggestion2')  );?>
