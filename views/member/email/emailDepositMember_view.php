@@ -20,7 +20,7 @@ $name=!isset($post0['name'])?$userlogin['detail']['firstname']." ".$userlogin['d
         <tbody>
           <tr>
             <td><h3>Deposit Order Detail</h3>
-              <p>Dear Hardi Ikrommullah,</p>
+              <p>Dear <?=$name;?>,</p>
               <p id="yui_3_16_0_1_1443010679159_2033">Thank you for submitting deposit form, Here your order deposit detail:.<br />
               </p>
               <table border="0" align="center" id="yui_3_16_0_1_1450323941636_3312">

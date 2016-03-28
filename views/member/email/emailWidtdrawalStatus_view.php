@@ -20,7 +20,7 @@ $rate=$raw['rate'];
         <tbody>
           <tr>
             <td><h3>Withdrawal Order Success</h3>
-              <p>Dear Hardi Ikrommullah,</p>
+              <p>Dear <?=$name;?>,</p>
               <p id="yui_3_16_0_1_1443010679159_2033">Your Deposit Has been Success, Here your order withdrawal detail:.<br />
               </p>
               <table border="0" align="center" id="yui_3_16_0_1_1450323941636_3312">
