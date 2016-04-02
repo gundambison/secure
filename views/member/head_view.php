@@ -66,7 +66,7 @@ if(isset($fileCss)){
 	foreach($fileCss as $id=>$file){
 		if(intval($id)==0){ $strID='id="'.$id.'"';}else{ $strID='';}
 ?>
-	<link rel="stylesheet" <?=$strID;?> href="<?=base_url().'assets/'.$file;?>"  media='all' />
+	<link rel="stylesheet" <?=$strID;?> href="<?=base_url().'assets/'.$file;?>?7"  media='all' />
 <?php
 	}
 }
@@ -161,7 +161,7 @@ ddaccordion.init({
 	border-bottom: 1px solid #a1c67b;
 }
 
-.ui--icon{
+.arrowsidemenu ul li a .ui--icon{
 	display:none;
 }
 .arrowsidemenu ul li a{ /*sub menu links*/
@@ -181,5 +181,31 @@ ddaccordion.init({
 .alone{
 	color: rgba(255, 209, 13,.9) !important;
 }
-</style>
+.box-welcome{
+	margin-left:230px;
+}
+.box-info{	
+	width: 200px;
+	margin-left: 0px;
+	padding: 10px;
+	float:left; 
+	margin-right:0px;
+
+}
+.box-detail{
+	background: rgb(14, 90, 242) none repeat scroll 0% 0%;
+	margin: 20px;
+	font-size:120%;
+	color:white;
+	width: 89%;
+	min-height: 80px;
+	text-align:center;
+	padding-top:20px;
+}
+.box-detail button{
+	color:gold;
+}
+.clear{
+	clear:both;
+}</style>
 </head>

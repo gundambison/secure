@@ -5,7 +5,7 @@
 <div><a href="<?=base_url("member");?>" title="Home" class="alone">Home</a></div>
 <div class="menuheaders"><a href="#" title="DETAIL">Profile</a></div>
 <ul class="menucontents">
-	<li><a href="<?=base_url("member/detail");?>" 
+	<li><a href="<?=base_url("member/profile");?>" 
 				block="0" lightbox="0" title="Detail" font="" color="29a4dd">Detail</a></li>
 	<li><a href="<?=base_url("member/edit");?>">Edit Detail</a></li>
 	<li><a href="<?=base_url("member/editpassword");?>">Edit Password</a></li>
