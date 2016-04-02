@@ -1,7 +1,7 @@
 <?php 
 ob_start();
 $name=!isset($raw['name'])?$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']:$raw['name'];
-$rate=$raw['rate'];
+//$rate=$raw['rate'];
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -27,39 +27,39 @@ $rate=$raw['rate'];
                 <tbody id="yui_3_16_0_1_1450323941636_3311">
                   <tr id="yui_3_16_0_1_1450323941636_3324">
                     <td width="297" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3323"><strong>Date</strong></td>
-                    <td width="398" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337"><strong>: </strong>2016-02-01 14:58:34</td>
+                    <td width="398" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337"><strong>: </strong><?=date("Y-m-d H:i:s");?></td>
                   </tr>
                   <tr id="yui_3_16_0_1_1450323941636_3322">
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>Withdrawal from  account</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> <strong>: </strong>78953372</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> <strong>: </strong><?=$raw['accountid'];?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_"><strong>Name</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>:</strong> Hardi Ikrommullah</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>:</strong> <?=$name;?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>Bank Name</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong>BCA</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong><?=$raw['bank'];?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_5"><strong>Account Bank Number</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6"><strong>: </strong>2937383933</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6"><strong>: </strong><?=$raw['norek'];?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_7"><strong>Account Bank Holder</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_8"><strong>: </strong>Hardi Ikrommullah</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_8"><strong>: </strong><?=$raw['namerek'];?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_9"><strong>Withdrawal Amount ( USD )</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_10"><strong>: </strong>$ 1000</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_10"><strong>: </strong>$ <?=number_format($raw['orderWidtdrawal'],2);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_11"><strong>Withdrawal Amount ( Rp )</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_12"><strong>: </strong>Rp. 14.000.000</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_12"><strong>: </strong>Rp. <?=number_format($raw['order1'],0);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_13"><strong>Rate</strong></td>
-                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_14"><strong>: </strong>Rp. 14.000</td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_14"><strong>: </strong>Rp. <?=number_format($rate['value']);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_15"><strong>Status</strong></td>
@@ -217,8 +217,8 @@ foreach($this->forex->emailAdmin as $email){
 	$to[]=$email;
 }
 
-$subject = '[SalmaForex] Confirmation to Widtdrawal ';
-$subject.=$statusConfirm=='approve'?'Have Been Approve':'Have Been Disapprove';
+$subject = '[SalmaForex] Confirmation to Widthdrawal ';
+$subject.= 'Have Been Approve';//:'Have Been Disapprove';
 
 
 $headers = "From: noreply@salmaforex.com\r\n";

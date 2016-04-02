@@ -3,7 +3,21 @@
 if (  function_exists('logFile')){ logFile('view/member/data','widtdrawalProcess_data.php','data'); };
 
 $uDetail=$userlogin['detail'];
-defined('BASEPATH') OR exit('No direct script access allowed');?>
+defined('BASEPATH') OR exit('No direct script access allowed');
+if(!isset($uDetail['bank'])||$uDetail['bank']==''){
+	$notAllow=1;
+	$uDetail['bank']='';
+}
+
+if(!isset($uDetail['bank_norek'])||$uDetail['bank_norek']==''){
+	$notAllow=1;
+	$uDetail['bank_norek']='';
+}
+
+if(isset($notAllow)){
+	redirect(site_url("member/edit/warning"),1);
+}
+?>
 <style>
 .form-group{
 	width:100% !important;
@@ -27,11 +41,11 @@ $name1='<input type="hidden" name="accountid" value="'.$userlogin['accountid'].'
 echo bsInput('Akun Salmaforex','akun', $userlogin['username'] ,'',true);
 echo bsInput('Name','name', $name.$name1 ,'',true);
 echo bsInput('Phone','phone', trim($uDetail['phone']) ,'Please Input Valid Phonenumber' );
-echo bsInput('Nama Bank','bank', '' ,'BCA, Mandiri, BNI, BII, etc' );
-echo bsInput('No Rekening','norek', '' ,'999 999 999 9' );
+echo bsInput('Nama Bank','bank', trim($uDetail['bank']) ,'BCA, Mandiri, BNI, BII, etc' );
+echo bsInput('No Rekening','norek', trim($uDetail['bank_norek']) ,'999 999 999 9' );
 echo bsInput('Nama Pemilik Rekening','namerek', trim($name) ,'Please Input Valid Name' );
 
-echo bsInput('Jumlah Order ($)','orderDeposit', 0 ,'Minimal $10' );
+echo bsInput('Jumlah Order ($)','orderDeposit', 10 ,'Minimal $10' );
 echo bsInput('Rate ($)','orderDeposit', 
 '<div id="input_rate">0</div>' ,'Minimal $10',true );
 echo bsInput('Jumlah Transfer (Rp)','order1', '' ,'Nominal Hanya Estimasi Saja' );

@@ -82,7 +82,7 @@ public $demo=1;
 		
 	}
 	
-	function create($id,$raw='')
+	function create($id,$raw='') //tidak di jalankan
 	{
 		$detail=$this->regisDetail($id);
 		if(defined('LOCAL')){
@@ -105,9 +105,7 @@ public $demo=1;
 			'investorpassword'=>trim($raw['investorpassword']),
 			'masterpassword'=>trim($raw['masterpassword']),
 			'accountid'=>$raw['accountid'],
-			'email'=>$detail['email'],
-//			'raw'=>$raw,
-//			'activation'=>base64_encode($raw),
+			'email'=>$detail['email'], 
 			'created'=>date("Y-m-d")
 		);
 		$accid=date("ym000");
@@ -176,12 +174,13 @@ public $demo=1;
 			'email'=>$detail['email']
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
-			
+		$param2['accountType']=$detail['accounttype'];
 		$this->load->view('member/email/emailRegister_view',$param2);
 		
 	}
 
 	function detail($id,$field='id'){
+	logCreate("account detail id:$id|field:$field");	
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
 		$sql="select count(id) c 
@@ -189,28 +188,51 @@ public $demo=1;
 		where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
-			return false;
-//			$sql.print_r($res,1) ;
+			logCreate("account detail id:$id|field:$field|NOT FOUND","error");
+			return false; 
 		}
 		
 		$sql="select a.* from `{$this->tableAccount}` a  		
 		where `{$field}` like '$id'";
-		$res=dbFetchOne($sql);
-//		$this->accountDetailRepair($res);
+		$res=dbFetchOne($sql); 
+		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
+			logCreate("account detail id:$id|field:$field|update username ","info");
+			$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
+			dbQuery($sql);
+			$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
+			dbQuery($sql);
 			
-		$sql="select a.*,ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
+			$sql="select a.* from `{$this->tableAccount}` a  		
+			where `{$field}` like '$id'";
+			$res=dbFetchOne($sql); 
+		}
+		
+		$sql="select 
+		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid,
+		a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
 		left join `{$this->tableAccountDetail}` ad 
 			on a.username like ad.username
 		left join `{$this->tableAdmin}` adm 
 			on adm_username like a.username
 		where a.`{$field}` like '$id'";
 		$data= dbFetchOne($sql);
+		if($data['accounttype']!='MEMBER'){
+			logCreate("account detail id:$id|field:$field|agent","info");
+			$agent=true;
+		}
+		else{ 
+			$agent=false;
+		}
+		
 		if($data['type']==7){
 			$data['type']='admin';
-		}else{
+		}
+		else{
 			$data['type']=false;
 		}
+		
 		if(isset($data['raw'])){
+			logCreate("account detail id:$id|field:$field|raw detail","info");
 			$data['detail']=json_decode($data['raw'],true); 
 		}
 		unset($data['raw']);
@@ -219,7 +241,8 @@ public $demo=1;
 	
 	function detailRepair($data=array()){
 		$username=$data['username'];
-		$sql="select count(id) c  from `{$this->tableAccountDetail}` where `username`='$username'";
+		$sql="select count(id) c  from `{$this->tableAccountDetail}` 
+		where `username`='$username'";
 		$res=dbFetchOne($sql);
 		if($res['c']==1){
 			return true;
@@ -228,7 +251,8 @@ public $demo=1;
 		if($data['reg_id']!=0){
 			$reg=$this->regisDetail($data['reg_id']);
 			$detail=json_encode($reg['detail']);
-			$sql="insert into `{$this->tableAccountDetail}`(username,detail) values('$username','$detail')";
+			$sql="insert into `{$this->tableAccountDetail}`(username,detail) 
+			values('$username','$detail')";
 			dbQuery($sql);
 		}else{}
 		return true;

@@ -38,10 +38,13 @@ foreach($dt as $row){
 	if($row['status']==2){
 		$status0="cancel";
 	}
-	
+	$row['detail']=$row['raw']->namerek."<br/>".$row['raw']->bank ." (".$row['raw']->norek.")" ;
 	$row['status']=$status0;
 	unset($row['param']);
-	$row['raw']->orderWidtdrawal ='$'.number_format($row['raw']->orderWidtdrawal);
+	if($row['raw']->order1 != $row['raw']->orderWidtdrawal* $row['raw']->rate){
+		$row['raw']->order1=  $row['raw']->orderWidtdrawal* $row['raw']->rate;
+	}
+	$row['raw']->orderWidtdrawal ='Rp'.number_format($row['raw']->order1).'<br/>$'.number_format($row['raw']->orderWidtdrawal).'<br/>Rate Rp'.number_format($row['raw']->rate); 
 	$row['flowid']=sprintf("%s%04s",date("ymd",strtotime($row['created']) ),$row['id']);
 	$data[]=$row;
 }

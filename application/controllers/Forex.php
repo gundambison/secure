@@ -11,6 +11,14 @@ data
 ***/
 class Forex extends CI_Controller {
 	public $param;	
+	public function registerApi($stat=1){
+		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
+		$res=json_decode($tmp, true);
+		//echo '<pre>';
+		if($stat==1)
+			print_r($res);
+	}
+	
 	public function error404(){
 		logCreate('error 404 link:'.site_url());
 		redirect(base_url('member'));
@@ -37,120 +45,16 @@ class Forex extends CI_Controller {
 		echo $def;
 		exit();
 	}
-//===========DELETE DI PRODUCTION	
-	public function activation($kode='null')
-	{
-		$this->param['title']='OPEN LIVE ACCOUNT ACTIVATION'; 
-		$this->param['content']=array(  );
-		 
-		if($this->input->post('kode')==''){
-			$row=$this->forex->activationDetail($kode);
-			
-			
-			if(!isset($res)&&$row['status']!=0){
-				logCreate('data not valid:'.print_r($row,1),'error');
-				$this->param['content'][]= 'activationError' ;
-				$res=true;
-			}
-				
-			if(!isset($res)&&!isset($row['id'])){
-				
-				logCreate('forex code not valid code:'.$kode,'error');
-				$this->param['content'][]= 'data/activationError' ;
-				$res=true;
-			}
-			
-			if(!isset($res)&&isset($row['id'])){
-				$this->param['kode']=$kode; 
-				//$this->load->view('forex/activation_view',$data);
-				$this->param['content'][]= 'activation';
-				$res=true;
-			}
-		}else{		
-			$this->param['post']=$_POST;
-			$this->param['content'][]= 'data/activation' ;
-		}
-		$this->showView();
-	}
-
-//===========DELETE DI PRODUCTION
-	public function fake($status='none')
-	{ 
-		if($this->input->get('privatekey')!=$this->forex->forexKey()){
-			$message="there is nothing to see but us tree";
-			$this->errorMessage('341',$message);
-		}
-		
-		if(defined('LOCAL')){
-			if($status=='none'){
-				$res=array(
-					'responsecode'=>0,
-					'accountid'=>'9'.date("Ymdhis"),
-					'masterpassword'=>date("his"),
-					'investorpassword'=>date("dmy"),
-				);//$res= "1;11001724"; 
-				 
-			}
-			
-			if($status=='activation'){
-				$res="1";
-			}
-			if($status=='update'){
-				$res="0";
-			}
-			if($status=='updateBalance'){
-				$res="0";
-			}
-			$raw=array();
-			if(!isset($res)){ 
-				$res='1;11001724';
-				//echo $raw."<br/>".base64_encode($raw);
-				//MTsxMTAwMTcyNA==
-				
-				$id=$this->forex->accountActivation(5,$raw);
-				$res.="id:$id";
-			}
-			$this->succesMessage($res);
-		}else{ 
-			echo "no respond";
-		}
-	}
 	
-	/*	
-	public function sendmail(){
-		if(defined('LOCAL')){
-			echo 'no email send';
-		}else{
-			mail("gundambison@gmail.com","test","----this is a test----");
-		}
-	}
-	
-	
-
-	public function runApi(){ //not run 
-		$url=$this->config->item('api_url');		
-		$param['app_code']='9912310';
-		$param['module']='forex';
-		$param['task']='register';
-		$result=_runApi($url, $param); //not run
-		echo 'run:'.$url.'<pre>';
-		var_dump($result);
-	}
-*/	
-//=========HAPUS DI PRODUCTION
-	public function listUser()
-	{
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
-		$this->param['content']=array(
-			'listUser', 
-		);
-		$this->showView(); 
-		
-	}
-	
-	public function register($raw='0')
+	public function register($raw=false,$agent=false)
 	{
 		$this->load->library('session');
+		$this->param['statAccount']='member';
+		if($agent!=false){
+			$this->param['fullregis']=true;
+			$this->param['statAccount']='agent';
+		}
+		
 		if($raw!='0'){
 			$ar=explode("-",$raw);
 			logCreate("agent ref:$raw id:{$ar[0]}","info");
@@ -164,6 +68,8 @@ class Forex extends CI_Controller {
 			$this->param['agent']=$num!=''?$num:'';
 		}
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		if(!isset($this->param['formTitle'])) 
+			$this->param['formTitle']=$this->param['title'];
 		$this->param['content']=array(
 			'modal',
 			'form', 
@@ -172,9 +78,16 @@ class Forex extends CI_Controller {
 		
 	}
 	
+	public function agent()
+	{
+		$this->param['formTitle']="Open Patner Account";
+		$this->register(false,true);
+	}
+	
 	public function index()
 	{
-		redirect(base_url('forex/register'));
+		$this->register();
+		//redirect(base_url('forex/register'));
 	}
 	
 	public function data()
@@ -186,31 +99,32 @@ class Forex extends CI_Controller {
 		);
 		$type=$this->input->post('type','unknown'); 
 		$message='unknown data type';
+		$raw=$this->convertData(); 
+		
 		if($type=='request'){
 			$respon['title']='NEW LIVE ACCOUNT (CREATED)';
+			if($raw['statusMember']=='AGENT'){
+				$respon['title']='NEW PATNER ACCOUNT (CREATED)';
+			}
 			$param['data']=$this->convertData();
 			$stat=$this->forex->saveData($param['data'],$message);
-//======SAVE TO DATABASE			
-			/*
-			$param['module']='liveuser';
-			$param['task']='create';
-			logCreate( 'param:'.print_r($param,1));
-			$param['app_code']='9912310';
-			$result=_runApi($url, $param); //not run
-			$this->param['result']=$result;
-			logCreate( 'param:'.print_r($result,1));
-			//$respon['result']=$result;
-			//$respon['html']=$this->load->view($this->param['folder'].'liveTable_view',$this->param,true);
-			*/
+
 			if($stat!==false){
-				$respon['html']="Silakan Menunggu Konfirmasi dari Email anda";
+				
+				$respon['html']="Your Opening Live Account Was Sent Successfully. Please Check your Email in few minutes. Thanks.<br/>
+				Pembukaan Akun Tranding Anda telah Sukses. Silahkan Cek Kembali Email Anda beberapa saat lagi";
 				$ok=1;
+				if($raw['statusMember']=='AGENT'){
+					$respon['html']='Your Opening Patner Account Was Sent Successfully. Please Check your Email in few minutes. Thanks.<br/>
+				Pembukaan Akun Patner Anda telah Sukses. Silahkan Cek Kembali Email Anda beberapa saat lagi';
+				}
 				$url=$this->config->item('api_url');		
 				$param['app_code']=$this->config->item('app_code')[0];
 				$param['module']='forex';
 				$param['task']='register';
 //-------------------TESTED				
 				$result=_runApi($url, $param); //test
+				$this->registerApi(0);
 			}
 		}
 		
@@ -269,8 +183,7 @@ class Forex extends CI_Controller {
 		if(array_search($appcode, $aAppcode)!==false){
 			$this->load->model('forex_model','modelku');
 			$param=$this->input->post('data');
-			$function= strtolower($module ).ucfirst(strtolower($task ));
-			//	$respon=$this->modelku->$function($param );
+			$function= strtolower($module ).ucfirst(strtolower($task )); 
 			$file='views/api/'.$function.'_data.php';
 			if(is_file($file)){
 				$res =$this->load->view('api/'.$function.'_data', $param,true);
@@ -332,15 +245,13 @@ class Forex extends CI_Controller {
 			$this->param['script']=$this->param['type']=$name;
 			
 			$this->param['openScript']=$jsScript;
-//			logCreate('open script:'.$jsScript.'|data:'. $this->uri->segment(1)."_".$name  );
-			
+ 			
 			if(isset($this->param['content'])&&!is_array($this->param['content'])){
 				$this->param['load_view']= 
 					$this->param['folder'].$this->param['content'].'_view';
 				
 			}else{}
-			//$this->checkView( $this->param['load_view'] );
-			
+ 			
 		}else{ 
 			$controller=$this->uri->segment(1);
 			if($controller=='')$controller='forex';
@@ -391,7 +302,7 @@ class Forex extends CI_Controller {
 			
 		);
 		
-		$this->param['shortlink']=site_url();
+		$this->param['shortlink']=base_url();
 		$this->param['footerJS']=array(			
 			'js/envision-2.0.9.4/lib/js/common.js',
 			'js/envision-2.0.9.4/lib/js/modernizr-2.6.2-respond-1.1.0.min.js',
@@ -418,4 +329,51 @@ class Forex extends CI_Controller {
 			logCreate($this->input->post(),'post');
 	}
 	
+	public function fake($status='none')
+	{ 
+		if(!defined('LOCAL')){
+			redirect(site_url());
+		}
+		if($this->input->get('privatekey')!=$this->forex->forexKey()){
+			$message="there is nothing to see but us tree";
+			$this->errorMessage('341',$message);
+		}
+		
+		if(defined('LOCAL')){
+			if($status=='none'){
+				$res=array(
+					'responsecode'=>0,
+					'accountid'=>'9'.date("Ymdhis"),
+					'masterpassword'=>date("his"),
+					'investorpassword'=>date("dmy"),
+				);//$res= "1;11001724"; 
+				 
+			}
+			
+			if($status=='activation'){
+				$res="1";
+			}
+			if($status=='update'){
+				$res="0";
+			}
+			if($status=='updateBalance'){
+				$res="0";
+			}
+			$raw=array();
+		/*	
+			if(!isset($res)){ 
+				$res='1;11001724'; 
+				
+				$id=$this->forex->accountActivation(5,$raw);
+				$res.="id:$id";
+			}
+			$this->succesMessage($res);
+		*/
+			echo json_encode($res);
+		}else{ 
+			echo "no respond";
+		}
+	}
+	
+	 
 }

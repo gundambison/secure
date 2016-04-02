@@ -1,25 +1,10 @@
 <?php 
-/***
-in progress
-forgot
-reset 
-
-Deposit : form deposit
-widtdrawal : form widtdrawal
-login 
-logout
-detail
------------
-listApi
-
-Password untuk kotak surat admin02@salmaforex.com adalah ZL9EXgVoQZ
-***/
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member extends MY_Controller {
 	public $param;	
 	
-	public function edit(){
+	public function edit($warn=0){
 		$this->checkLogin();
 		if($this->input->post('rand')){
 			$param=array(
@@ -34,23 +19,13 @@ class Member extends MY_Controller {
 			
  
 			$url=$this->forex->forexUrl('local');
-			//base_url("member/data");
-/*			
-			
-			foreach($this->input->post() as $name=>$value){
-				$param['data'][]=array( 'name'=>$name, 'value'=>$value);
-			}
-			$param['data'][]=array( 'name'=>'detail','value'=>$this->param['detail']['detail']);
-			$param['data'][]=array( 'name'=>'username','value'=>$this->param['detail']['username']);
-*/
+ 
 			$param['data']=$this->convertData();
-//----------UPDATE Agar dapat di LOG			
-//			$result= _runApi($url,$param); //not run
-			//echo '<pre>'.print_r($param,1);
-			$result=$this->load->view('member/data/updateDetail_data',$param,true);
-			$ar=json_decode($result);
-			// die(print_r($ar,1));	
-			if($result['status']==true){
+ 
+			$ar=$this->load->view('member/data/updateDetail_data',$param,true);
+			$result=json_decode($ar,1); 
+			
+			if(isset($result['status'])&&(int)$result['status']==1){
 				redirect(base_url('member/detail'));
 			}
 			else{ 
@@ -63,6 +38,7 @@ class Member extends MY_Controller {
 				'detailEdit', 
 			);
 			$this->param['footerJS'][]='js/login.js';
+			$this->param['warning']=$warn;
 			$this->showView(); 
 		}
 		
@@ -75,31 +51,23 @@ class Member extends MY_Controller {
 			$data=array( 
 				'investor'=>$post['investor1'],
 				'trading'=>$post['trading1']
-			);
-			//$data[]=current_url(); 
-			//$data[]=$_SERVER['HTTP_REFERER'];
-			//$data['server']=$_SERVER;
+			); 
 			
 		if( $post['expire'] > date("Y-m-d H:i:s") && $post['expire'] < date("Y-m-d H:i:s",
 		strtotime("+2 hour"))){
-			$data['member']=$this->param['detail'];
-			//echo 'valid';
+			$data['member']=$this->param['detail']; 
 			$data['now']=date("Y-m-d H:i:s", strtotime("+2 hour"));
 			
-			$url=$this->forex->forexUrl('local');//base_url("member/data");	 
+			$url=$this->forex->forexUrl('local'); 
 			$param=array(
 				'type'=>'updatePassword',
 				'raw'=>$data,
 				'recover'=>true,
 				'post'=> $this->input->post() 
 			);
-			$param['member']= $this->param['detail'] ;
-//-----------LAKUKAN POST KE SITE UTAMA			
-			//$data['result']= _runApi($url,$param); //not run
-			//print_r($_POST);
+			$param['member']= $this->param['detail'] ; 
 			$result=$this->load->view('member/data/updatePassword_data',$param,true);
-			//print_r($result);
-			//die();
+ 
 //-----------EMAIL
 			$param2=array( 
 				'username'=>	$this->param['detail']['username'],
@@ -115,8 +83,9 @@ class Member extends MY_Controller {
 		}else{ 
 			echo 'not valid';redirect(base_url("member/editPassword"));
 		}
-			redirect(base_url('member/logout'));//decho '<pre>';print_r($data);die();
+			redirect(base_url('member/logout'));//echo '<pre>';print_r($data);die();
 		}
+		
 		$this->param['title']='Edit Password'; 
 		$this->param['content']=array(
 			'passwordEdit', 'modal'
@@ -157,8 +126,7 @@ class Member extends MY_Controller {
 				'recover'=>true
 			);
 			
-//-----------LAKUKAN POST KE SITE UTAMA			
-			//$result= _runApi($url,$param); //not run
+//-----------LAKUKAN POST KE SITE UTAMA
 			$params=array(
 			  'post'=>array(
 				'username'=>$detail['username']
@@ -231,8 +199,10 @@ class Member extends MY_Controller {
 		$this->param['content']=array();
 		if($status=='done'){
 			$info=$this->session->flashdata('info');
-			if($info==1)
+			if($info==1){
 				$this->param['content'][]='done' ;
+				
+			}
 		}
 		
 		if($this->input->post('orderWidtdrawal')){
@@ -299,14 +269,7 @@ class Member extends MY_Controller {
 	}	
 	
 	public function index(){
-		$this->checkLogin();
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
-		$this->param['content']=array(
-			'info', 
-		);
-		$this->param['footerJS'][]='js/login.js';
-		$this->showView(); 
-		
+		$this->detail();
 	}	
 
 	public function listApi($type='api'){
@@ -424,10 +387,11 @@ class Member extends MY_Controller {
 			'js/jquery-migrate.min.js',
 			'js/rs-plugin/js/jquery.themepunch.tools.min.js',
 			'js/rs-plugin/js/jquery.themepunch.revolution.min.js',
+			'js/ddaccordion.js'
 			
 		);
 		
-		$this->param['shortlink']=site_url();
+		$this->param['shortlink']=base_url();
 		$this->param['footerJS']=array(			
 			'js/envision-2.0.9.4/lib/js/common.js',
 			'js/envision-2.0.9.4/lib/js/modernizr-2.6.2-respond-1.1.0.min.js',
@@ -450,8 +414,9 @@ class Member extends MY_Controller {
 		$this->param['description']="Trade now with the best and most transparent forex STP broker";
 		
 		$this->param['emailAdmin']=$this->forex->emailAdmin;
-		 
+		
 		$this->param['session']=$this->session-> all_userdata(); 
+		$this->param['baseFolder']='member/';
 		if($this->input->post())
 			logCreate($this->input->post(),'post');
 	}

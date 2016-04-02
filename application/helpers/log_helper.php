@@ -1,8 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*
-membutuhkan config logConfig.php 
-
+membutuhkan config logConfig.php  
 */
  
 if ( ! function_exists('logConfig'))
@@ -31,14 +30,11 @@ if ( ! function_exists('logCreateDir')){
 		$dir_str='';
 		foreach($a as $id=>$path){
 			if($path=='') break;
-			$dir_str.=($id!=0)?"/$path":$path;
-//			logCreate("path:{$dir_str}");
+			$dir_str.=($id!=0)?"/$path":$path; 
 			if(!is_dir($dir_str)){
-				@mkdir($dir_str);
-//				logCreate("create:{$dir_str}");
+				@mkdir($dir_str); 
 			}else{ logCreate("dir avaiable:{$dir_str}");}
-		}
-//		logCreate("dir avaiable:{$dir}");
+		} 
 	}
 	
 }else{}
@@ -69,7 +65,7 @@ if ( ! function_exists('logCreate'))
 	//@error_log($str,3,$target );
 	if($target==''){
 		log_message('error', 'filename:'.$target.'(null?)|str:'.$str );
-	}
+	}else{}
 	
 	if(!is_file($target)){
 		$txt="<?php die('you not allowed to read directly');\t?>\n";

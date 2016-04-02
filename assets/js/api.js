@@ -27,15 +27,13 @@ try{
     } );
 }
 catch(err){
-	console.log('not tableAPI');
+	//console.log('not tableAPI');
 }
 
 try{	
 	tableDeposit=jQuery('#tableDeposit').DataTable( {
 		"columnDefs": [
-            { 
-			
-            }
+            {}
 		],
         "processing": true,
         "serverSide": true,
@@ -49,14 +47,16 @@ try{
             { "data": "raw.username" },
             { "data": "raw.name" },
             { "data": "raw.orderDeposit" },
+			{ "data": "detail" },
             { "data": "status" },
             { "data": "action" },             
         ]
     } );
-	console.log('table deposit ready');
+	//console.log('table deposit ready');
 }
 catch(err){
-	console.log('not table Deposit');
+	 console.log('not table Widtdrawal');
+	 console.log(err);
 }	
 
 try{	
@@ -78,14 +78,16 @@ try{
             { "data": "raw.username" },
             { "data": "raw.name" },
             { "data": "raw.orderWidtdrawal" },
+            { "data": "detail" },
             { "data": "status" },
             { "data": "action" },             
         ]
     } );
-	console.log('table widtdrawal ready');
+	//console.log('table widtdrawal ready');
 }
 catch(err){
-	console.log('not table Widtdrawal');
+	 console.log('not table Widtdrawal');
+	 console.log(err);
 }	
  	
 } );
@@ -105,13 +107,13 @@ function detail(id){
 		
 		//jQuery("#myModal").modal({show: true}).css("height","150%");	
 		jQuery("#preview").html(result.data.html);
-		console.log("success");	console.log(result);			
+		//console.log("success");	//console.log(result);			
 	});
 	respon.error(function(xhr,status,msg){			
-			console.log("Error");
-			console.log(status);
-			console.log(msg);
-			console.log(xhr);
+			//console.log("Error");
+			//console.log(status);
+			//console.log(msg);
+			//console.log(xhr);
 			
 	});
 }
@@ -123,7 +125,7 @@ function depositApprove(id){
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
 		tableDeposit.draw();
-		console.log('approve');
+		//console.log('approve');
 	});
 	
 }
@@ -134,13 +136,13 @@ function depositCancel(id){
 	respon=sendAjax(url,params);
 	respon.success(function(result,status) {
 		tableDeposit.draw();
-		console.log('cancel');
+		//console.log('cancel');
 	});
 	
 }
 //===============Widthdrawal
 function widtdrawalApprove(id){
-	console.log('approve');
+	//console.log('approve');
 	params={status:"approve",id:id}
 	url=urlData+"?type=widtdrawalProcess";
 	respon=sendAjax(url,params);
@@ -151,7 +153,7 @@ function widtdrawalApprove(id){
 }
 
 function widtdrawalCancel(id){
-	console.log('cancel');
+	//console.log('cancel');
 	params={status:"cancel",id:id}
 	url=urlData+"?type=widtdrawalProcess";
 	respon=sendAjax(url,params);

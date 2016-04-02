@@ -11,7 +11,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');?><!DOCTYPE html>
 	$this->load->view($load_view);
 ?>
  <!-- CONTENT-WRAPPER SECTION START-->
-    <div class="content-wrapper" id="salma-main">	
+    <div class="content-wrapper" id="salma-main">
+	<?php 
+$detail1=isset($detail['detail'])?$detail['detail']:false;
+if($detail1){
+	$this->load->view('member/inc/menu'); 
+}
+?>
 <?php 
 //$this->load->view('menu_view');
 if(isset($content)){
@@ -27,6 +33,7 @@ if(isset($content)){
 	}
 }else{}
 ?>
+	<div class='clear'></div>
 	</div>
 	<div class='clear'></div>
 	<div id='bgAjax'>&nbsp;</div>
@@ -54,5 +61,23 @@ if(isset($footerJS)){
 <script type="text/javascript">try{Typekit.load({
      active: function() {}
 });}catch(e){}</script>
+<?php 
+if(!defined('LOCAL')){?>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5652d61400c5a4a1546218c3/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+<?php 
+}
+?>
 </body>
 </html>

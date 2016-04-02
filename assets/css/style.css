@@ -349,16 +349,58 @@ background-color:#F0677C!important;
 	padding: 30px;
 	border-radius: 20px;
 	width:600px;
-	margin:0 auto 30px;
+	margin:0 auto 30px; 
 }
 .content-wrapper,.frame-form-basic, .formBasic,.frame-form-basic h2  {
 	background-color:#EAFCED;
 	background-color:rgba(234, 252, 237, 0.50);
 
 }
+.menu-container{
+	width: 300px;
+	float: left;
+	margin-left:50px;
+	margin-top: 40px;
+}
+.menu-container .myMenu li{
+	border-bottom:rgb(224, 224, 234) 1px solid;
+	border-left: rgba(10, 90, 241,1) 3px solid;
+	border-right: rgba(10, 90, 241,1) 3px solid;
+}
+.menu-container .myMenu li:first-child{
+	border-top: rgba(10, 90, 241,1) 3px solid;
+	border-radius:10px 10px 0 0;
+}
+.menu-container .myMenu li:last-child{
+	border-bottom: rgba(10, 90, 241,1) 3px solid;
+	border-radius:0 0 10px 10px  ;
+}
+.menu-container .myMenu li{
+	list-style: outside none none;
+	background: rgba(14, 90, 242, 0.8) none repeat scroll 0% 0%;
+	padding: 5px 5px 10px 20px;
+	color: white;
+	font-size: 110%;
+	font-kerning: auto;
+	margin: 0 17px 0 0;
+}
+.menu-container .myMenu li a{
+	color:white;
+}
+.menu-container .myMenu li a:hover{
+	color:white;
+	font-size:150%;
+}
+.form-container{
+	float:left;
+	width: 600px;
+}
+.clear{
+	clear:both;
+}
 html .frame-form-basic h2{
 	margin-top:-50px; 
-	width:250px;
+	width:350px;
 	text-align:center;
 }
 

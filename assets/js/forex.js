@@ -1,7 +1,13 @@
 try{
 	target0=jQuery("#input_orderDeposit");
-	target0.val(10);
+//	target0.val(10);
 	orderDeposit();
+	jQuery("#input_orderDeposit,#input_order1").keyup(function(){
+		orderDeposit();
+	});
+	jQuery("#input_orderDeposit,#input_order1").blur(function(){
+		orderDeposit();
+	});
 }
 catch(err){
 	console.log(err);
@@ -12,6 +18,12 @@ try{
 	target0=jQuery("#input_orderWidtdrawal");
 	target0.val(10);
 	orderWidtdrawal();
+	jQuery("#input_orderWidtdrawal,#input_order1").keyup(function(){
+		orderWidtdrawal();
+	});
+	jQuery("#input_orderWidtdrawal,#input_order1").blur(function(){
+		orderWidtdrawal();
+	});
 }
 catch(err){
 	console.log(err);
@@ -21,21 +33,7 @@ catch(err){
 function clearModal(){
 	jQuery(".modal-title, .modal-body").empty();
 }
-
-jQuery("#input_orderDeposit,#input_order1").keyup(function(){
-	orderDeposit();
-});
-jQuery("#input_orderDeposit,#input_order1").blur(function(){
-	orderDeposit();
-});
-
-jQuery("#input_orderWidtdrawal,#input_order1").keyup(function(){
-	orderWidtdrawal();
-});
-jQuery("#input_orderWidtdrawal,#input_order1").blur(function(){
-	orderWidtdrawal();
-});
-
+ 
 function orderWidtdrawal(){
 	target0=jQuery("#input_orderWidtdrawal");
 	dolar=0;
@@ -49,10 +47,12 @@ function orderWidtdrawal(){
 
 function orderDeposit(){
 	target0=jQuery("#input_orderDeposit");
+	console.log(target0.val());
 	dolar=0;
 	jQuery.post(urlDeposit,function(dolar){
+		console.log(dolar );
 		target=jQuery("#input_order1");
-		target.val( target0.val() * dolar);
+		target.val( parseInt(target0.val()) * dolar);
 		target=jQuery("#input_rate");
 		target.html(  "Rp "+ dolar);
 	});
@@ -79,25 +79,31 @@ function createLiveUser(){
 		if(result.status==true){ 
 			jQuery(".modal-title").html(result.data.title);
 			jQuery(".modal-body").html(result.data.html);
+//			window.open(url,'_blank');
 		}else{
 			jQuery(".modal-title").html("WARNING");
 			jQuery(".modal-body").html(result.message);
 			
 		}
 		
-		jQuery("#myModal").modal({show: true}).css("height","150%");	
-		
-		console.log("success");	console.log(result);			
+		jQuery("#myModal").modal({show: true}).css("height","150%");
+		//console.log("success");	
+		//console.log(result);			
 	   });
 	   respon.error(function(xhr,status,msg){			
-			console.log("Error");
-			console.log(status);
-			console.log(msg);
-			console.log(xhr);
+			//console.log("Error");
+			//console.log(status);
+			//console.log(msg);
+			//console.log(xhr);
 			
 		});
 }
-
+function checkEmail(target){
+	return true;
+   // var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+   // return re.test(target.val());
+	
+}
 function checkInput(){
 	stat=1
 	//stat=checkMoreThan(jQuery('#input_name'),2);
@@ -118,24 +124,18 @@ function checkInput(){
 		jQuery('#input_email').css('border-width','1px') ;
 		stat=checkMoreThan(jQuery('#input_phone'),2);
 	}else{ 
-		console.log('error email :');console.log(stat);
+		//console.log('error email :');
+		//console.log(stat);
 		
 	}
 	return stat;
 }
-/*
-function checkEmail(target){
-	return true;
-    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    return re.test(target.val());
-	
-}
-*/
+ 
 function checkMoreThan(target, length){
 	console.log(target);
 	if(target.val().length<=length){
-		console.log('error :'+target.attr('name'));
-		console.log('error :'+target.val().length);
+		//console.log('error :'+target.attr('name'));
+		//console.log('error :'+target.val().length);
 		target.css('border-color','#ff2323') ;
 		target.css('border-width','3px') ;
 		return 0;
@@ -156,8 +156,6 @@ jQuery(function() {
  
   });
   
- 
-
 function sendAjax(url,params){
 	jQuery("#bgAjax").show();
 	var request = jQuery.ajax({
@@ -170,11 +168,11 @@ function sendAjax(url,params){
     });
 	request.success(function(){
 		jQuery("#bgAjax").hide();
-		console.log("ajax end");
+		//console.log("ajax end");
 	});
 	request.error(function(){
 		jQuery("#bgAjax").hide();
-		console.log("ajax end");
+		//console.log("ajax end");
 	});
 	
 	return request;

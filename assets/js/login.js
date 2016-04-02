@@ -16,15 +16,15 @@ function forgotpass(){
 		}
 		 
 		jQuery("#myModal").modal({show: true}).css("height","150%");
-		console.log("success");	
-		console.log(result);	 
+		//console.log("success");	
+		//console.log(result);	 
 			
 	   });
 	   respon.error(function(xhr,status,msg){			
-			console.log("Error");
-			console.log(status);
-			console.log(msg);
-			console.log(xhr);
+			//console.log("Error");
+			//console.log(status);
+			//console.log(msg);
+			//console.log(xhr);
 			
 		});
 		
@@ -33,7 +33,7 @@ function forgotpass(){
 function login(){
 	var formData=jQuery("#frmLiveAccount").serializeArray();	
 	params={type:"login",data:formData}
-	console.log(params);
+	//console.log(params);
 	clearModal();
 	
 	respon=sendAjax(url,params);
@@ -51,15 +51,15 @@ function login(){
 		
 		//jQuery("#myModal").modal({show: true}).css("height","150%");	
 		
-		console.log("success");	
-		console.log(result);	 
+		//console.log("success");	
+		//console.log(result);	 
 			
 	   });
 	   respon.error(function(xhr,status,msg){			
-			console.log("Error");
-			console.log(status);
-			console.log(msg);
-			console.log(xhr);
+			//console.log("Error");
+			//console.log(status);
+			//console.log(msg);
+			//console.log(xhr);
 			
 		});
 		

@@ -1,5 +1,5 @@
 <div class='container'>
     <div style='margin-top:30px;'>
-		<h3>Request Sedang di proses. Kami akan menghubungi anda secepatnya</h3>
+		<h3>Your Order Was Sent Successfully. Please Check Your Email. Thanks.</h3>
 	</div>
 </div>

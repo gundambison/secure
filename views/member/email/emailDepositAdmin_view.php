@@ -227,6 +227,7 @@ if(defined('LOCAL')){
 	$this->db->insert('mujur_api',$data);
 }
 else{
+	$emailAdmin[]='finance@salmaforex.com';
 	foreach($emailAdmin as $to){
 		mail(trim($to), $subject, $message, $headers);
 	}
