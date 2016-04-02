@@ -258,6 +258,10 @@ class Member extends MY_Controller {
 	}
 	 
 	public function detail(){
+		$this->index();
+	}
+	
+	public function profile(){
 		$this->checkLogin();
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
 		$this->param['content']=array(
@@ -269,7 +273,13 @@ class Member extends MY_Controller {
 	}	
 	
 	public function index(){
-		$this->detail();
+		$this->checkLogin();
+		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['content']=array(
+			'welcome', 
+		);
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView();
 	}	
 
 	public function listApi($type='api'){
