@@ -196,12 +196,21 @@ public $demo=1;
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql); 
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
-			logCreate("account detail id:$id|field:$field|update username ","info");
-			$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
-			dbQuery($sql);
-			$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
-			dbQuery($sql);
-			
+			logCreate("account detail id:$id|field:$field|update username |".json_encode($res),"info");
+			$sql="select count(id) c from `{$this->tableAccount}` where `username` = '{$res['accountid']}'";
+			$res0=dbFetchOne($sql,1);
+			$okay2Rename=$res0['c']==0?true:false;
+			if($okay2Rename){
+				$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
+				dbQuery($sql);
+				$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
+				dbQuery($sql);
+			}
+			else{
+				logCreate("fail rename:".json_encode($res));
+				$sql="UPDATE {$this->tableAccount} SET `accountid` = '{$res['username']}' WHERE `username` = '{$res['username']}';";
+				dbQuery($sql);
+			}
 			$sql="select a.* from `{$this->tableAccount}` a  		
 			where `{$field}` like '$id'";
 			$res=dbFetchOne($sql); 
@@ -234,8 +243,9 @@ public $demo=1;
 		if(isset($data['raw'])){
 			logCreate("account detail id:$id|field:$field|raw detail","info");
 			$data['detail']=json_decode($data['raw'],true); 
+			unset($data['raw']);
 		}
-		unset($data['raw']);
+		
 		return $data;
 	}
 	

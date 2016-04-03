@@ -27,6 +27,9 @@ if(isset($detail)&&$detail['type']=='admin'){?>
 	<li><a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/tarif");?>" block="0" lightbox="0" title="Live Account" font="" color="29a4dd"><img class="ui--icon" src="<?=base_url();?>assets/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"><?php 
 							echo isset($detail['id'])?'Tarif':'unknown';?>
 				</a>
+	<li><a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/listApi/user");?>">
+		List User
+	</a></li>
 	</li>
 </ul>
 <?php 

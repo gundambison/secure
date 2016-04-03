@@ -3,12 +3,12 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 ?>
 <div class='container'>
     <div style='margin-top:30px;'>
-		<h2>Welcome to the Secure Area of SalmaForex</h2>
+		<h2 class='welcome'>Welcome to the Secure Area of SalmaForex</h2>
 		<p>
 		Dear <?=$name;?>, <br/>
 		Your are now logged-in the Secure Area. Here you can view all the Information from your accounts. You can also Update Your Profile before deposit and withdrawn and many more.
 		</p>
-		<div class='box-welcome'>
+		<div class='box-welcome'> 
 			<div class='box-info'>
 				<div class='box-detail'>
 				<label>Verify Account</label>
@@ -21,12 +21,14 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 				<a href='<?=base_url("member/editpassword");?>'><button>Click Here</button></a>
 				</div>
 			</div>
+			<div class='clear'></div>
 			<div class='box-info'>
 				<div class='box-detail'>
 				<label>Create a Deposit</label>
 				<a href='<?=base_url("deposit-form");?>'><button>Click Here</button></a>
 				</div>
 			</div>
+			
 			<div class='box-info'>
 				<div class='box-detail'>
 				<label>Withdrawn</label>

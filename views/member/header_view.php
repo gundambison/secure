@@ -36,7 +36,7 @@ if(isset($detail['accounttype'])&&$detail['accounttype']=='MEMBER'){
 			  style="margin-right: 5px;"><?php 
 							echo isset($detail['id'])?'Logout':'Login';?></a>
 			<div class="helper--seperator"></div>
-			<a href="<?=base_url("member/detail");?>" 
+			<a href="<?=base_url("member/profile");?>" 
 			block="0" lightbox="0" title="Detail" font="" color="29a4dd"><img 
 			class="ui--icon" src="<?=base_url();?>assets/img/contact.png" 
 			alt="" data-at2x="size:14px" data-retina-auto="1"

@@ -283,7 +283,7 @@ class Member extends MY_Controller {
 	}	
 
 	public function listApi($type='api'){
-	$types=array('api','deposit','widtdrawal');	
+	$types=array('api','deposit','widtdrawal','user');	
 		if(!defined('LOCAL')){
 			$this->checkLogin();
 		}
@@ -332,7 +332,6 @@ class Member extends MY_Controller {
 		$this->param['fileCss']['dataTable']='css/jquery.dataTables.min.css';
 		$this->showView(); 
 	}
-	
 	
 	private function checkLogin(){
 		$session=$this->param['session'];

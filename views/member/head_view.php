@@ -184,28 +184,5 @@ ddaccordion.init({
 .box-welcome{
 	margin-left:230px;
 }
-.box-info{	
-	width: 200px;
-	margin-left: 0px;
-	padding: 10px;
-	float:left; 
-	margin-right:0px;
-
-}
-.box-detail{
-	background: rgb(14, 90, 242) none repeat scroll 0% 0%;
-	margin: 20px;
-	font-size:120%;
-	color:white;
-	width: 89%;
-	min-height: 80px;
-	text-align:center;
-	padding-top:20px;
-}
-.box-detail button{
-	color:gold;
-}
-.clear{
-	clear:both;
-}</style>
+</style>
 </head>
