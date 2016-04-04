@@ -357,7 +357,7 @@ background-color:#F0677C!important;
 
 }
 .menu-container{
-	width: 300px;
+	width: 20%;
 	float: left;
 	margin-left:50px;
 	margin-top: 40px;
@@ -390,6 +390,10 @@ background-color:#F0677C!important;
 .menu-container .myMenu li a:hover{
 	color:white;
 	font-size:150%;
+}
+.container-left{
+	float:left;
+	width:60% !important;
 }
 .form-container{
 	float:left;
@@ -439,7 +443,7 @@ h2.welcome{
 	color:rgb(216, 131, 47);
 }
 .box-info{	
-	width: 29%;
+	width: 30%;
 	margin-left: 0px;
 	padding:0 10px;
 	float:left; 
@@ -447,11 +451,11 @@ h2.welcome{
 
 }
 .box-info:first-child{
-	margin-left: -30px;
+/*	margin-left: -30px;*/
 }
 .box-detail{
 	background: rgb(14, 90, 242) none repeat scroll 0% 0%;
-	margin: 5px 20px 0;
+	margin: 0px 10px 15px;
 	font-size:120%;
 	color:white;
 	width: 89%;
@@ -465,4 +469,9 @@ h2.welcome{
 }
 .clear-20{
 	clear:both;
+}
+.box-welcome{
+	margin-left:10px;
+	min-width:80%;
+	max-width:90%
 }

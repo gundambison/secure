@@ -181,8 +181,6 @@ ddaccordion.init({
 .alone{
 	color: rgba(255, 209, 13,.9) !important;
 }
-.box-welcome{
-	margin-left:230px;
-}
+
 </style>
 </head>
