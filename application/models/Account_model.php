@@ -20,7 +20,7 @@ public $demo=1;
 
 	function newAccountWithoutPassword(){
 		$sql="select username from `{$this->tableAccount}` 
-		where masterpassword='' limit 11;";
+		where masterpassword='' limit 4;";
 		return dbFetch($sql);
 	}
 

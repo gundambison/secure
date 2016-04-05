@@ -11,7 +11,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');?><!DOCTYPE html>
 	$this->load->view($load_view);
 ?>
  <!-- CONTENT-WRAPPER SECTION START-->
-    <div class="content-wrapper" id="salma-main">	
+    <div class="content-wrapper" id="salma-main">
+	<?php 
+$detail1=isset($detail['detail'])?$detail['detail']:false;
+if($detail1){
+	$this->load->view('member/inc/menu'); 
+}
+?>
 <?php 
 //$this->load->view('menu_view');
 if(isset($content)){
@@ -27,6 +33,7 @@ if(isset($content)){
 	}
 }else{}
 ?>
+	<div class='clear'></div>
 	</div>
 	<div class='clear'></div>
 	<div id='bgAjax'>&nbsp;</div>

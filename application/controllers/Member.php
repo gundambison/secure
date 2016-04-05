@@ -258,6 +258,10 @@ class Member extends MY_Controller {
 	}
 	 
 	public function detail(){
+		$this->index();
+	}
+	
+	public function profile(){
 		$this->checkLogin();
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
 		$this->param['content']=array(
@@ -269,11 +273,17 @@ class Member extends MY_Controller {
 	}	
 	
 	public function index(){
-		$this->detail();
+		$this->checkLogin();
+		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['content']=array(
+			'welcome', 
+		);
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView();
 	}	
 
 	public function listApi($type='api'){
-	$types=array('api','deposit','widtdrawal');	
+	$types=array('api','deposit','widtdrawal','user');	
 		if(!defined('LOCAL')){
 			$this->checkLogin();
 		}
@@ -322,7 +332,6 @@ class Member extends MY_Controller {
 		$this->param['fileCss']['dataTable']='css/jquery.dataTables.min.css';
 		$this->showView(); 
 	}
-	
 	
 	private function checkLogin(){
 		$session=$this->param['session'];
@@ -387,6 +396,7 @@ class Member extends MY_Controller {
 			'js/jquery-migrate.min.js',
 			'js/rs-plugin/js/jquery.themepunch.tools.min.js',
 			'js/rs-plugin/js/jquery.themepunch.revolution.min.js',
+			'js/ddaccordion.js'
 			
 		);
 		
@@ -413,8 +423,9 @@ class Member extends MY_Controller {
 		$this->param['description']="Trade now with the best and most transparent forex STP broker";
 		
 		$this->param['emailAdmin']=$this->forex->emailAdmin;
-		 
+		
 		$this->param['session']=$this->session-> all_userdata(); 
+		$this->param['baseFolder']='member/';
 		if($this->input->post())
 			logCreate($this->input->post(),'post');
 	}

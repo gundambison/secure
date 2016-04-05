@@ -3,8 +3,8 @@
 $rand_url=url_title("{$detail['accountid']}-{$detail['detail']['firstname']}","-");
 	$urlAffiliation=base_url("register/{$rand_url}");
 ?>
-<div class='container'>
-    <div style='margin-top:30px;'>
+<div class='form-container'>
+    <div style='margin-top:30px;'> 
 			<div class="frame-form-basic">
 			<h2>Detail</h2>
 <?php $detail1=$detail['detail']; 
@@ -29,7 +29,7 @@ $rand_url=url_title("{$detail['accountid']}-{$detail['detail']['firstname']}","-
 			 
 			<?=bsInput( lang('forex_city'),'city',$detail1['city'], lang('forex_inputsuggestion2'),1 );?>
 			<?=bsInput( lang('forex_zipcode'),'zipcode', $detail1['zipcode'], lang('forex_inputsuggestion'),1 );?>
-			<?=bsInput( lang('forex_country'),'citizen', $detail1['citizen'], lang('forex_inputsuggestion'),1 );?>
+			<?=bsInput( lang('forex_country'),'citizen', isset($detail1['citizen'])?$detail1['citizen']:'', lang('forex_inputsuggestion'),1 );?>
 			
 		</table>
 <?php 
