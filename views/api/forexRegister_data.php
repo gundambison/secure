@@ -2,7 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ob_start();
 $succes=false;
- 
+$register=$this->account->newAccountWithoutPassword(40,'where reg_status=1');
+foreach($register as $row){
+	$post=array('username'=>$row['username']);
+	$params2=array('post'=>$post);
+	$this->load->view('member/data/login_data',$params2);
+} 
+
 $register=$this->forex->regisAll(40,'where reg_status=1');
 logCreate("register:".json_encode($register));
 $data=array();
