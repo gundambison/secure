@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ob_start();
 $succes=false;
-$register=$this->account->newAccountWithoutPassword(40,'where reg_status=1');
+$register= $this->account->newAccountWithoutPassword(40,'where reg_status=1');
 foreach($register as $row){
 	$post=array('username'=>$row['username']);
 	$params2=array('post'=>$post);
@@ -82,6 +82,36 @@ foreach($register as $row){
 	}
 	else{
 		$result=$result0;		
+	}
+
+        if(isset($result['responsecode'])&& ((int)$result['responsecode']==7||(int)$result['responsecode']==5) ){
+		logCreate("agent bermasalah?"); 
+		//=================send
+	   $url=$this->forex->forexUrl('register');
+	
+	   $param=array( );
+	   $param['privatekey']	=$this->forex->forexKey();
+//======Required 
+	   $param['username']	=   $dt0['detail']['firstname'];	
+//======Optional	
+	   if($dt['address']!='')
+		$param['address']	=$dt['address'];	
+	   if($dt['zipcode']!='')
+		$param['zip_code']	=$dt['zipcode'];	
+	   if($dt['email']!='')
+		$param['email']		=$dt['email'];
+	   if($dt['country']['name']!='')
+		$param['country']	=$dt['country']['name'];
+	   if($dt['phone']!='')
+		$param['phone']		=$dt['phone']; 
+	   $url.="?".http_build_query($param);
+           $result0= _runApi($url );
+           if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
+		$result=(array)$result0['data'];logCreate("agent bermasalah V1 result:".print_r($result,1)); 
+	   }
+	   else{
+		$result=$result0;logCreate("agent bermasalah?"); logCreate("agent bermasalah v2 result:".print_r($result,1)); 
+	   }
 	}
 	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==5){
