@@ -275,6 +275,7 @@ Daftar Fungsi Yang Tersedia :
 	}	
   
 	public function login(){
+		redirect(base_url('forex'),1);
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
 		$this->param['content']=array(
 			'modal',
