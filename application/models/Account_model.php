@@ -3,20 +3,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if (   function_exists('logFile')){ logFile('model','account_model.php','model'); };
 
 class Account_model extends CI_Model {
-public $tableRegis='mujur_register'; 
-public $tableWorld='mujur_country'; 
-public $tableAccount='mujur_account';
-public $tableAccountRecover='mujur_accountrecover';
+public $tableRegis='sfor_register'; 
+public $tableWorld='sfor_country'; 
+public $tableAccount='sfor_account';
+public $tableAccountRecover='sfor_accountrecover';
 
-public $tableAccountDetail='mujur_accountdetail';
-public $tableActivation='mujur_activation';
-public $tablePassword='mujur_password';
-public $tableAdmin='mujur_admin';
-public $tablePrice='mujur_price';
-public $tableFlowlog='mujur_flowlog';
-public $tableAPI='mujur_api';
+public $tableAccountDetail='sfor_accountdetail';
+public $tableActivation='sfor_activation';
+public $tablePassword='sfor_password';
+public $tableAdmin='sfor_admin';
+public $tablePrice='sfor_price';
+public $tableFlowlog='sfor_flowlog';
+public $tableAPI='sfor_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
+
+	function newAccountWithoutPassword(){
+		$sql="select username from `{$this->tableAccount}` 
+		where masterpassword='' limit 4;";
+		return dbFetch($sql);
+	}
 
 	function recoverId($id=0){		 
 		$now=date("Y-m-d H:i:s");
@@ -201,7 +207,7 @@ public $demo=1;
 			$res0=dbFetchOne($sql,1);
 			$okay2Rename=$res0['c']==0?true:false;
 			if($okay2Rename){
-				$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
+				$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `sfor_account`.`id` = {$res['id']};";
 				dbQuery($sql);
 				$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);

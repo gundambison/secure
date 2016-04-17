@@ -4,31 +4,31 @@ $config['app_code']=array(
 );
  
 
-$config['emailAdmin']=array('admin@dev.salmaforex.com');
+$config['emailAdmin']=array('admin@dev.salmaforex.com','admin@secure.salmaforex.com');
 
 if(defined('LOCAL')){
 	$config['urlForex']=array( 
-		'default'=>			'localhost/forex/fake',
-		'activation'=>		'localhost/forex/fake/activation',
-		'update'=>			'localhost/forex/fake/update',
-		'register'=>		'localhost/forex/fake',
-		'updateBalance'=>	'localhost/forex/fake/updateBalance'		
+		'default'=>			'http://forex.local/forex/fake',
+		'activation'=>		'http://forex.local/forex/fake/activation',
+		'update'=>			'http://forex.local/forex/fake/update',
+		'register'=>		'http://forex.local/forex/fake',
+		'updateBalance'=>	'http://forex.local/forex/fake/updateBalance'		
 		
 	);
 	
-	$config['api_url']='localhost/forex/api';
+	$config['api_url']='http://forex.local/forex/api';
 	$config['forexKey']='unknown99';
 }
 else{ 
 	$config['urlForex']=array( 
-		'default'=>			'http://nfx.posismo.com/api/account/openAccount' ,
-		'register'=>		'http://nfx.posismo.com/rest-api/salma/register',
-		'update'=>			'http://nfx.posismo.com/rest-api/salma/update-account' ,
-		'updateBalance'=>	'http://nfx.posismo.com/api/account/activeAccount'
+		'default'=>			'https://www.natureforex.com/rest-api/salma' ,
+		'register'=>		'https://www.natureforex.com/rest-api/salma/register',
+		'update'=>			'https://www.natureforex.com/rest-api/salma/update-account' ,
+		'updateBalance'=>	'https://www.natureforex.com/rest-api/salma/update-balance'
 	);
 	
 	$config['api_url']='http://secure.salmaforex.com/forex/api';
-	$config['forexKey']='SalmaFX1234567*';
+	$config['forexKey']='SalmaFX123!@#';
 	
 }
 
@@ -39,4 +39,4 @@ if(defined('_DEV_')){
 	  'http://dev.salmaforex.com/forex/fake/updateBalance';
 }else{} 
 
-$config['urlForex']['local']='localhost/index.php/forex/data';
+$config['urlForex']['local']='http://forex.local/index.php/forex/data';
