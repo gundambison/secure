@@ -2,21 +2,42 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 if (   function_exists('logFile')){ logFile('model','forex_model.php','model'); };
 class Forex_model extends CI_Model {
-public $tableRegis='mujur_register'; 
-public $tableWorld='mujur_country'; 
-public $tableAccount='mujur_account';
-public $tableAccountDetail='mujur_accountdetail';
-public $tableActivation='mujur_activation';
-public $tablePassword='mujur_password';
-public $tableAdmin='mujur_admin';
-public $tablePrice='mujur_price';
-public $tableFlowlog='mujur_flowlog';
-public $tableAPI='mujur_api';
+public $tableRegis='sfor_register'; 
+public $tableWorld='sfor_country'; 
+public $tableAccount='sfor_account';
+public $tableAccountDetail='sfor_accountdetail';
+public $tableActivation='sfor_activation';
+public $tablePassword='sfor_password';
+public $tableAdmin='sfor_admin';
+public $tablePrice='sfor_price';
+public $tableFlowlog='sfor_flowlog';
+public $tableAPI='sfor_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 
 public $emailAdmin='admin@dev.salmaforex.com';
-
+/***
+Daftar Fungsi Yang Tersedia :
+*	emailAdmin($name='default')
+*	forexUrl($name='default')
+*	forexKey()
+*	flowInsert($type='',$data=array() )
+*	rateUpdate($raw)
+*	rateNow($types='')
+*	accountRecover($detail=false)
+*	accountCreate($id,$raw='')
+*	accountDetail($id,$field='id')
+*	accountDetailRepair($data=array())
+*	accountActivation($id,$raw0)
+*	activationDetail($id,$field='id')
+*	activationUpdate($id, $status)
+*	activationUpdateUser($id, $status)
+*	regisAll($limit=10,$where="")
+*	regisDetail($id,$stat=false)
+*	regisDelete($email,$status=-1)
+*	saveData($data, &$message)
+*	__construct()
+***/
 	function emailAdmin($name='default'){
 		$url=$aAppcode=$this->config->item('emailAdmin');
 		
@@ -86,7 +107,7 @@ public $emailAdmin='admin@dev.salmaforex.com';
 	}
 
 	function rateNow($types=''){
-//==========Menambah mujur_price
+//==========Menambah sfor_price
 			if(!$this->db->table_exists($this->tablePrice)){
 				$fields = array(
 				  'id'=>array( 
@@ -103,15 +124,15 @@ public $emailAdmin='admin@dev.salmaforex.com';
 				$str = $this->db->last_query();			 
 				logConfig("create table:$str");
 				$this->db->reset_query();	
-				$this->db->insert('mujur_price', 
+				$this->db->insert('sfor_price', 
 					array('types'=>'deposit', 'price'=>14000));
-				$this->db->insert('mujur_price', 
+				$this->db->insert('sfor_price', 
 					array('types'=>'widtdrawal', 'price'=>13500));
 			}
 			
 		$types=addslashes($types);
 		$row= $this->db	
-		->query('select price `value` from mujur_price where types="'.$types.'" order by created desc limit 1')
+		->query('select price `value` from sfor_price where types="'.$types.'" order by created desc limit 1')
 		->row_array(); 
 		return $row ;
 	}
@@ -147,7 +168,6 @@ SEMUA dipindah ke model ACCOUNT
 		if(!isset($detail['detail']['statusMember']))
 			$detail['detail']['statusMember']='MEMBER';
 		logCreate("register id:$id |raw:".print_r($raw,1));
-		
 		
 		$dt=array(
 			'reg_id'=>$id,
@@ -446,14 +466,22 @@ REGISTER
 			$message='No email';
 			return false;
 		}
-		
+/*
 		$sql="select count(reg_id) c from {$this->tableRegis} where
-		reg_email='$email'";
+		reg_email like '$email'";
 		$res= $this->db->query($sql)->row_array();
 		if($res['c']!=0){
-			$message='Email already register';//.json_encode($res);
+			$message='Email already register';
 			return false;
 		}
+*/
+		$reg_id=date("ym0000");
+		$sql="select max(reg_id) max from {$this->tableRegis}";
+		$dt2=dbFetchOne($sql);
+		if($dt2['max'] > (int)$reg_id){
+			$accid=$dt2['max'];
+		}
+		
 		unset($data['type']);
 		$dt=array(
 			'reg_status'=>1,
@@ -461,6 +489,8 @@ REGISTER
 			'reg_agent'=>$agent,
 			'reg_created'=>date("Y-m-d H:i:s"),
 			'reg_email'=>$email,
+			'reg_id'=>$reg_id,
+			'reg_username'=>!isset($data['firstname'])?'salmaforex':trim( $data['firstname'] )
 		);
 		$sql=$this->db->insert_string($this->tableRegis, $dt);
 		dbQuery($sql);
@@ -532,8 +562,8 @@ REGISTER
 				logConfig("create table:$str");
 				$this->db->reset_query();	
 			}
-//==========Menambah mujur_api
-			if(!$this->db->table_exists('mujur_api')){
+//==========Menambah sfor_api
+			if(!$this->db->table_exists('sfor_api')){
 				$fields = array(
 				  'id'=>array( 
 					'type' => 'BIGINT','auto_increment' => TRUE), 		   
@@ -547,7 +577,7 @@ REGISTER
 				);
 				$this->dbforge->add_field($fields);
 				$this->dbforge->add_key('id', TRUE);
-				$this->dbforge->create_table('mujur_api',TRUE);
+				$this->dbforge->create_table('sfor_api',TRUE);
 				$str = $this->db->last_query();			 
 				logConfig("create table:$str");
 				$this->db->reset_query();	

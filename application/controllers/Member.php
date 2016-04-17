@@ -2,8 +2,39 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member extends MY_Controller {
-	public $param;	
+/***
+Daftar Fungsi Yang Tersedia :
+*	edit($warn=0)
+*	editPassword()
+*	forgot()
+*	recover($id=0)
+*	deposit($status='none')
+*	widtdrawal($status='none')
+*	login()
+*	logout()
+*	detail()
+*	profile()
+*	index()
+*	listApi($type='api')
+*	tarif()
+*	checkLogin()
+*	__CONSTRUCT()
+***/
+	public $param;
 	
+	public function loginProcess(){
+		$login=$this->session->userdata('login');
+		$param=array( 'login'=>$login );
+		$raw=$this->load->view('depan/data/login_data',$param,true);
+		$response=json_decode($raw);
+		if($response->status===false){
+			$post['message']=$response->message;
+			$this->session->set_flashdata('login', $post);
+			redirect(base_url('login/member'),1);
+		}
+		redirect(base_url('member'),1);
+	}
+
 	public function edit($warn=0){
 		$this->checkLogin();
 		if($this->input->post('rand')){
@@ -22,14 +53,14 @@ class Member extends MY_Controller {
  
 			$param['data']=$this->convertData();
  
-			$ar=$this->load->view('member/data/updateDetail_data',$param,true);
+			$ar=$this->load->view('depan/data/updateDetail_data',$param,true);
 			$result=json_decode($ar,1); 
 			
 			if(isset($result['status'])&&(int)$result['status']==1){
-				redirect(base_url('member/detail'));
+				redirect(base_url('depan/detail'));
 			}
 			else{ 
-				redirect(base_url('member/edit'));
+				redirect(base_url('depan/edit'));
 			}
 		}
 		else{ 
@@ -43,7 +74,7 @@ class Member extends MY_Controller {
 		}
 		
 	}
-	
+
 	public function editPassword(){
 		$this->checkLogin();
 		if($this->input->post('rand')){
@@ -66,7 +97,7 @@ class Member extends MY_Controller {
 				'post'=> $this->input->post() 
 			);
 			$param['member']= $this->param['detail'] ; 
-			$result=$this->load->view('member/data/updatePassword_data',$param,true);
+			$result=$this->load->view('depan/data/updatePassword_data',$param,true);
  
 //-----------EMAIL
 			$param2=array( 
@@ -77,13 +108,13 @@ class Member extends MY_Controller {
 			);
 			$param2['emailAdmin']=array();//$this->forex->emailAdmin;
 			
-			$this->load->view('member/email/emailPasswordChange_view',$param2);
+			$this->load->view('depan/email/emailPasswordChange_view',$param2);
 			
 			
 		}else{ 
-			echo 'not valid';redirect(base_url("member/editPassword"));
+			echo 'not valid';redirect(base_url("depan/editPassword"));
 		}
-			redirect(base_url('member/logout'));//echo '<pre>';print_r($data);die();
+			redirect(base_url('depan/logout'));//echo '<pre>';print_r($data);die();
 		}
 		
 		$this->param['title']='Edit Password'; 
@@ -115,7 +146,7 @@ class Member extends MY_Controller {
 		$detail=$this->account->recoverId($id);
 		
 		if($detail!=false){ 	
-			$url=base_url("member/data");
+			$url=base_url("depan/data");
 			//reset 
 			$this->account->noPass($detail['id']);
 			$param=array(
@@ -132,7 +163,7 @@ class Member extends MY_Controller {
 				'username'=>$detail['username']
 			  )
 			);
-			$tmp=$this->load->view('member/data/login_data',$params,true);
+			$tmp=$this->load->view('depan/data/login_data',$params,true);
 			$respon=json_decode($tmp);
 			$this->param['raw']=array(
 			  'code'=>266,
@@ -178,10 +209,10 @@ class Member extends MY_Controller {
 			$this->forex->flowInsert('deposit', $data); 
 			$this->session->set_flashdata('info', '1');
 			//kirim email 1
-			$this->load->view('member/email/emailDepositAdmin_view',$this->param);			
+			$this->load->view('depan/email/emailDepositAdmin_view',$this->param);			
 			//kirim email 2
-			$this->load->view('member/email/emailDepositMember_view',$this->param);
-			redirect(base_url('member/deposit/done/'.rand(100,999) ),true);
+			$this->load->view('depan/email/emailDepositMember_view',$this->param);
+			redirect(base_url('depan/deposit/done/'.rand(100,999) ),true);
 			exit();
 		}
 		else{ 
@@ -193,7 +224,10 @@ class Member extends MY_Controller {
 		
 	}	
 
-	public function widtdrawal($status='none'){
+	public function widtdrawal($status=null){
+		redirect(base_url('member/withdrawal/'.$status));
+	}
+	function withdrawal($status=null){
 		$this->checkLogin();
 		$this->param['title']='OPEN LIVE ACCOUNT';
 		$this->param['content']=array();
@@ -223,10 +257,10 @@ class Member extends MY_Controller {
 			$this->forex->flowInsert('widtdrawal', $data); 
 			$this->session->set_flashdata('info', '1');
 			//kirim email 1
-			$this->load->view('member/email/emailWidtdrawalAdmin_view',$this->param);			
+			$this->load->view('depan/email/emailWidtdrawalAdmin_view',$this->param);			
 			//kirim email 2
-			$this->load->view('member/email/emailWidtdrawalMember_view',$this->param);
-			redirect(base_url('member/widtdrawal/done/'.rand(100,999) ),true);
+			$this->load->view('depan/email/emailWidtdrawalMember_view',$this->param);
+			redirect(base_url('depan/widtdrawal/done/'.rand(100,999) ),true);
 			
 			exit();
 		}
@@ -279,7 +313,7 @@ class Member extends MY_Controller {
 			'welcome', 
 		);
 		$this->param['footerJS'][]='js/login.js';
-		$this->showView();
+		$this->showView('newbase_view');
 	}	
 
 	public function listApi($type='api'){
@@ -313,7 +347,7 @@ class Member extends MY_Controller {
 			$post= $this->input->post();
 			$stat=$this->forex->rateUpdate($post);
 			if($stat===false)die('error');
-			redirect(base_url('member/tarif'));
+			redirect(base_url('depan/tarif'));
 			exit();
 		}else{}
 		$this->param['title']='Tarif'; 
@@ -338,15 +372,33 @@ class Member extends MY_Controller {
 		$detail=$this->account->detail($session['username'],'username');
 		if($detail==false){
 			logCreate('no username','error');
-			redirect("login");			
+			redirect("login");
 		}
-		else{ 
-			
-		}		
+		else{}
+		$post=array();
+		if(isset($session['expire'])){
+			if($session['expire']<strtotime("now")){
+				logCreate('User Expired' );
+				$post['message']='Your Login Has expired';
+				$this->session->set_flashdata('login', $post);
+				redirect("login/member");
+			}
+			else{
+				$session['expire']=strtotime("+10 minutes");
+			}
+		}
+		else{
+			logCreate('User don\'t have Expired' );
+			$post['message']='Your Login Has expired?';
+			$this->session->set_flashdata('login', $post);
+			redirect("login/member");
+			$session['expire']=strtotime("+10 minutes");
+		}
 		if($session['password']==$detail['masterpassword']){			
 			$array=array( 
 				'username'=>$session['username'],
-				'password'=>($session['password'])
+				'password'=>($session['password']),
+				'expire'=>$session['expire']
 			);
 			$this->session->set_userdata($array);
 			$this->param['detail']=$this->param['userlogin']=$detail;
@@ -355,6 +407,8 @@ class Member extends MY_Controller {
 		}
 		else{
 			logCreate('wrong password','error');
+			$post['message']='Please Login Again';
+			$this->session->set_flashdata('login', $post);
 			redirect("login");			
 		}
 	}
@@ -364,7 +418,7 @@ class Member extends MY_Controller {
 		
 		date_default_timezone_set('Asia/Jakarta');
 		$this->param['today']=date('Y-m-d');
-		$this->param['folder']='member/';
+		$this->param['folder']='depan/';
 		$this->load->helper('form');
 		$this->load->helper('formtable');
 		$this->load->helper('language');
@@ -375,59 +429,34 @@ class Member extends MY_Controller {
 		$this->load->model('account_model','account');
 		$defaultLang="english";
 		$this->lang->load('forex', $defaultLang);
+		
 		$this->param['fileCss']=array(	
 			'css/style.css',
-			'contact-form-7-css'=>'css/salmaforex/style.css', 
-			'rs-plugin-settings-css'=>'css/salmaforex/settings.css',
-			'wpt-custom-login-css'=>'css/salmaforex/custom-login.css',
-			'theme-bootstrap-css'	=>	'css/envision/bootstrap.css',					
-			'theme-frontend-style-css'	=>	'css/envision/style.css?ver=384753e655020ba892b1123f6ddf06b2',
-			'theme-frontend-extensions-css'	=>			'css/envision/extensions.css',
-			'theme-bootstrap-responsive-css'	=>		'css/envision/bootstrap-responsive.css',
-			'theme-bootstrap-responsive-1170-css'	=>	'css/envision/bootstrap-responsive-1170.css',
-			'theme-frontend-responsive-css'	=>			'css/envision/responsive.css',
-			'ttheme-fontawesome-css'	=>				'css/module.fontawesome/source/css/font-awesome.min.css',	
-			'theme-icomoon-css'	=>			'css/module.fontawesome/source/css/font-awesome.min.css',
-			'theme-skin'	=>				'css/Dark-Blue-Skin_cf846b6937291eb00e63741d95d1ce40.css',
-			'css/cupertino/jquery-ui-1.10.3.custom.min.css',
+			'css/bootstrap.css',
 		);
 		$this->param['fileJs']=array(
-			'js/jquery-1.11.3.js',
-			'js/jquery-migrate.min.js',
-			'js/rs-plugin/js/jquery.themepunch.tools.min.js',
-			'js/rs-plugin/js/jquery.themepunch.revolution.min.js',
-			'js/ddaccordion.js'
-			
+			'js/jquery-1.7.min.js',
 		);
 		
 		$this->param['shortlink']=base_url();
-		$this->param['footerJS']=array(			
-			'js/envision-2.0.9.4/lib/js/common.js',
-			'js/envision-2.0.9.4/lib/js/modernizr-2.6.2-respond-1.1.0.min.js',
-			'js/envision-2.0.9.4/lib/js/noconflict.js',
-			'js/envision-2.0.9.4/cloudfw/js/webfont.js',
-			'js/envision-2.0.9.4/lib/js/jquery.prettyPhoto.js',
-			'js/envision-2.0.9.4/lib/js/extensions.js',
-			'js/envision-2.0.9.4/lib/js/retina.js',
-			'js/envision-2.0.9.4/lib/js/queryloader2.js',
-			'js/envision-2.0.9.4/lib/js/waypoints.min.js',
-			'js/envision-2.0.9.4/lib/js/waypoints-sticky.js',
-			'js/envision-2.0.9.4/lib/js/jquery.viewport.mini.js',
-			'js/envision-2.0.9.4/lib/js/jquery.flexslider.js',		
-			'js/jquery-ui-1.9.2.min.js',			
-			'js/bootstrap.js',
-			'js/forex.js',	
-			
+		$this->param['footerJS']=array(	 
+			'js/bootstrap.min.js',
+			'js/formValidation.min.js',
+			'js/scripts.js'
 		);
- 
 		$this->param['description']="Trade now with the best and most transparent forex STP broker";
 		
 		$this->param['emailAdmin']=$this->forex->emailAdmin;
 		
+		$this->param['emailAdmin']=$this->forex->emailAdmin;
+		
 		$this->param['session']=$this->session-> all_userdata(); 
-		$this->param['baseFolder']='member/';
+		$this->param['baseFolder']='depan/';
+		$this->param['noBG']=true;
+		/*
 		if($this->input->post())
 			logCreate($this->input->post(),'post');
+		*/
 	}
 	
 }

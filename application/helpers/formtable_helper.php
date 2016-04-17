@@ -28,6 +28,37 @@ if ( ! function_exists('bsInput')){
 	}
 }else{}
 
+if ( ! function_exists('bsInput2')){
+	function bsInput2($title,$name, $value='',$info='',$disable=false,$show=true){
+		if($info=='')$info='please input correct data';
+		$data = array(
+			'name'          => $name,
+			'id'            => 'input_'.$name,
+			'value'         => $value,
+			'class'			=> 'form-control',
+			'type'			=> 'text',
+			'placeholder'	=> $info
+		);
+		if($disable!==false){
+			$inp=$value;  
+		}
+		else{
+			$inp= form_input($data);
+		}
+		$disp=$show==true?'':'display:none'; 
+		$str='<div class="form-group" style="'.$disp.'">
+                    <label for="input_'.$name.'" class="col-sm-2 control-label">'.$title.'</label>
+                    <div class="col-sm-10">
+                     '.$inp.'
+                    </div>
+                  </div>';
+		/*'<tr style="'.$disp.'"><td><label for="input_'.$name.'">'.$title.'</label></td><td>&nbsp;</td>
+		<td><div class="form-group">'.$inp.'</div></td></tr>';*/
+	return $str;
+	
+	}
+}else{}
+ 
 if ( ! function_exists('bsInputPass')){
 	function bsInputPass($title,$name, $value='',$info=''){
 		if($info=='')$info='please input correct data';
