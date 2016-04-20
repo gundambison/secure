@@ -20,7 +20,7 @@
                 <div class="drop-nav">
                 	<ul>
                     	<li>
-                        	<a href="#"><span class="glyphicon glyphicon-home"></span> Home</a>
+                        	<a href="<?=base_url('member');?>"><span class="glyphicon glyphicon-home"></span> Home</a>
                         </li>
                         <li>
                         	<a href="#"><span class="glyphicon glyphicon-retweet"></span> Transactions</a>

@@ -28,18 +28,16 @@
 <?php 
 			$load_view=$baseFolder.'form_view';
 			$this->load->view($load_view); 
-?>				
-                <div class="vspace-30"></div>
+?>
+			<div class="vspace-30"></div>
             </div>
             <div class="col-md-1 col-sm-2"></div>
             <div class="col-md-4 col-sm-10">
             	<div class="row">
-                	<div class="col-xs-6">
-                    	<a href="#"><img class="img-responsive inlineblock" alt="Live Support" src="<?=base_url()."media/";?>images/live-support.jpg"></a>
-                    </div>
-                    <div class="col-xs-6">
-                    	<a href="#"><img class="img-responsive inlineblock" alt="Skype Support" src="<?=base_url()."media/";?>images/skype-support.jpg"></a>
-                    </div>
+<?php 
+			$load_view=$baseFolder.'inc/support_view';
+			$this->load->view($load_view); 
+?>
                 </div>
             </div>
     	</div>

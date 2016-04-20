@@ -17,7 +17,17 @@ public $tableFlowlog='sfor_flowlog';
 public $tableAPI='sfor_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
-
+/***
+Daftar Fungsi Yang Tersedia :
+*	newAccountWithoutPassword()
+*	recoverId($id=0)
+*	noPass($id)
+*	recover($detail=false)
+*	create($id,$raw='') //tidak di jalankan
+*	detail($id,$field='id')
+*	detailRepair($data=array())
+*	__construct()
+***/
 	function newAccountWithoutPassword(){
 		$sql="select username from `{$this->tableAccount}` 
 		where masterpassword='' limit 4;";

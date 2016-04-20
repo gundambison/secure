@@ -2,9 +2,8 @@
 if ( ! function_exists('logFile')){ logFile('view/member/data','login_data.php','data'); };
 
 ob_start();
-	$responce=array('post'=>$login);
-	logCreate("login:".print_r($login,1),'info');
-	$responce['detail']=$detail=$this->forex->accountDetail($login['username'],'username');
+	$responce=array('post'=>$post);
+	$responce['detail']=$detail=$this->forex->accountDetail($post['username'],'username');
 	if($detail!==false){
 		if($detail['masterpassword']==''){
 			$responce['code']=9;
@@ -29,13 +28,13 @@ ob_start();
 			
 			$url=$this->forex->forexUrl('update');
 			$url.="?".http_build_query($param);
-		if(!defined('_DEV_')){	 
-			$result0= _runApi($url );
-			logCreate("update password result:".print_r($result0,1));
-		}
-		else{
-			logCreate("update password ke Sistem hanya di production");
-		}		
+			if(!defined('_DEV_')){	 
+				$result0= _runApi($url );
+				logCreate("update password result:".print_r($result0,1));
+			}
+			else{
+				logCreate("update password ke Sistem hanya di production");
+			}		
 			$sql = $this->db->update_string($this->forex->tableAccount, $data, $where);
 			dbQuery($sql,1); 
 			
@@ -55,18 +54,17 @@ ob_start();
 		}
 		
 		if($ok==1){
-			if(md5($login['password'])==$detail['masterpassword']){
+			if(md5($post['password'])==$detail['masterpassword']){
 			$responce['error']=false;
 			$array=array( 
-				'username'=>$login['username'],
-				'password'=>md5($login['password']),
-				'expire'=>strtotime("+10 minutes")
+				'username'=>$post['username'],
+				'password'=>md5($post['password'])
 			);
 			$this->session->set_userdata($array);
 			
 			}
 			else{
-				$responce['error']='Please Check Your Username and Password';			
+				$responce['error']='Please Check Your Username and Password '.json_encode($post);			
 			}
 		}else{}
 		
@@ -101,7 +99,7 @@ else{
 
 
 $responce['-']=$_SERVER;
-//logCreate($responce);
+logCreate($responce);
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result']);
 }else{
