@@ -6,7 +6,7 @@ if(!isset($showForm)){
 	$showForm=1;
 }
 if(!isset($showAgent)){ 
-	$showAgent=false;
+	$showAgent=true;
 }
 
 //if(isset($register)){ print_r($register); }
@@ -71,6 +71,13 @@ if(!isset($showAgent)){
  
 		<input type='hidden' name='statusMember' value='<?=isset($register['statusMember'])?$register['statusMember']:strtoupper($statAccount);?>' />
 		
+			<div class="form-group">
+                <label class="col-sm-3 control-label"></label>
+                <div class="col-sm-5">
+                    <input name="accept" id="acc" value="OK" class="btn btn-info" type="checkbox" />
+					I accept Costumer Agrement
+                </div>
+            </div> 
 			<div class="form-group">
                 <label class="col-sm-3 control-label"></label>
                 <div class="col-sm-5">

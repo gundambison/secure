@@ -24,7 +24,7 @@ Daftar Fungsi Yang Tersedia :
 	
 	public function loginProcess(){
 		$login=$this->session->userdata('login');
-		$param=array( 'login'=>$login );
+		$param=array( 'post'=>$login );
 		$raw=$this->load->view('depan/data/login_data',$param,true);
 		$response=json_decode($raw);
 		if($response->status===false){
@@ -57,10 +57,10 @@ Daftar Fungsi Yang Tersedia :
 			$result=json_decode($ar,1); 
 			
 			if(isset($result['status'])&&(int)$result['status']==1){
-				redirect(base_url('depan/detail'));
+				redirect(base_url('member/detail'));
 			}
 			else{ 
-				redirect(base_url('depan/edit'));
+				redirect(base_url('member/edit'));
 			}
 		}
 		else{ 
@@ -114,7 +114,7 @@ Daftar Fungsi Yang Tersedia :
 		}else{ 
 			echo 'not valid';redirect(base_url("depan/editPassword"));
 		}
-			redirect(base_url('depan/logout'));//echo '<pre>';print_r($data);die();
+			redirect(base_url('member/logout'));//echo '<pre>';print_r($data);die();
 		}
 		
 		$this->param['title']='Edit Password'; 
@@ -201,7 +201,7 @@ Daftar Fungsi Yang Tersedia :
 				'error'=>2,
 				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
 			);
-			$this->db->insert('mujur_api',$data);
+			$this->db->insert($this->forex->tableApi,$data);
 			
 			$data=$post0;
 			$data['userlogin']=$this->param['userlogin'];
@@ -212,7 +212,7 @@ Daftar Fungsi Yang Tersedia :
 			$this->load->view('depan/email/emailDepositAdmin_view',$this->param);			
 			//kirim email 2
 			$this->load->view('depan/email/emailDepositMember_view',$this->param);
-			redirect(base_url('depan/deposit/done/'.rand(100,999) ),true);
+			redirect(base_url('member/deposit/done/'.rand(100,999) ),true);
 			exit();
 		}
 		else{ 
@@ -249,7 +249,7 @@ Daftar Fungsi Yang Tersedia :
 				'error'=>2,
 				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
 			);
-			$this->db->insert('mujur_api',$data);
+			$this->db->insert($this->forex->tableApi,$data);
 			
 			$data=$post0;
 			$data['userlogin']=$this->param['userlogin'];
@@ -260,7 +260,7 @@ Daftar Fungsi Yang Tersedia :
 			$this->load->view('depan/email/emailWidtdrawalAdmin_view',$this->param);			
 			//kirim email 2
 			$this->load->view('depan/email/emailWidtdrawalMember_view',$this->param);
-			redirect(base_url('depan/widtdrawal/done/'.rand(100,999) ),true);
+			redirect(base_url('member/widtdrawal/done/'.rand(100,999) ),true);
 			
 			exit();
 		}
@@ -293,7 +293,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	 
 	public function detail(){
-		$this->index();
+		$this->profile();
 	}
 	
 	public function profile(){
@@ -348,7 +348,7 @@ Daftar Fungsi Yang Tersedia :
 			$post= $this->input->post();
 			$stat=$this->forex->rateUpdate($post);
 			if($stat===false)die('error');
-			redirect(base_url('depan/tarif'));
+			redirect(base_url('member/tarif'));
 			exit();
 		}else{}
 		$this->param['title']='Tarif'; 
@@ -379,20 +379,31 @@ Daftar Fungsi Yang Tersedia :
 		$post=array();
 		if(isset($session['expire'])){
 			if($session['expire']<strtotime("now")){
-				logCreate('User Expired' );
-				$post['message']='Your Login Has expired';
+//				logCreate('User Expired '.$session['expire']." vs ". strtotime("now") );
+				$post['message']='Please Login Again';
 				$this->session->set_flashdata('login', $post);
+				$array=array( 
+					'username'=>null,
+					'password'=>null,
+					'expire'=>strtotime("+12 minutes")
+				);
+				$this->session->set_userdata($array);
 				redirect("login/member");
 			}
 			else{
 				$session['expire']=strtotime("+10 minutes");
+				logCreate('add User Expired '.$session['expire']  );
 			}
 		}
 		else{
-			logCreate('User don\'t have Expired' );
+//			logCreate('User don\'t have Expired' );
 			$post['message']='Your Login Has expired?';
 			$this->session->set_flashdata('login', $post);
-			redirect("login/member");
+			$array=array(  
+					'expire'=>strtotime("+12 minutes")
+				);
+				$this->session->set_userdata($array);
+			redirect(base_url("member"));
 			$session['expire']=strtotime("+10 minutes");
 		}
 		if($session['password']==$detail['masterpassword']){			

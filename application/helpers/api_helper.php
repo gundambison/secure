@@ -64,7 +64,7 @@ if ( ! function_exists('_runApi')){
 		if(!isset($response0)) $response0='?';
 		logCreate( 'API |url:'. $url. "|raw:".(is_array($response)?'total array/obj='.count($response):$response0 ) );
 		
-	    $CI->db->insert('mujur_api',$dtAPI);	
+	    $CI->db->insert($CI->forex->tableAPI,$dtAPI);	
 		return $response;
 			
 	}

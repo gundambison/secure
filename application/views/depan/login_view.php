@@ -14,6 +14,15 @@
 						<div role="tabpanel" class="tab-pane active" id="online-login">
                         	<h4><strong>Login to Secure Online Account</strong></h4>
 <?php  
+		if(isset($register['message'])){ ?>
+							<div class="alert alert-block alert-danger fade in">
+								<button type="button" class="close" data-dismiss="alert"></button>
+								<h4 class="alert-heading">Warning!</h4>
+								<p><?=$register['message'];?></p>								
+							</div>
+<?php	}  
+?>
+<?php  
 		if(isset($login['message'])){ ?>
 							<div class="alert alert-block alert-danger fade in">
 								<button type="button" class="close" data-dismiss="alert"></button>
@@ -46,7 +55,7 @@
                                         <div class="input-group">
                                        
                                         </div>
-                                        <div class="text-center"><a class="small bright" href="#" title="Forgot your passport?"><span class="glyphicon glyphicon-arrow-right"></span> Reset Password</a></div>
+                                        <div class="text-center"><a class="small bright" href="<?=base_url('guest/forgot');?>" title="Forgot your passport?"><span class="glyphicon glyphicon-arrow-right"></span> Reset Password</a></div>
                                     </div>
                                 </div>
                             </form>

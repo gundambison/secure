@@ -12,6 +12,7 @@ public $tableAdmin='sfor_admin';
 public $tablePrice='sfor_price';
 public $tableFlowlog='sfor_flowlog';
 public $tableAPI='sfor_api';
+public $tableApi='sfor_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 
@@ -478,8 +479,8 @@ REGISTER
 		$reg_id=date("ym0000");
 		$sql="select max(reg_id) max from {$this->tableRegis}";
 		$dt2=dbFetchOne($sql);
-		if($dt2['max'] > (int)$reg_id){
-			$accid=$dt2['max'];
+		if($dt2['max'] >= (int)$reg_id){
+			$reg_id=$dt2['max']+3;
 		}
 		
 		unset($data['type']);

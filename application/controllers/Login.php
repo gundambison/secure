@@ -55,7 +55,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	function __CONSTRUCT(){
 	parent::__construct();
-		logCreate('controller Login','info');
+//		logCreate('controller Login','info');
 		$this->load->library('recaptcha');
 		$this->load->library('session');
 		date_default_timezone_set('Asia/Jakarta');

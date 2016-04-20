@@ -6,6 +6,8 @@ class Guest extends MY_Controller {
 Daftar Fungsi Yang Tersedia :
 *	home($raw=false,$agent=false)
 *	register()
+*	recover($id=0)
+*	forgot()
 *	__CONSTRUCT()
 ***/	
 	public function home($raw=false,$agent=false){
@@ -43,8 +45,7 @@ Daftar Fungsi Yang Tersedia :
 		);
 		$this->showView('newbase_view');
 	}
-	
-	
+
 	public function register(){
 		$post=$this->input->post();
 		print_r($post); 
@@ -55,10 +56,12 @@ Daftar Fungsi Yang Tersedia :
 				$respon['title']='NEW PATNER ACCOUNT (CREATED)';
 			}
 		$params=$post;
+		if( isset($post['accept']))$stat=true;
+		//var_dump($post);die('--');
 		logCreate(print_r($post,1));
-		$stat=$this->forex->saveData($params,$message);
+		if($stat==true)
+			$stat=$this->forex->saveData($params,$message);
 		
-		//var_dump($stat);die('--');
 		if($stat==false){
 			echo 'balik ke welcome';
 			//print_r($_SERVER);
@@ -70,11 +73,79 @@ Daftar Fungsi Yang Tersedia :
 		else{
 			echo 'menuju login';
 			logCreate('parameter valid and success input into register table','success');
-			$this->session->set_flashdata('notif', array('status' => true, 'msg' => 'Sukses!'));
+			$this->session->set_flashdata('notif', array('status' => true, 'message' => 'Sukses!'));
 			redirect(site_url('login'),1);
 		}
 	}
 	
+	public function recover($id=0){
+		$this->param['title']='Recover your Live Account'; 
+		$this->param['content']=array(
+			'modal',
+			'recover', 
+		);
+		$this->param['recoverId']=$id;
+		$detail=$this->account->recoverId($id);
+		
+		if($detail!=false){ 	
+			$url=base_url("depan/data");
+			//reset 
+			$this->account->noPass($detail['id']);
+			$param=array(
+				'type'=>'login',
+				'data'=>array(
+					array('name'=>'username', 'value'=>$detail['username'])
+				),
+				'recover'=>true
+			);
+			
+//-----------LAKUKAN POST KE SITE UTAMA
+			$params=array(
+			  'post'=>array(
+				'username'=>$detail['username']
+			  )
+			);
+			$tmp=$this->load->view('depan/data/login_data',$params,true);
+			$respon=json_decode($tmp);
+			$this->param['raw']=array(
+			  'code'=>266,
+			  'message'=>$respon->message
+			);
+			$detail='click from :('.$_SERVER['HTTP_REFERER'].')';
+			$sql="update `{$this->account->tableAccountRecover}` 
+		set  detail='$detail' , `expired`='0000-00-00'
+		where id='$id'";
+			dbQuery($sql,1);
+		}
+		else{ 
+			$this->param['raw']=array('invalid');
+		}
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+	}
+	
+	public function forgot(){
+		$post=$this->input->post();
+		if($post){
+			echo 'proses melakukan forgot password';
+			$forgot = array('status'=>false, 'message'=>'Email tidak ditemukan');
+			
+/*
+			$this->load->driver('advforex');
+			$forgotPassword=$this->advforex->member->forgot()?false:true;
+*/			
+			$this->session->set_flashdata('forgot', $forgot);
+			redirect($_SERVER['HTTP_REFERER'],1);
+			exit('');
+		}
+		$this->param['title']='Recover your Live Account'; 
+		$this->param['content']=array(
+			'modal',
+			'forgot', 
+		);
+		$this->param['footerJS'][]='js/login.js';
+		$this->showView(); 
+	}
 	function __CONSTRUCT(){
 	parent::__construct();
 		date_default_timezone_set('Asia/Jakarta');
