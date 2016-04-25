@@ -39,6 +39,17 @@ if($responce['error']===false){
 		$param['allowtrading']=1;
 		
 		$param['username']=isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?utf8_encode("{$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
+		$url=$this->forex->forexUrl('update');
+		$url.="?".http_build_query($param);
+		logCreate("update detail param:".print_r($param,1)."|url:$url");
+		$arr['param']=$param;
+		$arr['url']=$url;
+		$result0= _runApi($url );
+		logCreate("update change detail:".print_r($result0,1));
+		
+		$param=array( );
+		$param['privatekey']	=$this->forex->forexKey();
+		$param['accountid']=(int)$detail['accountid'];
 		
 		$param['address']=isset($detail['detail']['address'])?$detail['detail']['address']:"";
 		$param['country']=isset($detail['detail']['country']['name'])?$detail['detail']['country']['name']:"";
@@ -48,7 +59,7 @@ if($responce['error']===false){
 		
 		$url=$this->forex->forexUrl('update');
 		$url.="?".http_build_query($param);
-		logCreate("update password param:".print_r($param,1)."|url:$url");
+		logCreate("update detail param:".print_r($param,1)."|url:$url");
 		$arr['param']=$param;
 		$arr['url']=$url;
 		$result0= _runApi($url );
