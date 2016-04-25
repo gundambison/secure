@@ -92,7 +92,10 @@ foreach($register as $row){
 	   $param=array( );
 	   $param['privatekey']	=$this->forex->forexKey();
 //======Required 
-	   $param['username']	=   $dt0['detail']['firstname'];	
+	   $param['username']	=   $dt0['detail']['firstname'];
+	   $url.="?".http_build_query($param);
+           $result0= _runApi($url );
+/*		   
 //======Optional	
 	   if($dt['address']!='')
 		$param['address']	=$dt['address'];	
@@ -104,9 +107,8 @@ foreach($register as $row){
 		$param['country']	=$dt['country']['name'];
 	   if($dt['phone']!='')
 		$param['phone']		=$dt['phone']; 
-	   $url.="?".http_build_query($param);
-           $result0= _runApi($url );
-           if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
+*/	   
+       if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
 		$result=(array)$result0['data'];logCreate("agent bermasalah V1 result:".print_r($result,1)); 
 	   }
 	   else{
