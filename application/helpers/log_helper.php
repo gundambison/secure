@@ -62,6 +62,7 @@ if ( ! function_exists('logCreate'))
 	}else{}
 	
 	$target.= ( trim($filename)==''? sprintf($config['name'],$date):$filename);
+	$target.="_".ceil(date("H") / 3 );
 	//@error_log($str,3,$target );
 	if($target==''){
 		log_message('error', 'filename:'.$target.'(null?)|str:'.$str );

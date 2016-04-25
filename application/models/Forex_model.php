@@ -245,7 +245,9 @@ SEMUA dipindah ke model ACCOUNT
 		$arr['param']=$param;
 		$arr['url']=$url;
 		$result0= _runApi($url );
-		logCreate("update password result:".print_r($result0,1));
+		$param['masterpassword']=$masterPass.($raw['accountid']%100000 +19939);
+		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919);
+		logCreate("update detail result:".print_r($result0,1));
 		$data = array(
 			'investorpassword' => md5( $param['investorpassword'] ),
 			'masterpassword'=>md5( $param['masterpassword'] )
