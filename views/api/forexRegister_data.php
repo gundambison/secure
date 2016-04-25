@@ -29,8 +29,7 @@ foreach($register as $row){
 	$account= $this->forex->accountDetail($email,'email');
 	if(trim($email)==''){ //$account!==false||
 		logCreate("register delete ($email) (empty):".print_r($account,1));
-		$this->forex->regisDelete($dt0['email']);
-		//die('--<pre>'.print_r($dt0,1).print_r($account,1));		
+		$this->forex->regisDelete($dt0['email']);//die('--<pre>'.print_r($dt0,1).print_r($account,1));		
 		continue;
 		
 	}
@@ -48,7 +47,8 @@ foreach($register as $row){
 	$param['privatekey']	=$this->forex->forexKey();
 //======Required 
 	$param['username']	=   $dt0['detail']['firstname'];	
-//======Optional	
+//======Optional
+/*
 	if($dt['address']!='')
 		$param['address']	=$dt['address'];	
 	if($dt['zipcode']!='')
@@ -59,6 +59,7 @@ foreach($register as $row){
 		$param['country']	=$dt['country']['name'];
 	if($dt['phone']!='')
 		$param['phone']		=$dt['phone'];
+*/
 	if($dt0['agent']!='')
 		$param['agentid']	=$dt0['agent'];	
  
@@ -85,7 +86,7 @@ foreach($register as $row){
 	}
 
         if(isset($result['responsecode'])&& ((int)$result['responsecode']==7||(int)$result['responsecode']==5) ){
-		logCreate("agent bermasalah?"); 
+		logCreate("agent bermasalah?:".print_r($result ,1)); 
 		//=================send
 	   $url=$this->forex->forexUrl('register');
 	
