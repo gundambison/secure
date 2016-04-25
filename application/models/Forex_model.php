@@ -152,8 +152,8 @@ SEMUA dipindah ke model ACCOUNT
 		$dt=array(
 			'reg_id'=>$id,
 			'username'=>$detail['username'],
-			'investorpassword'=>trim($raw['investorpassword']),
-			'masterpassword'=>trim($raw['masterpassword']),
+			'investorpassword'=>md5( trim($raw['investorpassword']) ),
+			'masterpassword'=>md5( trim($raw['masterpassword']) ),
 			'accountid'=>$raw['accountid'],
 			'email'=>$detail['email'],
 			'type'=>strtoupper($detail['detail']['statusMember']),
@@ -207,17 +207,17 @@ SEMUA dipindah ke model ACCOUNT
 		dbQuery($sql,1);
 		//===========UPDATE ACCOUNT
 		//===============Change Password===============		
-		$sql="select password from {$this->tablePassword} order by rand() limit 2";
-		$data=dbFetch($sql);
-		logCreate('change password :'.json_encode($data));
-		$invPass=$data[0]['password'];
-		$masterPass=$data[1]['password'];
+//		$sql="select password from {$this->tablePassword} order by rand() limit 2";
+//		$data=dbFetch($sql);
+//		logCreate('change password :'.json_encode($data));
+		$invPass=trim($raw['investorpassword']);//$data[0]['password'];
+		$masterPass=trim($raw['masterpassword']);//$data[1]['password'];
 		
 		$param=array( );
 		$param['privatekey']	=$this->forex->forexKey();
 		$param['accountid']=(int)$raw['accountid'];
-		$param['masterpassword']=$masterPass.($raw['accountid']%100000 +19939);
-		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919);
+//		$param['masterpassword']=$masterPass.($raw['accountid']%100000 +19939);
+//		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919);
 		$param['allowlogin']=1;
 		$param['allowtrading']=1;
 		
@@ -227,8 +227,8 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("update password param:".print_r($param,1)."|url:$url");
 		$arr['param']=$param;
 		$arr['url']=$url;
-		$result0= _runApi($url );
-		logCreate("update password result:".print_r($result0,1));
+//		$result0= _runApi($url );
+//		logCreate("update password result:".print_r($result0,1));
 		$param=array( );
 		$param['privatekey']	=$this->forex->forexKey();
 		$param['accountid']=(int)$raw['accountid'];
@@ -244,10 +244,11 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("update detail param:".print_r($param,1)."|url:$url");
 		$arr['param']=$param;
 		$arr['url']=$url;
-		$result0= _runApi($url );
-		$param['masterpassword']=$masterPass.($raw['accountid']%100000 +19939);
-		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919);
-		logCreate("update detail result:".print_r($result0,1));
+//		$result0= _runApi($url );
+
+		$param['masterpassword']=$masterPass;//.($raw['accountid']%100000 +19939);
+		$param['investorpassword']=$invPass;//.($raw['accountid'] %100000 +19919);
+//		logCreate("update detail result:".print_r($result0,1));
 		$data = array(
 			'investorpassword' => md5( $param['investorpassword'] ),
 			'masterpassword'=>md5( $param['masterpassword'] )

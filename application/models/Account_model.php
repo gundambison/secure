@@ -1,7 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 if (   function_exists('logFile')){ logFile('model','account_model.php','model'); };
-
+/***
+Daftar Fungsi Yang Tersedia :
+*	newAccountWithoutPassword()
+*	recoverId($id=0)
+*	noPass($id)
+*	recover($detail=false)
+*	create($id,$raw='') //tidak di jalankan
+*	detail($id,$field='id')
+*	detailRepair($data=array())
+*	__construct()
+***/
 class Account_model extends CI_Model {
 public $tableRegis='mujur_register'; 
 public $tableWorld='mujur_country'; 

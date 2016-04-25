@@ -14,7 +14,7 @@ if ( ! function_exists('_runApi')){
 		$logTxt="func:_runApi| url:{$url}"; 
 		$parameter['info']='no post';		
 	}
-	$parameter[]=array('server'=>$_SERVER);
+//	$parameter[]=array('server'=>$_SERVER);
 	$dtAPI['parameter']=json_encode($parameter);
 	logCreate( 'API: '.$logTxt); 
 		

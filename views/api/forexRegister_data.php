@@ -93,6 +93,9 @@ foreach($register as $row){
 	   $param['privatekey']	=$this->forex->forexKey();
 //======Required 
 	   $param['username']	=   $dt0['detail']['firstname'];
+	   if($dt['email']!=''){
+			$param['email']		=$dt['email'];
+	   }
 	   $url.="?".http_build_query($param);
            $result0= _runApi($url );
 /*		   
@@ -101,8 +104,7 @@ foreach($register as $row){
 		$param['address']	=$dt['address'];	
 	   if($dt['zipcode']!='')
 		$param['zip_code']	=$dt['zipcode'];	
-	   if($dt['email']!='')
-		$param['email']		=$dt['email'];
+	   
 	   if($dt['country']['name']!='')
 		$param['country']	=$dt['country']['name'];
 	   if($dt['phone']!='')
