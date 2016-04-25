@@ -67,9 +67,11 @@ foreach($register as $row){
 	$arr['param']=$param;
 	$arr['url']=$url;
 //--------- PERINTAH PEMBUATAN	
+/*
 	logCreate("param:".print_r($param,1));
 	$rawAccount=$this->account->detail($reg_id, 'reg_id');
 	//apabila ada reg_id yang sama maka cancel	
+
 		if($rawAccount!=false){
 			logCreate("register not continue reg_id exist:".json_encode($rawAccount));
 			continue;
@@ -77,7 +79,8 @@ foreach($register as $row){
 		else{
 			$result0= _runApi($url );
 		}
-		
+*/		
+	$result0= _runApi($url );
 	if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
 		$result=(array)$result0['data'];
 	}
