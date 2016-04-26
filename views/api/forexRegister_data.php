@@ -70,8 +70,8 @@ foreach($register as $row){
 		$param['agentid']	=$dt0['agent'];	
 	}
 	$url.="?".http_build_query($param);
-	$arr['param']=$param;
-	$arr['url']=$url;
+//	$arr['param']=$param;
+//	$arr['url']=$url;
 //--------- PERINTAH PEMBUATAN	
 /*
 	logCreate("param:".print_r($param,1));

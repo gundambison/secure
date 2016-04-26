@@ -3,6 +3,7 @@ $respon=array( 'post'=>$_POST );
 $html='';
 $detail=$this->account->detail($post0['id']);
 $respon['raw']=$detail;
+$respon['register']=$register=$this->forex->regisDetail($detail['reg_id']);
 //$html.="<pre>".print_r($detail,1)."</pre>";
 
 $show=array();
@@ -18,6 +19,7 @@ if(trim($show['Alamat'])=='')$show['Alamat']='???';
 
 $show['Bank']=isset($detail['detail']['bank'])?$detail['detail']['bank']:'???';
 $show['No Rekening']=isset($detail['detail']['bank_norek'])?$detail['detail']['bank_norek']:'???';
+$show['Agent']=isset($register['agent'] )?$register['agent']:'???';
 
 ?><h3>Detail</h3>
 <table border=1 width=400>
@@ -33,6 +35,9 @@ foreach($show as $nm=>$val){?>
 <?php 
 $respon['title']='Detail User';
 
+if(!isset($_POST['debug'])){
+	unset($respon['raw'],$respon['register']);
+}
 
 $html = ob_get_contents();
 ob_end_clean();

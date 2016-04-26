@@ -400,6 +400,9 @@ REGISTER
 	{
 		$sql="select reg_username username, reg_password password, reg_detail detail, reg_status status,reg_agent agent,reg_email email from {$this->tableRegis} where reg_id=$id";
 		$res=dbFetchOne($sql);//$this->db->query($sql)->row_array();
+		//$res['sql']=$sql;
+		//return $res;
+		if(!isset($res['detail']) ) return $res;
 		if($res['username']==''&&$stat==false){			
 			$res['username']=9578990+$id;		
 			if(defined('LOCAL')){
@@ -421,6 +424,7 @@ REGISTER
 			}
 			//$this->db->query($sql);
 		}
+		
 		
 		unset($res['reg_id']);
 		$dt2=json_decode($res['detail'],1);
