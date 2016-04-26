@@ -16,7 +16,7 @@ foreach($register as $row){
 	$reg_id=$row['id'];
 	$dt0=$this->forex->regisDetail($row['id']);
 	$full_name=isset($dt0['detail']['firstname'])?$dt0['detail']['firstname']:'';
-	$full_name.=" ".isset($dt0['detail']['lastname'])?$dt0['detail']['lastname']:'';
+	$full_name.=" ". (isset($dt0['detail']['lastname'])?$dt0['detail']['lastname']:'');
 	
 	if($dt0['status']!=1){
 		logCreate("register id:".$row['id']."|status:".$dt0['status'],'info');
@@ -94,7 +94,7 @@ foreach($register as $row){
 		$result=$result0;		
 	}
 
-        if(isset($result['responsecode'])&& ((int)$result['responsecode']==7||(int)$result['responsecode']==5) ){
+        if(isset($result['responsecode'])&& ((int)$result['responsecode']==7||(int)$result['responsecode']==5||(int)$result['responsecode']==2) ){
 		logCreate("agent bermasalah?:".print_r($result ,1)); 
 		//=================send
 	   $url=$this->forex->forexUrl('register');
