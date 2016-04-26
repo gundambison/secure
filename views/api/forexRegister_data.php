@@ -15,6 +15,9 @@ $data=array();
 foreach($register as $row){
 	$reg_id=$row['id'];
 	$dt0=$this->forex->regisDetail($row['id']);
+	$full_name=isset($dt0['detail']['firstname'])?$dt0['detail']['firstname']:'';
+	$full_name.=" ".isset($dt0['detail']['lastname'])?$dt0['detail']['lastname']:'';
+	
 	if($dt0['status']!=1){
 		logCreate("register id:".$row['id']."|status:".$dt0['status'],'info');
 		continue;
@@ -46,7 +49,10 @@ foreach($register as $row){
 	$param=array( );
 	$param['privatekey']	=$this->forex->forexKey();
 //======Required 
-	$param['username']	=   $dt0['detail']['firstname'];	
+	$param['username']	=   $full_name;//$dt0['detail']['firstname'];
+	if($dt['email']!=''){
+			$param['email']		=$dt['email'];
+	}
 //======Optional
 /*
 	if($dt['address']!='')
@@ -60,9 +66,9 @@ foreach($register as $row){
 	if($dt['phone']!='')
 		$param['phone']		=$dt['phone'];
 */
-	if($dt0['agent']!='')
+	if($dt0['agent']!=''){
 		$param['agentid']	=$dt0['agent'];	
- 
+	}
 	$url.="?".http_build_query($param);
 	$arr['param']=$param;
 	$arr['url']=$url;
@@ -96,7 +102,7 @@ foreach($register as $row){
 	   $param=array( );
 	   $param['privatekey']	=$this->forex->forexKey();
 //======Required 
-	   $param['username']	=   $dt0['detail']['firstname'];
+	   $param['username']	=   $full_name;
 	   if($dt['email']!=''){
 			$param['email']		=$dt['email'];
 	   }
@@ -121,16 +127,16 @@ foreach($register as $row){
 		$result=$result0;logCreate("agent bermasalah?"); logCreate("agent bermasalah v2 result:".print_r($result,1)); 
 	   }
 	}
-	
+/*	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==5){
 		logCreate("delete Respon code 5");
 		$this->forex->regisDelete($dt0['email'],5); 
 		continue;
 	}
-	
+*/	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==8){
-		logCreate("delete Respon code 8");
-		$this->forex->regisDelete($dt0['email'],8); 
+//		logCreate("delete Respon code 8");
+//		$this->forex->regisDelete($dt0['email'],8); 
 		continue;
 	}
 	

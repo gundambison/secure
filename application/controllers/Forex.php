@@ -48,7 +48,6 @@ class Forex extends CI_Controller {
 	
 	public function register($raw=false,$agent=false)
 	{
-		redirect(site_url('login'),1);
 		$this->load->library('session');
 		$this->param['statAccount']='member';
 		if($agent!=false){
