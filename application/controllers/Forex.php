@@ -21,10 +21,22 @@ Daftar Fungsi Yang Tersedia :
 class Forex extends CI_Controller {
 	public $param;	
 	public function registerApi($stat=1){
-		log_message('register Api in session');
+		log_message('info','register Api in session');
 		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
 		$res=json_decode($tmp, true); 
 		if($stat==1)
+			print_r($res);
+	}
+	
+	public function backupDb(){
+		$name1=date("ymdh");
+		$name2=time();
+		echo "$name1<br/>$name2";
+		$this->param['tableTarget']='zlog_'.time();
+		log_message('info','register Api in session');
+		$tmp=$this->load->view('api/backup_data',$this->param,true);
+		$res=json_decode($tmp, true);
+		echo '<pre>';
 			print_r($res);
 	}
 	

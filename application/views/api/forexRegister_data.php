@@ -77,6 +77,8 @@ foreach($register as $row){
 			$result0= _runApi($url );
 		}
 		
+	if(!is_array($result0))$result0=(array)$result0;
+	
 	if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
 		$result=(array)$result0['data'];
 	}

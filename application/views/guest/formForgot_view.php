@@ -4,8 +4,15 @@
 			$forgot=$this->session->flashdata('forgot');
 			logCreate('session forgot valid','info');
 	}
-		if(isset($forgot['message'])){ ?>
+		if(isset($forgot['status'])&&$forgot['status']==false){ ?>
 							<div class="alert alert-block alert-danger fade in">
+								<button type="button" class="close" data-dismiss="alert"></button>
+								<h4 class="alert-heading">Warning!</h4>
+								<p><?=$forgot['message'];?></p>								
+							</div>
+<?php	} 
+		if(isset($forgot['status'])&&$forgot['status']==true){ ?>
+							<div class="alert alert-block alert-info fade in">
 								<button type="button" class="close" data-dismiss="alert"></button>
 								<h4 class="alert-heading">Warning!</h4>
 								<p><?=$forgot['message'];?></p>								

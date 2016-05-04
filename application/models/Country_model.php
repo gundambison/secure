@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Country_model extends CI_Model {
-public $table='sfor_country'; 
+public $table='mujur_country'; 
         public function __construct()
         {
             $this->load->database();

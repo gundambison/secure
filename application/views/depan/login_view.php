@@ -60,7 +60,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="salma-forex">...</div>
+                        <div role="tabpanel" class="tab-pane" id="salma-forex">If your account have problem, please contact our Support</div>
 					</div>
                 </div>
             </div>

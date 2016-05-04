@@ -130,11 +130,17 @@ Daftar Fungsi Yang Tersedia :
 		if($post){
 			echo 'proses melakukan forgot password';
 			$forgot = array('status'=>false, 'message'=>'Email tidak ditemukan');
-			
+			$respon=$this->load->view('guest/data/forgot_data',array('post'=>$post),true);
+			$json=@json_decode($respon,true);
+			$respon=is_array($json)?$json:$respon;
+//			die('<pre>'.print_r($respon,1));
 /*
 			$this->load->driver('advforex');
 			$forgotPassword=$this->advforex->member->forgot()?false:true;
 */			
+			if($respon['status']==1){
+				$forgot = array('status'=>true, 'message'=>'Silakan periksa email anda');
+			}
 			$this->session->set_flashdata('forgot', $forgot);
 			redirect($_SERVER['HTTP_REFERER'],1);
 			exit('');
