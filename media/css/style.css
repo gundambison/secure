@@ -464,3 +464,9 @@ h3.large{
 	width:30%;
 	text-align:center;
 }
+.formBasic{
+	min-width: 500px;
+}
+.formBasic td{
+	margin:10px 5px 0 5px;
+}

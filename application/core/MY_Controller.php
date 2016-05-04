@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		if($type=='unknown'||$type=='')$type=$this->input->get('type','unknown');
 		$message='unknown data type';
 		$open= $this->param['folder']."data/".$type."_data";
-		if(is_file('views/'.$open.".php")){
+		if(is_file('application/views/'.$open.".php")){
 			$param=array(
 				'post'=>$this->convertData(),
 				'get'=>$this->input->get(),

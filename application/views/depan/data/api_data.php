@@ -2,7 +2,8 @@
 ob_start();
 if ( function_exists('logFile')){ logFile('view/member/data','api_data.php','data'); };
 //api_data
-$respon=array( 'draw'=>$_POST['draw']);
+$respon=array( );
+$respon['draw']= isset($_POST['draw'])?$_POST['draw']:rand(1000,9999);
 /*
 {
   "draw": 1,
@@ -16,8 +17,8 @@ $dt=$this->db->query($sql)->row_array();
 $respon['recordsTotal']=$dt['c'];
 $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
 
-$start=$post0['start'];
-$limit=$post0['length'];
+$start=isset($post0['start'])?$post0['start']:0;
+$limit=isset($post0['length'])?$post0['length']:15;
 $data=array();
    $order="order by created desc";
 $sql="select id,url rawUrl,parameter rawParam,created from mujur_api $order limit $start,$limit";
