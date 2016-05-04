@@ -276,7 +276,7 @@ public $demo=1;
 		
 		if($data['reg_id']!=0){
 			$reg=$this->regisDetail($data['reg_id']);
-			$detail=json_encode($reg['detail']);
+			$detail=addslashes(json_encode($reg['detail']));
 			$sql="insert into `{$this->tableAccountDetail}`(username,detail) 
 			values('$username','$detail')";
 			dbQuery($sql);
