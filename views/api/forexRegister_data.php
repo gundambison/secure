@@ -17,7 +17,7 @@ foreach($register as $row){
 	$dt0=$this->forex->regisDetail($row['id']);
 	$full_name=isset($dt0['detail']['firstname'])?$dt0['detail']['firstname']:'';
 	$full_name.=" ". (isset($dt0['detail']['lastname'])?$dt0['detail']['lastname']:'');
-	
+	$full_name=substr($full_name,0,126);
 	if($dt0['status']!=1){
 		logCreate("register id:".$row['id']."|status:".$dt0['status'],'info');
 		continue;
@@ -51,7 +51,7 @@ foreach($register as $row){
 //======Required 
 	$param['username']	=   $full_name;//$dt0['detail']['firstname'];
 	if($dt['email']!=''){
-			$param['email']		=$dt['email'];
+			$param['email']		=substr($dt['email'],0,47);
 	}
 //======Optional
 /*
@@ -94,7 +94,7 @@ foreach($register as $row){
 		$result=$result0;		
 	}
 
-        if(isset($result['responsecode'])&& ((int)$result['responsecode']==7||(int)$result['responsecode']==5||(int)$result['responsecode']==2) ){
+	if(isset($result['responsecode'])&& ((int)$result['responsecode']==7||(int)$result['responsecode']==5||(int)$result['responsecode']==2) ){
 		logCreate("agent bermasalah?:".print_r($result ,1)); 
 		//=================send
 	   $url=$this->forex->forexUrl('register');
@@ -104,10 +104,8 @@ foreach($register as $row){
 //======Required 
 	   $param['username']	=   $full_name;
 	   if($dt['email']!=''){
-			$param['email']		=$dt['email'];
+			$param['email']		=substr($dt['email'],0,47);
 	   }
-	   $url.="?".http_build_query($param);
-           $result0= _runApi($url );
 /*		   
 //======Optional	
 	   if($dt['address']!='')
@@ -119,12 +117,17 @@ foreach($register as $row){
 		$param['country']	=$dt['country']['name'];
 	   if($dt['phone']!='')
 		$param['phone']		=$dt['phone']; 
-*/	   
-       if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
-		$result=(array)$result0['data'];logCreate("agent bermasalah V1 result:".print_r($result,1)); 
+*/
+	   $url.="?".http_build_query($param);
+           $result0= _runApi($url );
+
+	   if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
+		$result=(array)$result0['data'];
+		logCreate("agent bermasalah V1 result:".print_r($result,1)); 
 	   }
 	   else{
-		$result=$result0;logCreate("agent bermasalah?"); logCreate("agent bermasalah v2 result:".print_r($result,1)); 
+		$result=$result0;
+		logCreate("agent bermasalah?"); logCreate("agent bermasalah v2 result:".print_r($result,1)); 
 	   }
 	}
 /*	
