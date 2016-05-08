@@ -2,6 +2,28 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 if (   function_exists('logFile')){ logFile('model','forex_model.php','model'); };
 class Forex_model extends CI_Model {
+/***
+Daftar Fungsi Yang Tersedia :
+*	emailAdmin($name='default')
+*	forexUrl($name='default')
+*	forexKey()
+*	flowInsert($type='',$data=array() )
+*	rateUpdate($raw)
+*	rateNow($types='')
+*	accountRecover($detail=false)
+*	accountCreate($id,$raw='')
+*	accountDetail($id,$field='id')
+*	accountDetailRepair($data=array())
+*	accountActivation($id,$raw0)
+*	activationDetail($id,$field='id')
+*	activationUpdate($id, $status)
+*	activationUpdateUser($id, $status)
+*	regisAll($limit=10,$where="")
+*	regisDetail($id,$stat=false)
+*	regisDelete($email,$status=-1)
+*	saveData($data, &$message)
+*	__construct()
+***/
 public $tableRegis='mujur_register'; 
 public $tableWorld='mujur_country'; 
 public $tableAccount='mujur_account';
@@ -120,8 +142,7 @@ ACCOUNT
 SEMUA dipindah ke model ACCOUNT
 ***/	 
 	function accountRecover($detail=false){
-		if($detail==false){
-			
+		if($detail==false){			
 			return true;
 		}
 	}
@@ -146,8 +167,7 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("register id:$id |detail:".print_r($detail,1));
 		if(!isset($detail['detail']['statusMember']))
 			$detail['detail']['statusMember']='MEMBER';
-		logCreate("register id:$id |raw:".print_r($raw,1));
-		
+		logCreate("register id:$id |raw:".print_r($raw,1));		
 		
 		$dt=array(
 			'reg_id'=>$id,
@@ -216,19 +236,24 @@ SEMUA dipindah ke model ACCOUNT
 		$param=array( );
 		$param['privatekey']	=$this->forex->forexKey();
 		$param['accountid']=(int)$raw['accountid'];
-//		$param['masterpassword']=$masterPass.($raw['accountid']%100000 +19939);
-//		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919);
+//		$param['masterpassword']=$masterPass;//.($raw['accountid']%100000 +19939);
+//		$param['investorpassword']=$invPass;//.($raw['accountid'] %100000 +19919);
 		$param['allowlogin']=1;
 		$param['allowtrading']=1;
+
+		$full_name=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'';
+		$full_name.=" ". (isset($detail['detail']['lastname'])?$detail['detail']['lastname']:'');
+		$full_name=substr($full_name,0,126);
+		$param['username']= $full_name;
+//		isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?utf8_encode("{$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
 		
-		$param['username']=isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?utf8_encode("{$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
 		$url=$this->forex->forexUrl('update');
 		$url.="?".http_build_query($param);
 		logCreate("update password param:".print_r($param,1)."|url:$url");
 		$arr['param']=$param;
 		$arr['url']=$url;
-//		$result0= _runApi($url );
-//		logCreate("update password result:".print_r($result0,1));
+		$result0= _runApi($url );
+		logCreate("update password result:".print_r($result0,1));
 		$param=array( );
 		$param['privatekey']	=$this->forex->forexKey();
 		$param['accountid']=(int)$raw['accountid'];
@@ -238,13 +263,21 @@ SEMUA dipindah ke model ACCOUNT
 		$param['zipcode']=isset($detail['detail']['zipcode'])?$detail['detail']['zipcode']:"";
 		$param['phone']=  isset($detail['detail']['phone'])?$detail['detail']['phone']:"";
 		$param['email']=  isset($detail['email'])?$detail['email']:"";
-		
+//=============LIMIT
+		$param['address']=substr($param['address'],0,95);
+		$param['country']=substr($param['country'],0,17);
+		$param['zipcode']=substr($param['zipcode'],0,15);
+		$param['phone']=substr($param['phone'],0,31);
+		$param['email']=substr($param['email'],0,47);
+		$param['allowlogin']=1;
+		$param['allowtrading']=1;
+
 		$url=$this->forex->forexUrl('update');
 		$url.="?".http_build_query($param);
-		logCreate("update detail param:".print_r($param,1)."|url:$url");
+		logCreate("update create account| detail param:".print_r($param,1)."|url:$url");
 		$arr['param']=$param;
 		$arr['url']=$url;
-//		$result0= _runApi($url );
+		$result0= _runApi($url );
 
 		$param['masterpassword']=$masterPass;//.($raw['accountid']%100000 +19939);
 		$param['investorpassword']=$invPass;//.($raw['accountid'] %100000 +19919);
@@ -331,7 +364,6 @@ ACTIVATION
 ***/	
 	function accountActivation($id,$raw0){
 		logCreate('create activation :'.$id." raw:".print_r($raw0,1));
-		
 		$sql="select reg_id id from {$this->tableRegis} where reg_id like '$id'";
 		$row= $this->db->query($sql)->row_array();
 		$idActive=sprintf("%s%05s",dbId('activation', 200005),$row['id']);
