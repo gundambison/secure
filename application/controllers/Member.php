@@ -445,9 +445,11 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['fileCss']=array(	
 			'css/style.css',
 			'css/bootstrap.css',
+			'css/ddaccordion.css'
 		);
 		$this->param['fileJs']=array(
 			'js/jquery-1.7.min.js',
+			'js/ddaccordion.js'
 		);
 		
 		$this->param['shortlink']=base_url();
