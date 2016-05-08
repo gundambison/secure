@@ -58,11 +58,14 @@ else{
 }
 
 $route['register/(:any)'] = 'forex/register/$1';
-$route['login'] = 'member/login';
+//$route['login'] = 'login/member';
+$route['welcome'] = 'guest/home';
+
+$route['loginadmin'] = 'login/admin';
 $route['forgot_password'] = 'member/forgot';
 $route['deposit-form'] = 'member/deposit';
 $route['widtdrawal-form'] = 'member/widtdrawal';
-$route['withdrawal-form'] = 'member/widtdrawal';
+$route['withdraw-form'] = 'member/withdrawal';
 $route['rupiah_deposit'] = 'forex/deposit_value';
 $route['rupiah_widtdrawal'] = 'forex/widtdrawal_value';
 $route['recover/(:any)'] = "member/recover/$1";

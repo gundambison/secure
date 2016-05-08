@@ -15,8 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
 	} 
 	
-	public function data()
-	{
+	public function data(){
 		$url=$this->config->item('api_url');
 		$this->load->helper('api');
 		$respon=array(		
@@ -26,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		if($type=='unknown'||$type=='')$type=$this->input->get('type','unknown');
 		$message='unknown data type';
 		$open= $this->param['folder']."data/".$type."_data";
-		if(is_file('views/'.$open.".php")){
+		if(is_file('application/views/'.$open.".php")){
 			$param=array(
 				'post'=>$this->convertData(),
 				'get'=>$this->input->get(),
@@ -63,8 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$this->succesMessage($respon);
 	}
 	
-	protected function convertData()
-	{
+	protected function convertData(){
 	$post=array();
 		if(is_array($this->input->post('data'))){
 			foreach($this->input->post('data') as $data){
@@ -76,8 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		return $post;
 	}
 	
-	public function api()
-	{		
+	public function api(){		
 		$module=$this->input->post('module');
 		$task=$this->input->post('task');
 		$appcode=$this->input->post('app_code');
@@ -108,8 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 	}
 	
-	protected function succesMessage($respon)
-	{
+	protected function succesMessage($respon){
 		echo json_encode(
 		  array(
 			'status'=>true,
@@ -122,8 +118,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		exit();	
 	}
 	
-	protected function errorMessage($code, $message,$data=array())
-	{
+	protected function errorMessage($code, $message,$data=array()){
 		$json=array(
 			'status'=>false,
 			'code'=>$code, 
@@ -139,7 +134,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		exit();
 	}
 	 
-	protected function showView(){
+	protected function showView($target='newbase_view'){
 		$name=$this->uri->segment(2,'');		
 		if($name!=''){
 			$jsScript=$this->param['folder'].$this->uri->segment(2).".js";
@@ -157,7 +152,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 
 		}
 		 
-		$this->load->view('base_view', $this->param);
+		$this->load->view($target, $this->param);
 	
 	}
 	 

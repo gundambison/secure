@@ -10,7 +10,7 @@ $lang['forex_inputpassword'] = 'Please use safety password';
 $lang['forex_dob']='Date of Birth';
 $lang['forex_country']='Country';
 
-$lang['forex_state']='State';
+$lang['forex_state']='Province';
 $lang['forex_city']='City';
 $lang['forex_zipcode']='Zip code';
 $lang['forex_address']='Address';
