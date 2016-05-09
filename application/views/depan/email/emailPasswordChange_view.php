@@ -235,7 +235,7 @@ if(defined('LOCAL')){
 		'error'=>2,
 		'response'=>json_encode($param),
 	);
-	$this->db->insert($this->forex->tableApi,$data);
+	$this->db->insert($this->forex->tableAPI,$data);
 	echo $message;
 }
 else{
@@ -248,7 +248,7 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-	$this->db->insert($this->forex->tableApi,$data);
+	$this->db->insert($this->forex->tableAPI,$data);
 	
 	foreach($emailAdmin as $to){ //email admin lebih dari 1
 		mail(trim($to), $subject, $message, $headers);

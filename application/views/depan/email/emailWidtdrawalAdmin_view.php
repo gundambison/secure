@@ -223,7 +223,7 @@ if(defined('LOCAL')){
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-	$this->db->insert($this->forex->tableApi,$data);
+	$this->db->insert($this->forex->tableAPI,$data);
 }
 else{
 	$emailAdmin[]='finance@salmaforex.com';
@@ -238,5 +238,5 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-	$this->db->insert($this->forex->tableApi,$data);
+	$this->db->insert($this->forex->tableAPI,$data);
 }

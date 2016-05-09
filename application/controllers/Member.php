@@ -188,8 +188,9 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['content']=array();
 		if($status=='done'){
 			$info=$this->session->flashdata('info');
-			if($info==1)
-				$this->param['content'][]='done' ;
+			if($info==1){
+				$this->param['done']=1;//$this->param['content'][]='done' ;
+			}
 		}
 		
 		if($this->input->post('orderDeposit')){
@@ -201,7 +202,7 @@ Daftar Fungsi Yang Tersedia :
 				'error'=>2,
 				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
 			);
-			$this->db->insert($this->forex->tableApi,$data);
+			$this->db->insert($this->forex->tableAPI,$data);
 			
 			$data=$post0;
 			$data['userlogin']=$this->param['userlogin'];
@@ -225,7 +226,7 @@ Daftar Fungsi Yang Tersedia :
 	}	
 
 	public function widtdrawal($status=null){
-		redirect(base_url('member/withdrawal/'.$status));
+		$this->withdrawal($status);//redirect(base_url('member/withdrawal/'.$status));
 	}
 	function withdrawal($status=null){
 		$this->checkLogin();
@@ -234,8 +235,8 @@ Daftar Fungsi Yang Tersedia :
 		if($status=='done'){
 			$info=$this->session->flashdata('info');
 			if($info==1){
-				$this->param['content'][]='done' ;
-				
+				//$this->param['content'][]='done' ;
+				$this->param['done']=1;
 			}
 		}
 		
@@ -249,7 +250,7 @@ Daftar Fungsi Yang Tersedia :
 				'error'=>2,
 				'response'=>"rate:{$rate}\n".print_r($this->param['userlogin'],1)
 			);
-			$this->db->insert($this->forex->tableApi,$data);
+			$this->db->insert($this->forex->tableAPI,$data);
 			
 			$data=$post0;
 			$data['userlogin']=$this->param['userlogin'];
@@ -341,9 +342,8 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	public function tarif(){
-		if(!defined('LOCAL')){
-			$this->checkLogin();
-		}
+		
+		$this->checkLogin();
 		if($this->input->post('rate')){
 			$post= $this->input->post();
 			$stat=$this->forex->rateUpdate($post);
