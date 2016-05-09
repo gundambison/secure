@@ -38,7 +38,7 @@ switch (ENVIRONMENT)
 	$application_folder = 'application';
 
  
-	$view_folder = '';//views';
+	$view_folder = 'views';
 
 
 // --------------------------------------------------------------------

@@ -1,49 +1,27 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 /***
-Daftar Fungsi Yang Tersedia :
-*	registerApi($stat=1)
-*	error404()
-*	deposit_value()
-*	widtdrawal_value()
-*	register($raw=false,$agent=false)
-*	agent()
-*	index()
-*	data()
-*	convertData()
-*	api()
-*	succesMessage($respon)
-*	errorMessage($code, $message,$data=array())
-*	showView()
-*	__CONSTRUCT()
-*	fake($status='none')
+Register 
+---
+Deposit_value
+Widthrawal_value
+---
+data 
+
 ***/
 class Forex extends CI_Controller {
 	public $param;	
 	public function registerApi($stat=1){
-		log_message('info','register Api in session');
 		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
-		$res=json_decode($tmp, true); 
+		$res=json_decode($tmp, true);
+		//echo '<pre>';
 		if($stat==1)
 			print_r($res);
 	}
 	
-	public function backupDb(){
-		$name1=date("ymdh");
-		$name2=time();
-		echo "$name1<br/>$name2";
-		$this->param['tableTarget']='zlog_'.time();
-		log_message('info','register Api in session');
-		$tmp=$this->load->view('api/backup_data',$this->param,true);
-		$res=json_decode($tmp, true);
-		echo '<pre>';
-			print_r($res);
-	}
-	
 	public function error404(){
-		logCreate('error 404 link:'.current_url());
-		die('unknown link');
-		//redirect(base_url('member'));
+		logCreate('error 404 link:'.site_url());
+		redirect(base_url('member'));
 	}
 	
 	public function deposit_value()	
@@ -70,7 +48,6 @@ class Forex extends CI_Controller {
 	
 	public function register($raw=false,$agent=false)
 	{
-		redirect(base_url('welcome'),1);
 		$this->load->library('session');
 		$this->param['statAccount']='member';
 		if($agent!=false){
@@ -108,9 +85,9 @@ class Forex extends CI_Controller {
 	}
 	
 	public function index()
-	{		
-		redirect(base_url('welcome'));
+	{
 		$this->register();
+		//redirect(base_url('forex/register'));
 	}
 	
 	public function data()
@@ -302,15 +279,46 @@ class Forex extends CI_Controller {
 		$defaultLang="english";
 		$this->lang->load('forex', $defaultLang);
 		$this->param['fileCss']=array(	
-			 
+			'css/style.css',
+			'contact-form-7-css'=>'css/salmaforex/style.css', 
+			'rs-plugin-settings-css'=>'css/salmaforex/settings.css',
+			'wpt-custom-login-css'=>'css/salmaforex/custom-login.css',
+			'theme-bootstrap-css'	=>	'css/envision/bootstrap.css',					
+			'theme-frontend-style-css'	=>	'css/envision/style.css?ver=384753e655020ba892b1123f6ddf06b2',
+			'theme-frontend-extensions-css'	=>			'css/envision/extensions.css',
+			'theme-bootstrap-responsive-css'	=>		'css/envision/bootstrap-responsive.css',
+			'theme-bootstrap-responsive-1170-css'	=>	'css/envision/bootstrap-responsive-1170.css',
+			'theme-frontend-responsive-css'	=>			'css/envision/responsive.css',
+			'ttheme-fontawesome-css'	=>				'css/module.fontawesome/source/css/font-awesome.min.css',	
+			'theme-icomoon-css'	=>			'css/module.fontawesome/source/css/font-awesome.min.css',
+			'theme-skin'	=>				'css/Dark-Blue-Skin_cf846b6937291eb00e63741d95d1ce40.css',
+			'css/cupertino/jquery-ui-1.10.3.custom.min.css',
 		);
 		$this->param['fileJs']=array(
+			'js/jquery-1.11.3.js',
+			'js/jquery-migrate.min.js',
+			'js/rs-plugin/js/jquery.themepunch.tools.min.js',
+			'js/rs-plugin/js/jquery.themepunch.revolution.min.js',
 			
 		);
 		
 		$this->param['shortlink']=base_url();
 		$this->param['footerJS']=array(			
-			
+			'js/envision-2.0.9.4/lib/js/common.js',
+			'js/envision-2.0.9.4/lib/js/modernizr-2.6.2-respond-1.1.0.min.js',
+			'js/envision-2.0.9.4/lib/js/noconflict.js',
+			'js/envision-2.0.9.4/cloudfw/js/webfont.js',
+			'js/envision-2.0.9.4/lib/js/jquery.prettyPhoto.js',
+			'js/envision-2.0.9.4/lib/js/extensions.js',
+			'js/envision-2.0.9.4/lib/js/retina.js',
+			'js/envision-2.0.9.4/lib/js/queryloader2.js',
+			'js/envision-2.0.9.4/lib/js/waypoints.min.js',
+			'js/envision-2.0.9.4/lib/js/waypoints-sticky.js',
+			'js/envision-2.0.9.4/lib/js/jquery.viewport.mini.js',
+			'js/envision-2.0.9.4/lib/js/jquery.flexslider.js',		
+			'js/jquery-ui-1.9.2.min.js',			
+			'js/bootstrap.js',
+			 'js/forex.js',	
 		);
  
 		$this->param['description']="Trade now with the best and most transparent forex STP broker";
