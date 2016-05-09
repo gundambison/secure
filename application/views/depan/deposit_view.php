@@ -28,7 +28,12 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 	
 	$rand_url=url_title("{$detail['accountid']}-{$detail['detail']['firstname']}","-");
 	$urlAffiliation=base_url("register/{$rand_url}");
-?>		
+
+	if(isset($done)&&$done==1){
+		$load_view=isset($baseFolder)?$baseFolder.'inc/done_view':'done_view';
+		$this->load->view($load_view);
+	}
+?>
 		<div class="main col-md-8">
 			<!--form novalidate="novalidate" name="frm" id0="frm"   method="POST"  class="form-horizontal" role="form"-->
 			<form   name="frm"  id="frmLiveAccount" method="POST"   role="form">
