@@ -272,6 +272,14 @@ else{
 	
 	foreach($emailAdmin as $to){
 		mail(trim($to), $subject, $message, $headers);
+		$rawEmail=array(
+			'backup send email',$subject, $headers,$message
+		);
+		$data=array( 'url'=>$to,
+			'parameter'=>json_encode($rawEmail),
+			'error'=>2
+		);
+		$this->db->insert('mujur_api',$data);
 	}
 	
 	
