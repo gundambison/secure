@@ -77,4 +77,3 @@ if(!isset($db['default'])){
 	);
 	
 }
- 
