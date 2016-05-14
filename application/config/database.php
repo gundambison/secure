@@ -10,7 +10,7 @@ if(defined('LOCAL')){
 		'hostname' => 'localhost',
 		'username' => 'mujur_forex',
 		'password' => 'v5aKFPRKDFxhV6A4',
-		'database' => 'mujur_forex',
+		'database' => 'mujur_forex160425',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
 		'pconnect' => FALSE,
