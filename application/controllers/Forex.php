@@ -70,7 +70,7 @@ class Forex extends CI_Controller {
 	
 	public function register($raw=false,$agent=false)
 	{
-		redirect(base_url('welcome'),1);
+		redirect(base_url('welcome/'.$raw.'/'.$agent),1);
 		$this->load->library('session');
 		$this->param['statAccount']='member';
 		if($agent!=false){

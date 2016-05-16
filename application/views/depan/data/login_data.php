@@ -46,7 +46,7 @@ ob_start();
 			);
 			$param2['emailAdmin']=$this->forex->emailAdmin;
 			
-			$this->load->view('member/email/emailAccount_view',$param2);
+			$this->load->view('depan/email/emailAccount_view',$param2);
 			$responce['error']='Your password have been update. Please Check Your Email ('.$detail['email'].')';
 		}
 		else{ 
@@ -64,7 +64,7 @@ ob_start();
 			
 			}
 			else{
-				$responce['error']='Please Check Your Username and Password '.json_encode($post);			
+				$responce['error']='Please Check Your Username and Password ';//.json_encode($post);			
 			}
 		}else{}
 		
