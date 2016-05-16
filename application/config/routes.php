@@ -58,9 +58,11 @@ else{
 }
 
 $route['register/(:any)/(:any)'] = 'forex/register/$1/$1';
+$route['register/(:any)'] = 'forex/register/$1';
 //$route['login'] = 'login/member';
 $route['welcome'] = 'guest/home';
 $route['welcome/(:any)/(:any)'] = 'guest/home/$1/$1';
+$route['welcome/(:any)'] = 'guest/home/$1';
 
 $route['loginadmin'] = 'login/admin';
 $route['forgot_password'] = 'member/forgot';

@@ -10,7 +10,7 @@ Daftar Fungsi Yang Tersedia :
 *	forgot()
 *	__CONSTRUCT()
 ***/	
-	public function home($raw=false,$agent=false){
+	public function home($agent=false,$raw=false){
 		$this->load->library('session');
 		$this->param['statAccount']='member';
 		if($agent!=false){

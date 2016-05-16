@@ -68,9 +68,9 @@ class Forex extends CI_Controller {
 		exit();
 	}
 	
-	public function register($raw=false,$agent=false)
+	public function register($agent=false,$raw=false)
 	{
-		redirect(base_url('welcome/'.$raw.'/'.$agent),1);
+		redirect(base_url('welcome/'.$agent.'/'.$agent),1);
 		$this->load->library('session');
 		$this->param['statAccount']='member';
 		if($agent!=false){
