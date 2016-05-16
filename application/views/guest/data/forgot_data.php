@@ -6,7 +6,7 @@ $responce['detail']=$detail=$this->account->detail($post['email'],'email');
 	if($detail!==false){
 		$this->param['recoverid']=$this->account->recover($detail);
 		$this->param['raw']=$detail;
-//		$raw=$this->load->view('depan/email/emailRecover_view',$this->param,true);
+		$raw=$this->load->view('depan/email/emailRecover_view',$this->param,true);
 	}
 	else{ 
 		$responce['error']="The Email Not Found in Our Database .  Please check your input.";
@@ -14,7 +14,7 @@ $responce['detail']=$detail=$this->account->detail($post['email'],'email');
 	
 if($responce['error']===false){
 	$responce['result']=array(
-//		'raw'=>$raw,
+		'raw'=>$raw,
 		'detail'=>$detail,
 		'message'=>'You Will receive an e-mail with instruction about how to recover your password in few minutes.',
 		'title'=>'Your Request has been sent Successfully',
@@ -33,7 +33,7 @@ else{
 	}else{}
 }
  
-//logCreate($responce);
+logCreate($responce);
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result'] );
 }else{
