@@ -191,7 +191,7 @@ public $demo=1;
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
 		$param2['accountType']=$detail['accounttype'];
-		$this->load->view('member/email/emailRegister_view',$param2);
+		$this->load->view('depan/email/emailRegister_view',$param2);
 		
 	}
 
