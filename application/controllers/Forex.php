@@ -104,7 +104,9 @@ class Forex extends CI_Controller {
 	public function agent()
 	{
 		$this->param['formTitle']="Open Patner Account";
-		$this->register(false,true);
+		redirect(base_url('guest/agent'),1);
+		$this->register(true,true);
+		
 	}
 	
 	public function index()

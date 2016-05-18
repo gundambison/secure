@@ -74,6 +74,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 						Our Bank information :</p>
 					  <h3><strong>BCA : 8380126282 a.n Yadi Supriyadi <br />
 						</strong><strong>BRI : 2202.01.000120.561 a.n Yadi Supriyadi</strong><br />
+						<strong>MANDIRI : 1300014675337 a.n Yadi Supriyadi</strong><br />
 						<strong>BNI : 0423851338 a.n Yadi Supriyadi</strong></h3>
 					  <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
 					  <p id="yui_3_16_0_1_1443010679159_2163">Wishing you luck and profitable trading! </p>

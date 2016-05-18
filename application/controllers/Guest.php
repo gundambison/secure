@@ -47,6 +47,23 @@ Daftar Fungsi Yang Tersedia :
 		$this->showView('newbase_view');
 	}
 
+	public function agent(){
+		$this->load->library('session');
+		 
+			$this->param['fullregis']=true;
+			$this->param['statAccount']='agent';
+		$this->param['agent']=false;
+		$this->param['showAgent']=false;
+		$this->param['showForm']=false;
+		
+		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		if(!isset($this->param['formTitle'])) 
+			$this->param['formTitle']=$this->param['title'];
+		$this->param['content']=array(
+			'welcome', 
+		);
+		$this->showView();
+	}
 	public function register(){
 		$post=$this->input->post();
 		print_r($post); 
