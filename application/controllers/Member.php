@@ -127,6 +127,7 @@ Daftar Fungsi Yang Tersedia :
 	}	
 	
 	public function forgot(){
+		redirect('guest/forgot');
 		$this->param['title']='Recover your Live Account'; 
 		$this->param['content']=array(
 			'modal',
@@ -137,6 +138,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	public function recover($id=0){
+		redirect('guest/recover/'.$id);
 		$this->param['title']='Recover your Live Account'; 
 		$this->param['content']=array(
 			'modal',

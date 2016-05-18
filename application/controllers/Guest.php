@@ -127,9 +127,11 @@ Daftar Fungsi Yang Tersedia :
 			$respon=json_decode($tmp);
 			$this->param['raw']=array(
 			  'code'=>266,
-			  'message'=>$respon->message
+			  'message'=>isset($respon->message)?$respon->message:null,
+			  'respon'=>$tmp
 			);
-			$detail='click from :('.$_SERVER['HTTP_REFERER'].')';
+			$source=isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'-';
+			$detail='click from :('.$source.')';
 			$sql="update `{$this->account->tableAccountRecover}` 
 		set  detail='$detail' , `expired`='0000-00-00'
 		where id='$id'";
