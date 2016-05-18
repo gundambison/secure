@@ -30,6 +30,7 @@ else{
 }
 ?>	
 <?php 
+if(!isset($accountType))$accountType=null;
 if($accountType!='MEMBER'){
 	?>&nbsp;<?php 
 }
