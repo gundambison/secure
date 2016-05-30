@@ -28,7 +28,7 @@ if(isset($_POST['status'])){
 		$param['accountid']		=	$dt['raw']['accountid'];
 		$param['volume']		=	"-".$vol;  			 
 		$param['privatekey']	=	$this->forex->forexKey();
-		$param['description']	= 	'Withdrawal';
+		$param['description']	= 	'Withdrawal '.$vol.' '.date("H:i:s");
 				
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
@@ -77,7 +77,7 @@ if(isset($_POST['status'])){
 	else{
 		$sql="update mujur_flowlog set status=2 where id=$id";
 		dbQuery($sql,1);
-		$this->load->view('de/emailWidtdrawalDisapprove_view',$dt);
+		$this->load->view('depan/emailWidtdrawalDisapprove_view',$dt);
 		logCreate('widtdrawal disapprove');
 	}
 	
