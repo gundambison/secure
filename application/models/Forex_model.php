@@ -517,6 +517,47 @@ REGISTER
 		return true;
 		
 	}
+	
+	function apiAccount($account_id){
+		//kembalikan nilai yang berhubungan dengan account_id
+		$res['account']=$acc=(array)$this->accountDetail($account_id);
+	//	return $data;
+		$accid=$acc['username'];
+		$this->db->or_like('url', $accid );
+		$this->db->or_like('parameter',$accid);
+		$this->db->or_like('response',$accid);
+		$this->db->order_by('created','desc');
+		$data=$this->db->get($this->tableAPI)->result_array();
+		$res['sql'][]=$this->db->last_query();
+		if(is_array($data)){
+		foreach($data as $row){
+			$res['username'][]=$row;
+		}
+		}else{ $res['username'] =$data; }
+
+		$this->db->reset_query();
+
+		$email=$acc['email'];
+		$this->db->or_like('url',$email);
+		$this->db->order_by('created','desc');
+		$data=$this->db->get($this->tableAPI)->result_array();
+		$res['sql'][]=$this->db->last_query();
+		if(is_array($data)){
+		foreach($data as $row){
+			$res['email'][]=$row;
+		}
+		}else{ $res['email'] =$data; }
+		$this->db->reset_query();
+		
+		return $res;
+	}
+	
+	function apiDetail($id){
+		$this->db->reset_query();
+		$this->db->where('id',$id);
+		$data=$this->db->get($this->tableAPI)->row_array();
+		return $data;
+	}
 //=====================================
 		public function __construct()
         {

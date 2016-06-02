@@ -427,6 +427,38 @@ Daftar Fungsi Yang Tersedia :
 		}
 	}
 	
+	function send_email($status='',$id=''){
+		if($status!='send'){
+			$url0=base_url('member/send_email/send/'.$id);
+			echo "<h3 align='center'> Apakah email ini akan dikirim ulang? ".anchor($url0,'kirim email bila iya?')."</h3>";
+		}
+		$p=$this->forex->apiDetail($id);
+		//print_r($p);
+		$email=$p['url'];
+		$detail=json_decode($p['parameter'],true);
+		$subject=$detail[0];
+		$message=$detail[2];
+		$headers=$detail[1];
+		//
+		//$subject, $headers,$message,'send email'
+		if($status!='send'){
+			echo $message;
+		}
+		else{ 
+			@mail($email, $subject, $message, $headers);
+			echo "email sudah dikirim";
+			$rawEmail=array(
+				$subject, $headers,$message,'email ulang'
+			);
+			$data=array( 'url'=>json_encode($email),
+				'parameter'=>json_encode($rawEmail),
+				'error'=>2
+			);
+			$this->db->insert($this->forex->tableAPI,$data);
+		}
+		
+	}
+	
 	function __CONSTRUCT(){
 	parent::__construct(); 
 		

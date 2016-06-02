@@ -19,8 +19,27 @@ if(trim($show['Alamat'])=='')$show['Alamat']='???';
 $show['Bank']=isset($detail['detail']['bank'])?$detail['detail']['bank']:'???';
 $show['No Rekening']=isset($detail['detail']['bank_norek'])?$detail['detail']['bank_norek']:'???';
 
+$apiRes=$this->forex->apiAccount($post0['id']);
+//$respon['api2']=$apiRes;
+
+if(is_array($apiRes['email'])){
+	$n=0;
+//	$show['xxx']=json_encode( $apiRes['email']);
+	
+	foreach($apiRes['email'] as $dataApi){
+		$url0=base_url('member/send_email/api/'.$dataApi['id']);
+		$n++;
+		$detail=json_decode($dataApi['parameter'],true);
+		$subject=$detail[0];
+		$message=$detail[2];
+		$headers=$detail[1];
+		$show['send email '.$n]=anchor_popup($url0, $subject). " (".$dataApi['created'].")" ;
+	}
+	 
+}
+
 ?><h3>Detail</h3>
-<table border=1 width=400>
+<table border=1 width=400 class='table'>
 <?php 
 foreach($show as $nm=>$val){?>
 <tr>
@@ -37,7 +56,7 @@ $respon['title']='Detail User';
 $html = ob_get_contents();
 ob_end_clean();
  
-$respon['html']="<div style='max-height:400px;width:800px;overflow:auto'>".$html."</div>";
+$respon['html']="<div style='max-height:400px;width:800px;overflow:auto;padding:30px;border:1px solid blue;margin:2px'>".$html."</div>";
 $respon['status']=true;
 if(isset($respon)){ 
 	echo json_encode($respon);
