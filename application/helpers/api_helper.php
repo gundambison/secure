@@ -69,3 +69,19 @@ if ( ! function_exists('_runApi')){
 			
 	}
 } else{}
+
+if ( ! function_exists('batchEmail')){
+	function batchEmail( $to='', $subject='', $message='', $headers='')
+	{
+		$arr=array('to'=>trim($to), 'subject'=>$subject,'message'=>base64_encode($message),'headers'=>$headers);
+		$json=json_encode($arr);
+		echo '<br>'.$json;
+		$id0=date("ymd").'000' ;
+		$id=dbId('mail',(int)$id0);
+		$target="media/email/".$id.".txt";
+		echo '<br>target:'.$target;
+		file_put_contents($target, $json);
+		//return true;
+	}
+	
+}

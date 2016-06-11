@@ -368,6 +368,60 @@ class Forex extends CI_Controller {
 			echo "no respond";
 		}
 	}
-	
-	 
+
+	function email_send(){
+		$target="media/email";
+		$max=5; //silakan dinaikkan
+		$n=0;
+		$not_valid=array(".","..");
+		if ($handle = opendir($target)){
+			while (false !== ($entry = readdir($handle))) {
+				echo "\n<br>Read :".$entry;
+				if( array_search($entry, $not_valid)===false){
+					echo "|allow";
+					logCreate('file:'.$entry);
+					$txt=file_get_contents($target.'/'.$entry);
+					$json=@json_decode($txt,true);
+
+					if(is_array($json)&&isset($json['to'])){
+						$json['message']=isset($json['message'])?base64_decode( $json['message'] ):'';
+						echo '<hr/>'.implode('<p/>',$json);						
+						$OK=true;
+						//------check email
+						
+						//------lebih dari max?
+						if($OK)
+							$OK=$n<$max?true:false;
+
+						if($OK){
+							@mail(trim($json['to']), $json['subject'], $json['message'], $json['headers']);
+							echo '|send email';
+							$n++;
+		//hapus
+							$rawEmail=array(
+								$json['subject'], $json['headers'],$json['message'],'send email'
+							);
+							$data=array( 'url'=> $json['to'],
+								'parameter'=>json_encode($rawEmail),
+								'error'=>2
+							);
+							$this->db->insert($this->forex->tableAPI,$data);
+							unlink($target.'/'.$entry);
+						}
+					}
+					else{
+						echo 'not email';
+					}
+
+				}else{}
+
+			}
+
+		}else{}
+		
+		$arr=array('to'=>'satu', 'subject'=>'subjek','message'=>base64_encode('hello world'),'headers'=>'this is headers');
+		//echo '<br>'.json_encode($arr);
+		//batchEmail('satu@gdsdas.com','subject','message saya','headers');
+	}
+
 }

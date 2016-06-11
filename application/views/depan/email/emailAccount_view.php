@@ -266,7 +266,7 @@ if(defined('LOCAL')){
 	echo $message;
 }
 else{
-	mail(trim($to), $subject, $message, $headers);
+	batchEmail(trim($to), $subject, $message, $headers);
 	$subject = "[SalmaForex] ";
 	if(isset($post0['recover'])){
 		$subject.="recover password";
@@ -281,10 +281,10 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-	$this->db->insert($this->forex->tableAPI,$data);
+	//$this->db->insert($this->forex->tableAPI,$data);
 	
 	foreach($emailAdmin as $to){ //email admin lebih dari 1
-		mail(trim($to), $subject, $message, $headers);
+		batchEmail(trim($to), $subject, $message, $headers);
 	}
 	
 }

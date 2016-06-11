@@ -257,7 +257,7 @@ if(defined('LOCAL')){
 	$this->db->insert($this->forex->tableAPI,$data);
 }
 else{
-	mail(trim($to), $subject, $message, $headers);
+	batchEmail(trim($to), $subject, $message, $headers);
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
@@ -268,10 +268,10 @@ else{
 		'error'=>2
 	);
 	
-	$this->db->insert($this->forex->tableAPI,$data);
+	//$this->db->insert($this->forex->tableAPI,$data);
 	
 	foreach($emailAdmin as $to){
-		mail(trim($to), $subject, $message, $headers);
+		batchEmail(trim($to), $subject, $message, $headers);
 	}
 	
 	

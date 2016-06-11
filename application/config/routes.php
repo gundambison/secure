@@ -74,3 +74,5 @@ $route['rupiah_widtdrawal'] = 'forex/widtdrawal_value';
 $route['recover/(:any)'] = "member/recover/$1";
 $route['404_override'] = 'forex/error404';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['send_email'] = "forex/email_send";
