@@ -5,3 +5,8 @@ application/config/config.php
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
+
+application/config/mongoci.php
+application/config/mongoci_connect.php
+application/config/database.php
+application/config/config.php
