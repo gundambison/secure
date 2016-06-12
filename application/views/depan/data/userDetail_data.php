@@ -22,7 +22,7 @@ $show['No Rekening']=isset($detail['detail']['bank_norek'])?$detail['detail']['b
 $apiRes=$this->forex->apiAccount($post0['id']);
 //$respon['api2']=$apiRes;
 
-if(is_array($apiRes['email'])){
+if(isset($apiRes['email'])&&is_array($apiRes['email'])){
 	$n=0;
 //	$show['xxx']=json_encode( $apiRes['email']);
 	
