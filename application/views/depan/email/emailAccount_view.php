@@ -30,7 +30,10 @@ else{
 }
 ?>	
 <?php 
+<<<<<<< HEAD
 if(!isset($accountType))$accountType=null;
+=======
+>>>>>>> origin
 if($accountType!='MEMBER'){
 	?>&nbsp;<?php 
 }
@@ -266,7 +269,11 @@ if(defined('LOCAL')){
 	echo $message;
 }
 else{
+<<<<<<< HEAD
 	batchEmail(trim($to), $subject, $message, $headers);
+=======
+	mail(trim($to), $subject, $message, $headers);
+>>>>>>> origin
 	$subject = "[SalmaForex] ";
 	if(isset($post0['recover'])){
 		$subject.="recover password";
@@ -281,10 +288,17 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
+<<<<<<< HEAD
 	//$this->db->insert($this->forex->tableAPI,$data);
 	
 	foreach($emailAdmin as $to){ //email admin lebih dari 1
 		batchEmail(trim($to), $subject, $message, $headers);
+=======
+	$this->db->insert($this->forex->tableAPI,$data);
+	
+	foreach($emailAdmin as $to){ //email admin lebih dari 1
+		mail(trim($to), $subject, $message, $headers);
+>>>>>>> origin
 	}
 	
 }

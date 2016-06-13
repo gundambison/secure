@@ -46,8 +46,12 @@ public $demo=1;
 		where id='{$id}'";
 		$row=$this->db->query($sql)->row_array();
 		$raw=base64_decode($row['params']);
+<<<<<<< HEAD
 		$source=isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'-';
 		$detail='click from :'.$source;
+=======
+		$detail='click from :'.$_SERVER['HTTP_REFERER'];
+>>>>>>> origin
 		$sql="update `{$this->tableAccountRecover}` 
 		set  detail='$detail' 
 		where id='$id'";
@@ -192,7 +196,11 @@ public $demo=1;
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
 		$param2['accountType']=$detail['accounttype'];
+<<<<<<< HEAD
 		$this->load->view('depan/email/emailRegister_view',$param2);
+=======
+		$this->load->view('member/email/emailRegister_view',$param2);
+>>>>>>> origin
 		
 	}
 

@@ -127,7 +127,10 @@ Daftar Fungsi Yang Tersedia :
 	}	
 	
 	public function forgot(){
+<<<<<<< HEAD
 		redirect('guest/forgot');
+=======
+>>>>>>> origin
 		$this->param['title']='Recover your Live Account'; 
 		$this->param['content']=array(
 			'modal',
@@ -138,7 +141,10 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	public function recover($id=0){
+<<<<<<< HEAD
 		redirect('guest/recover/'.$id);
+=======
+>>>>>>> origin
 		$this->param['title']='Recover your Live Account'; 
 		$this->param['content']=array(
 			'modal',
@@ -344,6 +350,94 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	public function tarif(){
+<<<<<<< HEAD
+=======
+		
+		$this->checkLogin();
+		if($this->input->post('rate')){
+			$post= $this->input->post();
+			$stat=$this->forex->rateUpdate($post);
+			if($stat===false)die('error');
+			redirect(base_url('member/tarif'));
+			exit();
+		}else{}
+		$this->param['title']='Tarif'; 
+		$this->param['content']=array(
+			'modal',
+			'tarif', 
+		);
+		$this->param['rate']=array(
+			'mean'=>ceil( ($this->forex->rateNow('deposit')['value'] + $this->forex->rateNow('widtdrawal')['value']	)/2),
+			'deposit'=>$this->forex->rateNow('deposit')['value'],
+			'widtdrawal'=>$this->forex->rateNow('widtdrawal')['value']
+		);
+//datatables		
+		$this->param['footerJS'][]='js/jquery.dataTables.min.js';
+		$this->param['footerJS'][]='js/tarif.js';
+		$this->param['fileCss']['dataTable']='css/jquery.dataTables.min.css';
+		$this->showView(); 
+	}
+	
+	private function checkLogin(){
+		$session=$this->param['session'];
+		$detail=$this->account->detail($session['username'],'username');
+		if($detail==false){
+			logCreate('no username','error');
+			redirect("login");
+		}
+		else{}
+		$post=array();
+		if(isset($session['expire'])){
+			if($session['expire']<strtotime("now")){
+//				logCreate('User Expired '.$session['expire']." vs ". strtotime("now") );
+				$post['message']='Please Login Again';
+				$this->session->set_flashdata('login', $post);
+				$array=array( 
+					'username'=>null,
+					'password'=>null,
+					'expire'=>strtotime("+12 minutes")
+				);
+				$this->session->set_userdata($array);
+				redirect("login/member");
+			}
+			else{
+				$session['expire']=strtotime("+10 minutes");
+				logCreate('add User Expired '.$session['expire']  );
+			}
+		}
+		else{
+//			logCreate('User don\'t have Expired' );
+			$post['message']='Your Login Has expired?';
+			$this->session->set_flashdata('login', $post);
+			$array=array(  
+					'expire'=>strtotime("+12 minutes")
+				);
+				$this->session->set_userdata($array);
+			redirect(base_url("member"));
+			$session['expire']=strtotime("+10 minutes");
+		}
+		if($session['password']==$detail['masterpassword']){			
+			$array=array( 
+				'username'=>$session['username'],
+				'password'=>($session['password']),
+				'expire'=>$session['expire']
+			);
+			$this->session->set_userdata($array);
+			$this->param['detail']=$this->param['userlogin']=$detail;
+			$uniqid=url_title(trim($detail['id']).' '.$session['username'],'-');
+			$this->param['urlAffiliation']=base_url('register/'.$uniqid);
+		}
+		else{
+			logCreate('wrong password','error');
+			$post['message']='Please Login Again';
+			$this->session->set_flashdata('login', $post);
+			redirect("login");			
+		}
+	}
+	
+	function __CONSTRUCT(){
+	parent::__construct(); 
+>>>>>>> origin
 		
 		$this->checkLogin();
 		if($this->input->post('rate')){

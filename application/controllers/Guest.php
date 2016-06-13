@@ -10,7 +10,11 @@ Daftar Fungsi Yang Tersedia :
 *	forgot()
 *	__CONSTRUCT()
 ***/	
+<<<<<<< HEAD
 	public function home($agent=false,$raw=false){
+=======
+	public function home($raw=false,$agent=false){
+>>>>>>> origin
 		$this->load->library('session');
 		$this->param['statAccount']='member';
 		if($agent!=false){
@@ -47,6 +51,7 @@ Daftar Fungsi Yang Tersedia :
 		$this->showView('newbase_view');
 	}
 
+<<<<<<< HEAD
 	public function agent(){
 		$this->load->library('session');
 		 
@@ -64,6 +69,8 @@ Daftar Fungsi Yang Tersedia :
 		);
 		$this->showView();
 	}
+=======
+>>>>>>> origin
 	public function register(){
 		$post=$this->input->post();
 		print_r($post); 
@@ -127,11 +134,17 @@ Daftar Fungsi Yang Tersedia :
 			$respon=json_decode($tmp);
 			$this->param['raw']=array(
 			  'code'=>266,
+<<<<<<< HEAD
 			  'message'=>isset($respon->message)?$respon->message:null,
 			  'respon'=>$tmp
 			);
 			$source=isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'-';
 			$detail='click from :('.$source.')';
+=======
+			  'message'=>$respon->message
+			);
+			$detail='click from :('.$_SERVER['HTTP_REFERER'].')';
+>>>>>>> origin
 			$sql="update `{$this->account->tableAccountRecover}` 
 		set  detail='$detail' , `expired`='0000-00-00'
 		where id='$id'";

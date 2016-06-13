@@ -261,7 +261,11 @@ if(defined('LOCAL')){
 else{
 	$to[]='finance@salmaforex.com';
 	foreach($to as $email){
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
 		batchEmail($email, $subject, $message, $headers);
+=======
+		mail($email, $subject, $message, $headers);
+>>>>>>> origin:application/views/depan/email/emailDepositStatus_view.php
 	}
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
@@ -270,5 +274,9 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
 	//$this->db->insert($this->forex->tableAPI,$data);
+=======
+	$this->db->insert($this->forex->tableAPI,$data);
+>>>>>>> origin:application/views/depan/email/emailDepositStatus_view.php
 }

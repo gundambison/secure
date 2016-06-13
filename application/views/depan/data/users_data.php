@@ -19,12 +19,20 @@ $data=array();
 		$col=$post0['order'][0]['column'];
 		$order=$post0['order'][0]['dir'];
 		$col2=$post0['columns'][$col]['data'];
+<<<<<<< HEAD
 		$orders="order by {$col2} {$order}, created asc";
+=======
+		$orders="order by {$col2} {$order}";
+>>>>>>> origin
 		
    }
    $where='1';
 $search=isset($post0['search']['value'])?$post0['search']['value']:'';
+<<<<<<< HEAD
 if($search!=''&&strlen($search)>2){
+=======
+if($search!=''&&strlen($search)>3){
+>>>>>>> origin
 	$where="a.username like '{$search}%'";
 	$where.=" or a.email like '{$search}%'";
 	//$where.=" or ad.detail like '%{$search}%'";
@@ -35,7 +43,10 @@ left join mujur_accountdetail ad
 	on a.username=ad.username
 */	
 	$res=dbFetchOne($sql,1);
+<<<<<<< HEAD
 	$respon['sql'][]=$sql;
+=======
+>>>>>>> origin
 	$respon['recordsFiltered']=$res['c'];
 }
 else{
@@ -50,7 +61,10 @@ left join mujur_accountdetail ad
 	on a.username=ad.username
 */	
 logCreate('sql :'.$sql);
+<<<<<<< HEAD
 $respon['sql'][]=$sql;
+=======
+>>>>>>> origin
 $dt=$this->db->query($sql)->result_array();
 foreach($dt as $row){
 	$row['raw']=$detail=$this->account->detail($row['id']);

@@ -68,9 +68,15 @@ class Forex extends CI_Controller {
 		exit();
 	}
 	
+<<<<<<< HEAD
 	public function register($agent=false,$raw=false)
 	{
 		redirect(base_url('welcome/'.$agent.'/'.$agent),1);
+=======
+	public function register($raw=false,$agent=false)
+	{
+		redirect(base_url('welcome'),1);
+>>>>>>> origin
 		$this->load->library('session');
 		$this->param['statAccount']='member';
 		if($agent!=false){
@@ -104,9 +110,13 @@ class Forex extends CI_Controller {
 	public function agent()
 	{
 		$this->param['formTitle']="Open Patner Account";
+<<<<<<< HEAD
 		redirect(base_url('guest/agent'),1);
 		$this->register(true,true);
 		
+=======
+		$this->register(false,true);
+>>>>>>> origin
 	}
 	
 	public function index()
@@ -368,6 +378,7 @@ class Forex extends CI_Controller {
 			echo "no respond";
 		}
 	}
+<<<<<<< HEAD
 
 	function email_send(){
 		$target="media/email";
@@ -424,4 +435,8 @@ class Forex extends CI_Controller {
 		//batchEmail('satu@gdsdas.com','subject','message saya','headers');
 	}
 
+=======
+	
+	 
+>>>>>>> origin
 }

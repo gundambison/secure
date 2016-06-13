@@ -229,7 +229,11 @@ if(defined('LOCAL')){
 else{
 	$emailAdmin[]='finance@salmaforex.com';
 	foreach($emailAdmin as $to){
+<<<<<<< HEAD:application/views/depan/email/emailDepositAdmin_view.php
 		batchEmail(trim($to), $subject, $message, $headers);
+=======
+		mail(trim($to), $subject, $message, $headers);
+>>>>>>> origin:application/views/depan/email/emailDepositAdmin_view.php
 	}
 	
 	$rawEmail=array(
@@ -239,5 +243,9 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
+<<<<<<< HEAD:application/views/depan/email/emailDepositAdmin_view.php
 	//$this->db->insert($this->forex->tableAPI,$data);
+=======
+	$this->db->insert($this->forex->tableAPI,$data);
+>>>>>>> origin:application/views/depan/email/emailDepositAdmin_view.php
 }

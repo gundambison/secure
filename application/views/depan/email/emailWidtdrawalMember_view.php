@@ -231,7 +231,11 @@ if(defined('LOCAL')){
 	//die($message );
 }
 else{
+<<<<<<< HEAD
 	batchEmail(trim($to), $subject, $message, $headers);
+=======
+	mail(trim($to), $subject, $message, $headers);
+>>>>>>> origin
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
@@ -239,5 +243,9 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
+<<<<<<< HEAD
 	//$this->db->insert($this->forex->tableAPI,$data);
+=======
+	$this->db->insert($this->forex->tableAPI,$data);
+>>>>>>> origin
 }

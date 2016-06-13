@@ -25,14 +25,22 @@ if(isset($_POST['status'])){
 		$param['accountid']		=	$dt['raw']['accountid'];
 		//$param['volume']		=	$vol; 			 
 		$param['privatekey']	=	$this->forex->forexKey();
+<<<<<<< HEAD
 		$param['description']	= 	'Deposit '.$vol.' '.date("H:i:s");
+=======
+		$param['description']	= 	'Deposit';
+>>>>>>> origin
 		
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param)."&volume={$vol}+";
 		$respon['server']=$tmp= _runApi($url );
 		if((int)$tmp['responsecode']===0){
 			logCreate('deposit Approve');
+<<<<<<< HEAD
 			$this->load->view('depan/email/emailDepositApprove_view',$dt);//emailDepositStatus_view
+=======
+			$this->load->view('member/email/emailDepositApprove_view',$dt);//emailDepositStatus_view
+>>>>>>> origin
 			$sql="update mujur_flowlog set status=1 where id=$id";
 			dbQuery($sql,1);
 		}
@@ -45,7 +53,11 @@ if(isset($_POST['status'])){
 		$sql="update mujur_flowlog set status=2 where id=$id";
 		dbQuery($sql,1);
 		logCreate('deposit disaproved');
+<<<<<<< HEAD
 		$this->load->view('depan/email/emailDepositCancel_view',$dt);//emailDepositStatus_view
+=======
+		$this->load->view('member/email/emailDepositCancel_view',$dt);//emailDepositStatus_view
+>>>>>>> origin
 	}
 	
 }else{}	

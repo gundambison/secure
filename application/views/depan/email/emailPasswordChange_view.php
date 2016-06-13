@@ -239,7 +239,11 @@ if(defined('LOCAL')){
 	echo $message;
 }
 else{
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
 	batchEmail(trim($to), $subject, $message, $headers);
+=======
+	mail(trim($to), $subject, $message, $headers);
+>>>>>>> origin:application/views/depan/email/emailPasswordChange_view.php
 	$subject = "[SalmaForex] Update Account";
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
@@ -248,10 +252,17 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
 	//$this->db->insert($this->forex->tableAPI,$data);
 	
 	foreach($emailAdmin as $to){ //email admin lebih dari 1
 		batchEmail(trim($to), $subject, $message, $headers);
+=======
+	$this->db->insert($this->forex->tableAPI,$data);
+	
+	foreach($emailAdmin as $to){ //email admin lebih dari 1
+		mail(trim($to), $subject, $message, $headers);
+>>>>>>> origin:application/views/depan/email/emailPasswordChange_view.php
 	}
 	
 	

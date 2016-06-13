@@ -19,6 +19,7 @@ if(trim($show['Alamat'])=='')$show['Alamat']='???';
 $show['Bank']=isset($detail['detail']['bank'])?$detail['detail']['bank']:'???';
 $show['No Rekening']=isset($detail['detail']['bank_norek'])?$detail['detail']['bank_norek']:'???';
 
+<<<<<<< HEAD
 $apiRes=$this->forex->apiAccount($post0['id']);
 //$respon['api2']=$apiRes;
 
@@ -40,6 +41,10 @@ if(isset($apiRes['email'])&&is_array($apiRes['email'])){
 
 ?><h3>Detail</h3>
 <table border=1 width=400 class='table'>
+=======
+?><h3>Detail</h3>
+<table border=1 width=400>
+>>>>>>> origin
 <?php 
 foreach($show as $nm=>$val){?>
 <tr>
@@ -56,7 +61,11 @@ $respon['title']='Detail User';
 $html = ob_get_contents();
 ob_end_clean();
  
+<<<<<<< HEAD
 $respon['html']="<div style='max-height:400px;width:800px;overflow:auto;padding:30px;border:1px solid blue;margin:2px'>".$html."</div>";
+=======
+$respon['html']="<div style='max-height:400px;width:800px;overflow:auto'>".$html."</div>";
+>>>>>>> origin
 $respon['status']=true;
 if(isset($respon)){ 
 	echo json_encode($respon);

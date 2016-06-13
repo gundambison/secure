@@ -9,7 +9,11 @@ if(defined('LOCAL')){
 		'dsn'	=> '',
 		'hostname' => 'localhost',
 		'username' => 'mujur_forex',
+<<<<<<< HEAD:application/config/_database.php
 		'password' => '',
+=======
+		'password' => 'v5aKFPRKDFxhV6A4',
+>>>>>>> origin:application/config/database.php
 		'database' => 'mujur_forex160425',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
