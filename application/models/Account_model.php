@@ -85,7 +85,22 @@ public $demo=1;
 				$str = $this->db->last_query();			 
 				logConfig("create table:$str");
 				$this->db->reset_query();	
-			}else{}			
+			}else{}
+//===================Menambah ALTER TABLE `mujur_account` ADD `agent` INT NULL DEFAULT NULL AFTER `accountid`;
+				$sql="select * from {$this->tableAccount} limit 1";
+				$row=dbFetchOne($sql);
+				if (!$this->db->field_exists('agent', $this->tableAccount)){ 
+					$sql="ALTER TABLE `{$this->tableAccount}` ADD `agent` varchar(31) AFTER `accountid`";
+					dbQuery($sql);
+					/*
+					$sql="select a.id, a.reg_id, r.reg_agent from mujur_account a, mujur_register r where a.reg_id=r.reg_id and r.reg_agent !=''  ";
+					$res=dbFetch($sql);
+					foreach($res as $row){
+						$sql="update   mujur_account set agent='$row[reg_agent]' where reg_id='$row[reg_id]'";
+						dbQuery($sql);
+					}
+					*/
+				}
 			return true;
 		}
 		
@@ -252,6 +267,9 @@ public $demo=1;
 		
 		if($data['type']==7){
 			$data['type']='admin';
+		}
+		elseif(strtolower($data['accounttype'])=='agent'){
+			$data['type']='agent';
 		}
 		else{
 			$data['type']=false;

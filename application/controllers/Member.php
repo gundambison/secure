@@ -321,7 +321,7 @@ Daftar Fungsi Yang Tersedia :
 	}	
 
 	public function listApi($type='api'){
-	$types=array('api','deposit','widtdrawal','user');	
+	$types=array('api','deposit','widtdrawal','user','agent');	
 		if(!defined('LOCAL')){
 			$this->checkLogin();
 		}
