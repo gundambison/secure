@@ -49,7 +49,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 			echo bsInput('Akun Salmaforex','akun', $userlogin['username'] ,'',true);
 			echo bsInput('Name','name', $name.$name1 ,'',true);
 			echo bsInput('Phone','phone', trim($uDetail['phone']) ,'Please Input Valid Phonenumber' );
-			echo bsInput('Nama Bank','bank', trim($uDetail['bank']) ,'BCA, Mandiri, BNI, BII, etc' );
+			echo bsInput('Nama Bank','bank', trim($uDetail['bank']) ,'BCA, Mandiri,  etc' );
 			echo bsInput('No Rekening','norek', trim($uDetail['bank_norek']) ,'999 999 999 9' );
 			echo bsInput('Nama Pemilik Rekening','namerek', trim($name) ,'Please Input Valid Name' );
 
@@ -74,7 +74,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 						Our Bank information :</p>
 					  <h3><strong>BCA : 8380126282 a.n Yadi Supriyadi <br />
 						</strong><strong>MANDIRI : 1300014675337 a.n Yadi Supriyadi</strong><br />
-						<strong>BNI : 0423851338 a.n Yadi Supriyadi</strong></h3>
+						</h3>
 					  <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
 					  <p id="yui_3_16_0_1_1443010679159_2163">Wishing you luck and profitable trading! </p>
 					  <p><strong>Thank you for choosing SalmaForex to provide you with brokerage services on the forex market! We wish you every success in your trading!</strong></p>
