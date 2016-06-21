@@ -55,8 +55,8 @@ try{
 	//console.log('table deposit ready');
 }
 catch(err){
-	 console.log('not table Widtdrawal');
-	 console.log(err);
+//	 console.log('not table Widtdrawal');
+//	 console.log(err);
 }	
 
 try{	
@@ -86,25 +86,12 @@ try{
 	//console.log('table widtdrawal ready');
 }
 catch(err){
-	 console.log('not table Widtdrawal');
-	 console.log(err);
+//	 console.log('not table Widtdrawal');
+//	 console.log(err);
 }
-/*
-"columns": [{
-                "orderable": true
-            }, {
-                "orderable": false
-            }, {
-                "orderable": false
-            }, {
-                "orderable": false
-            }, {
-                "orderable": false
-            }, {
-                "orderable": false
-            }],
-*/
-try{	
+
+try{
+	console.log('table user');
 	tableUsers=jQuery('#tableUsers').DataTable( {
 		"columnDefs": [
             { 
@@ -112,7 +99,7 @@ try{
                     return '<input type="button"  value="detail" onclick="detailUser('+ row.id+')" />';
 					
                 },
-                "targets": 5
+                "targets": 6
             }
 		],
         "processing": true,
@@ -127,18 +114,29 @@ try{
             { "data": "username" },
             { "data": "email" },
             { "data": "accounttype","orderable": false },
+            { "data": "status", "orderable": true },     
             { "data": "action","orderable": false },             
         ],
 		"lengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [5, 10,15, 20, -1],
+                [5, 10,15, 20, "All"] // change per page values here
             ],
     } );
 	//console.log('table widtdrawal ready');
+	function activeStatus(id){
+		console.log('kirim ajax dgn id');
+		params={id:id,type:"activeUserStatus"}
+		url=urlChangeStatus;
+		req=sendAjax(url,param);
+		console.log(req);
+	}
+	function reviewStatus(id){
+		console.log('kirim ajax dgn id');
+	}
 }
 catch(err){
-	 console.log('not table User?');
-	 console.log(err);
+ 	 console.log('not table User?');
+	console.log(err);
 }
 
 

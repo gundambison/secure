@@ -1,23 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 if (   function_exists('logFile')){ logFile('model','account_model.php','model'); };
-/***
-Daftar Fungsi Yang Tersedia :
-*	newAccountWithoutPassword()
-*	recoverId($id=0)
-*	noPass($id)
-*	recover($detail=false)
-*	create($id,$raw='') //tidak di jalankan
-*	detail($id,$field='id')
-*	detailRepair($data=array())
-*	__construct()
-***/
+
 class Account_model extends CI_Model {
 public $tableRegis='mujur_register'; 
 public $tableWorld='mujur_country'; 
 public $tableAccount='mujur_account';
 public $tableAccountRecover='mujur_accountrecover';
 
+public $tableAccountDocument='mujur_accountdocument';
 public $tableAccountDetail='mujur_accountdetail';
 public $tableActivation='mujur_activation';
 public $tablePassword='mujur_password';
@@ -27,7 +18,20 @@ public $tableFlowlog='mujur_flowlog';
 public $tableAPI='mujur_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
-
+/***
+Daftar Fungsi Yang Tersedia :
+*	newAccountWithoutPassword()
+*	recoverId($id=0)
+*	noPass($id)
+*	recover($detail=false)
+*	create($id,$raw='') //tidak di jalankan
+*	updateAccountDetail($username, $detail=false,$document=false)
+*	updateAccountDocument($username,$document=false)
+*	document($id,$field='id')
+*	detail($id,$field='id')
+*	detailRepair($data=array())
+*	__construct()
+***/
 	function newAccountWithoutPassword(){
 		$sql="select username from `{$this->tableAccount}` 
 		where masterpassword='' limit 4;";
@@ -68,7 +72,7 @@ public $demo=1;
 	
 	function recover($detail=false){
 		if($detail==false){
-//=========Menambah Account Recover			
+//=========Menambah Account Recover
 			if(!$this->db->table_exists($this->tableAccountRecover)){
 				$fields = array(
 				  'id'=>array( 
@@ -86,20 +90,48 @@ public $demo=1;
 				logConfig("create table:$str");
 				$this->db->reset_query();	
 			}else{}
-//===================Menambah ALTER TABLE `mujur_account` ADD `agent` INT NULL DEFAULT NULL AFTER `accountid`;
+//==========Account Document
+			if(!$this->db->table_exists($this->tableAccountDocument)){
+				$fields = array(
+				  'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE),
+				  'upload'=>array( 'type' => 'text'),
+				  'modified'=>array( 'type' => 'timestamp')
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table($this->tableAccountDocument,TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();	
+			}else{}
+			if (!$this->db->field_exists('email', $this->tableAccountDocument)){
+				$sql="ALTER TABLE `{$this->tableAccountDocument}` ADD `email` varchar(255) AFTER `id`";
+				dbQuery($sql);
+			}
+			if (!$this->db->field_exists('status', $this->tableAccountDocument)){
+				$sql="ALTER TABLE `{$this->tableAccountDocument}` ADD `status` tinyint AFTER `email`";
+				dbQuery($sql);
+			}
+//===================
 				$sql="select * from {$this->tableAccount} limit 1";
 				$row=dbFetchOne($sql);
 				if (!$this->db->field_exists('agent', $this->tableAccount)){ 
 					$sql="ALTER TABLE `{$this->tableAccount}` ADD `agent` varchar(31) AFTER `accountid`";
 					dbQuery($sql);
+				}
+				if (!$this->db->field_exists('status', $this->tableAccount)){ 
+					$sql="ALTER TABLE `{$this->tableAccount}` ADD `status` tinyint AFTER `accountid`";
+					dbQuery($sql);
 					/*
-					$sql="select a.id, a.reg_id, r.reg_agent from mujur_account a, mujur_register r where a.reg_id=r.reg_id and r.reg_agent !=''  ";
-					$res=dbFetch($sql);
-					foreach($res as $row){
-						$sql="update   mujur_account set agent='$row[reg_agent]' where reg_id='$row[reg_id]'";
-						dbQuery($sql);
-					}
+					1 : valid
+					2 : waiting
+					0 : not valid
 					*/
+				}
+				if (!$this->db->field_exists('document', $this->tableAccountDetail)){ 
+					$sql="ALTER TABLE `{$this->tableAccountDetail}` ADD `document` tinyint AFTER `detail`";
+					dbQuery($sql);
 				}
 			return true;
 		}
@@ -211,6 +243,60 @@ public $demo=1;
 		
 	}
 
+	function updateAccountDetail($username, $detail=false,$document=false){
+		$sql="select count(id) c from {$this->tableAccountDetail} where username='$username'";
+		$res=dbFetchOne($sql);
+		if($res['c']==0){
+			$ar=array('username'=>$username);
+			$this->db->insert($this->tableAccountDetail, $ar);
+		}
+		$json=json_encode($detail);
+		$sql="UPDATE {$this->tableAccountDetail} SET `detail` = '{$json}' WHERE `username` = '{$username}';";
+		dbQuery($sql);
+		return true;
+	}	
+
+	function updateAccountDocument($username,$document=false){
+		$data=$this->detail($username,'username');
+		$email=trim($data['email']);
+		$sql="select count(id) c from {$this->tableAccountDocument} where email like '$email'";
+		$res=dbFetchOne($sql);
+		if($res['c']==0){
+			$ar=array('email'=>$email);
+			$this->db->insert($this->tableAccountDocument, $ar);
+		}else{}
+		if($document!=false){
+			$upload=addslashes($document);
+			$sql="UPDATE {$this->tableAccountDocument} SET `upload` = '{$document}' WHERE `email` = '{$email}';";
+			dbQuery($sql);
+			$sql="UPDATE {$this->tableAccountDocument} SET `status` = '2' WHERE `email` = '{$email}';";
+			dbQuery($sql);
+			echo $sql;
+		}
+		return true;
+		
+	}
+	
+	function document($id,$field='id'){
+		$id=addslashes(trim($id));
+		if($field=='email')$id.="%";
+		$sql="select count(id) c 
+		from `{$this->tableAccount}`  
+		where `{$field}` like '{$id}';"; 
+		$res=dbFetchOne($sql);
+		if($res['c']==0){
+			logCreate("account detail id:$id|field:$field|NOT FOUND","error");
+			return false; 
+		}
+		
+		$sql="select a.email from `{$this->tableAccount}` a  		
+		where `{$field}` like '$id'";
+		$res=dbFetchOne($sql);
+		$email=$res['email'];
+		$sql="select id,email,upload,status from {$this->tableAccountDocument} where email like '$email'";
+		return dbFetchOne($sql);
+	}
+
 	function detail($id,$field='id'){
 	logCreate("account detail id:$id|field:$field");	
 		$id=addslashes(trim($id));
@@ -249,7 +335,7 @@ public $demo=1;
 		}
 		
 		$sql="select 
-		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid,
+		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid, a.status,
 		a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
 		left join `{$this->tableAccountDetail}` ad 
 			on a.username like ad.username
@@ -280,7 +366,8 @@ public $demo=1;
 			$data['detail']=json_decode($data['raw'],true); 
 			unset($data['raw']);
 		}
-		
+//----document
+		$data['document']=$this->document($id, $field);
 		return $data;
 	}
 	

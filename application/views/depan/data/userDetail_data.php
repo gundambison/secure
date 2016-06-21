@@ -18,6 +18,16 @@ if(trim($show['Alamat'])=='')$show['Alamat']='???';
 
 $show['Bank']=isset($detail['detail']['bank'])?$detail['detail']['bank']:'???';
 $show['No Rekening']=isset($detail['detail']['bank_norek'])?$detail['detail']['bank_norek']:'???';
+//====status
+$status='Not Active';
+	if(isset($detail['document']['status'])){	
+	if($detail['document']['status']==1)$status ='Active';
+	if($detail['document']['status']==2)$status ='Review';
+	$status.='<button onclick="activeStatus('.$post0['id'].')" type="button">Active</button>';
+	$status.='<button onclick="reviewStatus('.$post0['id'].')" type="button">Review</button>';
+	$status.= anchor_popup(site_url('member/show_upload/'.$post0['id']),'Lihat Dokumen');
+	}
+$show['Status']=$status;
 
 $apiRes=$this->forex->apiAccount($post0['id']);
 //$respon['api2']=$apiRes;

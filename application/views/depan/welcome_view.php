@@ -21,7 +21,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
                                         <div class="box-padder15">
                                             <p class="bright large"><strong>Verify Account</strong></p>
                                             <div class="vspace-15"></div>
-                                            <a class="btn btn-default" href='<?=base_url('member/profile');?>'><strong>Click Here</strong></a>
+                                            <a class="btn btn-default" href='<?=base_url('member/uploads');?>'><strong>Click Here</strong></a>
                                         </div>
                                     </div>
                                     <div class="vspace-30"></div>

@@ -21,6 +21,7 @@ Daftar Fungsi Yang Tersedia :
 *	__CONSTRUCT()
 ***/
 	public $param;
+	public $folderUpload;
 	
 	public function loginProcess(){
 		$login=$this->session->userdata('login');
@@ -33,6 +34,35 @@ Daftar Fungsi Yang Tersedia :
 			redirect(base_url('login/member'),1);
 		}
 		redirect(base_url('member'),1);
+	}
+
+	public function uploads($warn=0){
+		$this->checkLogin();
+		if($this->input->post('rand')){
+			$rand=dbId();
+			print_r($_POST);print_r($_FILES);
+			$files=$_FILES['doc'];
+			if($files['size']>550000){
+				$post['message']="upload to big";
+				$this->session->set_flashdata('login', $post);
+				redirect(site_url('member/uploads/'.$rand));exit();
+			}
+			$user=$this->param['detail'];
+			$filename=url_title($user['email']).".".date("ymd").".tmp";
+			echo '<pre>';print_r($this->param['detail']);
+			copy($files['tmp_name'],$this->folderUpload.$filename);
+			$url=  $this->folderUpload.$filename  ;
+			$this->account->updateAccountDocument($user['username'], $url);
+			//exit('file:'.$url);
+			redirect(site_url('member/profile'));
+		}
+		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['content']=array(
+				'detailUpload', 
+		);
+		$this->param['footerJS'][]='js/login.js';
+		$this->param['warning']=$warn;
+		$this->showView();
 	}
 
 	public function edit($warn=0){
@@ -276,7 +306,13 @@ Daftar Fungsi Yang Tersedia :
 		$this->showView(); 
 		
 	}	
-  
+	function show_upload($userid=null){
+		$data=$this->account->document($userid);
+		//var_dump($data);
+		header('content-type:image/jpeg');
+		$txt=file_get_contents( $data['upload']);
+		echo $txt;
+	}
 	public function login(){
 		redirect(base_url('forex'),1);
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
@@ -344,7 +380,6 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	public function tarif(){
-		
 		$this->checkLogin();
 		if($this->input->post('rate')){
 			$post= $this->input->post();
@@ -500,6 +535,7 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['session']=$this->session-> all_userdata(); 
 		$this->param['baseFolder']='depan/';
 		$this->param['noBG']=true;
+		$this->folderUpload = 'media/uploads/';
 		/*
 		if($this->input->post())
 			logCreate($this->input->post(),'post');

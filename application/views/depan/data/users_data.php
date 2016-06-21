@@ -19,6 +19,9 @@ $data=array();
 		$col=$post0['order'][0]['column'];
 		$order=$post0['order'][0]['dir'];
 		$col2=$post0['columns'][$col]['data'];
+		if($col==5){
+			$col2='d.status';
+		}
 		$orders="order by {$col2} {$order}, created asc";
 		
    }
@@ -42,7 +45,8 @@ else{
 	logCreate('no search :'.$search);
 }
 
-$sql="select a.id,a.created from mujur_account a 
+$sql="select a.id,a.created,d.status status_document from mujur_account a 
+left join mujur_accountdocument d on d.email like a.email
 	where $where 
 	$orders limit $start,$limit";
 /*
@@ -56,8 +60,13 @@ foreach($dt as $row){
 	$row['raw']=$detail=$this->account->detail($row['id']);
 	$row['firstname']=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'-';
 	logCreate('search :'.$row['id']);
+	
 	unset($detail['raw']);
 	foreach($detail as $nm=>$val){ $row[$nm]=$val; }
+	$row['status']='Not Active';	
+	if($row['status_document']==1)$row['status']='Active';
+	if($row['status_document']==2)$row['status']='Review';
+	
 	$row['action']='';
 	$data[]=$row;
 }

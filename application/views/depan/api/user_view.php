@@ -13,6 +13,7 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
                 <th>Username</th>
                 <th>Email</th>
                 <th>Type</th>
+                <th>Status</th>
                 
                 <th>Action</th>
             </tr>
@@ -24,6 +25,7 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
                 <th>Username</th>
                 <th>Email</th>
                 <th>Type</th>
+                <th>Status</th>
                 
                 <th>Action</th>
             </tr>
@@ -33,5 +35,6 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
 <script>
 urlAPI="<?=base_url("member/data?type=users");?>";
 urlDetail="<?=base_url("member/data");?>";
+urlChangeStatus="<?=site_url("member/data?type=update");?>";
 </script>	
 </div></div>

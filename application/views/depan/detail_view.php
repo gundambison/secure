@@ -17,12 +17,18 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 				Your are now logged-in the Secure Area. Here you can view all the Information from your accounts. You can also Update Your Profile before deposit and withdrawn and many more. </p>
                 <div class="vspace-30"></div>
 	<?php $detail1=$detail['detail']; 
-	 //echo '<pre>'.print_r($detail,1); 
+	$docUser=$this->account->document($detail1['id']);
 	?>
 			<a href='<?=base_url('member/edit');?>' class='btn btn-default'>Edit Detail</a>
 			<a href='<?=base_url('member/editpassword');?>' class='btn btn-default'>Edit Password</a>
 			
 			<table class='table-striped table' border="0">
+			<?php 
+			if($docUser['status']!=1){ 
+				$status = 'Waiting';  
+				echo  bsInput( 'Status','firstname',$status, lang('forex_inputsuggestion'), 1);
+			} 
+			?>
 			<?=bsInput( lang('forex_firstname'),'firstname',$detail1['firstname'], lang('forex_inputsuggestion'), 1);?>
 			<?=bsInput( lang('forex_lastname'),'lastname',$detail1['lastname'], lang('forex_inputsuggestion'),1 );?> 
 				<?=bsInput( lang('forex_address'),'address',$detail1['address'], lang('forex_inputsuggestion2'),1 );?>
