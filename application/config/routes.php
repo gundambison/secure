@@ -57,18 +57,13 @@ else{
 	$route['default_controller'] = 'member/login';
 }
 
-<<<<<<< HEAD
 $route['register/(:any)/(:any)'] = 'forex/register/$1/$1';
-$route['register/(:any)'] = 'forex/register/$1';
-//$route['login'] = 'login/member';
+
 $route['welcome'] = 'guest/home';
 $route['welcome/(:any)/(:any)'] = 'guest/home/$1/$1';
 $route['welcome/(:any)'] = 'guest/home/$1';
-=======
+
 $route['register/(:any)'] = 'forex/register/$1';
-//$route['login'] = 'login/member';
-$route['welcome'] = 'guest/home';
->>>>>>> origin
 
 $route['loginadmin'] = 'login/admin';
 $route['forgot_password'] = 'member/forgot';
@@ -78,10 +73,9 @@ $route['withdraw-form'] = 'member/withdrawal';
 $route['rupiah_deposit'] = 'forex/deposit_value';
 $route['rupiah_widtdrawal'] = 'forex/widtdrawal_value';
 $route['recover/(:any)'] = "member/recover/$1";
-<<<<<<< HEAD
+
 $route['send_email'] = "forex/email_send";
-=======
->>>>>>> origin
+
 $route['404_override'] = 'forex/error404';
 $route['translate_uri_dashes'] = FALSE;
 

@@ -10,8 +10,7 @@ function logFile(){
 } 
 	define('ENVIRONMENT', 'production'); 
  
-=======
-	define('_DEV_',1);
+//	define('_DEV_',1);
 /**
  * CodeIgniter
  *
@@ -75,7 +74,6 @@ function logFile(){
  * Different environments will require different levels of error reporting.
  * By default development will show errors but testing and live will hide them.
  */
->>>>>>> origin
 switch (ENVIRONMENT)
 {
 	case 'development':
