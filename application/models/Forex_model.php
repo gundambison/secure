@@ -204,7 +204,7 @@ SEMUA dipindah ke model ACCOUNT
 		$dt=array(
 			'id'=>$accid,
 			'username'=>$dataRaw['accountid'],
-			'detail'=>json_encode($detail['detail']), 
+			'detail'=>addslashes(json_encode($detail['detail'])), 
 		);
 		
 		logCreate("hapus detail sebelumnya:". $dataRaw['accountid']);
