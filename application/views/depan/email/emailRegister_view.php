@@ -257,7 +257,11 @@ if(defined('LOCAL')){
 	$this->db->insert($this->forex->tableAPI,$data);
 }
 else{
+<<<<<<< HEAD:application/views/depan/email/emailRegister_view.php
 	batchEmail(trim($to), $subject, $message, $headers);
+=======
+	mail(trim($to), $subject, $message, $headers);
+>>>>>>> origin:application/views/depan/email/emailRegister_view.php
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
@@ -268,10 +272,17 @@ else{
 		'error'=>2
 	);
 	
+<<<<<<< HEAD:application/views/depan/email/emailRegister_view.php
 	//$this->db->insert($this->forex->tableAPI,$data);
 	
 	foreach($emailAdmin as $to){
 		batchEmail(trim($to), $subject, $message, $headers);
+=======
+	$this->db->insert($this->forex->tableAPI,$data);
+	
+	foreach($emailAdmin as $to){
+		mail(trim($to), $subject, $message, $headers);
+>>>>>>> origin:application/views/depan/email/emailRegister_view.php
 	}
 	
 	

@@ -26,7 +26,11 @@ if(isset($_POST['status'])){
 		$param['accountid']		=	$dt['raw']['accountid'];
 		$param['volume']		=	"-".$vol;  			 
 		$param['privatekey']	=	$this->forex->forexKey();
+<<<<<<< HEAD
 		$param['description']	= 	'Withdrawal '.$vol.' '.date("H:i:s");
+=======
+		$param['description']	= 	'Withdrawal';
+>>>>>>> origin
 				
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
@@ -50,7 +54,11 @@ if(isset($_POST['status'])){
 			$sql="update mujur_flowlog set status=2 where id=$id";
 			dbQuery($sql,1);
 			$dt['statusConfirm']="Disapprove";
+<<<<<<< HEAD
 			$this->load->view('depan/email/emailWidtdrawalDisapprove_view',$dt);
+=======
+			$this->load->view('member/email/emailWidtdrawalDisapprove_view',$dt);
+>>>>>>> origin
 			logCreate('widtdrawal disapprove');
 		}
 		else{ 
@@ -60,7 +68,11 @@ if(isset($_POST['status'])){
 			//$respon['server'][]=$tmp= _runApi($url );
 			
 			if((int)$tmp['responsecode']===0){ 
+<<<<<<< HEAD
 				$this->load->view('depan/email/emailWidtdrawalApprove_view',$dt);
+=======
+				$this->load->view('member/email/emailWidtdrawalApprove_view',$dt);
+>>>>>>> origin
 				$sql="update mujur_flowlog set status=1 where id=$id";
 				dbQuery($sql,1);
 				logCreate('widtdrawal Approve');
@@ -75,7 +87,11 @@ if(isset($_POST['status'])){
 	else{
 		$sql="update mujur_flowlog set status=2 where id=$id";
 		dbQuery($sql,1);
+<<<<<<< HEAD
 		$this->load->view('depan/emailWidtdrawalDisapprove_view',$dt);
+=======
+		$this->load->view('member/email/emailWidtdrawalDisapprove_view',$dt);
+>>>>>>> origin
 		logCreate('widtdrawal disapprove');
 	}
 	
@@ -92,4 +108,8 @@ if(isset($respon)){
 	echo json_encode($respon);
 }else{
 	echo json_encode(array());
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin

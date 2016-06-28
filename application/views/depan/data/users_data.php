@@ -19,15 +19,18 @@ $data=array();
 		$col=$post0['order'][0]['column'];
 		$order=$post0['order'][0]['dir'];
 		$col2=$post0['columns'][$col]['data'];
+
 		if($col==5){
 			$col2='d.status';
 		}
+ 
 		$orders="order by {$col2} {$order}, created asc";
 		
    }
    $where='1';
 $search=isset($post0['search']['value'])?$post0['search']['value']:'';
-if($search!=''&&strlen($search)>2){
+
+if($search!=''&&strlen($search)>3){
 	$where="a.username like '{$search}%'";
 	$where.=" or a.email like '{$search}%'";
 	//$where.=" or ad.detail like '%{$search}%'";

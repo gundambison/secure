@@ -299,7 +299,11 @@ SEMUA dipindah ke model ACCOUNT
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
 		$param2['accountType']=$detail['detail']['statusMember'];	
+<<<<<<< HEAD
 		$this->load->view('depan/email/emailRegister_view',$param2);
+=======
+		$this->load->view('member/email/emailRegister_view',$param2);
+>>>>>>> origin
 		
 	}
 
@@ -516,6 +520,7 @@ REGISTER
 		$message='Your account successfull registered';
 		return true;
 		
+<<<<<<< HEAD
 	}
 	
 	function apiAccount($account_id){
@@ -557,6 +562,8 @@ REGISTER
 		$this->db->where('id',$id);
 		$data=$this->db->get($this->tableAPI)->row_array();
 		return $data;
+=======
+>>>>>>> origin
 	}
 //=====================================
 		public function __construct()

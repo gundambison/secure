@@ -35,12 +35,14 @@ if($userlogin['type']!='agent'){
 	$show['Status']=$status;
 }
 
+
 if($show['email']!=''){
 	$apiRes=$this->forex->apiAccount($post0['id']);
 }
 else{
 	$apiRes=false;
 }
+ 
 //$respon['api2']=$apiRes;
 if($userlogin['type']!='agent'){
 	if(isset($apiRes['email'])&&is_array($apiRes['email'])){
@@ -62,6 +64,7 @@ if($userlogin['type']!='agent'){
 
 ?><h3>Detail</h3>
 <table border=1 width=400 class='table'>
+
 <?php 
 foreach($show as $nm=>$val){?>
 <tr>
@@ -77,8 +80,9 @@ $respon['title']='Detail User';
 
 $html = ob_get_contents();
 ob_end_clean();
- 
+
 $respon['html']="<div style='max-height:400px;width:800px;overflow:auto;padding:30px;border:1px solid blue;margin:2px'>".$html."</div>";
+
 $respon['status']=true;
 unset($respon['raw']);
 if(isset($respon)){ 
