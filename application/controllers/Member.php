@@ -2,27 +2,32 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member extends MY_Controller {
+	public $param;
+	public $folderUpload;
 /***
 Daftar Fungsi Yang Tersedia :
+*	loginProcess()
+*	uploads($warn=0)
 *	edit($warn=0)
 *	editPassword()
 *	forgot()
 *	recover($id=0)
 *	deposit($status='none')
-*	widtdrawal($status='none')
+*	widtdrawal($status=null)
+*	withdrawal($status=null)
+*	updateDocument($status=null, $userid=null)
+*	show_upload($userid=null)
 *	login()
 *	logout()
 *	detail()
 *	profile()
 *	index()
-*	listApi($type='api')
+*	listApi($type=null)
 *	tarif()
 *	checkLogin()
+*	send_email($status='',$id='')
 *	__CONSTRUCT()
-***/
-	public $param;
-	public $folderUpload;
-	
+***/	
 	public function loginProcess(){
 		$login=$this->session->userdata('login');
 		$param=array( 'post'=>$login );
@@ -40,7 +45,7 @@ Daftar Fungsi Yang Tersedia :
 		$this->checkLogin();
 		if($this->input->post('rand')){
 			$rand=dbId();
-			print_r($_POST);print_r($_FILES);
+			//print_r($_POST);print_r($_FILES);
 			$files=$_FILES['doc'];
 			if($files['size']>550000){
 				$post['message']="upload to big";
@@ -49,10 +54,10 @@ Daftar Fungsi Yang Tersedia :
 			}
 			$user=$this->param['detail'];
 			$filename=url_title($user['email']).".".date("ymd").".tmp";
-			echo '<pre>';print_r($this->param['detail']);
+			//echo '<pre>';print_r($this->param['detail']);
 			copy($files['tmp_name'],$this->folderUpload.$filename);
 			$url=  $this->folderUpload.$filename  ;
-			$this->account->updateAccountDocument($user['username'], $url);
+			$this->account->updateDocument($user['username'], $url);
 			//exit('file:'.$url);
 			redirect(site_url('member/profile'));
 		}
@@ -305,7 +310,25 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['footerJS'][]='js/login.js';
 		$this->showView(); 
 		
-	}	
+	}
+	
+	function updateDocument($status=null, $userid=null){
+		$stat_id=null;
+		if($status=='active') $stat_id=1;
+		if($status=='review') $stat_id=2;
+		if($status=='inactive') $stat_id=0;
+		
+		if($stat_id!=null){
+			$data=$this->account->detail($userid);
+			$username=$data['username']; //die(print_r($data,1));
+			$this->account->updateDocumentStatus($username, $stat_id);
+			echo 'status sudah berganti '.$stat_id;
+		}else{
+			echo 'status tidak diketahui';
+			exit();
+		}
+	}
+	
 	function show_upload($userid=null){
 		$data=$this->account->document($userid);
 		//var_dump($data);
@@ -349,18 +372,18 @@ Daftar Fungsi Yang Tersedia :
 	public function index(){
 		$this->checkLogin();
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
-		$this->param['content']=array(
-			'welcome', 
-		);
+		$this->param['content']=array( 'welcome');
+		
 		$this->param['footerJS'][]='js/login.js';
 		$this->showView('newbase_view');
 	}	
 
-	public function listApi($type='api'){
-	$types=array('api','deposit','widtdrawal','user','agent');	
-		if(!defined('LOCAL')){
+	public function listApi($type=null){
+	$types=array('api','deposit','widtdrawal','user','agent','approval','partner','patner_revenue');	
+/*		if(!defined('LOCAL')){
 			$this->checkLogin();
 		}
+*/
 		$this->param['title']='List API'; 
 		$this->param['content']=array(
 			'modal',			
@@ -371,6 +394,7 @@ Daftar Fungsi Yang Tersedia :
 		}
 		else{ 
 			$this->param['content']='api/api';
+			redirect('member');
 		}
 //datatables		
 		$this->param['footerJS'][]='js/jquery.dataTables.min.js';

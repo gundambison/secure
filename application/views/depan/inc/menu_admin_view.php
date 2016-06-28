@@ -18,18 +18,21 @@
 		<ul>
 			<li><a href="<?=base_url('member/listApi');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/open-account.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"> API</a></li>
             <li><a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/listApi/deposit");?>"> <img class="ui--icon" src="<?=base_url();?>media/img/open-account.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"><?php 
-														echo isset($detail['id'])?'DAFTAR DEPOSIT':'unknown';?>
+					echo isset($detail['id'])?'DAFTAR DEPOSIT':'unknown';?>
 		
 		</a></li>
 			<li><a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/listApi/widtdrawal");?>"> <img class="ui--icon" src="<?=base_url();?>media/img/open-account.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"><?php 
-														echo isset($detail['id'])?'DAFTAR WIDTDRAWAL':'unknown';?>
+					echo isset($detail['id'])?'DAFTAR WIDTDRAWAL':'unknown';?>
 											</a></li>
 			<li><a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/tarif");?>"> <img class="ui--icon" src="<?=base_url();?>media/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;"><?php 
-														echo isset($detail['id'])?'Tarif':'unknown';?>
+					echo isset($detail['id'])?'Tarif':'unknown';?>
 											</a>
 								</li>
 			<li><a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/listApi/user");?>"> <img class="ui--icon" src="<?=base_url();?>media/img/contact.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">
 			List User
+			</a></li>
+			<li><a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/listApi/approval");?>"> <img class="ui--icon" src="<?=base_url();?>media/img/contact.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">
+			List Approval User
 			</a></li>
 			<li><a href="<?=!isset($detail['id'])?base_url("member/logout"):base_url("member/listApi/agent");?>"> <img class="ui--icon" src="<?=base_url();?>media/img/contact.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">
 			List Agent

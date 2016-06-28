@@ -10,10 +10,11 @@
                         <div class="col-xs-7 text-right"><?=isset($userlogin['detail']['firstname'])?$userlogin['detail']['firstname']:'';?>&nbsp;<?=isset($userlogin['detail']['lastname'])?$userlogin['detail']['lastname']:'';?></div>
                     </div>
                     <hr/>
-                    <!--div class="row large">
+                    <div class="row large">
                     	<div class="col-xs-5"><strong>Ballance :</strong></div>
-                        <div class="col-xs-7 text-right">$ 12.00</div>
-                    </div-->
+                        <div class="col-xs-7 text-right">$<?=number_format($userlogin['balance'],6);?> 
+						<font size='-3'>(last update: <?=date("d-m-Y H:i:s",strtotime($userlogin['balanceDate']));?>)</font></div>
+                    </div>
                 </div>
                 <div class="vspace-30"></div>
                 <div class="drop-nav">
@@ -30,7 +31,6 @@ if($menu==2){
 	}
 }
 ?>
- 
                 </div>
                 <div class="vspace-30"></div>
                 <div class="row">

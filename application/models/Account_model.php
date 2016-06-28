@@ -9,6 +9,7 @@ public $tableAccount='mujur_account';
 public $tableAccountRecover='mujur_accountrecover';
 
 public $tableAccountDocument='mujur_accountdocument';
+public $tableAccountBalance='mujur_accountbalance';
 public $tableAccountDetail='mujur_accountdetail';
 public $tableActivation='mujur_activation';
 public $tablePassword='mujur_password';
@@ -26,9 +27,11 @@ Daftar Fungsi Yang Tersedia :
 *	recover($detail=false)
 *	create($id,$raw='') //tidak di jalankan
 *	updateAccountDetail($username, $detail=false,$document=false)
-*	updateAccountDocument($username,$document=false)
+*	updateDocument($username,$document=false)
+*	updateDocumentStatus($username,$status=false)
 *	document($id,$field='id')
 *	detail($id,$field='id')
+*	balance($username,&$time)
 *	detailRepair($data=array())
 *	__construct()
 ***/
@@ -104,13 +107,41 @@ Daftar Fungsi Yang Tersedia :
 				$str = $this->db->last_query();			 
 				logConfig("create table:$str");
 				$this->db->reset_query();	
+				$sql="ALTER TABLE {$this->tableAccountDocument} ENGINE=MYISAM";
+				dbQuery($sql);
 			}else{}
+
 			if (!$this->db->field_exists('email', $this->tableAccountDocument)){
 				$sql="ALTER TABLE `{$this->tableAccountDocument}` ADD `email` varchar(255) AFTER `id`";
 				dbQuery($sql);
 			}
 			if (!$this->db->field_exists('status', $this->tableAccountDocument)){
 				$sql="ALTER TABLE `{$this->tableAccountDocument}` ADD `status` tinyint AFTER `email`";
+				dbQuery($sql);
+			}
+//=========Menambah Account Balance
+			if(!$this->db->table_exists($this->tableAccountBalance)){
+				$fields = array(
+				  'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE),
+				  'detail'=>array( 'type' => 'text'),
+				  'balance'=>array('type'=>'float'),
+				  'modified'=>array( 'type' => 'timestamp'),
+				  'expired'=>array('type'=>'datetime')
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table($this->tableAccountBalance,TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();
+				$sql="ALTER TABLE `{$this->tableAccountBalance}` CHANGE `balance` `balance` DECIMAL(19,7) NOT NULL;";
+				dbQuery($sql);
+				$sql="ALTER TABLE `{$this->tableAccountBalance}` ENGINE=MYISAM;";
+				dbQuery($sql);
+			}else{}
+			if (!$this->db->field_exists('username', $this->tableAccountBalance)){
+				$sql="ALTER TABLE `{$this->tableAccountBalance}` ADD `username` varchar(255) AFTER `id`";
 				dbQuery($sql);
 			}
 //===================
@@ -256,7 +287,7 @@ Daftar Fungsi Yang Tersedia :
 		return true;
 	}	
 
-	function updateAccountDocument($username,$document=false){
+	function updateDocument($username,$document=false){
 		$data=$this->detail($username,'username');
 		$email=trim($data['email']);
 		$sql="select count(id) c from {$this->tableAccountDocument} where email like '$email'";
@@ -274,7 +305,20 @@ Daftar Fungsi Yang Tersedia :
 			echo $sql;
 		}
 		return true;
-		
+	}
+	function updateDocumentStatus($username,$status=false){
+		$data=$this->detail($username,'username');
+		$email=trim($data['email']);
+		$sql="select count(id) c from {$this->tableAccountDocument} where email like '$email'";
+		$res=dbFetchOne($sql);
+		if($res['c']==0){
+			$ar=array('email'=>$email);
+			$this->db->insert($this->tableAccountDocument, $ar);
+		}else{}
+			$sql="UPDATE {$this->tableAccountDocument} SET `status` = '$status' WHERE `email` = '{$email}';";
+			dbQuery($sql);
+			//echo $sql;
+		return true;
 	}
 	
 	function document($id,$field='id'){
@@ -333,7 +377,7 @@ Daftar Fungsi Yang Tersedia :
 			where `{$field}` like '$id'";
 			$res=dbFetchOne($sql); 
 		}
-		
+
 		$sql="select 
 		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid, a.status,
 		a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
@@ -344,7 +388,7 @@ Daftar Fungsi Yang Tersedia :
 		where a.`{$field}` like '$id'";
 		$data= dbFetchOne($sql);
 		if($data['accounttype']!='MEMBER'){
-			logCreate("account detail id:$id|field:$field|agent","info");
+		//	logCreate("account detail id:$id|field:$field|agent","info");
 			$agent=true;
 		}
 		else{ 
@@ -362,15 +406,71 @@ Daftar Fungsi Yang Tersedia :
 		}
 		
 		if(isset($data['raw'])){
-			logCreate("account detail id:$id|field:$field|raw detail","info");
+		//	logCreate("account detail id:$id|field:$field|raw detail","info");
 			$data['detail']=json_decode($data['raw'],true); 
 			unset($data['raw']);
 		}
 //----document
 		$data['document']=$this->document($id, $field);
+		$sql="select count(a.id) c from `{$this->tableAccount}` a  		
+		where `agent` like '$data[username]'";
+		$res0=dbFetchOne($sql);
+		$data['patner']=$res0['c'];
+		$data['balance']=$this->balance($res['username'],$time);
+		$data['balanceDate']=$time;
 		return $data;
 	}
 	
+	private function balance($username,&$time){
+//======Remove Expire
+		$session=$this->session-> all_userdata();
+		$now = date("Y-m-d H:i:s");
+		$now_12 = date("Y-m-d H:i:s", strtotime("+3 hours"));
+		$sql="delete from {$this->tableAccountBalance} where expired < '$now'";
+		dbQuery($sql);
+		$time=date("Y-m-d H:i:s");
+		$sql="select username, balance,modified from {$this->tableAccountBalance} where username like '$username'";
+		$row=dbFetchOne($sql);
+		
+		if(isset($row['balance'])){
+			$time=$row['modified'];
+			return $row['balance'];
+		}
+		if($session['username']!=$username){
+		//	logCreate('username different:'.$username);
+			return 0;
+		}
+		
+		$param['accountid']		=	$username;
+		$param['volume']		=	"-0";  			 
+		$param['privatekey']	=	$this->forex->forexKey();
+		$param['description']	= 	'check balance '.date("H:i:s");
+		$url=$this->forex->forexUrl('updateBalance');
+		$url.="?".http_build_query($param);
+
+		$tmp= _runApi($url );//{"balance":"100.000000","responsecode":"0","accountid":"7001189"}
+		//print_r($tmp);die();
+		if(!is_array($tmp))$tmp=(array)$tmp;
+		if(isset($tmp['balance'])){
+			logCreate('url:'.$url.'| respon:'.json_encode($tmp));
+			$data = array(
+				'username' => $username,
+				'detail'  => json_encode($tmp),
+				'balance'  =>  $tmp['balance'],
+				'expired'	=> $now_12
+			);
+
+			$sql = $this->db->set($data)->get_compiled_insert($this->tableAccountBalance);
+			dbQuery($sql);
+			return $tmp['balance'];
+		}
+		else{
+			logCreate('url:'.$url.'| Failed| respon:'.json_encode($tmp));
+		}
+		return 0;
+		
+	}
+
 	function detailRepair($data=array()){
 		$username=$data['username'];
 		$sql="select count(id) c  from `{$this->tableAccountDetail}` 

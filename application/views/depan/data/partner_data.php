@@ -3,10 +3,16 @@ if (   function_exists('logFile')){ logFile('view/member/data','widtdrawal_data.
 ob_start();
 //api_data
 $respon=array( 'draw'=>isset($_POST['draw'])?$_POST['draw']:1);
+$session=$this->param['session'];
+		$detail=$userlogin=$this->account->detail($session['username'],'username');
+		if($detail!==false){
+			$respon['userlogin']=$detail;
+		}
+		
 $aOrder=array(
 'created','username0','username','email'
 );
-$sql="select count(id) c from `mujur_account`";
+$sql="select count(id) c from `mujur_account` where agent like '{$userlogin['username']}'";
 $dt=$this->db->query($sql)->row_array();
 $respon['recordsTotal']=$dt['c'];
 $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
@@ -30,9 +36,10 @@ $search=isset($post0['search']['value'])?$post0['search']['value']:'';
 if($search!=''&&strlen($search)>2){
 	$where="a.username like '{$search}%'";
 	$where.=" or a.email like '{$search}%'";
+	 
 	//$where.=" or ad.detail like '%{$search}%'";
 	$sql="select count(a.id) c from mujur_account a 
-	where $where";
+	where ($where) and agent like '{$userlogin['username']}'";
 /*
 left join mujur_accountdetail ad 
 	on a.username=ad.username
@@ -47,7 +54,7 @@ else{
 
 $sql="select a.id,a.created,d.status status_document from mujur_account a 
 left join mujur_accountdocument d on d.email like a.email
-	where $where 
+	where ($where) and agent like '{$userlogin['username']}'
 	$orders limit $start,$limit";
 /*
 left join mujur_accountdetail ad 
@@ -74,6 +81,7 @@ foreach($dt as $row){
 
 $respon['data']=$data;
 $respon['-']=$post0;  
+$respon[]=$userlogin;
 $warning = ob_get_contents();
 ob_end_clean();
 if($warning!=''){
@@ -82,6 +90,7 @@ if($warning!=''){
 
 if(isset($respon)){ 
 	echo json_encode($respon);
-}else{
+}
+else{
 	echo json_encode(array());
 }

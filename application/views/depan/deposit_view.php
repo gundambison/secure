@@ -15,9 +15,30 @@ if(!isset($uDetail['bank_norek'])||$uDetail['bank_norek']==''){
 }
 
 if(isset($notAllow)){
+	$this->session->set_flashdata('notif', array('status' => false, 'msg' => 'Update nomor rekening!'));
 	redirect(site_url("member/edit/warning"),1);
 }
- 
+
+//=============
+$notAllow=1;
+$detail=$this->account->detail($userlogin['id']);
+//print_r($detail);die();
+if(isset($detail['document']['status'])){
+	if($detail['document']['status']==1){
+		unset($notAllow);
+	}
+	else{
+		$this->session->set_flashdata('notif', array('status' => false, 'msg' => 'Dokumen pendukung sedang di review'));
+	}
+}
+else{
+	$this->session->set_flashdata('notif', array('status' => false, 'msg' => 'Upload dokumen pendukung!'));
+}
+
+if(isset($notAllow)){
+	redirect(site_url("member/uploads/warning"),1);
+}
+
 $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']; 
 ?>
 <div class="container">

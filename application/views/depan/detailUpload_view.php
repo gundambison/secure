@@ -16,18 +16,18 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 				Your are now logged-in the Secure Area. Here you can view all the Information from your accounts. You can also Update Your Profile before deposit and withdrawn and many more. </p>
                 <div class="vspace-30"></div>
 				
-				<h2>Upload Document</h2>
+				<h2>Upload Document</h2>				
 <?php
+	callback_submit();
 	echo form_open_multipart();
 	$detail1=$detail['detail'];
-	if(isset($warning)&&$warning!==0){
-		?>?
-<?php 
-	}
+
 	$allow=false;
 	if(isset($detail1['firstname'])&&$detail1['firstname']!=''){
 		$allow=1;
 	}
+	$document=$this->account->document($detail['id']);
+	//echo '<pre>'.print_r($document,1).'</pre>';
 ?>
 			<table class='table-striped table' border="0">
 			<tr>
@@ -39,6 +39,10 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 						'id'=>'doc_upload'
 					);
 					echo form_upload($params);
+					if(isset($document['upload'])){ 
+						$url=site_url('member/show_upload/'.$detail['id']);
+						echo anchor_popup($url, 'Lihat dokumen'); 
+					}
 				?>
 				</td>
 			</tr>

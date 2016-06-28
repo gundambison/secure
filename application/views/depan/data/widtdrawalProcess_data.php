@@ -15,9 +15,7 @@ $dt['statusConfirm']=$_POST['status'];
 $dt['rate']['value']=$dt['raw']['rate'];
 $this->param['deposit']=$dt;
 
-//======KIRIM EMAIL
-
- 		
+//======KIRIM EMAIL 		
 if(isset($_POST['status'])){
 	if($_POST['status']=='approve'){
 		$param=array( );

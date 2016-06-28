@@ -4,8 +4,22 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
 ?>
 <div class='container'>
     <div style='margin-top:30px;'>
+		<ul class="page-breadcrumb breadcrumb">
+				<li>
+					<?=anchor(base_url('member'),'Home');?>
+					<i class="fa fa-circle"></i>
+				</li>
+				<li>
+					<?=anchor(base_url('member/listApi'),'API');?>
+					<i class="fa fa-circle"></i>
+				</li>
+				<li>
+					<a href="#">Agent</a>
+					<i class="fa fa-circle"></i>
+				</li> 
+		</ul>
 		<div id='preview'></div>
-<table id="tableUsers" class="display" cellspacing="0" width="100%">
+<table id="tableAgent" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
 				<th>Date</th>

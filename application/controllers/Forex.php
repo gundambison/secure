@@ -348,10 +348,12 @@ class Forex extends CI_Controller {
 				$res="1";
 			}
 			if($status=='update'){
-				$res="0";
+				$res0='{"responsecode":"0","accountid":"9'.date("Ymdhis").'"}';
+				$res=json_decode($res0);
 			}
 			if($status=='updateBalance'){
-				$res="0";
+				$res0='{"balance":"100.305060","responsecode":"0","accountid":"7001189"}';
+				$res=json_decode($res0);
 			}
 			$raw=array();
 		/*	

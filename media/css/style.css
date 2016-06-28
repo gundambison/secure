@@ -470,3 +470,20 @@ h3.large{
 .formBasic td{
 	margin:10px 5px 0 5px;
 }
+.note{
+padding: 20px;
+margin: 10px;
+border: 1px solid #dadaf9;
+font-size: 20px;
+border-radius: 15px;
+text-align: center;
+font-style: oblique;
+}
+.note-success{
+color: #0d33d7;
+background-color: #e7ebf5;
+}
+.note-danger{
+color: #d70d0d;
+background-color: #ffd2da;
+}
