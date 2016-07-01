@@ -204,7 +204,7 @@ SEMUA dipindah ke model ACCOUNT
 		$dt=array(
 			'id'=>$accid,
 			'username'=>$dataRaw['accountid'],
-			'detail'=>addslashes(json_encode($detail['detail'])), 
+			'detail'=>addslashes(json_encode($detail['detail'])),
 		);
 		
 		logCreate("hapus detail sebelumnya:". $dataRaw['accountid']);
@@ -299,6 +299,7 @@ SEMUA dipindah ke model ACCOUNT
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
 		$param2['accountType']=$detail['detail']['statusMember'];	
+
 		$this->load->view('depan/email/emailRegister_view',$param2);
 		
 	}
@@ -515,7 +516,7 @@ REGISTER
 		dbQuery($sql);
 		$message='Your account successfull registered';
 		return true;
-		
+ 
 	}
 	
 	function apiAccount($account_id){
@@ -556,7 +557,7 @@ REGISTER
 		$this->db->reset_query();
 		$this->db->where('id',$id);
 		$data=$this->db->get($this->tableAPI)->row_array();
-		return $data;
+		return $data; 
 	}
 //=====================================
 		public function __construct()

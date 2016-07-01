@@ -9,8 +9,9 @@ Daftar Fungsi Yang Tersedia :
 *	recover($id=0)
 *	forgot()
 *	__CONSTRUCT()
-***/	
+***/
 	public function home($agent=false,$raw=false){
+//public function home($raw=false,$agent=false){
 		$this->load->library('session');
 		$this->param['statAccount']='member';
 		if($agent!=false){
@@ -64,6 +65,7 @@ Daftar Fungsi Yang Tersedia :
 		);
 		$this->showView();
 	}
+
 	public function register(){
 		$post=$this->input->post();
 		print_r($post); 
@@ -132,6 +134,7 @@ Daftar Fungsi Yang Tersedia :
 			);
 			$source=isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'-';
 			$detail='click from :('.$source.')';
+
 			$sql="update `{$this->account->tableAccountRecover}` 
 		set  detail='$detail' , `expired`='0000-00-00'
 		where id='$id'";

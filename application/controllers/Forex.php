@@ -67,10 +67,11 @@ class Forex extends CI_Controller {
 		echo $def;
 		exit();
 	}
-	
+
 	public function register($agent=false,$raw=false)
 	{
 		redirect(base_url('welcome/'.$agent.'/'.$agent),1);
+
 		$this->load->library('session');
 		$this->param['statAccount']='member';
 		if($agent!=false){
@@ -104,9 +105,10 @@ class Forex extends CI_Controller {
 	public function agent()
 	{
 		$this->param['formTitle']="Open Patner Account";
+
 		redirect(base_url('guest/agent'),1);
 		$this->register(true,true);
-		
+
 	}
 	
 	public function index()
@@ -348,10 +350,12 @@ class Forex extends CI_Controller {
 				$res="1";
 			}
 			if($status=='update'){
-				$res="0";
+				$res0='{"responsecode":"0","accountid":"9'.date("Ymdhis").'"}';
+				$res=json_decode($res0);
 			}
 			if($status=='updateBalance'){
-				$res="0";
+				$res0='{"balance":"100.305060","responsecode":"0","accountid":"7001189"}';
+				$res=json_decode($res0);
 			}
 			$raw=array();
 		/*	

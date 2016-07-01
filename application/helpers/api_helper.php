@@ -85,3 +85,18 @@ if ( ! function_exists('batchEmail')){
 	}
 	
 }
+
+if ( ! function_exists('callback_submit')){
+	function callback_submit(){
+    $CI =& get_instance();
+    $notif=$CI->session->flashdata('notif');
+    if($notif){
+	echo '
+	    <div class="note '.($notif['status'] ? 'note-success' : 'note-danger').' note-shadow">
+		    <button class="close" data-close="alert"></button>
+		    <p>'.$notif['msg'].'</p>
+	    </div>
+	';
+    }
+	}
+}

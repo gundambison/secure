@@ -18,6 +18,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	public function data(){
 		$url=$this->config->item('api_url');
 		$this->load->helper('api');
+		$session=$this->param['session'];
+		$detail=$this->account->detail($session['username'],'username');
+		if($detail==false){
+			logCreate('no username','error');
+			redirect("login");
+		}
+		else{}
+		$this->param['userlogin']=$detail;
+		
 		$respon=array(		
 			'html'=>print_r($_REQUEST,1), 
 		);

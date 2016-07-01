@@ -37,7 +37,7 @@ Daftar Fungsi Yang Tersedia :
 			$response['success']=true;
 		}
 		// Proses
-		//var_dump($response);die();
+ 
 		if( $response['success']  ){
 			// Code jika sukses
 			echo 'CAPTCHA OK';
