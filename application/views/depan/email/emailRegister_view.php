@@ -257,22 +257,22 @@ if(defined('LOCAL')){
 	$this->db->insert($this->forex->tableAPI,$data);
 }
 else{
-	batchEmail(trim($to), $subject, $message, $headers);
+	if(!is_array($to))$to=array($to);
+	foreach($to as $email){
+		batchEmail($email, $subject, $message, $headers);
+	}
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	
-	$subject = "[SalmaForex] Register Baru ";
-	$data=array( 'url'=>$to,
+	$data=array( 'url'=>json_encode($to),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-	
-	//$this->db->insert($this->forex->tableAPI,$data);
-	
+//	$this->db->insert($this->forex->tableAPI,$data);
+	$subject = "[SalmaForex] Register Baru ";
 	foreach($emailAdmin as $to){
 		batchEmail(trim($to), $subject, $message, $headers);
 	}
-	
-	
+/*
+*/	
 }

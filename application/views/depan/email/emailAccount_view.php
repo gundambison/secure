@@ -29,8 +29,9 @@ else{
 <?php
 }
 ?>	
-<?php 
+<?php
 if(!isset($accountType))$accountType=null;
+
 if($accountType!='MEMBER'){
 	?>&nbsp;<?php 
 }
@@ -266,7 +267,14 @@ if(defined('LOCAL')){
 	echo $message;
 }
 else{
-	batchEmail(trim($to), $subject, $message, $headers);
+	if(!is_array($to))$to=array($to);
+	foreach($to as $email){
+		batchEmail($email, $subject, $message, $headers);
+	}
+
+	$rawEmail=array(
+		$subject, $headers,$message,'send email'
+	);
 	$subject = "[SalmaForex] ";
 	if(isset($post0['recover'])){
 		$subject.="recover password";
@@ -274,17 +282,14 @@ else{
 	else{ 
 		$subject.="Welcome";
 	}
-	$rawEmail=array(
-		$subject, $headers,$message,'send email'
-	);
-	$data=array( 'url'=>$to,
+
+	$data=array( 'url'=>json_encode($to),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-	//$this->db->insert($this->forex->tableAPI,$data);
-	
+//	$this->db->insert($this->forex->tableAPI,$data);
 	foreach($emailAdmin as $to){ //email admin lebih dari 1
 		batchEmail(trim($to), $subject, $message, $headers);
 	}
-	
+
 }

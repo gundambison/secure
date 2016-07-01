@@ -240,6 +240,7 @@ if(defined('LOCAL')){
 }
 else{
 	$to[]='finance@salmaforex.com';
+	if(!is_array($to))$to=array($to);
 	foreach($to as $email){
 		batchEmail($email, $subject, $message, $headers);
 	}
@@ -250,5 +251,6 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-	//$this->db->insert($this->forex->tableAPI,$data);
+//	$this->db->insert($this->forex->tableAPI,$data);
+
 }

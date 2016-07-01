@@ -8,15 +8,15 @@ $config['emailAdmin']=array('admin@dev.salmaforex.com','admin@secure.salmaforex.
 
 if(defined('LOCAL')){
 	$config['urlForex']=array( 
-		'default'=>			'http://forex.local/forex/fake',
-		'activation'=>		'http://forex.local/forex/fake/activation',
-		'update'=>			'http://forex.local/forex/fake/update',
-		'register'=>		'http://forex.local/forex/fake',
-		'updateBalance'=>	'http://forex.local/forex/fake/updateBalance'		
+		'default'=>			'http://advance.forex/forex/fake',
+		'activation'=>		'http://advance.forex/forex/fake/activation',
+		'update'=>			'http://advance.forex/forex/fake/update',
+		'register'=>		'http://advance.forex/forex/fake',
+		'updateBalance'=>	'http://advance.forex/forex/fake/updateBalance'		
 		
 	);
 	
-	$config['api_url']='http://forex.local/forex/api';
+	$config['api_url']='http://advance.forex/forex/api';
 	$config['forexKey']='unknown99';
 }
 else{ 
@@ -39,4 +39,4 @@ if(defined('_DEV_')){
 	  'http://dev.salmaforex.com/forex/fake/updateBalance';
 }else{} 
 
-$config['urlForex']['local']='http://forex.local/index.php/forex/data';
+$config['urlForex']['local']='http://advance.forex/index.php/forex/data';

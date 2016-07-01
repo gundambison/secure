@@ -10,14 +10,15 @@
                         <div class="col-xs-7 text-right"><?=isset($userlogin['detail']['firstname'])?$userlogin['detail']['firstname']:'';?>&nbsp;<?=isset($userlogin['detail']['lastname'])?$userlogin['detail']['lastname']:'';?></div>
                     </div>
                     <hr/>
-                    <!--div class="row large">
+                    <div class="row large">
                     	<div class="col-xs-5"><strong>Ballance :</strong></div>
-                        <div class="col-xs-7 text-right">$ 12.00</div>
-                    </div-->
+                        <div class="col-xs-7 text-right">$<?=number_format($userlogin['balance'],6);?> 
+						<font size='-3'>(last update: <?=date("d-m-Y H:i:s",strtotime($userlogin['balanceDate']));?>)</font></div>
+                    </div>
                 </div>
                 <div class="vspace-30"></div>
                 <div class="drop-nav">
-<?php 
+<?php
 $menu=2;
 if($menu==2){
 	if(isset($detail)&&$detail['type']=='admin'){
@@ -31,6 +32,18 @@ if($menu==2){
 }
 ?>
  
+                        <!--li>
+                        	<a href="#"><span class="glyphicon glyphicon-user"></span> Partner Area</a>
+                            <span class="toggle glyphicon glyphicon-chevron-down"></span>
+                            <ul>
+                            	<li><a href="#"><span class="glyphicon glyphicon-triangle-right"></span> Subnav 1</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-triangle-right"></span> Subnav 2</a></li>
+                            </ul>
+                        </li-->
+                        <li>
+                        	<a href="<?=base_url('member/logout');?>"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="vspace-30"></div>
                 <div class="row">

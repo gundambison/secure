@@ -5,7 +5,8 @@ if(!isset($defInput)){
 if(!isset($showForm)){ 
 	$showForm=1;
 }
-//$showAgent=true;
+ 
+$showAgent=true;
 if(!isset($showAgent)){ 
 	$showAgent=true;
 }

@@ -1,5 +1,5 @@
 <?php 
-if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','view'); };
+if (   function_exists('logFile')){ logFile('view/member/api','partner_view.php','view'); };
 
 ?>
 <div class='container'>
@@ -19,7 +19,7 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
 				</li> 
 		</ul>
 		<div id='preview'></div>
-<table id="tableUsers" class="display" cellspacing="0" width="100%">
+<table id="tablePartner" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
 				<th>Date</th>
@@ -27,9 +27,7 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
                 <th>Username</th>
                 <th>Email</th>
                 <th>Type</th>
-                <th>Status</th>
-                
-                <th>Action</th>
+                <th>Status</th> 
             </tr>
         </thead>
 		<tfooter>
@@ -40,14 +38,12 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
                 <th>Email</th>
                 <th>Type</th>
                 <th>Status</th>
-                
-                <th>Action</th>
             </tr>
         </tfooter>
 </table>	
 
 <script>
-urlAPI="<?=base_url("member/data?type=users");?>";
+urlAPI="<?=base_url("member/data?type=partner");?>";
 urlDetail="<?=base_url("member/data");?>";
 urlChangeStatus="<?=site_url("member/data?type=update");?>";
 </script>	

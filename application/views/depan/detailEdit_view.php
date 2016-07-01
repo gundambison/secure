@@ -20,10 +20,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 				<form   name="frm"  id="frmLiveAccount" method="POST"   role="form">
 <?php 
 	$detail1=$detail['detail'];
-	if(isset($warning)&&$warning!==0){
-		?><b>SILAKAN LENGKAPI SEMUA DETAIL YANG TERSEDIA</b>
-<?php 
-	}
+	callback_submit();
 	$allow=false;
 	if(isset($detail1['firstname'])&&$detail1['firstname']!=''){
 		$allow=1;

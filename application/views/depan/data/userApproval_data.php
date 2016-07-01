@@ -6,7 +6,8 @@ $respon=array( 'draw'=>isset($_POST['draw'])?$_POST['draw']:1);
 $aOrder=array(
 'created','username0','username','email'
 );
-$sql="select count(id) c from `mujur_account`";
+$sql="select count(a.id) c from `mujur_account` a 
+join mujur_accountdocument d on d.email like a.email";
 $dt=$this->db->query($sql)->row_array();
 $respon['recordsTotal']=$dt['c'];
 $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
@@ -19,22 +20,20 @@ $data=array();
 		$col=$post0['order'][0]['column'];
 		$order=$post0['order'][0]['dir'];
 		$col2=$post0['columns'][$col]['data'];
-
 		if($col==5){
 			$col2='d.status';
 		}
- 
 		$orders="order by {$col2} {$order}, created asc";
 		
    }
    $where='1';
 $search=isset($post0['search']['value'])?$post0['search']['value']:'';
-
-if($search!=''&&strlen($search)>3){
+if($search!=''&&strlen($search)>2){
 	$where="a.username like '{$search}%'";
 	$where.=" or a.email like '{$search}%'";
 	//$where.=" or ad.detail like '%{$search}%'";
 	$sql="select count(a.id) c from mujur_account a 
+	join mujur_accountdocument d on d.email like a.email
 	where $where";
 /*
 left join mujur_accountdetail ad 
@@ -49,7 +48,7 @@ else{
 }
 
 $sql="select a.id,a.created,d.status status_document from mujur_account a 
-left join mujur_accountdocument d on d.email like a.email
+join mujur_accountdocument d on d.email like a.email
 	where $where 
 	$orders limit $start,$limit";
 /*

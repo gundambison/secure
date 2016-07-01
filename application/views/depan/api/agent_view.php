@@ -14,12 +14,12 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
 					<i class="fa fa-circle"></i>
 				</li>
 				<li>
-					<a href="#">User/Member</a>
+					<a href="#">Agent</a>
 					<i class="fa fa-circle"></i>
 				</li> 
 		</ul>
 		<div id='preview'></div>
-<table id="tableUsers" class="display" cellspacing="0" width="100%">
+<table id="tableAgent" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
 				<th>Date</th>
@@ -27,7 +27,6 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
                 <th>Username</th>
                 <th>Email</th>
                 <th>Type</th>
-                <th>Status</th>
                 
                 <th>Action</th>
             </tr>
@@ -39,7 +38,6 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
                 <th>Username</th>
                 <th>Email</th>
                 <th>Type</th>
-                <th>Status</th>
                 
                 <th>Action</th>
             </tr>
@@ -47,8 +45,35 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
 </table>	
 
 <script>
-urlAPI="<?=base_url("member/data?type=users");?>";
+urlAPI="<?=base_url("member/data?type=agent");?>";
 urlDetail="<?=base_url("member/data");?>";
-urlChangeStatus="<?=site_url("member/data?type=update");?>";
 </script>	
-</div></div>
+</div></div><?php 
+/*
+$sql="select count(a.id) c from mujur_account a, mujur_register r where a.reg_id=r.reg_id and r.reg_agent !=''  ";
+$data=dbFetchOne($sql);
+$n=isset($_GET['p'])?$_GET['p']:0;
+$max=113;
+$total=$data['c'];
+echo 'total:'.$data['c'];
+$sql="select a.id, a.reg_id, r.reg_agent from mujur_account a, mujur_register r where a.reg_id=r.reg_id and r.reg_agent !='' 
+limit $n,$max
+ ";
+					$res=dbFetch($sql);
+					foreach($res as $row){
+						$sql="update mujur_account set agent='$row[reg_agent]' where reg_id='$row[reg_id]'";
+						//echo "$sql<br/>";
+						dbQuery($sql);
+					}
+
+if($n < $total){
+$n+=$max;
+$url=current_url()."?p=$n";
+}
+else{
+	$url=site_url('member/listApi/done')."?p=$n";
+}
+
+
+echo '<script>window.location.href ="'.$url.'";</script>';
+*/

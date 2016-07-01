@@ -32,8 +32,9 @@ else{
 		$responce['result']['code']= $responce['code'];
 	}else{}
 }
- 
+
 logCreate($responce);
+
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result'] );
 }else{

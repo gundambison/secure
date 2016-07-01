@@ -15,9 +15,7 @@ $dt['statusConfirm']=$_POST['status'];
 $dt['rate']['value']=$dt['raw']['rate'];
 $this->param['deposit']=$dt;
 
-//======KIRIM EMAIL
-
- 		
+//======KIRIM EMAIL 		
 if(isset($_POST['status'])){
 	if($_POST['status']=='approve'){
 		$param=array( );
@@ -28,6 +26,7 @@ if(isset($_POST['status'])){
 		$param['accountid']		=	$dt['raw']['accountid'];
 		$param['volume']		=	"-".$vol;  			 
 		$param['privatekey']	=	$this->forex->forexKey();
+
 		$param['description']	= 	'Withdrawal '.$vol.' '.date("H:i:s");
 				
 		$url=$this->forex->forexUrl('updateBalance');
@@ -52,7 +51,9 @@ if(isset($_POST['status'])){
 			$sql="update mujur_flowlog set status=2 where id=$id";
 			dbQuery($sql,1);
 			$dt['statusConfirm']="Disapprove";
+			
 			$this->load->view('depan/email/emailWidtdrawalDisapprove_view',$dt);
+
 			logCreate('widtdrawal disapprove');
 		}
 		else{ 
@@ -61,7 +62,7 @@ if(isset($_POST['status'])){
 			$url.="?".http_build_query($param);
 			//$respon['server'][]=$tmp= _runApi($url );
 			
-			if((int)$tmp['responsecode']===0){ 
+			if((int)$tmp['responsecode']===0){
 				$this->load->view('depan/email/emailWidtdrawalApprove_view',$dt);
 				$sql="update mujur_flowlog set status=1 where id=$id";
 				dbQuery($sql,1);
@@ -77,7 +78,11 @@ if(isset($_POST['status'])){
 	else{
 		$sql="update mujur_flowlog set status=2 where id=$id";
 		dbQuery($sql,1);
+<<<<<<< HEAD
 		$this->load->view('depan/emailWidtdrawalDisapprove_view',$dt);
+=======
+		$this->load->view('member/email/emailWidtdrawalDisapprove_view',$dt);
+>>>>>>> origin
 		logCreate('widtdrawal disapprove');
 	}
 	
@@ -94,4 +99,8 @@ if(isset($respon)){
 	echo json_encode($respon);
 }else{
 	echo json_encode(array());
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin

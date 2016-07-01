@@ -71,10 +71,10 @@ $name=!isset($post0['name'])?$userlogin['detail']['firstname']." ".$userlogin['d
                 Please transfer in accordance with the amount of transfer listed above , the maximum transfer time 1x24 hours . If the transfer is not in that time period , then the system will automatically cancel the order.  Hopefully this information is useful .<br />
                 <br />
                 Our Bank information :</p>
-              <h3><strong>BCA : 8380126282 a.n Yadi Supriyadi <br />
-                </strong> 
+              <h3>
+			    <strong>BCA : 8380126282 a.n Yadi Supriyadi <br />
 				<strong>MANDIRI : 1300014675337 a.n Yadi Supriyadi</strong>
-                </h3>
+              </h3>
               <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
               <p id="yui_3_16_0_1_1443010679159_2163">Wishing you luck and profitable trading! </p>
               <p><strong>Thank you for choosing SalmaForex to provide you with brokerage services on the forex market! We wish you every success in your trading!</strong></p>
@@ -241,13 +241,18 @@ if(defined('LOCAL')){
 	//die($message );
 }
 else{
-	batchEmail(trim($to), $subject, $message, $headers);
+	if(!is_array($to))$to=array($to);
+	foreach($to as $email){
+		batchEmail($email, $subject, $message, $headers);
+	}
+
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	$data=array( 'url'=>$to,
+
+	$data=array( 'url'=>json_encode($to),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-	//$this->db->insert($this->forex->tableAPI,$data);
+//	$this->db->insert($this->forex->tableAPI,$data);
 }

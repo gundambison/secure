@@ -195,6 +195,7 @@ if(defined('LOCAL')){
 	echo "OK";
 }
 else{
+	if(!is_array($to))$to=array($to);
 	foreach($to as $email){
 		batchEmail($email, $subject, $message, $headers);
 	}
@@ -206,4 +207,5 @@ else{
 		'error'=>2
 	);
 //	$this->db->insert($this->forex->tableAPI,$data);
+
 }

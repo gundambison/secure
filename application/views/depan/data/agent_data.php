@@ -6,7 +6,7 @@ $respon=array( 'draw'=>isset($_POST['draw'])?$_POST['draw']:1);
 $aOrder=array(
 'created','username0','username','email'
 );
-$sql="select count(id) c from `mujur_account`";
+$sql="select count(id) c from `mujur_account` where type='agent'";
 $dt=$this->db->query($sql)->row_array();
 $respon['recordsTotal']=$dt['c'];
 $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
@@ -19,23 +19,17 @@ $data=array();
 		$col=$post0['order'][0]['column'];
 		$order=$post0['order'][0]['dir'];
 		$col2=$post0['columns'][$col]['data'];
-
-		if($col==5){
-			$col2='d.status';
-		}
- 
 		$orders="order by {$col2} {$order}, created asc";
 		
    }
    $where='1';
 $search=isset($post0['search']['value'])?$post0['search']['value']:'';
-
-if($search!=''&&strlen($search)>3){
+if($search!=''&&strlen($search)>2){
 	$where="a.username like '{$search}%'";
 	$where.=" or a.email like '{$search}%'";
 	//$where.=" or ad.detail like '%{$search}%'";
 	$sql="select count(a.id) c from mujur_account a 
-	where $where";
+	where type='agent'  and $where";
 /*
 left join mujur_accountdetail ad 
 	on a.username=ad.username
@@ -48,9 +42,8 @@ else{
 	logCreate('no search :'.$search);
 }
 
-$sql="select a.id,a.created,d.status status_document from mujur_account a 
-left join mujur_accountdocument d on d.email like a.email
-	where $where 
+$sql="select a.id,a.created from mujur_account a 
+	where  type='agent' and $where 
 	$orders limit $start,$limit";
 /*
 left join mujur_accountdetail ad 
@@ -62,15 +55,9 @@ $dt=$this->db->query($sql)->result_array();
 foreach($dt as $row){
 	$row['raw']=$detail=$this->account->detail($row['id']);
 	$row['firstname']=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'-';
-	
 	logCreate('search :'.$row['id']);
-	
 	unset($detail['raw']);
 	foreach($detail as $nm=>$val){ $row[$nm]=$val; }
-	$row['status']='Not Active';	
-	if($row['status_document']==1)$row['status']='Active';
-	if($row['status_document']==2)$row['status']='Review';
-	
 	$row['action']='';
 	$data[]=$row;
 }

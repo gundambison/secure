@@ -1,6 +1,6 @@
 <?php  
+$uDetail=$userDetail=$userlogin['detail'];
 defined('BASEPATH') OR exit('No direct script access allowed');
-$uDetail=$userlogin['detail'];
 if(!isset($uDetail['bank'])||$uDetail['bank']==''){
 	$notAllow=1;
 	$uDetail['bank']='';
@@ -12,8 +12,30 @@ if(!isset($uDetail['bank_norek'])||$uDetail['bank_norek']==''){
 }
 
 if(isset($notAllow)){
-	redirect(site_url("member/edit/warn"),1);
+	$this->session->set_flashdata('notif', array('status' => false, 'msg' => 'Update nomor rekening!'));
+	redirect(site_url("member/edit/warning"),1);
 }
+
+//=============
+$notAllow=1;
+$detail=$this->account->detail($userlogin['id']);
+//print_r($detail);die();
+if(isset($detail['document']['status'])){
+	if($detail['document']['status']==1){
+		unset($notAllow);
+	}
+	else{
+		$this->session->set_flashdata('notif', array('status' => false, 'msg' => 'Dokumen pendukung sedang di review'));
+	}
+}
+else{
+	$this->session->set_flashdata('notif', array('status' => false, 'msg' => 'Upload dokumen pendukung!'));
+}
+
+if(isset($notAllow)){
+	redirect(site_url("member/uploads/warning"),1);
+}
+
 ?>
 <div class="container">
 	<div class="row">
@@ -36,14 +58,14 @@ if(isset($notAllow)){
 			  <div class="panel-body">
 				<table class='table-striped table' border="0"> 
 	<?php 
-	$name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']; 
+	$name=$userDetail['firstname']." ".$userDetail['lastname']; 
 	$name1='<input type="hidden" name="accountid" value="'.$userlogin['accountid'].'" />
 	<input type="hidden" name="name" value="'.$name.'" />
 	<input type="hidden" name="username" value="'.$userlogin['username'].'" />';
 	echo bsInput('Akun Salmaforex','akun', $userlogin['username'] ,'',true);
 	echo bsInput('Name','name', $name.$name1 ,'',true);
 	echo bsInput('Phone','phone', trim($uDetail['phone']) ,'Please Input Valid Phonenumber' );
-	echo bsInput('Nama Bank','bank', trim($uDetail['bank']) ,'BCA, Mandiri,   etc' );
+	echo bsInput('Nama Bank','bank', trim($uDetail['bank']) ,'BCA, Mandiri, BNI, BII, etc' );
 	echo bsInput('No Rekening','norek', trim($uDetail['bank_norek']) ,'999 999 999 9' );
 	echo bsInput('Nama Pemilik Rekening','namerek', trim($name) ,'Please Input Valid Name' );
 

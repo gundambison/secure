@@ -239,20 +239,23 @@ if(defined('LOCAL')){
 	echo $message;
 }
 else{
-	batchEmail(trim($to), $subject, $message, $headers);
-	$subject = "[SalmaForex] Update Account";
+	if(!is_array($to))$to=array($to);
+	foreach($to as $email){
+		batchEmail($email, $subject, $message, $headers);
+	}
+
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	$data=array( 'url'=>$to,
+	$subject = "[SalmaForex] Update Account";
+	$data=array( 'url'=>json_encode($to),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-	//$this->db->insert($this->forex->tableAPI,$data);
-	
+//	$this->db->insert($this->forex->tableAPI,$data);
 	foreach($emailAdmin as $to){ //email admin lebih dari 1
 		batchEmail(trim($to), $subject, $message, $headers);
 	}
-	
-	
+/*
+*/
 }

@@ -250,5 +250,6 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
+
 	//$this->db->insert($this->forex->tableAPI,$data);
 }

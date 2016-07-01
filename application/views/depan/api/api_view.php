@@ -4,6 +4,16 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
 ?>
 <div class='container'>
     <div style='margin-top:30px;'>
+		<ul class="page-breadcrumb breadcrumb">
+				<li>
+					<?=anchor(base_url('member'),'Home');?>
+					<i class="fa fa-circle"></i>
+				</li>
+				<li>
+					<a href="#">Api</a>
+					<i class="fa fa-circle"></i>
+				</li> 
+		</ul>
 	<a href="<?=base_url("member/listApi/normal");?>" >
 		<input type='button' value='API' />
 	</a>

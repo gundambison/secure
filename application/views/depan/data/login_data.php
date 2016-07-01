@@ -64,7 +64,8 @@ ob_start();
 			
 			}
 			else{
-				$responce['error']='Please Check Your Username and Password ';//.json_encode($post);			
+				$responce['error']='Please Check Your Username and Password ';
+
 			}
 		}else{}
 		

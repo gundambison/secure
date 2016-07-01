@@ -58,11 +58,12 @@ else{
 }
 
 $route['register/(:any)/(:any)'] = 'forex/register/$1/$1';
-$route['register/(:any)'] = 'forex/register/$1';
-//$route['login'] = 'login/member';
+
 $route['welcome'] = 'guest/home';
 $route['welcome/(:any)/(:any)'] = 'guest/home/$1/$1';
 $route['welcome/(:any)'] = 'guest/home/$1';
+
+$route['register/(:any)'] = 'forex/register/$1';
 
 $route['loginadmin'] = 'login/admin';
 $route['forgot_password'] = 'member/forgot';
@@ -72,7 +73,10 @@ $route['withdraw-form'] = 'member/withdrawal';
 $route['rupiah_deposit'] = 'forex/deposit_value';
 $route['rupiah_widtdrawal'] = 'forex/widtdrawal_value';
 $route['recover/(:any)'] = "member/recover/$1";
+
+$route['send_email'] = "forex/email_send";
+
 $route['404_override'] = 'forex/error404';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['send_email'] = "forex/email_send";
+$route['media/(:any)/(:any)/(:any:)'] = 'media/dirs_img/$1/$1/$1';

@@ -14,12 +14,12 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
 					<i class="fa fa-circle"></i>
 				</li>
 				<li>
-					<a href="#">User/Member</a>
+					<a href="#">Approve Member</a>
 					<i class="fa fa-circle"></i>
 				</li> 
 		</ul>
 		<div id='preview'></div>
-<table id="tableUsers" class="display" cellspacing="0" width="100%">
+<table id="tableApproval" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
 				<th>Date</th>
@@ -28,7 +28,6 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
                 <th>Email</th>
                 <th>Type</th>
                 <th>Status</th>
-                
                 <th>Action</th>
             </tr>
         </thead>
@@ -47,7 +46,7 @@ if (   function_exists('logFile')){ logFile('view/member/api','api_view.php','vi
 </table>	
 
 <script>
-urlAPI="<?=base_url("member/data?type=users");?>";
+urlAPI="<?=base_url("member/data?type=userApproval");?>";
 urlDetail="<?=base_url("member/data");?>";
 urlChangeStatus="<?=site_url("member/data?type=update");?>";
 </script>	

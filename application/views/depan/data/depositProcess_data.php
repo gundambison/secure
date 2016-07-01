@@ -33,6 +33,7 @@ if(isset($_POST['status'])){
 		if((int)$tmp['responsecode']===0){
 			logCreate('deposit Approve');
 			$this->load->view('depan/email/emailDepositApprove_view',$dt);//emailDepositStatus_view
+
 			$sql="update mujur_flowlog set status=1 where id=$id";
 			dbQuery($sql,1);
 		}
@@ -46,6 +47,7 @@ if(isset($_POST['status'])){
 		dbQuery($sql,1);
 		logCreate('deposit disaproved');
 		$this->load->view('depan/email/emailDepositCancel_view',$dt);//emailDepositStatus_view
+
 	}
 	
 }else{}	
