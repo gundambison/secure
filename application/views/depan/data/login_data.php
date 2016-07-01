@@ -64,11 +64,8 @@ ob_start();
 			
 			}
 			else{
-<<<<<<< HEAD:application/views/depan/data/login_data.php
-				$responce['error']='Please Check Your Username and Password ';//.json_encode($post);			
-=======
-				$responce['error']='Please Check Your Username and Password '.json_encode($post);			
->>>>>>> origin:application/views/depan/data/login_data.php
+				$responce['error']='Please Check Your Username and Password ';
+
 			}
 		}else{}
 		

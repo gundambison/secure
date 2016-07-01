@@ -226,25 +226,17 @@ if(defined('LOCAL')){
 	$this->db->insert($this->forex->tableAPI,$data);
 }
 else{
-	$emailAdmin[]='finance@salmaforex.com';
-	foreach($emailAdmin as $to){
-<<<<<<< HEAD
-		batchEmail(trim($to), $subject, $message, $headers);
-=======
-		mail(trim($to), $subject, $message, $headers);
->>>>>>> origin
+	$emailAdmin[]='finance@salmaforex.com';$to=$emailAdmin;
+	if(!is_array($to))$to=array($to);
+	foreach($to as $email){
+		batchEmail($email, $subject, $message, $headers);
 	}
-	
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
-	$data=array( 'url'=>print_r($emailAdmin,1),
+	$data=array( 'url'=>json_encode($to),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-<<<<<<< HEAD
-	//$this->db->insert($this->forex->tableAPI,$data);
-=======
-	$this->db->insert($this->forex->tableAPI,$data);
->>>>>>> origin
+//	$this->db->insert($this->forex->tableAPI,$data);
 }

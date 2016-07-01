@@ -1,4 +1,5 @@
-<?php  $uDetail=$userlogin['detail'];
+<?php  
+$uDetail=$userDetail=$userlogin['detail'];
 defined('BASEPATH') OR exit('No direct script access allowed');
 if(!isset($uDetail['bank'])||$uDetail['bank']==''){
 	$notAllow=1;
@@ -57,7 +58,7 @@ if(isset($notAllow)){
 			  <div class="panel-body">
 				<table class='table-striped table' border="0"> 
 	<?php 
-	$name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']; 
+	$name=$userDetail['firstname']." ".$userDetail['lastname']; 
 	$name1='<input type="hidden" name="accountid" value="'.$userlogin['accountid'].'" />
 	<input type="hidden" name="name" value="'.$name.'" />
 	<input type="hidden" name="username" value="'.$userlogin['username'].'" />';

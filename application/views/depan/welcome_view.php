@@ -11,7 +11,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
             	<h3 class="orange nomargin"><strong>Welcome to the Secure Area of SalmaForex</strong></h3>
                 <p>Dear <?=isset($userlogin['detail']['firstname'])?$userlogin['detail']['firstname']:'';?>&nbsp;<?=isset($userlogin['detail']['lastname'])?$userlogin['detail']['lastname']:'';?>,<br/>
 				Your are now logged-in the Secure Area. Here you can view all the Information from your accounts. You can also Update Your Profile before deposit and withdrawn and many more. </p>
-		<?php 
+		<?php
 		$showAgentMenu0=isset($userlogin['type'])&&$userlogin['type']=='agent'?true:false;
 		$showAgentMenu1=isset($userlogin['patner'])&&$userlogin['patner']!=0?true:false;
 		$showAgentMenu=$showAgentMenu0||$showAgentMenu1?true:false;
@@ -19,7 +19,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 		?>
 			<div class="vspace-30"></div>
                 <div class="box yellow-box">
-                	<div class="box-padder30">
+					<div class="box-padder30">
 						<table width="100%">
                             <tr>
 								<td>
@@ -79,7 +79,8 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 							}
 							else{?>
                                             <a class="btn btn-default" href='<?=base_url('member/uploads');?>'><strong>Click Here</strong></a>
-					<?php	} ?>
+					<?php
+							}?>
                                         </div>
                                     </div>
                                     <div class="vspace-30"></div>

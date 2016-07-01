@@ -219,7 +219,7 @@ $headers .= "MIME-Version: 1.0\r\n";
 
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-if(defined('LOCAL')){	
+if(defined('LOCAL')){
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
@@ -231,11 +231,19 @@ if(defined('LOCAL')){
 	//die($message );
 }
 else{
-<<<<<<< HEAD
+	if(!is_array($to))$to=array($to);
+	foreach($to as $email){
+		batchEmail($email, $subject, $message, $headers);
+	}
+	$rawEmail=array(
+		$subject, $headers,$message,'send email'
+	);
+	$data=array( 'url'=>json_encode($to),
+		'parameter'=>json_encode($rawEmail),
+		'error'=>2
+	);
+/*
 	batchEmail(trim($to), $subject, $message, $headers);
-=======
-	mail(trim($to), $subject, $message, $headers);
->>>>>>> origin
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
@@ -243,9 +251,6 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-<<<<<<< HEAD
 	//$this->db->insert($this->forex->tableAPI,$data);
-=======
-	$this->db->insert($this->forex->tableAPI,$data);
->>>>>>> origin
+*/
 }

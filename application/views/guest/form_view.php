@@ -5,11 +5,8 @@ if(!isset($defInput)){
 if(!isset($showForm)){ 
 	$showForm=1;
 }
-<<<<<<< HEAD
-//$showAgent=true;
-=======
+ 
 $showAgent=true;
->>>>>>> origin
 if(!isset($showAgent)){ 
 	$showAgent=true;
 }

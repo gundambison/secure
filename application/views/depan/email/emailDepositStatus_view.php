@@ -87,10 +87,13 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
                 <br />
                 Our Bank information :</p>
               <h3><strong>BCA : 8380126282 a.n Yadi Supriyadi <br />
-                </strong><strong>BRI : 2202.01.000120.561 a.n Yadi Supriyadi</strong><br />
+                </strong>
+
 				<strong>MANDIRI : 1300014675337 a.n Yadi Supriyadi</strong>
-                <strong>BNI : 0423851338 a.n Yadi Supriyadi</strong></h3>
-              <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
+
+				</h3>
+              <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, 
+			  please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
               <p id="yui_3_16_0_1_1443010679159_2163">Wishing you luck and profitable trading! </p>
               <p><strong>Thank you for choosing SalmaForex to provide you with brokerage services on the forex market! We wish you every success in your trading!</strong></p>
               <p>Sincerely,<br />
@@ -260,23 +263,19 @@ if(defined('LOCAL')){
 }
 else{
 	$to[]='finance@salmaforex.com';
+	if(!is_array($to))$to=array($to);
 	foreach($to as $email){
-<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
 		batchEmail($email, $subject, $message, $headers);
-=======
-		mail($email, $subject, $message, $headers);
->>>>>>> origin:application/views/depan/email/emailDepositStatus_view.php
 	}
+
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);
+
 	$data=array( 'url'=>json_encode($to),
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
-	//$this->db->insert($this->forex->tableAPI,$data);
-=======
-	$this->db->insert($this->forex->tableAPI,$data);
->>>>>>> origin:application/views/depan/email/emailDepositStatus_view.php
+//	$this->db->insert($this->forex->tableAPI,$data);
+
 }

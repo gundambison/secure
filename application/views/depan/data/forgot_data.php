@@ -6,11 +6,7 @@ $responce['detail']=$detail=$this->account->detail($post['email'],'email');
 	if($detail!==false){
 		$this->param['recoverid']=$this->account->recover($detail);
 		$this->param['raw']=$detail;
-<<<<<<< HEAD
 		$raw=$this->load->view('depan/email/emailRecover_view',$this->param,true);
-=======
-		$raw=$this->load->view('member/email/emailRecover_view',$this->param,true);
->>>>>>> origin
 	}
 	else{ 
 		$responce['error']="The Email Not Found in Our Database .  Please check your input.";
