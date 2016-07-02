@@ -120,6 +120,10 @@ Daftar Fungsi Yang Tersedia :
 				$sql="ALTER TABLE `{$this->tableAccountDocument}` ADD `status` tinyint AFTER `email`";
 				dbQuery($sql);
 			}
+			if (!$this->db->field_exists('filetype', $this->tableAccountDocument)){
+				$sql="ALTER TABLE `{$this->tableAccountDocument}` ADD `filetype` varchar(100) AFTER `upload`";
+				dbQuery($sql);
+			}
 //=========Menambah Account Balance
 			if(!$this->db->table_exists($this->tableAccountBalance)){
 				$fields = array(
@@ -289,7 +293,7 @@ Daftar Fungsi Yang Tersedia :
 		return true;
 	}	
 
-	function updateDocument($username,$document=false){
+	function updateDocument($username,$document=false,$type=null){
 		$data=$this->detail($username,'username');
 		$email=trim($data['email']);
 		$sql="select count(id) c from {$this->tableAccountDocument} where email like '$email'";
@@ -301,6 +305,9 @@ Daftar Fungsi Yang Tersedia :
 		if($document!=false){
 			$upload=addslashes($document);
 			$sql="UPDATE {$this->tableAccountDocument} SET `upload` = '{$document}' WHERE `email` = '{$email}';";
+			dbQuery($sql);
+			$type=addslashes($type);
+			$sql="UPDATE {$this->tableAccountDocument} SET `filetype` = '{$type}' WHERE `email` = '{$email}';";
 			dbQuery($sql);
 			$sql="UPDATE {$this->tableAccountDocument} SET `status` = '2' WHERE `email` = '{$email}';";
 			dbQuery($sql);
@@ -335,12 +342,16 @@ Daftar Fungsi Yang Tersedia :
 			return false; 
 		}
 		
-		$sql="select a.email from `{$this->tableAccount}` a  		
+		$sql="select a.* from `{$this->tableAccount}` a
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql);
 		$email=$res['email'];
-		$sql="select id,email,upload,status from {$this->tableAccountDocument} where email like '$email'";
-		return dbFetchOne($sql);
+		$sql="select id,email,upload,filetype type,status 
+		from {$this->tableAccountDocument} 
+		where email like '$email'";
+		$resDoc= dbFetchOne($sql);
+		$resDoc['account']=$res;
+		return $resDoc;
 	}
 
 	function detail($id,$field='id'){
