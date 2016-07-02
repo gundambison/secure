@@ -47,6 +47,7 @@ Daftar Fungsi Yang Tersedia :
 			$rand=dbId();
 			//print_r($_POST);print_r($_FILES);
 			$files=$_FILES['doc'];
+			//var_dump($files);die();
 			if($files['size']>550000){
 				$post['message']="upload to big";
 				$this->session->set_flashdata('login', $post);
@@ -57,7 +58,7 @@ Daftar Fungsi Yang Tersedia :
 			//echo '<pre>';print_r($this->param['detail']);
 			copy($files['tmp_name'],$this->folderUpload.$filename);
 			$url=  $this->folderUpload.$filename  ;
-			$this->account->updateDocument($user['username'], $url);
+			$this->account->updateDocument($user['username'], $url,$files['type']);
 			//exit('file:'.$url);
 			redirect(site_url('member/profile'));
 		}
@@ -323,8 +324,9 @@ Daftar Fungsi Yang Tersedia :
 			$data=$this->account->detail($userid);
 			$username=$data['username']; //die(print_r($data,1));
 			$this->account->updateDocumentStatus($username, $stat_id);
-			echo 'status sudah berganti '.$stat_id;
-		}else{
+			echo 'status sudah berganti menjadi '.$status;
+		}
+		else{
 			echo 'status tidak diketahui';
 			exit();
 		}
@@ -332,8 +334,10 @@ Daftar Fungsi Yang Tersedia :
 	
 	function show_upload($userid=null){
 		$data=$this->account->document($userid);
-		//var_dump($data);
-		header('content-type:image/jpeg');
+		//echo'<pre>';var_dump($data);die();
+		header('content-type:'.$data['type']);
+		header('Content-Disposition: attachment; filename="'.url_title($data['account']['email']).'"');
+
 		$txt=file_get_contents( $data['upload']);
 		echo $txt;
 	}
