@@ -23,7 +23,7 @@ if(isset($fileCss)){
 <?php 
 if(isset($fileJs)){
 	foreach($fileJs as $file){?>
-	<script src="<?=base_url().'media/'.$file;?>"></script><?php
+	<script src="<?=base_url().'media/'.$file;?>"?34></script><?php
 	}
 }
 

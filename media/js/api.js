@@ -91,7 +91,7 @@ catch(err){
 }
 
 try{
-	console.log('table user');
+//	console.log('table user');
 	tableUsers=jQuery('#tableUsers').DataTable( {
 		"columnDefs": [
             { 
@@ -131,7 +131,7 @@ try{
 		console.log(req);
 	}
 	function reviewStatus(id){
-		console.log('kirim ajax dgn id');
+//		console.log('kirim ajax dgn id');
 	}
 }
 catch(err){
@@ -139,7 +139,7 @@ catch(err){
 }
 
 try{
-	console.log('table agent');
+//	console.log('table agent');
 	tableUsers=jQuery('#tableAgent').DataTable( {
 		"columnDefs": [
             { 
@@ -182,12 +182,12 @@ try{
 	}
 }
 catch(err){
- 	 console.log('not table agent?');
-	console.log(err);
+// 	 console.log('not table agent?');
+//	console.log(err);
 }
 
 try{
-	console.log('table partner');
+//	console.log('table partner');
 	tableUsers=jQuery('#tablePartner').DataTable( {
 		"columnDefs": [
             { 
@@ -223,19 +223,19 @@ try{
 		params={id:id,type:"activeUserStatus"}
 		url=urlChangeStatus;
 		req=sendAjax(url,param);
-		console.log(req);
+//		console.log(req);
 	}
 	function reviewStatus(id){
-		console.log('kirim ajax dgn id');
+//		console.log('kirim ajax dgn id');
 	}
 }
 catch(err){
- 	 console.log('not table agent?');
-	console.log(err);
+// 	 console.log('not table agent?');
+//	console.log(err);
 }
 
 try{
-	console.log('table user approval');
+//	console.log('table user approval');
 	tableUsers=jQuery('#tableApproval').DataTable( {
 		"columnDefs": [
             { 
@@ -272,15 +272,15 @@ try{
 		params={id:id,type:"activeUserStatus"}
 		url=urlChangeStatus;
 		req=sendAjax(url,param);
-		console.log(req);
+//		console.log(req);
 	}
 	function reviewStatus(id){
-		console.log('kirim ajax dgn id');
+//		console.log('kirim ajax dgn id');
 	}
 }
 catch(err){
- 	 console.log('not table User?');
-	console.log(err);
+// 	console.log('not table User?');
+//	console.log(err);
 }
 
 
