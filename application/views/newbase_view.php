@@ -61,7 +61,7 @@ if(isset($footerJS)){
 	}else{}
 	
 	foreach($footerJS as $jsFile ){?>
-	  <script src="<?=base_url();?>media/<?=$jsFile;?>"></script>
+	  <script src="<?=base_url();?>media/<?=$jsFile;?>?12"></script>
 <?php 
 	}
 }else{ echo '<!--no footer js -->'; } ?>
