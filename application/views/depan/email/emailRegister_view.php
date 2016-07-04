@@ -268,7 +268,7 @@ else{
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);
-//	$this->db->insert($this->forex->tableAPI,$data);
+	$this->db->insert($this->forex->tableAPI,$data);
 	$subject = "[SalmaForex] Register Baru ";
 	foreach($emailAdmin as $to){
 		batchEmail(trim($to), $subject, $message, $headers);
