@@ -77,12 +77,8 @@ if(isset($_POST['status'])){
 	}
 	else{
 		$sql="update mujur_flowlog set status=2 where id=$id";
-		dbQuery($sql,1);
-<<<<<<< HEAD
+		dbQuery($sql,1); 
 		$this->load->view('depan/emailWidtdrawalDisapprove_view',$dt);
-=======
-		$this->load->view('member/email/emailWidtdrawalDisapprove_view',$dt);
->>>>>>> origin
 		logCreate('widtdrawal disapprove');
 	}
 	
@@ -99,8 +95,5 @@ if(isset($respon)){
 	echo json_encode($respon);
 }else{
 	echo json_encode(array());
-<<<<<<< HEAD
+	
 }
-=======
-}
->>>>>>> origin
