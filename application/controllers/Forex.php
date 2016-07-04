@@ -292,7 +292,7 @@ class Forex extends CI_Controller {
 	
 	function __CONSTRUCT(){
 	parent::__construct(); 
-		
+		$this->load->library('session');
 		date_default_timezone_set('Asia/Jakarta');
 		$this->param['today']=date('Y-m-d');
 		$this->param['folder']='forex/';
