@@ -32,7 +32,8 @@ class Forex extends CI_Controller {
 		$name1=date("ymdh");
 		$name2=time();
 		echo "$name1<br/>$name2";
-		$this->param['tableTarget']='zlog_'.time();
+		$this->param['tableTarget']='z_api';
+		//'zlog_'.time();
 		log_message('info','register Api in session');
 		$tmp=$this->load->view('api/backup_data',$this->param,true);
 		$res=json_decode($tmp, true);
