@@ -197,7 +197,9 @@ SEMUA dipindah ke model ACCOUNT
 		}
 		$sql=$this->db->insert_string($this->tableAccount,$dt);
 		dbQuery($sql,1);
+		logCreate("register accid:".$raw['accountid']);
 		$dataRaw = $this->account->detail($raw['accountid'],'accountid');
+		logCreate("register accid:".$acc_id);
 		$dataRaw = $this->account->detail($acc_id);
 		
 //===========Account Detail  
@@ -208,11 +210,11 @@ SEMUA dipindah ke model ACCOUNT
 		);
 		
 		logCreate("hapus detail sebelumnya:". $dataRaw['accountid']);
-		$sql="delete from $this->tableAccountDetail where username like '{$dataRaw['accountid']}'";
+		$sql="delete from {$this->tableAccountDetail} where username like '{$dataRaw['accountid']}'";
 		dbQuery($sql,0);
 		
 		$sql=$this->db->insert_string($this->tableAccountDetail, $dt);
-		
+		$data=dbFetch($sql);
 		$sql="select id from {$this->tableActivation} where userid=$id and status!=1";
 		$data=dbFetch($sql);
 		logCreate('Close Old Activation:'.json_encode($data) );
@@ -299,7 +301,7 @@ SEMUA dipindah ke model ACCOUNT
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
 		$param2['accountType']=$detail['detail']['statusMember'];	
-
+		echo '<div>KIRIM EMAIL</div>';
 		$this->load->view('depan/email/emailRegister_view',$param2);
 		
 	}
