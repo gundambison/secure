@@ -342,11 +342,13 @@ Daftar Fungsi Yang Tersedia :
 			return false; 
 		}
 		
-		$sql="select a.* from `{$this->tableAccount}` a  		
+		$sql="select a.* from `{$this->tableAccount}` a
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql);
 		$email=$res['email'];
-		$sql="select id,email,upload,filetype type,status from {$this->tableAccountDocument} where email like '$email'";
+		$sql="select id,email,upload,filetype type,status 
+		from {$this->tableAccountDocument} 
+		where email like '$email'";
 		$resDoc= dbFetchOne($sql);
 		$resDoc['account']=$res;
 		return $resDoc;
@@ -369,15 +371,18 @@ Daftar Fungsi Yang Tersedia :
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql); 
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
+			
 			logCreate("account detail id:$id|field:$field|update username |".json_encode($res),"info");
 			$sql="select count(id) c from `{$this->tableAccount}` where `username` = '{$res['accountid']}'";
 			$res0=dbFetchOne($sql,1);
 			$okay2Rename=$res0['c']==0?true:false;
 			if($okay2Rename){
+				logCreate("update rename:".json_encode($res));
 				$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
 				dbQuery($sql);
 				$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);
+				logCreate("update rename:DONE");
 			}
 			else{
 				logCreate("fail rename:".json_encode($res));
@@ -427,7 +432,8 @@ Daftar Fungsi Yang Tersedia :
 		where `agent` like '$data[username]'";
 		$res0=dbFetchOne($sql);
 		$data['patner']=$res0['c'];
-		$data['balance']=$this->balance($res['username'],$time);
+		logCreate("cek balance:");
+		$data['balance']=$this->account->balance($res['username'],$time);
 		$data['balanceDate']=$time;
 		return $data;
 	}
