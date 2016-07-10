@@ -93,10 +93,14 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 						Please transfer in accordance with the amount of transfer listed above , the maximum transfer time 1x24 hours . If the transfer is not in that time period , then the system will automatically cancel the order.  Hopefully this information is useful .<br />
 						<br />
 						Our Bank information :</p>
-					  <h3><strong>BCA : 8380126282 a.n Yadi Supriyadi <br />
-
-						<strong>MANDIRI : 1300014675337 a.n Yadi Supriyadi</strong><br />
-
+					<h3>
+		<?php
+		$bank = $key=$this->config->item('forexBank');
+		//print_r($bank);
+		foreach($bank as $row){
+			echo "\n\t{$row['name']} : <strong>{$row['number']}</strong> a.n {$row['person']}<br />";
+		}
+		?>
 					</h3>
 					  <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
 					  <p id="yui_3_16_0_1_1443010679159_2163">Wishing you luck and profitable trading! </p>

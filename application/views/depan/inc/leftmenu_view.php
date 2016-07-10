@@ -11,9 +11,11 @@
                     </div>
                     <hr/>
                     <!--div class="row large">
-                    	<div class="col-xs-5"><strong>Ballance :</strong></div>
-                        <div class="col-xs-7 text-right">$<?=isset($userlogin['balance'])?number_format($userlogin['balance'],2):'';?> 
-						<font size='-3'>(last update: <?=isset($userlogin['balanceDate'])?date("d-m-Y H:i:s",strtotime($userlogin['balanceDate'])):'';?>)</font></div>
+                    	<div class="col-xs-5"><strong>Balance :</strong></div>
+                        <div class="col-xs-7 text-right">
+							$<?=isset($userlogin['balance'])?number_format($userlogin['balance'],2):'';?>
+							<font size='-3'>(last update: <?=isset($userlogin['balanceDate'])?date("d-m-Y H:i:s",strtotime($userlogin['balanceDate'])):'';?>)</font>
+						</div>
                     </div-->
                 </div>
                 <div class="vspace-30"></div>
