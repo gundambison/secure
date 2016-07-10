@@ -354,6 +354,19 @@ Daftar Fungsi Yang Tersedia :
 		return $resDoc;
 	}
 
+	function lists($id,$field='id'){
+		$sql="select count(id) c 
+		from `{$this->tableAccount}`  
+		where `{$field}` like '{$id}';"; 
+		$res=dbFetchOne($sql);
+		$respon=array('total'=>$res['c']);
+		$sql="select a.* from `{$this->tableAccount}` a  		
+		where `{$field}` like '$id'";
+		$respon['data']=dbFetch($sql);
+		return $respon;
+		
+	}
+	
 	function detail($id,$field='id'){
 	logCreate("account detail id:$id|field:$field");	
 		$id=addslashes(trim($id));
@@ -371,15 +384,18 @@ Daftar Fungsi Yang Tersedia :
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql); 
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
+			
 			logCreate("account detail id:$id|field:$field|update username |".json_encode($res),"info");
 			$sql="select count(id) c from `{$this->tableAccount}` where `username` = '{$res['accountid']}'";
 			$res0=dbFetchOne($sql,1);
 			$okay2Rename=$res0['c']==0?true:false;
 			if($okay2Rename){
+				logCreate("update rename:".json_encode($res));
 				$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
 				dbQuery($sql);
 				$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);
+				logCreate("update rename:DONE");
 			}
 			else{
 				logCreate("fail rename:".json_encode($res));
@@ -429,13 +445,18 @@ Daftar Fungsi Yang Tersedia :
 		where `agent` like '$data[username]'";
 		$res0=dbFetchOne($sql);
 		$data['patner']=$res0['c'];
-		$data['balance']=$this->balance($res['username'],$time);
+		//logCreate("cek balance:");
+		$time=date('Y-m-d H:i:s');
+		$data['balance']=$this->account->balance($res['username'],$time);
 		$data['balanceDate']=$time;
 		return $data;
 	}
 	
 	private function balance($username,&$time){
 //======Remove Expire
+		if(!isset($this->session)){
+			return 0;
+		}
 		$session=$this->session-> all_userdata();
 		$now = date("Y-m-d H:i:s");
 		$now_12 = date("Y-m-d H:i:s", strtotime("+3 hours"));
@@ -449,11 +470,12 @@ Daftar Fungsi Yang Tersedia :
 			$time=$row['modified'];
 			return $row['balance'];
 		}
+
 		if($session['username']!=$username){
 		//	logCreate('username different:'.$username);
 			return 0;
 		}
-		
+
 		$param['accountid']		=	$username;
 		$param['volume']		=	"-0";  			 
 		$param['privatekey']	=	$this->forex->forexKey();
@@ -461,8 +483,8 @@ Daftar Fungsi Yang Tersedia :
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
 
-		$tmp= _runApi($url );//{"balance":"100.000000","responsecode":"0","accountid":"7001189"}
-		//print_r($tmp);die();
+		$tmp= _runApi($url );
+		logCreate('account balance:'.json_encode($tmp));
 		if(!is_array($tmp))$tmp=(array)$tmp;
 		if(isset($tmp['balance'])){
 			logCreate('url:'.$url.'| respon:'.json_encode($tmp));

@@ -40,3 +40,11 @@ if(defined('_DEV_')){
 }else{} 
 
 $config['urlForex']['local']='http://advance.forex/index.php/forex/data';
+
+$config['forexBank']=array(
+	array('name'=>'BCA', 'number'=>'8380126282','person'=>'Yadi Supriyadi'),
+	array('name'=>'BRI', 'number'=>'2202.01.000120.561','person'=>'Yadi Supriyadi'),
+	array('name'=>'MANDIRI', 'number'=>'1300014675337','person'=>'Yadi Supriyadi'),
+	array('name'=>'BNI', 'number'=>'0423851338','person'=>'Yadi Supriyadi'),
+
+);
