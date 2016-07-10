@@ -439,6 +439,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	private function balance($username,&$time){
+		return 0;
 //======Remove Expire
 		$session=$this->session-> all_userdata();
 		$now = date("Y-m-d H:i:s");
@@ -457,7 +458,7 @@ Daftar Fungsi Yang Tersedia :
 		//	logCreate('username different:'.$username);
 			return 0;
 		}
-		
+
 		$param['accountid']		=	$username;
 		$param['volume']		=	"-0";  			 
 		$param['privatekey']	=	$this->forex->forexKey();
