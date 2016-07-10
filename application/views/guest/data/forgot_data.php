@@ -33,7 +33,7 @@ else{
 	}else{}
 }
 
-logCreate($responce);
+logCreate("respon forgot_data:".json_encode($responce));
 
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result'] );

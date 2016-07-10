@@ -19,9 +19,10 @@ if ( ! function_exists('_runApi')){
 	logCreate( 'API: '.$logTxt); 
 		
 	if(count($parameter)){	 	
-		logCreate( 'API: '."url:{$url}| param:".print_r($parameter,1),'debug');
+		logCreate( 'API: '."url:{$url}| param:\n".print_r($parameter,1),'debug');
 	}else{ 
-		logCreate( 'API: param:'.print_r(parse_url($url),1),'debug');
+		logCreate( 'API: param:
+'.print_r(parse_url($url),1),'debug');
 	}
 		$curl = curl_init();
 		 
@@ -33,7 +34,8 @@ if ( ! function_exists('_runApi')){
 			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($parameter,'','&'));
 			if( isset($_SERVER['HTTP_USER_AGENT']) ) curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 			logCreate('API:POST','info');
-		}else{ 
+		}
+		else{ 
 			logCreate('API:GET','info');
 		}
 		
@@ -68,11 +70,11 @@ if ( ! function_exists('_runApi')){
 		return $response;
 			
 	}
+
 } else{}
 
 if ( ! function_exists('batchEmail')){
-	function batchEmail( $to='', $subject='', $message='', $headers='')
-	{
+	function batchEmail( $to='', $subject='', $message='', $headers=''){
 		$arr=array('to'=>trim($to), 'subject'=>$subject,'message'=>base64_encode($message),'headers'=>$headers);
 		$json=json_encode($arr);
 		echo '<br>'.$json;
@@ -84,7 +86,7 @@ if ( ! function_exists('batchEmail')){
 		//return true;
 	}
 	
-}
+} else{}
 
 if ( ! function_exists('callback_submit')){
 	function callback_submit(){
@@ -99,4 +101,4 @@ if ( ! function_exists('callback_submit')){
 	';
     }
 	}
-}
+} else{}

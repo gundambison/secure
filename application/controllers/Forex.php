@@ -113,9 +113,37 @@ class Forex extends CI_Controller {
 	}
 	
 	public function index()
-	{		
+	{
+		//if(!isset($this->session))echo 'error<pre>';var_dump($this->session);var_dump($_SESSION);die('--');
 		redirect(base_url('welcome'));
 		$this->register();
+	}
+	
+	public function forgot_pass($start=null, $to=null){
+		$iDays= 24*3600;
+		if($start==null){ 
+			$start='2016-07-02'; 
+		}
+		if($to==null){ 
+			$i10day=$iDays*10;
+			$to=date("Y-m-d",strtotime($start)+$i10day);			
+		}
+		
+		for($i=strtotime($start);$i<=strtotime($to);$i+=$iDays){
+			$sDate=date('Y-m-d',$i);
+			$data=$this->account->lists($sDate, 'created');
+			foreach($data['data'] as $row){
+				$post=array('email'=>$row['email']);
+				$respon=$this->load->view('guest/data/forgot_data',array('post'=>$post),true);
+				$json=@json_decode($respon,true);
+				$respon=is_array($json)?$json:$respon;
+				if($respon['status']!=1){
+					logCreate('forgot_pass status!=0|'.json_encode($respon));//echo '<pre>'.print_r($respon,1);die();
+				}
+			}
+			logCreate('forgot_pass ('.$sDate.') data:'.json_encode($data));//echo '<pre>==='.print_r($data,1);die();
+		}
+		echo 'done '.$start.'('.strtotime($start).') - '.$to;
 	}
 	
 	public function data()
