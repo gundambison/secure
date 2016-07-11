@@ -217,7 +217,7 @@ SEMUA dipindah ke model ACCOUNT
 		dbQuery($sql,0);
 		
 		$sql=$this->db->insert_string($this->tableAccountDetail, $dt);
-		$data=dbFetch($sql);
+		$data=dbQuery($sql);
 		$sql="select id from {$this->tableActivation} where userid=$id and status!=1";
 		$data=dbFetch($sql);
 		logCreate('Close Old Activation:'.json_encode($data) );
