@@ -124,7 +124,7 @@ class Forex extends CI_Controller {
 		if($start==null){ 
 			$start='2016-07-02'; 
 		}
-		if($to==null){ 
+		if($to==null){
 			$i10day=$iDays*10;
 			$to=date("Y-m-d",strtotime($start)+$i10day);			
 		}
@@ -404,7 +404,7 @@ class Forex extends CI_Controller {
 
 	function email_send(){
 		$target="media/email";
-		$max=5; //silakan dinaikkan
+		$max=7; //silakan dinaikkan
 		$n=0;
 		$not_valid=array(".","..");
 		if ($handle = opendir($target)){

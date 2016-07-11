@@ -68,7 +68,7 @@ Daftar Fungsi Yang Tersedia :
 
 	public function register(){
 		$post=$this->input->post();
-		print_r($post); 
+		//print_r($post); 
 		$stat=false;
 		
 		$respon['title']='NEW LIVE ACCOUNT (CREATED)';
@@ -77,8 +77,7 @@ Daftar Fungsi Yang Tersedia :
 			}
 		$params=$post;
 		if( isset($post['accept']))$stat=true;
-		//var_dump($post);die('--');
-		logCreate(print_r($post,1));
+		logCreate('register post:'.print_r($post,1));
 		if($stat==true)
 			$stat=$this->forex->saveData($params,$message);
 		

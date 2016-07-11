@@ -144,7 +144,7 @@ foreach($register as $row){
 	}
 	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==0){
-		logCreate('register member |url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1)	.'|url:'.$url, 
+		logCreate('register member |url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1).'|url:'.$url, 
 			'info');
 		$id=$this->forex->accountActivation($row['id'],$result);
 		$arr['accountActivation']=$id; 
