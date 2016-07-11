@@ -147,8 +147,7 @@ SEMUA dipindah ke model ACCOUNT
 		}
 	}
 	
-	function accountCreate($id,$raw='')
-	{
+	function accountCreate($id,$raw=''){
 		$reg_id=$id;
 		$detail=$this->regisDetail( $reg_id );
 		if(defined('LOCAL')){
@@ -181,20 +180,24 @@ SEMUA dipindah ke model ACCOUNT
 			//'activation'=>base64_encode($raw),
 			'created'=>date("Y-m-d")
 		);
+		$accid=dbId('account',date("ym000"),3);
+/*
 		$accid=date("ym000");
-		$sql="select max(id) max from {$this->tableAccount}";
+		$sql="select max(id) max from {$this->tableAccountDetail}";
 		$dt2=dbFetchOne($sql);
 		if($dt2['max'] > (int)$accid){
 			$accid=$dt2['max'];
 		}
+*/
 		$dt['id']=$acc_id=$accid+1;
 		$sql="select count(id) tot from {$this->tableAccount} where reg_id='$reg_id'";
 		$rawAccount=dbFetchOne($sql);
 	//apabila ada reg_id yang sama maka cancel	
-		if($rawAccount['tot']!=0){
+		if((int)$reg_id!=0&&$rawAccount['tot']!=0){
 			logCreate("register not continue account exist:".json_encode($rawAccount));
 			return false;
 		}
+
 		$sql=$this->db->insert_string($this->tableAccount,$dt);
 		dbQuery($sql,1);
 		logCreate("register accid:".$raw['accountid']);
@@ -226,7 +229,7 @@ SEMUA dipindah ke model ACCOUNT
 		$data = array('reg_status' => 0);
 		$where = "reg_id=$id";
 		$sql = $this->db->update_string($this->tableRegis, $data, $where);
-		dbQuery($sql,1);
+		dbQuery($sql);
 		//===========UPDATE ACCOUNT
 		//===============Change Password===============		
 //		$sql="select password from {$this->tablePassword} order by rand() limit 2";
@@ -485,8 +488,7 @@ REGISTER
 		dbQuery($sql,1);
 	}
 	
-	function saveData($data, &$message)
-	{
+	function saveData($data, &$message){
 		if(isset($data['agent'])){
 			$agent=trim($data['agent']);
 			unset($data['agent']);
@@ -502,10 +504,13 @@ REGISTER
 		$sql="select count(reg_id) c from {$this->tableRegis} where
 		reg_email='$email'";
 		$res= $this->db->query($sql)->row_array();
+/*
+email double diperbolehkan
 		if($res['c']!=0){
 			$message='Email already register';//.json_encode($res);
 			return false;
 		}
+*/
 		unset($data['type']);
 		$dt=array(
 			'reg_status'=>1,
