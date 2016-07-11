@@ -144,8 +144,21 @@ foreach($register as $row){
 	}
 	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==0){
-		logCreate('register member |url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1)	.'|url:'.$url, 
+		logCreate('register member |url: '.$this->forex->forexUrl().'|respon:'.print_r($result,1).' |url:'.$url, 
 			'info');
+		$param=array( );
+		$param['privatekey']	=$this->forex->forexKey();
+		$param['accountid']=(int)$result['accountid'];
+		$param['allowlogin']=1;
+		$param['allowtrading']=1;
+		$url=$this->forex->forexUrl('update');
+		$url.="?".http_build_query($param);
+		logCreate("update allow:".print_r($param,1)."|url:$url");
+		$arr['param']=$param;
+		$arr['url']=$url;
+		$result0= _runApi($url );
+		logCreate("update allow result:".print_r($result0,1));
+		
 		$id=$this->forex->accountActivation($row['id'],$result);
 		$arr['accountActivation']=$id; 
  

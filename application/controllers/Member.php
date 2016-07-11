@@ -56,7 +56,7 @@ Daftar Fungsi Yang Tersedia :
 			$user=$this->param['detail'];
 			$filename=url_title($user['email']).".".date("ymd").".tmp";
 			//echo '<pre>';print_r($this->param['detail']);
-			copy($files['tmp_name'],$this->folderUpload.$filename);
+			@copy($files['tmp_name'],$this->folderUpload.$filename);
 			$url=  $this->folderUpload.$filename  ;
 			$this->account->updateDocument($user['username'], $url,$files['type']);
 			//exit('file:'.$url);
