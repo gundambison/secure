@@ -20,6 +20,7 @@ if(isset($notAllow)){
 }
 
 //=============
+/*
 $notAllow=1;
 $detail=$this->account->detail($userlogin['id']);
 //print_r($detail);die();
@@ -32,13 +33,13 @@ if(isset($detail['document']['status'])){
 	}
 }
 else{
-	$this->session->set_flashdata('notif', array('status' => false, 'msg' => 'Upload dokumen pendukung!'));
+	$this->session->set_flashdata('notif', array('status' => false, 'msg' => 'Silakan Upload dokumen pendukung!'));
 }
 
 if(isset($notAllow)){
 	redirect(site_url("member/uploads/warning"),1);
 }
-
+*/
 $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']; 
 ?>
 <div class="container">

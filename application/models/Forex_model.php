@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-if (   function_exists('logFile')){ logFile('model','forex_model.php','model'); };
+if( function_exists('logFile')){ logFile('model','forex_model.php','model'); };
 class Forex_model extends CI_Model {
 /***
 Daftar Fungsi Yang Tersedia :
@@ -567,8 +567,7 @@ email double diperbolehkan
 		return $data; 
 	}
 //=====================================
-		public function __construct()
-        {
+		public function __construct(){
             $this->load->database();
 			$this->load->dbforge();
 //=========UPDATE REGISTER			
@@ -646,6 +645,24 @@ email double diperbolehkan
 				$this->dbforge->add_field($fields);
 				$this->dbforge->add_key('id', TRUE);
 				$this->dbforge->create_table('mujur_api',TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();	
+			}
+			if(!$this->db->table_exists('mujur_email')){
+				$fields = array(
+				  'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE), 		   
+				  'to'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '200'),
+				  'subject'=>array( 'type' => 'text'),
+				  'headers'=>array( 'type' => 'text'),
+				  'created'=>array( 'type' => 'timestamp'),
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table('mujur_email',TRUE);
 				$str = $this->db->last_query();			 
 				logConfig("create table:$str");
 				$this->db->reset_query();	
