@@ -550,11 +550,16 @@ email double diperbolehkan
 
 		$this->db->reset_query();
 
-		$email=trim($acc['email'])."%";
+		$email=trim($acc['email']) ;
+		/*
 		$this->db->or_like('url',$email);
 		$this->db->order_by('created','desc');
 		$data=$this->db->get($this->tableAPI)->result_array();
 		$res['sql'][]=$this->db->last_query();
+		*/
+		$sql="select * from {$this->tableAPI} where url like '%{$email}%' order by created desc";
+		$data=dbFetch($sql);
+		logCreate('apiAccount |email:'.$this->db->last_query());
 		if(is_array($data)){
 			foreach($data as $row){
 				$res['email'][]=$row;
