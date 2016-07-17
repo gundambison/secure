@@ -44,7 +44,7 @@ else{
 }
  
 //$respon['api2']=$apiRes;
-if($userlogin['type']!='agent'){
+//if($userlogin['type']!='agent'){
 	if(isset($apiRes['email'])&&is_array($apiRes['email'])){
 		$n=0;
 	//	$show['xxx']=json_encode( $apiRes['email']);
@@ -60,7 +60,7 @@ if($userlogin['type']!='agent'){
 		}
 		 
 	}else{}
-}
+//}
 
 ?><h3>Detail</h3>
 <table border=1 width=400 class='table'>
