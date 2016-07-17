@@ -538,10 +538,15 @@ email double diperbolehkan
 		$data=$this->db->get($this->tableAPI)->result_array();
 		$res['sql'][]=$this->db->last_query();
 		if(is_array($data)){
-		foreach($data as $row){
-			$res['username'][]=$row;
+			foreach($data as $row){
+				$res['username'][]=$row;
+			}
+			logCreate('apiAccount |username:'.$accid.' |data(1):'.json_encode($data));
 		}
-		}else{ $res['username'] =$data; }
+		else{ 
+			$res['username'] =$data;
+			logCreate('apiAccount |username:'.$accid.' |data(2):'.json_encode($data));
+		}
 
 		$this->db->reset_query();
 
@@ -554,9 +559,11 @@ email double diperbolehkan
 			foreach($data as $row){
 				$res['email'][]=$row;
 			}
+			logCreate('apiAccount |email:'.$email.' |data(1):'.json_encode($data));
 		}
 		else{ 
 			$res['email'] =$data;
+			logCreate('apiAccount |email:'.$email.' |data(2):'.json_encode($data));
 		}
 		$this->db->reset_query();
 		
