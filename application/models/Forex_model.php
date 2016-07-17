@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-if( function_exists('logFile')){ logFile('model','forex_model.php','model'); };
+if (   function_exists('logFile')){ logFile('model','forex_model.php','model'); };
 class Forex_model extends CI_Model {
 /***
 Daftar Fungsi Yang Tersedia :
@@ -545,16 +545,19 @@ email double diperbolehkan
 
 		$this->db->reset_query();
 
-		$email=$acc['email'];
+		$email=trim($acc['email'])."%";
 		$this->db->or_like('url',$email);
 		$this->db->order_by('created','desc');
 		$data=$this->db->get($this->tableAPI)->result_array();
 		$res['sql'][]=$this->db->last_query();
 		if(is_array($data)){
-		foreach($data as $row){
-			$res['email'][]=$row;
+			foreach($data as $row){
+				$res['email'][]=$row;
+			}
 		}
-		}else{ $res['email'] =$data; }
+		else{ 
+			$res['email'] =$data;
+		}
 		$this->db->reset_query();
 		
 		return $res;
