@@ -30,7 +30,8 @@ foreach($register as $row){
 	$email=trim($dt0['email']);
 	
 	$account= $this->forex->accountDetail($email,'email');
-	if(trim($email)==''){ //$account!==false||
+	
+	if($account!==false||trim($email)==''){ //
 		logCreate("register delete ($email) (empty):".print_r($account,1));
 		$this->forex->regisDelete($dt0['email']);//die('--<pre>'.print_r($dt0,1).print_r($account,1));		
 		continue;
@@ -40,7 +41,7 @@ foreach($register as $row){
 		logCreate("register email:($email)");
 		if($email===NULL) logCreate("register email:(NULL)");
 	}
-	
+//	die('email??:'.$email.print_r($account,1) );
 	$arr=array( 'raw'=>$dt0);
 	$dt=$dt0['detail'];
 //=================send
