@@ -51,6 +51,18 @@ $(document).ready(function(e) {
 			th.addClass('glyphicon-chevron-down');
 		}
 	});
+try{
+	$('#history-table').dataTable( {
+		"ajax": urlAPI
+	} );
+	console.log('history');
+}
+catch(err){
+	console.log(err);
+	console.log('not history');
+}
+ 
+
 });
 //==============OLD===
 
