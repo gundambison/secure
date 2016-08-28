@@ -57,6 +57,23 @@ public $emailAdmin='admin@dev.salmaforex.com';
 		
 	}
 //=================FLOW LOG
+	function flowMember($id,$sort='created',$sortType='DESC', $limit=50,$start=0){
+		$where="`param` like '%\"id\":\"{$id}\"%'";
+		$sql="select count(id) c from `{$this->tableFlowlog}` where $where";
+		$sql.=" order by `{$sort}` {$sortType} limit {$start}, {$limit}";
+		$dt=dbFetchOne($sql);
+		if($dt['c']==0) return false;
+		$data['count']=$dt['c'];
+		$sql="select types, param, created, status from `{$this->tableFlowlog}` where $where";
+		$dt=dbFetch($sql);
+		foreach($dt as $nm=>$var){
+			$param=json_decode($var['param'],true);
+			$dt[$nm]['param']=$param;
+			$dt[$nm]['user']=isset($dt[$nm]['param']['userlogin'])?$dt[$nm]['param']['userlogin']:false;
+		}
+		$data['data']=$dt;
+		return $data;
+	}
 	function flowInsert($type='',$data=array() ){
 		if(!$this->db->table_exists($this->tableFlowlog)){
 				$fields = array(

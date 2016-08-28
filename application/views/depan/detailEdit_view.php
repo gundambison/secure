@@ -22,8 +22,8 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 	$detail1=$detail['detail'];
 	callback_submit();
 	$allow=false;
-	if(isset($detail1['firstname'])&&$detail1['firstname']!=''){
-		$allow=1;
+	if(isset($detail1['firstname'])&&trim($detail1['firstname'])!=''){
+	//	$allow=1;
 	}
 ?>
 			<table class='table-striped table' border="0">

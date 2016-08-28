@@ -23,9 +23,10 @@
 	<!--TRANSAKSI-->
 	<div class="submenu">
 		<ul>
-			<li><a href="<?=base_url('member/revenue');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Revenue</a></li>
+			<!--li><a href="<?=base_url('member/revenue');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Revenue</a></li-->
 			<li><a href="<?=base_url('deposit-form');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Deposit</a></li>
 			<li><a href="<?=base_url('withdraw-form');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Withdrawal</a></li>
+			<li><a href="<?=base_url('history');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">History</a></li>
 		</ul>
 	</div>
 
@@ -39,5 +40,5 @@
 		</ul>
 	</div>
 	
-	<a class="menuitem" href="<?=base_url('member/logout');?>" ><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+	<!--a class="menuitem" href="<?=base_url('member/logout');?>" ><span class="glyphicon glyphicon-log-out"></span> Logout</a-->
 </div>

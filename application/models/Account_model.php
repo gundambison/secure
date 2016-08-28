@@ -384,7 +384,6 @@ Daftar Fungsi Yang Tersedia :
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql); 
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
-			
 			logCreate("account detail id:$id|field:$field|update username |".json_encode($res),"info");
 			$sql="select count(id) c from `{$this->tableAccount}` where `username` = '{$res['accountid']}'";
 			$res0=dbFetchOne($sql,1);
@@ -450,6 +449,7 @@ Daftar Fungsi Yang Tersedia :
 		$data['balance']=$this->account->balance($res['username'],$time);
 		$data['balanceDate']=$time;
 		return $data;
+
 	}
 	
 	private function balance($username,&$time){

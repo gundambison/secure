@@ -70,6 +70,7 @@ $route['forgot_password'] = 'member/forgot';
 $route['deposit-form'] = 'member/deposit';
 $route['widtdrawal-form'] = 'member/widtdrawal';
 $route['withdraw-form'] = 'member/withdrawal';
+$route['history'] = 'member/history';
 $route['rupiah_deposit'] = 'forex/deposit_value';
 $route['rupiah_widtdrawal'] = 'forex/widtdrawal_value';
 $route['recover/(:any)'] = "member/recover/$1";

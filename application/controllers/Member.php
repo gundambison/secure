@@ -55,7 +55,6 @@ Daftar Fungsi Yang Tersedia :
 			}
 			$user=$this->param['detail'];
 			$filename=url_title($user['email']).".".date("ymd").".tmp";
-			//echo '<pre>';print_r($this->param['detail']);
 			@copy($files['tmp_name'],$this->folderUpload.$filename);
 			$url=  $this->folderUpload.$filename  ;
 			$this->account->updateDocument($user['username'], $url,$files['type']);
@@ -221,7 +220,20 @@ Daftar Fungsi Yang Tersedia :
 		$this->showView(); 
 	}
 
-//==================	
+//==================
+	public function history($status='none'){	
+		$this->checkLogin();
+		$this->param['content']=array();
+		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['content'][]='history' ;
+		$this->param['content'][]='modal' ;
+		$this->param['footerJS'][]='js/login.js';
+		$this->param['footerJS'][]='js/jquery.dataTables.min.js';
+		$this->param['footerJS'][]='js/api.js';
+		$this->param['fileCss']['dataTable']='css/jquery.dataTables.min.css';
+		$this->showView();  
+	}
+
 	public function deposit($status='none'){	
 		$this->checkLogin();
 		$this->param['content']=array();
@@ -431,7 +443,7 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['footerJS'][]='js/jquery.dataTables.min.js';
 		$this->param['footerJS'][]='js/tarif.js';
 		$this->param['fileCss']['dataTable']='css/jquery.dataTables.min.css';
-		$this->showView(); 
+		$this->showView();
 	}
 
 	private function checkLogin(){
@@ -556,8 +568,6 @@ Daftar Fungsi Yang Tersedia :
 			'js/scripts.js'
 		);
 		$this->param['description']="Trade now with the best and most transparent forex STP broker";
-		
-		$this->param['emailAdmin']=$this->forex->emailAdmin;
 		
 		$this->param['emailAdmin']=$this->forex->emailAdmin;
 		

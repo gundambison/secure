@@ -83,10 +83,11 @@ $respon['data']=$data;
 $respon['-']=$post0;  
 $respon[]=$userlogin;
 $warning = ob_get_contents();
+	ob_end_clean();
+	if($warning!=''){
+		$respon['warning']=$warning;     
+	}
 ob_end_clean();
-if($warning!=''){
-	$respon['warning']=$warning;     
-}
 
 if(isset($respon)){ 
 	echo json_encode($respon);
@@ -94,3 +95,4 @@ if(isset($respon)){
 else{
 	echo json_encode(array());
 }
+
