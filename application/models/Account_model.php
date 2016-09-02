@@ -454,9 +454,11 @@ Daftar Fungsi Yang Tersedia :
 	
 	private function balance($username,&$time){
 //======Remove Expire
+/*
 		if(!isset($this->session)){
 			return 0;
 		}
+*/	
 		$session=$this->session-> all_userdata();
 		$now = date("Y-m-d H:i:s");
 		$now_12 = date("Y-m-d H:i:s", strtotime("+3 hours"));

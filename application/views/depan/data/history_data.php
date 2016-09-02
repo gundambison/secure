@@ -2,7 +2,7 @@
 if (   function_exists('logFile')){ logFile('view/member/data','widtdrawal_data.php','data'); };
 ob_start();
 
-$user_id= $userlogin['id']
+$user_id= $userlogin['id'];
 $raw=$this->forex->flowMember($user_id);
 echo 'start:'.$user_id;
 $response=array('c'=>$raw['count']);
