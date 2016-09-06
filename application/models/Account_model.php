@@ -394,7 +394,7 @@ Daftar Fungsi Yang Tersedia :
 				dbQuery($sql);
 				$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);
-				logCreate("update rename:DONE");
+				logCreate("acc_model detail update:rename [DONE]");
 			}
 			else{
 				logCreate("fail rename:".json_encode($res));

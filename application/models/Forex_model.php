@@ -183,7 +183,7 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("register id:$id |detail:".print_r($detail,1));
 		if(!isset($detail['detail']['statusMember']))
 			$detail['detail']['statusMember']='MEMBER';
-		logCreate("register id:$id |raw:".print_r($raw,1));		
+			logCreate("register id:$id |raw:".print_r($raw,1));		
 		
 		$dt=array(
 			'reg_id'=>$id,

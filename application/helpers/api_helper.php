@@ -14,15 +14,14 @@ if ( ! function_exists('_runApi')){
 		$logTxt="func:_runApi| url:{$url}"; 
 		$parameter['info']='no post';		
 	}
-	$parameter[]=array('server'=>$_SERVER);
+	//$parameter[]=array('server'=>$_SERVER);
 	$dtAPI['parameter']=json_encode($parameter);
 	logCreate( 'API: '.$logTxt); 
 		
 	if(count($parameter)){	 	
 		logCreate( 'API: '."url:{$url}| param:\n".print_r($parameter,1),'debug');
 	}else{ 
-		logCreate( 'API: param:
-'.print_r(parse_url($url),1),'debug');
+		logCreate( 'API: param:'.print_r(parse_url($url),1),'debug');
 	}
 		$curl = curl_init();
 		 
@@ -77,12 +76,14 @@ if ( ! function_exists('batchEmail')){
 	function batchEmail( $to='', $subject='', $message='', $headers=''){
 		$arr=array('to'=>trim($to), 'subject'=>$subject,'message'=>base64_encode($message),'headers'=>$headers);
 		$json=json_encode($arr);
-		echo '<br>'.$json;
+		//echo '<br>'.$json;
 		$id0=date("ymd").'000' ;
 		$id=dbId('mail',(int)$id0);
 		$target="media/email/".$id.".txt";
-		echo '<br>target:'.$target;
+		//echo '<br>target:'.$target;
 		file_put_contents($target, $json);
+		$sql="insert into mujur_email(subject,to,header) values('".addslashes($subject)."','".addslashes($to)."','".addslashes(json_encode($headers))."')";
+		dbQuery($sql);
 		//return true;
 	}
 	
