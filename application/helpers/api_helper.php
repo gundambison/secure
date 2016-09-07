@@ -82,7 +82,7 @@ if ( ! function_exists('batchEmail')){
 		$target="media/email/".$id.".txt";
 		//echo '<br>target:'.$target;
 		file_put_contents($target, $json);
-		$sql="insert into mujur_email(subject,to,header) values('".addslashes($subject)."','".addslashes($to)."','".addslashes(json_encode($headers))."')";
+		$sql="insert into mujur_email(`subject`,`to`,`header`) values('".addslashes($subject)."','".addslashes($to)."','".addslashes(json_encode($headers))."')";
 		dbQuery($sql);
 		//return true;
 	}
