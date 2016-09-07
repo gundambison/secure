@@ -388,6 +388,7 @@ Daftar Fungsi Yang Tersedia :
 			$sql="select count(id) c from `{$this->tableAccount}` where `username` = '{$res['accountid']}'";
 			$res0=dbFetchOne($sql,1);
 			$okay2Rename=$res0['c']==0?true:false;
+			/*
 			if($okay2Rename){
 				logCreate("update rename:".json_encode($res));
 				$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
@@ -401,6 +402,7 @@ Daftar Fungsi Yang Tersedia :
 				$sql="UPDATE {$this->tableAccount} SET `accountid` = '{$res['username']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);
 			}
+			*/
 			$sql="select a.* from `{$this->tableAccount}` a  		
 			where `{$field}` like '$id'";
 			$res=dbFetchOne($sql); 
