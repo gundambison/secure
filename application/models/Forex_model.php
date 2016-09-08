@@ -184,10 +184,11 @@ SEMUA dipindah ke model ACCOUNT
 		if(!isset($detail['detail']['statusMember']))
 			$detail['detail']['statusMember']='MEMBER';
 			logCreate("register id:$id |raw:".print_r($raw,1));		
-		
+		$full_name=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'';
+		$full_name.=" ". (isset($detail['detail']['lastname'])?$detail['detail']['lastname']:'');
 		$dt=array(
 			'reg_id'=>$id,
-			'username'=>$detail['username'],
+			'username'=> $full_name,
 			'investorpassword'=>md5( trim($raw['investorpassword']) ),
 			'masterpassword'=>md5( trim($raw['masterpassword']) ),
 			'accountid'=>$raw['accountid'],
