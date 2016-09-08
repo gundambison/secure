@@ -56,13 +56,14 @@ left join mujur_accountdocument d on d.email like a.email
 left join mujur_accountdetail ad 
 	on a.username=ad.username
 */	
-logCreate('sql :'.$sql);
+//logCreate('sql :'.$sql);
 $respon['sql'][]=$sql;
 $dt=$this->db->query($sql)->result_array();
 foreach($dt as $row){
 	$row['raw']=$detail=$this->account->detail($row['id']);
 	$row['firstname']=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'-';
-	
+	$full_name=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'';
+	$full_name.=" ". (isset($detail['detail']['lastname'])?$detail['detail']['lastname']:'');
 	logCreate('search :'.$row['id']);
 	
 	unset($detail['raw']);
@@ -72,6 +73,9 @@ foreach($dt as $row){
 	if($row['status_document']==2)$row['status']='Review';
 	
 	$row['action']='';
+	$row['full_name']=$full_name;
+//accountid
+	$row['username']=$row['accountid']!=0?$row['accountid']:$row['username'];
 	$data[]=$row;
 }
 
@@ -85,6 +89,7 @@ if($warning!=''){
 
 if(isset($respon)){ 
 	echo json_encode($respon);
-}else{
+}
+else{
 	echo json_encode(array());
 }
