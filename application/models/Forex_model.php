@@ -214,12 +214,32 @@ SEMUA dipindah ke model ACCOUNT
 			logCreate("register not continue account exist:".json_encode($rawAccount));
 			return false;
 		}
+	//==============EMAIL START=======	
+		$invPass=trim($raw['investorpassword']);//$data[0]['password'];
+		$masterPass=trim($raw['masterpassword']);//$data[1]['password'];
+		
+		$param2=array( 
+			'username'=>$raw['accountid'],
+			'email'=>$detail['email'],
+			'masterpassword'=>$masterPass,
+			'investorpassword'=>$invPass
+			
+		);
 
+		$param2['emailAdmin']=$this->emailAdmin;
+		$param2['accountType']=$detail['detail']['statusMember'];	
+
+		logCreate( 'create account ');
 		$sql=$this->db->insert_string($this->tableAccount,$dt);
-		dbQuery($sql,1);
-		logCreate("register accid:".$raw['accountid']);
+		dbQuery($sql);
+		logCreate( 'KIRIM EMAIL(1):'.$detail['email']);
+		$this->load->view('depan/email/emailRegister_view',$param2);
+		logCreate( 'KIRIM EMAIL(2):'.$detail['email'].'(DONE)');
+	//==============EMAIL END=======	
+		
+		logCreate("register accid(1):".$raw['accountid']);
 		$dataRaw = $this->account->detail($raw['accountid'],'accountid');
-		logCreate("register accid:".$acc_id);
+		logCreate("register accid(2):".$acc_id);
 		$dataRaw = $this->account->detail($acc_id);
 		
 //===========Account Detail  
@@ -312,7 +332,7 @@ SEMUA dipindah ke model ACCOUNT
 		
 		$sql = $this->db->update_string($this->tableAccount, $data, $where);
 		dbQuery($sql,1);
-		
+		/*
 		$param2=array( 
 			'username'=>$raw['accountid'],
 			'masterpassword'=>$param['masterpassword'],
@@ -323,7 +343,7 @@ SEMUA dipindah ke model ACCOUNT
 		$param2['accountType']=$detail['detail']['statusMember'];	
 		echo '<div>KIRIM EMAIL</div>';
 		$this->load->view('depan/email/emailRegister_view',$param2);
-		
+		*/
 	}
 
 	function accountDetail($id,$field='id'){
