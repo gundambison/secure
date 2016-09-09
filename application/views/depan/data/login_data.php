@@ -4,6 +4,9 @@ if ( ! function_exists('logFile')){ logFile('view/member/data','login_data.php',
 ob_start();
 	$responce=array('post'=>$post);
 	$responce['detail']=$detail=$this->forex->accountDetail($post['username'],'username');
+	if($detail==false){
+		$responce['detail']=$detail=$this->forex->accountDetail($post['username'],'accountid');
+	}
 	if($detail!==false){
 		if($detail['masterpassword']==''){
 			$responce['code']=9;
@@ -103,6 +106,7 @@ $responce['-']=$_SERVER;
 logCreate($responce);
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result']);
-}else{
+}
+else{
 	echo json_encode(array());
 }
