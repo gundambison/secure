@@ -137,7 +137,7 @@ Daftar Fungsi Yang Tersedia :
  
 //-----------EMAIL
 			$param2=array( 
-				'username'=>	this->param['detail']['accountid'],//$this->param['detail']['username'],
+				'username'=>	$this->param['detail']['accountid'],//$this->param['detail']['username'],
 				'masterpassword'=>		$data['trading'],
 				'investorpassword'=>	$data['investor'],
 				'email'=>		$this->param['detail']['email']
