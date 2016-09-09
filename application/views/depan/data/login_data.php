@@ -42,7 +42,7 @@ ob_start();
 			dbQuery($sql,1); 
 			
 			$param2=array( 
-				'username'=>$detail['username'],
+				'username'=>$detail['accountid'],
 				'masterpassword'=>$param['masterpassword'],
 				'investorpassword'=>$param['investorpassword'],
 				'email'=>$detail['email']
@@ -106,7 +106,6 @@ $responce['-']=$_SERVER;
 logCreate($responce);
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result']);
-}
-else{
+}else{
 	echo json_encode(array());
 }
