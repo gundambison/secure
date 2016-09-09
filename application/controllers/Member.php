@@ -55,7 +55,8 @@ Daftar Fungsi Yang Tersedia :
 			}
 			$user=$this->param['detail'];
 			$filename=url_title($user['email']).".".date("ymd").".tmp";
-			@copy($files['tmp_name'],$this->folderUpload.$filename);
+			//echo '<pre>';print_r($this->param['detail']);
+			copy($files['tmp_name'],$this->folderUpload.$filename);
 			$url=  $this->folderUpload.$filename  ;
 			$this->account->updateDocument($user['username'], $url,$files['type']);
 			//exit('file:'.$url);
@@ -136,7 +137,7 @@ Daftar Fungsi Yang Tersedia :
  
 //-----------EMAIL
 			$param2=array( 
-				'username'=>	$this->param['detail']['username'],
+				'username'=>	this->param['detail']['accountid'],//$this->param['detail']['username'],
 				'masterpassword'=>		$data['trading'],
 				'investorpassword'=>	$data['investor'],
 				'email'=>		$this->param['detail']['email']
