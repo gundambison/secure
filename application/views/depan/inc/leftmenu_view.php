@@ -3,7 +3,7 @@
                 	<h3 class="box-title"><strong>SalmaForex Ballance</strong></h3>
                     <div class="row large">
                     	<div class="col-xs-5"><strong>Account :</strong></div>
-                        <div class="col-xs-7 text-right"><?=isset($userlogin['username'])?$userlogin['username']:'';?></div>
+                        <div class="col-xs-7 text-right"><?=isset($userlogin['accountid'])?$userlogin['accountid']:'';?></div>
                     </div>
                     <div class="row large">
                     	<div class="col-xs-5"><strong>Name :</strong></div>

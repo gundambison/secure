@@ -23,7 +23,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 	callback_submit();
 	$allow=false;
 	if(isset($detail1['firstname'])&&trim($detail1['firstname'])!=''){
-	//	$allow=1;
+		$allow=1;
 	}
 ?>
 			<table class='table-striped table' border="0">
@@ -40,8 +40,8 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 				 
 				<?=bsInput( lang('forex_city'),'city',$detail1['city'], lang('forex_inputsuggestion2')  );?>
 				<?=bsInput( lang('forex_zipcode'),'zipcode', $detail1['zipcode'], lang('forex_inputsuggestion') );?>
-				<?=bsInput( lang('forex_country'),'citizen', isset($detail1['citizen'])?$detail1['citizen']:'Indonesia', lang('forex_inputsuggestion'),1  );?>
-				<?=bsButton('Update');?>
+			<?=bsInput( lang('forex_country'),'citizen', isset($detail1['citizen'])?$detail1['citizen']:'Indonesia', lang('forex_inputsuggestion'),1  );?>
+			<?=bsButton('Update');?>
 			</table>
 			<input type='hidden' name='rand' value='<?=dbId('id',22222,3);?>' />
 			</form> 
