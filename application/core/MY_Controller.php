@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$session=$this->param['session'];
 		$detail=$this->account->detail($session['username'],'username');
 		if($detail==false){
-			$detail=$this->account->detail($session['username'],'username');
+			$detail=$this->account->detail($session['username'],'accountid');
 			if($detail==false){
 			logCreate('no username','error');
 			redirect(site_url("login")."?err=no_user" );
