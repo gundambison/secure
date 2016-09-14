@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	function __CONSTRUCT(){
 		parent::__construct(); 
 		$this->load->library('session');
+		
 	}
 //---------Tidak diketahui kegunaannya?	
 	public function runApi(){
@@ -19,6 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$url=$this->config->item('api_url');
 		$this->load->helper('api');
 		$session=$this->param['session'];
+		$this->param['session']=$this->session-> all_userdata();
 		$detail=$this->account->detail($session['username'],'username');
 		if($detail==false){
 			logCreate('no username','error');
