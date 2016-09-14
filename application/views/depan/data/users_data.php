@@ -32,6 +32,7 @@ $search=isset($post0['search']['value'])?$post0['search']['value']:'';
 
 if($search!=''&&strlen($search)>3){
 	$where="a.username like '{$search}%'";
+	$where.="or a.accountid like '{$search}%'";
 	$where.=" or a.email like '{$search}%'";
 	//$where.=" or ad.detail like '%{$search}%'";
 	$sql="select count(a.id) c from mujur_account a 
@@ -75,7 +76,7 @@ foreach($dt as $row){
 	$row['action']='';
 	$row['full_name']=$full_name;
 //accountid
-	$row['username']=$row['accountid']!=0?$row['accountid']:$row['username'];
+	$row['username']=$row['accountid']!=0?$row['accountid'].".":$row['username'];
 	$data[]=$row;
 }
 

@@ -12,7 +12,9 @@ $session=$this->param['session'];
 $aOrder=array(
 'created','username0','username','email'
 );
-$sql="select count(id) c from `mujur_account` where agent like '{$userlogin['username']}'";
+$sql="select count(id) c from `mujur_account` where
+agent like '{$userlogin['username']}' or
+agent like '{$userlogin['accountid']}'";
 $dt=$this->db->query($sql)->row_array();
 $respon['recordsTotal']=$dt['c'];
 $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
