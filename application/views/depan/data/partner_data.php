@@ -4,18 +4,16 @@ ob_start();
 //api_data
 $respon=array( 'draw'=>isset($_POST['draw'])?$_POST['draw']:1);
 $session=$this->param['session'];
+
 $detail=$userlogin=$this->account->detail($session['username'],'username');
-if($detail==false){
+if($detail!==false){
+	$respon['userlogin']=$detail;
+}
+else{
 	$detail=$userlogin=$this->account->detail($session['username'],'accountid');
 	if($detail!==false){
 		$respon['userlogin']=$detail;
 	}
-	else{
-		$respon['userlogin']=array();
-	}
-}
-else{
-		$respon['userlogin']=array();
 }
 
 $respon['time']=array( 'start'=>date('Ymd H:i:s'));
@@ -127,7 +125,7 @@ $warning = ob_get_contents();
 	}
 ob_end_clean();
 
-unset($respon['warning'],$respon['-'],$respon['userlogin'],$respon['sql'],$respon['session']);
+unset($respon['warning'],$respon['-'],$respon['userlogin'],$respon['sql']);
 $respon['time']['stop']=date("Ymd H:i:s");
 
 if(isset($respon)){
