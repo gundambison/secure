@@ -99,10 +99,10 @@ foreach($dt as $row){
 	$row['raw']=$detail=$this->account->detail($row['id']);
 	$respon['time']['detail_'.$row['id']]=date("Ymd H:i:s");
 	$row['firstname']=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'-';
-	
+	$detail['username']=isset($detail['accountid'])&&$detail['accountid']!=''?$detail['accountid'].".":$detail['username'];
 	logCreate('search :'.$row['id']);
 	
-	unset($detail['raw']);
+	unset($detail['raw'],$row['raw']);
 	foreach($detail as $nm=>$val){
 		$row[$nm]=$val;
 	}
