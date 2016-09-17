@@ -25,9 +25,9 @@ foreach($dt as $row){
 	if(!isset($row['raw']->username)){
 		$row['raw']->username='-';
 		$row['status']=-1;
-	}	
-	$row['action']=$row['status']==0?'<input 
-	type="button" onclick="widtdrawalApprove('.
+	}
+	if($row['raw']->userlogin->accountid!='')$row['raw']->username=$row['raw']->userlogin->accountid.".";
+	$row['action']=$row['status']==0?'<input type="button" onclick="widtdrawalApprove('.
 	  $row['id'].');" value="approved" />
 	  <input 
 	type="button" onclick="widtdrawalCancel('.
