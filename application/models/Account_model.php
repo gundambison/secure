@@ -460,27 +460,38 @@ Daftar Fungsi Yang Tersedia :
 		if(!isset($this->session)){
 			return 0;
 		}
-*/	
+*/
+		$detail=$userlogin=$this-> detail($username,'username');
+		if($detail!==false){
+		//OK
+		}
+		else{
+			$detail=$userlogin=$this-> detail($username,'accountid');
+			if($detail!==false){
+				//OK
+			}
+		}
+		$accountid=$detail['accountid'];
 		$session=$this->session-> all_userdata();
 		$now = date("Y-m-d H:i:s");
 		$now_12 = date("Y-m-d H:i:s", strtotime("+3 hours"));
 		$sql="delete from {$this->tableAccountBalance} where expired < '$now'";
 		dbQuery($sql);
 		$time=date("Y-m-d H:i:s");
-		$sql="select username, balance,modified from {$this->tableAccountBalance} where username like '$username'";
+		$sql="select username, balance,modified from {$this->tableAccountBalance} where username like '$accountid'";
 		$row=dbFetchOne($sql);
 		
 		if(isset($row['balance'])){
 			$time=$row['modified'];
 			return $row['balance'];
 		}
-
+/*
 		if($session['username']!=$username){
 		//	logCreate('username different:'.$username);
 			return 0;
 		}
-
-		$param['accountid']		=	$username;
+*/
+		$param['accountid']		=	$accountid;
 		$param['volume']		=	"-0";  			 
 		$param['privatekey']	=	$this->forex->forexKey();
 		$param['description']	= 	'check balance '.date("H:i:s");
@@ -493,7 +504,7 @@ Daftar Fungsi Yang Tersedia :
 		if(isset($tmp['balance'])){
 			logCreate('url:'.$url.'| respon:'.json_encode($tmp));
 			$data = array(
-				'username' => $username,
+				'username' => $accountid,
 				'detail'  => json_encode($tmp),
 				'balance'  =>  $tmp['balance'],
 				'expired'	=> $now_12
