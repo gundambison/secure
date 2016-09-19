@@ -388,7 +388,7 @@ Daftar Fungsi Yang Tersedia :
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
 		$sql="select count(id) c 
-		from `{$this->tableAccount}`  
+		from `{$this->tableAccount}`
 		where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
@@ -475,7 +475,7 @@ Daftar Fungsi Yang Tersedia :
 		//logCreate("cek balance:");
 		$time=date('Y-m-d H:i:s');
 		logCreate("account balance |start","info");
-		$data['balance']=$this->account->balance($res['username'],$time);
+		$data['balance']=$this->account->balance($res['accountid'],$time);
 		$data['balanceDate']=$time;
 		logCreate("account balace |start","info");
 		return $data;
@@ -489,22 +489,23 @@ Daftar Fungsi Yang Tersedia :
 			return 0;
 		}
 */
-		$detail=$userlogin=$this->exist($username,'username');
+		$detail=$userlogin=$this->exist($username,'accountid');
 		if($detail!==false){
 		//OK
-			logCreate("account->balance |found username","info");
+			logCreate("account->balance |found accountid","info");
 		}
 		else{
-			$detail=$userlogin=$this->exist($username,'accountid');
+			$detail=$userlogin=$this->exist($username,'username');
 			if($detail!==false){
 				//OK
-				logCreate("account->balance |found accountid","info");
+				logCreate("account->balance |found username","info");
 			}
 			else{
 				logCreate("account->balance |not found","info");
 				return 0;
 			}
 		}
+
 		$accountid=$detail['accountid'];
 		$session=$this->session-> all_userdata();
 		$now = date("Y-m-d H:i:s");

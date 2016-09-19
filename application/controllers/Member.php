@@ -388,7 +388,9 @@ Daftar Fungsi Yang Tersedia :
 	}	
 	
 	public function index(){
+		logCreate('cek login');
 		$this->checkLogin();
+		logCreate('cek login OK');
 		$this->param['title']='OPEN LIVE ACCOUNT'; 
 		$this->param['content']=array( 'welcome');
 		
@@ -449,20 +451,24 @@ Daftar Fungsi Yang Tersedia :
 
 	private function checkLogin(){
 		$session=$this->param['session'];
+		logCreate('controller:member |checkLogin |username:'.$session['username'] );
 		$detail=$this->account->detail($session['username'],'username');
+		logCreate('username found:'.count($detail) );
 		if($detail==false){
+			logCreate('session accountid:'.$session['username']);
 			$detail=$this->account->detail($session['username'],'accountid');
 		}
 		
 		if($detail==false){
-			logCreate('no username','error');
+			logCreate('no username/accid:'.$session['username'],'error');
 			redirect("login");
 		}
 		else{}
+		logCreate('username:'.$session['username'],'error');
 		$post=array();
 		if(isset($session['expire'])){
 			if($session['expire']<strtotime("now")){
-//				logCreate('User Expired '.$session['expire']." vs ". strtotime("now") );
+				logCreate('User Expired '.$session['expire']." vs ". strtotime("now") );
 				$post['message']='Please Login Again';
 				$this->session->set_flashdata('login', $post);
 				$array=array( 
@@ -471,6 +477,7 @@ Daftar Fungsi Yang Tersedia :
 					'expire'=>strtotime("+12 minutes")
 				);
 				$this->session->set_userdata($array);
+				
 				redirect("login/member");
 			}
 			else{
@@ -479,7 +486,7 @@ Daftar Fungsi Yang Tersedia :
 			}
 		}
 		else{
-//			logCreate('User don\'t have Expired' );
+			logCreate('User don\'t have Expired' );
 			$post['message']='Your Login Has expired?';
 			$this->session->set_flashdata('login', $post);
 			$array=array(  
@@ -489,7 +496,9 @@ Daftar Fungsi Yang Tersedia :
 			redirect(base_url("member"));
 			$session['expire']=strtotime("+10 minutes");
 		}
-		if($session['password']==$detail['masterpassword']){			
+		
+		if($session['password']==$detail['masterpassword']){
+			logCreate('password OK:'.$session['username'],'error');
 			$array=array( 
 				'username'=>$session['username'],
 				'password'=>($session['password']),
@@ -506,6 +515,7 @@ Daftar Fungsi Yang Tersedia :
 			$this->session->set_flashdata('login', $post);
 			redirect("login");			
 		}
+		
 	}
 	
 	function send_email($status='',$id=''){
@@ -580,6 +590,8 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['baseFolder']='depan/';
 		$this->param['noBG']=true;
 		$this->folderUpload = 'media/uploads/';
+		logCreate('start controller member'); 
+		
 		/*
 		if($this->input->post())
 			logCreate($this->input->post(),'post');
