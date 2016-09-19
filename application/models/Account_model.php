@@ -318,9 +318,9 @@ Daftar Fungsi Yang Tersedia :
 	function updateDocumentStatus($username,$status=false){
 		$data=$this->detail($username,'username');
 		$email=trim($data['email']);
-		$sql="select count(id) c from {$this->tableAccountDocument} where email like '$email'";
+		$sql="select count(id) cUpdateDoc from {$this->tableAccountDocument} where email like '$email'";
 		$res=dbFetchOne($sql);
-		if($res['c']==0){
+		if($res['cUpdateDoc']==0){
 			$ar=array('email'=>$email);
 			$this->db->insert($this->tableAccountDocument, $ar);
 		}else{}
@@ -333,24 +333,25 @@ Daftar Fungsi Yang Tersedia :
 	function document($id,$field='id'){
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
-		$sql="select count(id) c 
-		from `{$this->tableAccount}`  
-		where `{$field}` like '{$id}';"; 
+		$sql="select count(id) cDoc from `{$this->tableAccount}` where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
-		if($res['c']==0){
-			logCreate("account detail id:$id|field:$field|NOT FOUND","error");
+		if($res['cDoc']==0){
+			logCreate("account document id:$id|field:$field|NOT FOUND","error");
 			return false; 
 		}
+		logCreate("account document id:$id |field:$field |FOUND:".$res['cDoc']);
 		
 		$sql="select a.* from `{$this->tableAccount}` a
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql);
 		$email=$res['email'];
+		
 		$sql="select id,email,upload,filetype type,status 
 		from {$this->tableAccountDocument} 
 		where email like '$email'";
 		$resDoc= dbFetchOne($sql);
 		$resDoc['account']=$res;
+		logCreate("account document id:$id |field:$field |FOUND:".$res['upload']);
 		return $resDoc;
 	}
 
@@ -367,12 +368,27 @@ Daftar Fungsi Yang Tersedia :
 		
 	}
 	
+	function exist($id,$field='id'){
+	logCreate("account exist id:$id|field:$field");	
+		$id=addslashes(trim($id));
+		if($field=='email')$id.="%";
+		$sql="select count(id) c 
+		from `{$this->tableAccount}`  
+		where `{$field}` like '{$id}';"; 
+		$res=dbFetchOne($sql);
+		if($res['c']==0){
+			logCreate("account exist id:$id|field:$field|NOT FOUND","error");
+			return false; 
+		}
+		return true;
+	}
+	
 	function detail($id,$field='id'){
 	logCreate("account detail id:$id|field:$field");	
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
 		$sql="select count(id) c 
-		from `{$this->tableAccount}`  
+		from `{$this->tableAccount}`
 		where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
@@ -382,26 +398,29 @@ Daftar Fungsi Yang Tersedia :
 		
 		$sql="select a.* from `{$this->tableAccount}` a  		
 		where `{$field}` like '$id'";
-		$res=dbFetchOne($sql); 
+		$res=dbFetchOne($sql);
+		logCreate("account detail FOUND","lokal");
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
-			
 			logCreate("account detail id:$id|field:$field|update username |".json_encode($res),"info");
 			$sql="select count(id) c from `{$this->tableAccount}` where `username` = '{$res['accountid']}'";
-			$res0=dbFetchOne($sql,1);
-			$okay2Rename=$res0['c']==0?true:false;
+			//$res0=dbFetchOne($sql,1);
+			//$okay2Rename=$res0['c']==0?true:false;
+			logCreate("account detail FOUND","lokal");
+			/*
 			if($okay2Rename){
 				logCreate("update rename:".json_encode($res));
 				$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
 				dbQuery($sql);
 				$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);
-				logCreate("update rename:DONE");
+				logCreate("acc_model detail update:rename [DONE]");
 			}
 			else{
 				logCreate("fail rename:".json_encode($res));
 				$sql="UPDATE {$this->tableAccount} SET `accountid` = '{$res['username']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);
 			}
+			*/
 			$sql="select a.* from `{$this->tableAccount}` a  		
 			where `{$field}` like '$id'";
 			$res=dbFetchOne($sql); 
@@ -417,66 +436,99 @@ Daftar Fungsi Yang Tersedia :
 		where a.`{$field}` like '$id'";
 		$data= dbFetchOne($sql);
 		if($data['accounttype']!='MEMBER'){
-		//	logCreate("account detail id:$id|field:$field|agent","info");
+			logCreate("account detail |agent","info");
 			$agent=true;
 		}
-		else{ 
+		else{
+			logCreate("account detail |member","info");
 			$agent=false;
 		}
 		
 		if($data['type']==7){
+			logCreate("account detail |admin","info");
 			$data['type']='admin';
 		}
 		elseif(strtolower($data['accounttype'])=='agent'){
+			logCreate("account detail |agent","info");
 			$data['type']='agent';
 		}
 		else{
+			logCreate("account detail |other?","info");
 			$data['type']=false;
 		}
 		
 		if(isset($data['raw'])){
-		//	logCreate("account detail id:$id|field:$field|raw detail","info");
+			logCreate("account detail id:$id|field:$field|raw detail","info");
 			$data['detail']=json_decode($data['raw'],true); 
 			unset($data['raw']);
 		}
 //----document
+		logCreate("account document |start","info");
 		$data['document']=$this->document($id, $field);
-		$sql="select count(a.id) c from `{$this->tableAccount}` a  		
-		where `agent` like '$data[username]'";
+		logCreate("account document |end","info");
+//----
+/*
+		$sql="select count(a.id) cPatner from `{$this->tableAccount}` a where `agent` like '$data[username]'";
 		$res0=dbFetchOne($sql);
-		$data['patner']=$res0['c'];
+*/
+		$data['patner']=0;//$res0['c'];
 		//logCreate("cek balance:");
 		$time=date('Y-m-d H:i:s');
-		$data['balance']=$this->account->balance($res['username'],$time);
+		logCreate("account balance |start","info");
+		$data['balance']=$this->account->balance($res['accountid'],$time);
 		$data['balanceDate']=$time;
+		logCreate("account balace |start","info");
 		return $data;
+
 	}
 	
 	private function balance($username,&$time){
 //======Remove Expire
+/*
 		if(!isset($this->session)){
 			return 0;
 		}
+*/
+		$detail=$userlogin=$this->exist($username,'accountid');
+		if($detail!==false){
+		//OK
+			logCreate("account->balance |found accountid","info");
+		}
+		else{
+			$detail=$userlogin=$this->exist($username,'username');
+			if($detail!==false){
+				//OK
+				logCreate("account->balance |found username","info");
+			}
+			else{
+				logCreate("account->balance |not found","info");
+				return 0;
+			}
+		}
+
+		$accountid=$detail['accountid'];
 		$session=$this->session-> all_userdata();
 		$now = date("Y-m-d H:i:s");
 		$now_12 = date("Y-m-d H:i:s", strtotime("+3 hours"));
 		$sql="delete from {$this->tableAccountBalance} where expired < '$now'";
+		logCreate("account->balance |erase expired","info");
 		dbQuery($sql);
 		$time=date("Y-m-d H:i:s");
-		$sql="select username, balance,modified from {$this->tableAccountBalance} where username like '$username'";
+		$sql="select username, balance,modified from {$this->tableAccountBalance} where username like '$accountid'";
 		$row=dbFetchOne($sql);
 		
 		if(isset($row['balance'])){
 			$time=$row['modified'];
+			logCreate("account->balance |still cache","info");
 			return $row['balance'];
 		}
-
+/*
 		if($session['username']!=$username){
 		//	logCreate('username different:'.$username);
 			return 0;
 		}
-
-		$param['accountid']		=	$username;
+*/
+		$param['accountid']		=	$accountid;
 		$param['volume']		=	"-0";  			 
 		$param['privatekey']	=	$this->forex->forexKey();
 		$param['description']	= 	'check balance '.date("H:i:s");
@@ -489,7 +541,7 @@ Daftar Fungsi Yang Tersedia :
 		if(isset($tmp['balance'])){
 			logCreate('url:'.$url.'| respon:'.json_encode($tmp));
 			$data = array(
-				'username' => $username,
+				'username' => $accountid,
 				'detail'  => json_encode($tmp),
 				'balance'  =>  $tmp['balance'],
 				'expired'	=> $now_12
@@ -497,6 +549,7 @@ Daftar Fungsi Yang Tersedia :
 
 			$sql = $this->db->set($data)->get_compiled_insert($this->tableAccountBalance);
 			dbQuery($sql);
+			logCreate("account->balance |update","info");
 			return $tmp['balance'];
 		}
 		else{
@@ -508,8 +561,7 @@ Daftar Fungsi Yang Tersedia :
 
 	function detailRepair($data=array()){
 		$username=$data['username'];
-		$sql="select count(id) c  from `{$this->tableAccountDetail}` 
-		where `username`='$username'";
+		$sql="select count(id) c  from `{$this->tableAccountDetail}` where `username`='$username'";
 		$res=dbFetchOne($sql);
 		if($res['c']==1){
 			return true;

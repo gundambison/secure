@@ -404,7 +404,8 @@ class Forex extends CI_Controller {
 
 	function email_send(){
 		$target="media/email";
-		$max=7; //silakan dinaikkan
+		$max=7;
+//==========silakan dinaikkan
 		$n=0;
 		$not_valid=array(".","..");
 		if ($handle = opendir($target)){

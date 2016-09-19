@@ -4,6 +4,9 @@ if ( ! function_exists('logFile')){ logFile('view/member/data','login_data.php',
 ob_start();
 	$responce=array('post'=>$post);
 	$responce['detail']=$detail=$this->forex->accountDetail($post['username'],'username');
+	if($detail==false){
+		$responce['detail']=$detail=$this->forex->accountDetail($post['username'],'accountid');
+	}
 	if($detail!==false){
 		if($detail['masterpassword']==''){
 			$responce['code']=9;
@@ -39,7 +42,7 @@ ob_start();
 			dbQuery($sql,1); 
 			
 			$param2=array( 
-				'username'=>$detail['username'],
+				'username'=>$detail['accountid'],
 				'masterpassword'=>$param['masterpassword'],
 				'investorpassword'=>$param['investorpassword'],
 				'email'=>$detail['email']

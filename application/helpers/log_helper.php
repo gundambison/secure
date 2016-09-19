@@ -9,7 +9,7 @@ if ( ! function_exists('logConfig'))
   function logConfig($txt,$config0='',$type='debug'){
 	$CI =& get_instance();
 	$config = $CI->config->item($config0);
-	log_message('info','config:'.$config0 );
+	log_message('info','config:'.$config0." |mgs:".json_encode($txt) );
 	if($config){
 		$date=date("Ymd");
 		$filename= sprintf($config['name'],$date);
@@ -65,7 +65,7 @@ if ( ! function_exists('logCreate'))
 	}
 		
 	$date=date("Ymd");
-	$date.="-".ceil( date("H")/8 );
+	$date.="-".ceil( date("H")/2 );
 	$datetime=date("Y-m-d H:i:s");
 	if(is_array($txt))
 		$txt=json_encode($txt);

@@ -4,8 +4,10 @@ ob_start();
 //api_data
 $respon=array( 'draw'=>isset($_POST['draw'])?$_POST['draw']:1);
  
-$sql="select count(id) c from mujur_flowlog where 	types='widtdrawal'";
-$dt=$this->db->query($sql)->row_array();
+$sql="select count(id) c from mujur_flowlog where
+types='widtdrawal'";
+$dt=dbFetchOne($sql);
+//$this->db->query($sql)->row_array();
 $respon['recordsTotal']=$dt['c'];
 $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
 
@@ -15,7 +17,7 @@ $data=array();
    $order="order by created desc";
 $sql="select * from mujur_flowlog where 	
 types='widtdrawal' $order limit $start,$limit";
-$dt=$this->db->query($sql)->result_array();
+$dt=dbFetch($sql);//$this->db->query($sql)->result_array();
 foreach($dt as $row){
 	//$row['url']=substr($row['rawUrl'],0,30);
 	//$row['param']=substr($row['rawParam'],0,30);
@@ -23,9 +25,9 @@ foreach($dt as $row){
 	if(!isset($row['raw']->username)){
 		$row['raw']->username='-';
 		$row['status']=-1;
-	}	
-	$row['action']=$row['status']==0?'<input 
-	type="button" onclick="widtdrawalApprove('.
+	}
+	if($row['raw']->userlogin->accountid!='')$row['raw']->username=$row['raw']->userlogin->accountid.".";
+	$row['action']=$row['status']==0?'<input type="button" onclick="widtdrawalApprove('.
 	  $row['id'].');" value="approved" />
 	  <input 
 	type="button" onclick="widtdrawalCancel('.

@@ -20,6 +20,7 @@ foreach($dt as $row){
 	//$row['url']=substr($row['rawUrl'],0,30);
 	//$row['param']=substr($row['rawParam'],0,30);
 	$row['raw']=json_decode($row['param']);
+	if($row['raw']->userlogin->accountid!='')$row['raw']->username=$row['raw']->userlogin->accountid.".";
 	if(!isset($row['raw']->username)){
 		$row['raw']->username='-';
 		$row['status']=-1;

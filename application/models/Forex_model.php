@@ -57,6 +57,23 @@ public $emailAdmin='admin@dev.salmaforex.com';
 		
 	}
 //=================FLOW LOG
+	function flowMember($id,$sort='created',$sortType='DESC', $limit=50,$start=0){
+		$where="`param` like '%\"id\":\"{$id}\"%'";
+		$sql="select count(id) c from `{$this->tableFlowlog}` where $where";
+		$sql.=" order by `{$sort}` {$sortType} limit {$start}, {$limit}";
+		$dt=dbFetchOne($sql);
+		if($dt['c']==0) return false;
+		$data['count']=$dt['c'];
+		$sql="select types, param, created, status from `{$this->tableFlowlog}` where $where";
+		$dt=dbFetch($sql);
+		foreach($dt as $nm=>$var){
+			$param=json_decode($var['param'],true);
+			$dt[$nm]['param']=$param;
+			$dt[$nm]['user']=isset($dt[$nm]['param']['userlogin'])?$dt[$nm]['param']['userlogin']:false;
+		}
+		$data['data']=$dt;
+		return $data;
+	}
 	function flowInsert($type='',$data=array() ){
 		if(!$this->db->table_exists($this->tableFlowlog)){
 				$fields = array(
@@ -166,11 +183,12 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("register id:$id |detail:".print_r($detail,1));
 		if(!isset($detail['detail']['statusMember']))
 			$detail['detail']['statusMember']='MEMBER';
-		logCreate("register id:$id |raw:".print_r($raw,1));		
-		
+			logCreate("register id:$id |raw:".print_r($raw,1));		
+		$full_name=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'';
+		$full_name.=" ". (isset($detail['detail']['lastname'])?$detail['detail']['lastname']:'');
 		$dt=array(
 			'reg_id'=>$id,
-			'username'=>$detail['username'],
+			'username'=> $full_name,
 			'investorpassword'=>md5( trim($raw['investorpassword']) ),
 			'masterpassword'=>md5( trim($raw['masterpassword']) ),
 			'accountid'=>$raw['accountid'],
@@ -197,12 +215,32 @@ SEMUA dipindah ke model ACCOUNT
 			logCreate("register not continue account exist:".json_encode($rawAccount));
 			return false;
 		}
+	//==============EMAIL START=======	
+		$invPass=trim($raw['investorpassword']);//$data[0]['password'];
+		$masterPass=trim($raw['masterpassword']);//$data[1]['password'];
+		
+		$param2=array( 
+			'username'=>$raw['accountid'],
+			'email'=>$detail['email'],
+			'masterpassword'=>$masterPass,
+			'investorpassword'=>$invPass
+			
+		);
 
+		$param2['emailAdmin']=$this->emailAdmin;
+		$param2['accountType']=$detail['detail']['statusMember'];	
+
+		logCreate( 'create account ');
 		$sql=$this->db->insert_string($this->tableAccount,$dt);
-		dbQuery($sql,1);
-		logCreate("register accid:".$raw['accountid']);
+		dbQuery($sql);
+		logCreate( 'KIRIM EMAIL(1):'.$detail['email']);
+		$this->load->view('depan/email/emailRegister_view',$param2);
+		logCreate( 'KIRIM EMAIL(2):'.$detail['email'].'(DONE)');
+	//==============EMAIL END=======	
+		
+		logCreate("register accid(1):".$raw['accountid']);
 		$dataRaw = $this->account->detail($raw['accountid'],'accountid');
-		logCreate("register accid:".$acc_id);
+		logCreate("register accid(2):".$acc_id);
 		$dataRaw = $this->account->detail($acc_id);
 		
 //===========Account Detail  
@@ -295,7 +333,7 @@ SEMUA dipindah ke model ACCOUNT
 		
 		$sql = $this->db->update_string($this->tableAccount, $data, $where);
 		dbQuery($sql,1);
-		
+		/*
 		$param2=array( 
 			'username'=>$raw['accountid'],
 			'masterpassword'=>$param['masterpassword'],
@@ -306,7 +344,7 @@ SEMUA dipindah ke model ACCOUNT
 		$param2['accountType']=$detail['detail']['statusMember'];	
 		echo '<div>KIRIM EMAIL</div>';
 		$this->load->view('depan/email/emailRegister_view',$param2);
-		
+		*/
 	}
 
 	function accountDetail($id,$field='id'){
@@ -538,23 +576,38 @@ email double diperbolehkan
 		$data=$this->db->get($this->tableAPI)->result_array();
 		$res['sql'][]=$this->db->last_query();
 		if(is_array($data)){
-		foreach($data as $row){
-			$res['username'][]=$row;
+			foreach($data as $row){
+				$res['username'][]=$row;
+			}
+			logCreate('apiAccount |username:'.$accid.' |data(1) total:'.count($data));
 		}
-		}else{ $res['username'] =$data; }
+		else{ 
+			$res['username'] =$data;
+			logCreate('apiAccount |username:'.$accid.' |data(2) total:'.count($data));
+		}
 
 		$this->db->reset_query();
 
-		$email=$acc['email'];
+		$email=trim($acc['email']) ;
+		/*
 		$this->db->or_like('url',$email);
 		$this->db->order_by('created','desc');
 		$data=$this->db->get($this->tableAPI)->result_array();
 		$res['sql'][]=$this->db->last_query();
+		*/
+		$sql="select * from {$this->tableAPI} where url like '%{$email}%' order by created desc";
+		$data=dbFetch($sql);
+		logCreate('apiAccount |email:'.$this->db->last_query());
 		if(is_array($data)){
-		foreach($data as $row){
-			$res['email'][]=$row;
+			foreach($data as $row){
+				$res['email'][]=$row;
+			}
+			logCreate('apiAccount |email:'.$email.' |data(1):'.json_encode($data));
 		}
-		}else{ $res['email'] =$data; }
+		else{ 
+			$res['email'] =$data;
+			logCreate('apiAccount |email:'.$email.' |data(2):'.json_encode($data));
+		}
 		$this->db->reset_query();
 		
 		return $res;

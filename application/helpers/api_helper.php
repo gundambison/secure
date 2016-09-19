@@ -14,15 +14,14 @@ if ( ! function_exists('_runApi')){
 		$logTxt="func:_runApi| url:{$url}"; 
 		$parameter['info']='no post';		
 	}
-	$parameter[]=array('server'=>$_SERVER);
+	//$parameter[]=array('server'=>$_SERVER);
 	$dtAPI['parameter']=json_encode($parameter);
 	logCreate( 'API: '.$logTxt); 
 		
 	if(count($parameter)){	 	
 		logCreate( 'API: '."url:{$url}| param:\n".print_r($parameter,1),'debug');
 	}else{ 
-		logCreate( 'API: param:
-'.print_r(parse_url($url),1),'debug');
+		logCreate( 'API: param:'.print_r(parse_url($url),1),'debug');
 	}
 		$curl = curl_init();
 		 

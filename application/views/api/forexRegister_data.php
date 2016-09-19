@@ -30,7 +30,8 @@ foreach($register as $row){
 	$email=trim($dt0['email']);
 	
 	$account= $this->forex->accountDetail($email,'email');
-	if(trim($email)==''){ //$account!==false||
+	
+	if($account!==false||trim($email)==''){ //
 		logCreate("register delete ($email) (empty):".print_r($account,1));
 		$this->forex->regisDelete($dt0['email']);//die('--<pre>'.print_r($dt0,1).print_r($account,1));		
 		continue;
@@ -40,7 +41,7 @@ foreach($register as $row){
 		logCreate("register email:($email)");
 		if($email===NULL) logCreate("register email:(NULL)");
 	}
-	
+//	die('email??:'.$email.print_r($account,1) );
 	$arr=array( 'raw'=>$dt0);
 	$dt=$dt0['detail'];
 //=================send
@@ -144,8 +145,21 @@ foreach($register as $row){
 	}
 	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==0){
-		logCreate('register member |url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1).'|url:'.$url, 
+		logCreate('register member |url: '.$this->forex->forexUrl().'|respon:'.print_r($result,1).' |url:'.$url, 
 			'info');
+		$param=array( );
+		$param['privatekey']	=$this->forex->forexKey();
+		$param['accountid']=(int)$result['accountid'];
+		$param['allowlogin']=1;
+		$param['allowtrading']=1;
+		$url=$this->forex->forexUrl('update');
+		$url.="?".http_build_query($param);
+		logCreate("update allow:".print_r($param,1)."|url:$url");
+		$arr['param']=$param;
+		$arr['url']=$url;
+		$result0= _runApi($url );
+		logCreate("update allow result:".print_r($result0,1));
+		
 		$id=$this->forex->accountActivation($row['id'],$result);
 		$arr['accountActivation']=$id; 
  

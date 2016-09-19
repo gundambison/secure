@@ -18,11 +18,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	public function data(){
 		$url=$this->config->item('api_url');
 		$this->load->helper('api');
+		$this->param['session']=$this->session-> all_userdata();
 		$session=$this->param['session'];
 		$detail=$this->account->detail($session['username'],'username');
 		if($detail==false){
+			$detail=$this->account->detail($session['username'],'accountid');
+			if($detail==false){
 			logCreate('no username','error');
-			redirect("login");
+			redirect(site_url("login")."?err=no_user" );
+			}
 		}
 		else{}
 		$this->param['userlogin']=$detail;
@@ -30,6 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$respon=array(		
 			'html'=>print_r($_REQUEST,1), 
 		);
+
 		$type=$this->input->post('type','unknown'); 
 		if($type=='unknown'||$type=='')$type=$this->input->get('type','unknown');
 		$message='unknown data type';
@@ -42,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			);
 			$raw=$this->load->view($open, $param, true);
 			$ar=json_decode($raw,true);
+
 			if(is_array($ar)){
 				$respon=$ar;				
 				logCreate($respon);
