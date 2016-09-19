@@ -318,9 +318,9 @@ Daftar Fungsi Yang Tersedia :
 	function updateDocumentStatus($username,$status=false){
 		$data=$this->detail($username,'username');
 		$email=trim($data['email']);
-		$sql="select count(id) c from {$this->tableAccountDocument} where email like '$email'";
+		$sql="select count(id) cUpdateDoc from {$this->tableAccountDocument} where email like '$email'";
 		$res=dbFetchOne($sql);
-		if($res['c']==0){
+		if($res['cUpdateDoc']==0){
 			$ar=array('email'=>$email);
 			$this->db->insert($this->tableAccountDocument, $ar);
 		}else{}
@@ -333,24 +333,25 @@ Daftar Fungsi Yang Tersedia :
 	function document($id,$field='id'){
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
-		$sql="select count(id) c 
-		from `{$this->tableAccount}`  
-		where `{$field}` like '{$id}';"; 
+		$sql="select count(id) cDoc from `{$this->tableAccount}` where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
-		if($res['c']==0){
-			logCreate("account detail id:$id|field:$field|NOT FOUND","error");
+		if($res['cDoc']==0){
+			logCreate("account document id:$id|field:$field|NOT FOUND","error");
 			return false; 
 		}
+		logCreate("account document id:$id |field:$field |FOUND:".$res['cDoc']);
 		
 		$sql="select a.* from `{$this->tableAccount}` a
 		where `{$field}` like '$id'";
 		$res=dbFetchOne($sql);
 		$email=$res['email'];
+		
 		$sql="select id,email,upload,filetype type,status 
 		from {$this->tableAccountDocument} 
 		where email like '$email'";
 		$resDoc= dbFetchOne($sql);
 		$resDoc['account']=$res;
+		logCreate("account document id:$id |field:$field |FOUND:".$res['upload']);
 		return $resDoc;
 	}
 
@@ -365,6 +366,21 @@ Daftar Fungsi Yang Tersedia :
 		$respon['data']=dbFetch($sql);
 		return $respon;
 		
+	}
+	
+	function exist($id,$field='id'){
+	logCreate("account exist id:$id|field:$field");	
+		$id=addslashes(trim($id));
+		if($field=='email')$id.="%";
+		$sql="select count(id) c 
+		from `{$this->tableAccount}`  
+		where `{$field}` like '{$id}';"; 
+		$res=dbFetchOne($sql);
+		if($res['c']==0){
+			logCreate("account exist id:$id|field:$field|NOT FOUND","error");
+			return false; 
+		}
+		return true;
 	}
 	
 	function detail($id,$field='id'){
@@ -382,12 +398,14 @@ Daftar Fungsi Yang Tersedia :
 		
 		$sql="select a.* from `{$this->tableAccount}` a  		
 		where `{$field}` like '$id'";
-		$res=dbFetchOne($sql); 
+		$res=dbFetchOne($sql);
+		logCreate("account detail FOUND","lokal");
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
 			logCreate("account detail id:$id|field:$field|update username |".json_encode($res),"info");
 			$sql="select count(id) c from `{$this->tableAccount}` where `username` = '{$res['accountid']}'";
-			$res0=dbFetchOne($sql,1);
-			$okay2Rename=$res0['c']==0?true:false;
+			//$res0=dbFetchOne($sql,1);
+			//$okay2Rename=$res0['c']==0?true:false;
+			logCreate("account detail FOUND","lokal");
 			/*
 			if($okay2Rename){
 				logCreate("update rename:".json_encode($res));
@@ -418,38 +436,48 @@ Daftar Fungsi Yang Tersedia :
 		where a.`{$field}` like '$id'";
 		$data= dbFetchOne($sql);
 		if($data['accounttype']!='MEMBER'){
-		//	logCreate("account detail id:$id|field:$field|agent","info");
+			logCreate("account detail |agent","info");
 			$agent=true;
 		}
-		else{ 
+		else{
+			logCreate("account detail |member","info");
 			$agent=false;
 		}
 		
 		if($data['type']==7){
+			logCreate("account detail |admin","info");
 			$data['type']='admin';
 		}
 		elseif(strtolower($data['accounttype'])=='agent'){
+			logCreate("account detail |agent","info");
 			$data['type']='agent';
 		}
 		else{
+			logCreate("account detail |other?","info");
 			$data['type']=false;
 		}
 		
 		if(isset($data['raw'])){
-		//	logCreate("account detail id:$id|field:$field|raw detail","info");
+			logCreate("account detail id:$id|field:$field|raw detail","info");
 			$data['detail']=json_decode($data['raw'],true); 
 			unset($data['raw']);
 		}
 //----document
+		logCreate("account document |start","info");
 		$data['document']=$this->document($id, $field);
-		$sql="select count(a.id) c from `{$this->tableAccount}` a  		
-		where `agent` like '$data[username]'";
+		logCreate("account document |end","info");
+//----
+/*
+		$sql="select count(a.id) cPatner from `{$this->tableAccount}` a where `agent` like '$data[username]'";
 		$res0=dbFetchOne($sql);
-		$data['patner']=$res0['c'];
+*/
+		$data['patner']=0;//$res0['c'];
 		//logCreate("cek balance:");
 		$time=date('Y-m-d H:i:s');
+		logCreate("account balance |start","info");
 		$data['balance']=$this->account->balance($res['username'],$time);
 		$data['balanceDate']=$time;
+		logCreate("account balace |start","info");
 		return $data;
 
 	}
@@ -461,14 +489,20 @@ Daftar Fungsi Yang Tersedia :
 			return 0;
 		}
 */
-		$detail=$userlogin=$this-> detail($username,'username');
+		$detail=$userlogin=$this->exist($username,'username');
 		if($detail!==false){
 		//OK
+			logCreate("account->balance |found username","info");
 		}
 		else{
-			$detail=$userlogin=$this-> detail($username,'accountid');
+			$detail=$userlogin=$this->exist($username,'accountid');
 			if($detail!==false){
 				//OK
+				logCreate("account->balance |found accountid","info");
+			}
+			else{
+				logCreate("account->balance |not found","info");
+				return 0;
 			}
 		}
 		$accountid=$detail['accountid'];
@@ -476,6 +510,7 @@ Daftar Fungsi Yang Tersedia :
 		$now = date("Y-m-d H:i:s");
 		$now_12 = date("Y-m-d H:i:s", strtotime("+3 hours"));
 		$sql="delete from {$this->tableAccountBalance} where expired < '$now'";
+		logCreate("account->balance |erase expired","info");
 		dbQuery($sql);
 		$time=date("Y-m-d H:i:s");
 		$sql="select username, balance,modified from {$this->tableAccountBalance} where username like '$accountid'";
@@ -483,6 +518,7 @@ Daftar Fungsi Yang Tersedia :
 		
 		if(isset($row['balance'])){
 			$time=$row['modified'];
+			logCreate("account->balance |still cache","info");
 			return $row['balance'];
 		}
 /*
@@ -512,6 +548,7 @@ Daftar Fungsi Yang Tersedia :
 
 			$sql = $this->db->set($data)->get_compiled_insert($this->tableAccountBalance);
 			dbQuery($sql);
+			logCreate("account->balance |update","info");
 			return $tmp['balance'];
 		}
 		else{
@@ -523,8 +560,7 @@ Daftar Fungsi Yang Tersedia :
 
 	function detailRepair($data=array()){
 		$username=$data['username'];
-		$sql="select count(id) c  from `{$this->tableAccountDetail}` 
-		where `username`='$username'";
+		$sql="select count(id) c  from `{$this->tableAccountDetail}` where `username`='$username'";
 		$res=dbFetchOne($sql);
 		if($res['c']==1){
 			return true;
