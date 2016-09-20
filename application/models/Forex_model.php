@@ -58,10 +58,16 @@ public $emailAdmin='admin@dev.salmaforex.com';
 	}
 //=================FLOW LOG
 	function flowMember($id,$sort='created',$sortType='DESC', $limit=50,$start=0){
-		$where="`param` like '%\"id\":\"{$id}\"%'";
+		$sql="select accountid id from {$this->tableAccount} where id=$id";
+		$res = dbFetchOne($sql);
+		
+		$accountid = $res['id'];
+
+		$where="`param` like '%\"accountid\":\"{$accountid}\"%' or `param` like '%\"id\":\"{$id}\"%'";
 		$sql="select count(id) c from `{$this->tableFlowlog}` where $where";
 		$sql.=" order by `{$sort}` {$sortType} limit {$start}, {$limit}";
 		$dt=dbFetchOne($sql);
+	//	echo $sql;
 		if($dt['c']==0) return false;
 		$data['count']=$dt['c'];
 		$sql="select types, param, created, status from `{$this->tableFlowlog}` where $where";
@@ -579,11 +585,11 @@ email double diperbolehkan
 			foreach($data as $row){
 				$res['username'][]=$row;
 			}
-			logCreate('apiAccount |username:'.$accid.' |data(1):'.json_encode($data));
+			logCreate('apiAccount |username:'.$accid.' |data(1) total:'.count($data));
 		}
 		else{ 
 			$res['username'] =$data;
-			logCreate('apiAccount |username:'.$accid.' |data(2):'.json_encode($data));
+			logCreate('apiAccount |username:'.$accid.' |data(2) total:'.count($data));
 		}
 
 		$this->db->reset_query();

@@ -124,7 +124,7 @@ class Forex extends CI_Controller {
 		if($start==null){ 
 			$start='2016-07-02'; 
 		}
-		if($to==null){ 
+		if($to==null){
 			$i10day=$iDays*10;
 			$to=date("Y-m-d",strtotime($start)+$i10day);			
 		}
@@ -320,7 +320,7 @@ class Forex extends CI_Controller {
 	
 	function __CONSTRUCT(){
 	parent::__construct(); 
-		$this->load->library('session');
+	//	$this->load->library('session');
 		date_default_timezone_set('Asia/Jakarta');
 		$this->param['today']=date('Y-m-d');
 		$this->param['folder']='forex/';
@@ -383,7 +383,7 @@ class Forex extends CI_Controller {
 				$res=json_decode($res0);
 			}
 			if($status=='updateBalance'){
-				$res0='{"balance":"100.305060","responsecode":"0","accountid":"7001189"}';
+				$res0='{"balance":"'.rand(111111,999999) .'","responsecode":"0","accountid":"7001189"}';
 				$res=json_decode($res0);
 			}
 			$raw=array();
@@ -404,7 +404,8 @@ class Forex extends CI_Controller {
 
 	function email_send(){
 		$target="media/email";
-		$max=5; //silakan dinaikkan
+		$max=7;
+//==========silakan dinaikkan
 		$n=0;
 		$not_valid=array(".","..");
 		if ($handle = opendir($target)){
