@@ -48,7 +48,9 @@ if($userlogin['type']!='agent'){
 		}
 	$show['Status']=$status;
 }
-
+else{
+	$show['Balance']='$'. number_format($detail['balance'],2);
+}
 
 if($show['email']!=''){
 	$apiRes=$this->forex->apiAccount($post0['id']);

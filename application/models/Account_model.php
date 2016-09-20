@@ -467,11 +467,12 @@ Daftar Fungsi Yang Tersedia :
 		$data['document']=$this->document($id, $field);
 		logCreate("account document |end","info");
 //----
-/*
-		$sql="select count(a.id) cPatner from `{$this->tableAccount}` a where `agent` like '$data[username]'";
+
+		$sql="select count(a.id) cPatner from `{$this->tableAccount}` a left join `{$this->tableRegis}` r on a.reg_id=r.reg_id
+		where `reg_agent` like '$data[accountid]'";
 		$res0=dbFetchOne($sql);
-*/
-		$data['patner']=0;//$res0['c'];
+
+		$data['patner']= (int)$res0['cPatner'];
 		//logCreate("cek balance:");
 		$time=date('Y-m-d H:i:s');
 		logCreate("account balance |start","info");
@@ -492,12 +493,34 @@ Daftar Fungsi Yang Tersedia :
 		$detail=$userlogin=$this->exist($username,'accountid');
 		if($detail!==false){
 		//OK
+			$field='accountid';
 			logCreate("account->balance |found accountid","info");
+			$sql="select 
+		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid, a.status,
+		a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
+		left join `{$this->tableAccountDetail}` ad 
+			on a.username like ad.username
+		left join `{$this->tableAdmin}` adm 
+			on adm_username like a.username
+		where a.`{$field}` like '$username'";
+			$detail= dbFetchOne($sql);
+		
 		}
 		else{
 			$detail=$userlogin=$this->exist($username,'username');
 			if($detail!==false){
 				//OK
+				$field='accountid';
+				logCreate("account->balance |found accountid","info");
+				$sql="select 
+			a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid, a.status,
+			a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
+			left join `{$this->tableAccountDetail}` ad 
+				on a.username like ad.username
+			left join `{$this->tableAdmin}` adm 
+				on adm_username like a.username
+			where a.`{$field}` like '$username'";
+				$detail= dbFetchOne($sql);
 				logCreate("account->balance |found username","info");
 			}
 			else{
@@ -516,7 +539,7 @@ Daftar Fungsi Yang Tersedia :
 		$time=date("Y-m-d H:i:s");
 		$sql="select username, balance,modified from {$this->tableAccountBalance} where username like '$accountid'";
 		$row=dbFetchOne($sql);
-		
+
 		if(isset($row['balance'])){
 			$time=$row['modified'];
 			logCreate("account->balance |still cache","info");

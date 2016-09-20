@@ -16,6 +16,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	} 
 	
 	public function data(){
+		$this->checkLogin();
+	// die('check login');
+		
 		$url=$this->config->item('api_url');
 		$this->load->helper('api');
 		$this->param['session']=$this->session-> all_userdata();
@@ -43,7 +46,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$param=array(
 				'post'=>$this->convertData(),
 				'get'=>$this->input->get(),
-				'post0'=>$this->input->post()
+				'post0'=>$this->input->post(),
+				'userlogin'=>$this->param['userlogin']
 			);
 			$raw=$this->load->view($open, $param, true);
 			$ar=json_decode($raw,true);
@@ -169,6 +173,75 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		 
 		$this->load->view($target, $this->param);
 	
+	}
+	
+	private function checkLogin(){
+		$session=$this->param['session'];
+		logCreate('controller:member |checkLogin |username:'.$session['username'] );
+		$detail=$this->account->detail($session['username'],'username');
+		logCreate('username found:'.count($detail) );
+		if($detail==false){
+			logCreate('session accountid:'.$session['username']);
+			$detail=$this->account->detail($session['username'],'accountid');
+		}
+		
+		if($detail==false){
+			logCreate('no username/accid:'.$session['username'],'error');
+			redirect("login");
+		}
+		else{}
+		logCreate('username:'.$session['username'],'error');
+		$post=array();
+		if(isset($session['expire'])){
+			if($session['expire']<strtotime("now")){
+				logCreate('User Expired '.$session['expire']." vs ". strtotime("now") );
+				$post['message']='Please Login Again';
+				$this->session->set_flashdata('login', $post);
+				$array=array( 
+					'username'=>null,
+					'password'=>null,
+					'expire'=>strtotime("+12 minutes")
+				);
+				$this->session->set_userdata($array);
+				
+				redirect("login/member");
+			}
+			else{
+				$session['expire']=strtotime("+10 minutes");
+				logCreate('add User Expired '.$session['expire']  );
+			}
+		}
+		else{
+			logCreate('User don\'t have Expired' );
+			$post['message']='Your Login Has expired?';
+			$this->session->set_flashdata('login', $post);
+			$array=array(  
+					'expire'=>strtotime("+12 minutes")
+				);
+				$this->session->set_userdata($array);
+			redirect(base_url("member"));
+			$session['expire']=strtotime("+10 minutes");
+		}
+		
+		if($session['password']==$detail['masterpassword']){
+			logCreate('password OK:'.$session['username'],'error');
+			$array=array( 
+				'username'=>$session['username'],
+				'password'=>($session['password']),
+				'expire'=>$session['expire']
+			);
+			$this->session->set_userdata($array);
+			$this->param['detail']=$this->param['userlogin']=$detail;
+			$uniqid=url_title(trim($detail['id']).' '.$session['username'],'-');
+			$this->param['urlAffiliation']=base_url('register/'.$uniqid);
+		}
+		else{
+			logCreate('wrong password','error');
+			$post['message']='Please Login Again';
+			$this->session->set_flashdata('login', $post);
+			redirect("login");			
+		}
+		
 	}
 	 
  }

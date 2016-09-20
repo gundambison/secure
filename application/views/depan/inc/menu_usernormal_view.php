@@ -13,7 +13,7 @@
 	<div class="submenu">
 		<ul>
 			<li><a href="<?=base_url('member/listApi/partner');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Partner</a></li>
-			<li><a href="<?=base_url('member/listApi/patner_revenue');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Patner Revenue</a></li>
+			<!--li><a href="<?=base_url('member/listApi/patner_revenue');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/partners.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;">Patner Revenue</a></li-->
 		</ul>
 	</div>
 	<?php

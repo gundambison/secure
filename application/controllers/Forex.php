@@ -383,7 +383,7 @@ class Forex extends CI_Controller {
 				$res=json_decode($res0);
 			}
 			if($status=='updateBalance'){
-				$res0='{"balance":"100.305060","responsecode":"0","accountid":"7001189"}';
+				$res0='{"balance":"'.rand(111111,999999) .'","responsecode":"0","accountid":"7001189"}';
 				$res=json_decode($res0);
 			}
 			$raw=array();
