@@ -194,7 +194,7 @@ SEMUA dipindah ke model ACCOUNT
 		$full_name.=" ". (isset($detail['detail']['lastname'])?$detail['detail']['lastname']:'');
 		$dt=array(
 			'reg_id'=>$id,
-			'username'=> $full_name,
+			'username'=> $raw['accountid'],
 			'investorpassword'=>md5( trim($raw['investorpassword']) ),
 			'masterpassword'=>md5( trim($raw['masterpassword']) ),
 			'accountid'=>$raw['accountid'],

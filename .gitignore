@@ -5,14 +5,14 @@
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
-<<<<<<< HEAD
 media/email/*
 
 application/config/mongoci.php
 application/config/mongoci_connect.php
 application/config/database.php
 application/config/config.php
-=======
+application/config/forexConfig.php
+
 application/views/old/*
 tmp/*
 cgi-bin/*
@@ -22,4 +22,3 @@ new.komodoproject
 LICENSE
 license.txt
 views/*
->>>>>>> origin

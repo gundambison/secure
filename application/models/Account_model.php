@@ -530,7 +530,10 @@ Daftar Fungsi Yang Tersedia :
 		}
 
 		$accountid=$detail['accountid'];
-		$session=$this->session-> all_userdata();
+		/*
+		if(isset($this->session))
+			$session=$this->session-> all_userdata();
+		*/
 		$now = date("Y-m-d H:i:s");
 		$now_12 = date("Y-m-d H:i:s", strtotime("+3 hours"));
 		$sql="delete from {$this->tableAccountBalance} where expired < '$now'";
