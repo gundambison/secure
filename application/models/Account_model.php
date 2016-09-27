@@ -464,7 +464,10 @@ Daftar Fungsi Yang Tersedia :
 		}
 //----document
 		logCreate("account document |start","info");
-		$data['document']=$this->document($id, $field);
+		$documents=$this->document($id, $field);
+		if(!$documents)
+			$documents=$this->document($id, 'accountid');
+		$data['document']=$documents;
 		logCreate("account document |end","info");
 //----
 
