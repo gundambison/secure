@@ -15,11 +15,14 @@ $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
 $start=isset($post0['start'])?$post0['start']:0;
 $limit=isset($post0['length'])?$post0['length']:11;
 $data=array();
-   $orders="order by created desc";
+   $orders="order by d.modified desc";
    if(isset($post0['order'][0])){
 		$col=$post0['order'][0]['column'];
 		$order=$post0['order'][0]['dir'];
 		$col2=$post0['columns'][$col]['data'];
+		if($col==0){
+			$col2='d.modified';
+		}
 		if($col==5){
 			$col2='d.status';
 		}
