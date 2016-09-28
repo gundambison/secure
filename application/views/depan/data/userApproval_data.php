@@ -56,7 +56,8 @@ else{
 	logCreate('no search :'.$search);
 }
 
-$sql="select a.id,a.created,d.status status_document, d.email main_email from mujur_account a 
+$sql="select a.id,a.created,d.status status_document, d.email main_email, d.id accdoc_id
+from mujur_account a 
 join mujur_accountdocument d on d.email like a.email
 	where $where 
 	$orders limit $start,$limit";
