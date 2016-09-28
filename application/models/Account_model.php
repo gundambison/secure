@@ -332,6 +332,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	function updateDocumentStatus($username,$status=false){
 		$data=$this->detail($username,'username');
+		if(!$data)$data=$this->detail($username,'accountid');
 		$email=trim($data['email']);
 		$sql="select count(id) cUpdateDoc from {$this->tableAccountDocument} where email like '$email'";
 		$res=dbFetchOne($sql);
