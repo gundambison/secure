@@ -23,6 +23,12 @@ $data=array();
 		if($col==0){
 			$col2='d.modified';
 		}
+		if($col==2){
+			$col2='a.accountid';
+		}
+		if($col==3){
+			$col2='a.email';
+		}
 		if($col==5){
 			$col2='d.status';
 		}
@@ -72,7 +78,7 @@ foreach($dt as $row){
 	$row['status']='Not Active';	
 	if($row['status_document']==1)$row['status']='Active';
 	if($row['status_document']==2)$row['status']='Review';
-	
+	$row['username']=$row['accountid'].".";
 	$row['action']='';
 	$data[]=$row;
 }
