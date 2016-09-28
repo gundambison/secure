@@ -295,14 +295,24 @@ Daftar Fungsi Yang Tersedia :
 
 	function updateDocument($username,$document=false,$type=null){
 		$data=$this->detail($username,'username');
+		if($data==false){
+			$data=$this->detail($username,'accountid');
+		}
+
 		$email=trim($data['email']);
 		$sql="select count(id) c from {$this->tableAccountDocument} where email like '$email'";
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
 			$ar=array('email'=>$email);
 			$this->db->insert($this->tableAccountDocument, $ar);
-		}else{}
+			logCreate('not found email:'.$email );
+		}
+		else{
+			logCreate('found email:'.$email.'| total:'.$res['c']);
+		}
+
 		if($document!=false){
+			logCreate('found email:'.$email.'| document:'.$document);
 			$upload=addslashes($document);
 			$sql="UPDATE {$this->tableAccountDocument} SET `upload` = '{$document}' WHERE `email` = '{$email}';";
 			dbQuery($sql);
@@ -311,8 +321,13 @@ Daftar Fungsi Yang Tersedia :
 			dbQuery($sql);
 			$sql="UPDATE {$this->tableAccountDocument} SET `status` = '2' WHERE `email` = '{$email}';";
 			dbQuery($sql);
-			echo $sql;
+			//echo $sql;
+			logCreate('update document email:'.$email.'| document:'.$document);
 		}
+		else{
+			logCreate('no  document update:');
+		}
+
 		return true;
 	}
 	function updateDocumentStatus($username,$status=false){
