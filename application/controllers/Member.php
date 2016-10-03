@@ -44,6 +44,7 @@ Daftar Fungsi Yang Tersedia :
 	public function uploads($warn=0){
 		$this->checkLogin();
 		if($this->input->post('rand')){
+		$session=$this->session-> all_userdata(); 
 			$rand=dbId();
 			//print_r($_POST);print_r($_FILES);
 			$files=$_FILES['doc'];
@@ -53,8 +54,10 @@ Daftar Fungsi Yang Tersedia :
 				$this->session->set_flashdata('login', $post);
 				redirect(site_url('member/uploads/'.$rand));exit();
 			}
+
 			$user=$this->param['detail'];
-			$filename=url_title($user['email']).".".date("ymd").".tmp";
+			//$filename=url_title($user['email']).".".date("ymd").".tmp";
+			$filename=$rand."_".url_title($session['username']).date("ymd").".tmp";
 			//echo '<pre>';print_r($this->param['detail']);
 			copy($files['tmp_name'],$this->folderUpload.$filename);
 			$url=  $this->folderUpload.$filename  ;
@@ -451,11 +454,11 @@ Daftar Fungsi Yang Tersedia :
 
 	private function checkLogin(){
 		$session=$this->param['session'];
-		logCreate('controller:member |checkLogin |username:'.$session['username'] );
+	//	logCreate('controller:member |checkLogin |username:'.$session['username'] );
 		$detail=$this->account->detail($session['username'],'username');
-		logCreate('username found:'.count($detail) );
+	//	logCreate('username found:'.count($detail) );
 		if($detail==false){
-			logCreate('session accountid:'.$session['username']);
+	//		logCreate('session accountid:'.$session['username']);
 			$detail=$this->account->detail($session['username'],'accountid');
 		}
 		
@@ -464,7 +467,7 @@ Daftar Fungsi Yang Tersedia :
 			redirect("login");
 		}
 		else{}
-		logCreate('username:'.$session['username'],'error');
+	//	logCreate('username:'.$session['username'],'error');
 		$post=array();
 		if(isset($session['expire'])){
 			if($session['expire']<strtotime("now")){
@@ -590,7 +593,7 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['baseFolder']='depan/';
 		$this->param['noBG']=true;
 		$this->folderUpload = 'media/uploads/';
-		logCreate('start controller member'); 
+		//logCreate('start controller member'); 
 		
 		/*
 		if($this->input->post())
