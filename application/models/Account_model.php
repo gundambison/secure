@@ -294,7 +294,7 @@ Daftar Fungsi Yang Tersedia :
 	}	
 
 	function updateDocument($username,$document=false,$type=null){
-		$data=$this->detail($username,'username');
+		$data=false;//$this->detail($username,'username');
 		if($data==false){
 			$data=$this->detail($username,'accountid');
 		}
