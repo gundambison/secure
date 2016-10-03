@@ -61,7 +61,7 @@ Daftar Fungsi Yang Tersedia :
 			//echo '<pre>';print_r($this->param['detail']);
 			copy($files['tmp_name'],$this->folderUpload.$filename);
 			$url=  $this->folderUpload.$filename  ;
-			$this->account->updateDocument($user['username'], $url,$files['type']);
+			$this->account->updateDocument($user['accountid'], $url,$files['type']);
 			//exit('file:'.$url);
 			redirect(site_url('member/profile'));
 		}
@@ -593,7 +593,7 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['baseFolder']='depan/';
 		$this->param['noBG']=true;
 		$this->folderUpload = 'media/uploads/';
-		//logCreate('start controller member'); 
+		logCreate('start controller member'); 
 		
 		/*
 		if($this->input->post())
