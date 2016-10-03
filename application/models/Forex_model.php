@@ -629,7 +629,8 @@ email double diperbolehkan
 		public function __construct(){
             $this->load->database();
 			$this->load->dbforge();
-//=========UPDATE REGISTER			
+//=========UPDATE REGISTER
+/*
 			$sql="select count(reg_id) tot from {$this->tableRegis}";
 			$dt=dbFetchOne($sql);
 			if($dt['tot']==0){
@@ -726,7 +727,7 @@ email double diperbolehkan
 				logConfig("create table:$str");
 				$this->db->reset_query();	
 			}
-
+*/
 			$this->rateNow();
 			$this->flowInsert('');
 			$this->emailAdmin();
