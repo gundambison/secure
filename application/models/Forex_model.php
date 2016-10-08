@@ -198,7 +198,7 @@ SEMUA dipindah ke model ACCOUNT
 			'investorpassword'=>md5( trim($raw['investorpassword']) ),
 			'masterpassword'=>md5( trim($raw['masterpassword']) ),
 			'accountid'=>$raw['accountid'],
-			'email'=>$detail['email'],
+			'email'=>trim($detail['email']),
 			'type'=>strtoupper($detail['detail']['statusMember']),
 			//'raw'=>$raw,
 			//'activation'=>base64_encode($raw),
@@ -227,7 +227,7 @@ SEMUA dipindah ke model ACCOUNT
 		
 		$param2=array( 
 			'username'=>$raw['accountid'],
-			'email'=>$detail['email'],
+			'email'=>trim($detail['email']),
 			'masterpassword'=>$masterPass,
 			'investorpassword'=>$invPass
 			
@@ -311,13 +311,13 @@ SEMUA dipindah ke model ACCOUNT
 		$param['country']=isset($detail['detail']['country']['name'])?$detail['detail']['country']['name']:"";
 		$param['zipcode']=isset($detail['detail']['zipcode'])?$detail['detail']['zipcode']:"";
 		$param['phone']=  isset($detail['detail']['phone'])?$detail['detail']['phone']:"";
-		$param['email']=  isset($detail['email'])?$detail['email']:"";
+		$param['email']=  isset($detail['email'])?trim($detail['email']) :"";
 //=============LIMIT
 		$param['address']=substr($param['address'],0,95);
 		$param['country']=substr($param['country'],0,17);
 		$param['zipcode']=substr($param['zipcode'],0,15);
 		$param['phone']=substr($param['phone'],0,31);
-		$param['email']=substr($param['email'],0,47);
+		$param['email']=trim( substr($param['email'],0,47) );
 		$param['allowlogin']=1;
 		$param['allowtrading']=1;
 
@@ -358,7 +358,7 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("accountDetail id:$id|field:$field");
 		
 		$id=addslashes(trim($id));
-		if($field=='email')$id.="%";
+		if($field=='email')$id=trim($id)."%";
 		
 		$sql="select count(id) c from `{$this->tableAccount}`  where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
@@ -539,8 +539,9 @@ REGISTER
 		}
 		
 		if(isset($data['email'])){
-			$email=$data['email'];
-		}else{
+			$email=trim($data['email']);
+		}
+		else{
 			$message='No email';
 			return false;
 		}
@@ -561,7 +562,7 @@ email double diperbolehkan
 			'reg_detail'=>json_encode($data),
 			'reg_agent'=>$agent,
 			'reg_created'=>date("Y-m-d H:i:s"),
-			'reg_email'=>$email,
+			'reg_email'=>trim($email),
 		);
 		$sql=$this->db->insert_string($this->tableRegis, $dt);
 		dbQuery($sql);
@@ -629,8 +630,7 @@ email double diperbolehkan
 		public function __construct(){
             $this->load->database();
 			$this->load->dbforge();
-//=========UPDATE REGISTER
-/*
+//=========UPDATE REGISTER			
 			$sql="select count(reg_id) tot from {$this->tableRegis}";
 			$dt=dbFetchOne($sql);
 			if($dt['tot']==0){
@@ -727,7 +727,7 @@ email double diperbolehkan
 				logConfig("create table:$str");
 				$this->db->reset_query();	
 			}
-*/
+
 			$this->rateNow();
 			$this->flowInsert('');
 			$this->emailAdmin();
