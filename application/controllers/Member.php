@@ -338,7 +338,8 @@ Daftar Fungsi Yang Tersedia :
 		
 		if($stat_id!=null){
 			$data=$this->account->detail($userid);
-			$username=$data['username']; //die(print_r($data,1));
+			$username=$data['accountid'];
+			//$username=$data['username']; //die(print_r($data,1));
 			$this->account->updateDocumentStatus($username, $stat_id);
 			echo 'status sudah berganti menjadi '.$status;
 		}
