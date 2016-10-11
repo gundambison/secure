@@ -621,6 +621,13 @@ Daftar Fungsi Yang Tersedia :
 		}else{}
 		return true;
 	}
+	
+	function all_by_email($field='*'){
+		$sql="select {$field} from `{$this->tableAccount}` 
+		group by email
+		order by modified";
+		return dbFetch($sql);
+	}
 //=====================================
 		public function __construct()
         {
