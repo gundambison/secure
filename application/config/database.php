@@ -26,7 +26,6 @@ if(defined('LOCAL')){
 		'failover' => array(),
 		'save_queries' => TRUE
 	);
-	
 }else{}
 
 if(defined('_DEV_')){
@@ -56,10 +55,10 @@ if(defined('_DEV_')){
 if(!isset($db['default'])){
 	$db['default'] = array(
 		'dsn'	=> '',
-		'hostname' => 'mysql.idhostinger.com',
-		'username' => 'u429780871_forex',
-		'password' => '|V4CMBo6mj',
-		'database' => 'u429780871_forex',
+		'hostname' => '',
+		'username' => 'mujur_salma',
+		'password' => '',
+		'database' => 'mujur_salma',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
 		'pconnect' => FALSE,
