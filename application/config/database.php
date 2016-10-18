@@ -27,7 +27,7 @@ if(defined('LOCAL')){
 		'save_queries' => TRUE
 	);
 }else{}
-/*
+
 if(defined('_DEV_')){
 	$db['default'] = array(
 		'dsn'	=> '',
@@ -51,14 +51,13 @@ if(defined('_DEV_')){
 		'save_queries' => TRUE
 	);
 }else{}
-*/
 //Database telah dibuat. Password untuk database u429780871_dev diubah menjadi n4cC5l0oA4
 if(!isset($db['default'])){
 	$db['default'] = array(
 		'dsn'	=> '',
-		'hostname' => '',
+		'hostname' => '31.220.56.227',
 		'username' => 'mujur_salma',
-		'password' => '',
+		'password' => 'mujur!salma227',
 		'database' => 'mujur_salma',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
@@ -75,6 +74,11 @@ if(!isset($db['default'])){
 		'failover' => array(),
 		'save_queries' => TRUE
 	);
-	
+/*
+		'hostname' => 'mysql.idhostinger.com',
+		'username' => 'u429780871_forex',
+		'password' => '|V4CMBo6mj',
+		'database' => 'u429780871_forex',
+*/		
 }
 
