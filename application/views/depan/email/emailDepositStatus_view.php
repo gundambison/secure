@@ -104,82 +104,80 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
         </tbody>
       </table>
         <br />
+
         <table width="750" border="0" cellspacing="0" cellpadding="0">
           <tbody>
             <tr>
-              <td width="373" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44" /></td>
-              <td width="10" bgcolor="#FFFFFF">&nbsp;</td>
-              <td width="367" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44" /></td>
+              <td width="373" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44"></td>
+              <td width="10" bgcolor="#FFFFFF"> </td>
+              <td width="367" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44"></td>
             </tr>
             <tr>
-              <td align="center" bgcolor="#E9EAEC">&nbsp;</td>
-              <td bgcolor="#FFFFFF">&nbsp;</td>
-              <td valign="top" bgcolor="#EAE9EE">&nbsp;</td>
+              <td align="center" bgcolor="#E9EAEC"> </td>
+              <td bgcolor="#FFFFFF"> </td>
+              <td valign="top" bgcolor="#EAE9EE"> </td>
             </tr>
             <tr>
               <td align="center" bgcolor="#E9EAEC"><table width="340" border="0" cellpadding="2" cellspacing="2">
                 <tbody>
                   <tr>
-                    <td width="132" rowspan="2" align="center" valign="top"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/japan.jpg" alt="" width="121" height="130" /></td>
-                    <td width="194" align="left" valign="top"><em><strong>JAPAN</strong></em></td>
+                    <td width="132" rowspan="2" align="center" valign="top"><img src="https://www.salmaforex.com/wp-content/uploads/2016/10/ifsc.png" alt="" width="121" height="130"></td>
+                    <td width="194" align="left" valign="top"><em><strong>INTERNATIONAL FINANCIAL SERVICES COMMISSION</strong></em></td>
                   </tr>
                   <tr>
-                    <td align="left" valign="top">SalmaTrade Companies Group<br />
-                      10-6, Kita-Aoyama 2-chome<br />
-                      Minato-ku, Tokyo 107-8487, Japan<br />
-                      TEL: 03-3492-3131<br />
-                      <a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26" /></a></td>
+                    <td align="left" valign="top">Sir Edney Cain Building, 2nd Floor, Belmopan, Belize, C. A. Tel: 501-822-2974 Fax: 501-822-3810<br>
+                      <a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26"></a></td>
                   </tr>
                   <tr>
-                    <td>&nbsp;</td>
-                    <td align="left" valign="top">&nbsp;</td>
+                    <td> </td>
+                    <td align="left" valign="top"> </td>
                   </tr>
                 </tbody>
               </table></td>
-              <td bgcolor="#FFFFFF">&nbsp;</td>
+              <td bgcolor="#FFFFFF"> </td>
               <td rowspan="3" align="center" valign="top" bgcolor="#E9EAEC"><table width="340" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
                   <tr>
                     <td align="center" bgcolor="#E9EAEC"><table width="340" border="0" cellpadding="2" cellspacing="2">
                       <tbody>
                         <tr>
-                          <td width="132" rowspan="2" align="center" valign="top" bgcolor="#E9EAEC"><img src="https://ci5.googleusercontent.com/proxy/iOcxlm1p58PJIqt5JjhzYoXax_zLvvBck0tQuEHN38wumj9OWTojK4p9BmzphydSlcBBzGey3PEFh8YJ6KUAHP1ziIV3yZhPjZ-cnVTzMEl4eU1CFg=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/about-sfm.jpg" alt="" width="119" height="156" /></td>
-                          <td width="194" align="left" valign="top" bgcolor="#E9EAEC"><strong><em>Salmaforex - The Leading</em></strong></td>
+                          <td width="132" rowspan="2" align="center" valign="top" bgcolor="#E9EAEC"><img src="https://ci5.googleusercontent.com/proxy/iOcxlm1p58PJIqt5JjhzYoXax_zLvvBck0tQuEHN38wumj9OWTojK4p9BmzphydSlcBBzGey3PEFh8YJ6KUAHP1ziIV3yZhPjZ-cnVTzMEl4eU1CFg=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/about-sfm.jpg" alt="" width="119" height="156"></td>
+                          <td width="194" align="left" valign="top" bgcolor="#E9EAEC"><strong><em>Salmaforex - The Leading Forex Broker</em></strong></td>
                         </tr>
                         <tr>
-                          <td align="left" valign="top" bgcolor="#E9EAEC">SalmaForex offers direct access to multiple destinations of liquidity in the forex markets without the usual burdens of a deal desk that had previously been unavailable to the retail investor.<br />
-                            <a href="https://www.salmaforex.com/about-us/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26" /></a></td>
+                          <td align="left" valign="top" bgcolor="#E9EAEC">SalmaForex offers direct access to multiple destinations of liquidity in the forex markets without the usual burdens of a deal desk that had previously been unavailable to the retail investor.<br>
+                            <a href="https://www.salmaforex.com/about-us/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26"></a></td>
                         </tr>
                         <tr>
-                          <td bgcolor="#E9EAEC">&nbsp;</td>
-                          <td align="left" valign="top" bgcolor="#E9EAEC">&nbsp;</td>
+                          <td bgcolor="#E9EAEC"> </td>
+                          <td align="left" valign="top" bgcolor="#E9EAEC"> </td>
                         </tr>
                       </tbody>
                     </table></td>
                   </tr>
                   <tr>
-                    <td bgcolor="#E9EAEC">&nbsp;</td>
+                    <td bgcolor="#E9EAEC"> </td>
                   </tr>
                   <tr>
-                    <td bgcolor="#E9EAEC"><img src="https://ci3.googleusercontent.com/proxy/BRAZITFgWtlYXFkiXRtSaScf85waxMn_t8WFNqvNvZUVqfGBg1VQS80ESIw6ntrHO75E9t-T0SWDPrQE-2fYgmqZGHBZriQCQWFViP_fB_KVtr5kXCcB=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/red-divider.jpg" alt="" width="373" height="10" /></td>
+                    <td bgcolor="#E9EAEC"><img src="https://ci3.googleusercontent.com/proxy/BRAZITFgWtlYXFkiXRtSaScf85waxMn_t8WFNqvNvZUVqfGBg1VQS80ESIw6ntrHO75E9t-T0SWDPrQE-2fYgmqZGHBZriQCQWFViP_fB_KVtr5kXCcB=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/red-divider.jpg" alt="" width="373" height="10"></td>
                   </tr>
                   <tr>
-                    <td bgcolor="#E9EAEC">&nbsp;</td>
+                    <td bgcolor="#E9EAEC"> </td>
                   </tr>
                   <tr>
-                    <td bgcolor="#E9EAEC">&nbsp;</td>
+                    <td bgcolor="#E9EAEC"> </td>
                   </tr>
                   <tr>
                     <td align="center" bgcolor="#E9EAEC"><table width="300" border="0" cellspacing="0" cellpadding="0">
                       <tbody>
                         <tr>
-                          <td align="left" bgcolor="#E9EAEC"><img src="https://ci6.googleusercontent.com/proxy/9eAN3kMRi6jb6VN5lGfu9_7OJJNqrGJ7xuybu4GR4fsPR--Z1VHRUPVF_Q0p-RFcvo5iY9HnRMSye_xWXhwHHtOov_4TWU6wDrPqRSW-ELWevjqNREWVezV51co=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/need-help-hdg-en.jpg" alt="" width="102" height="26" /></td>
+                          <td align="left" bgcolor="#E9EAEC"><img src="https://ci6.googleusercontent.com/proxy/9eAN3kMRi6jb6VN5lGfu9_7OJJNqrGJ7xuybu4GR4fsPR--Z1VHRUPVF_Q0p-RFcvo5iY9HnRMSye_xWXhwHHtOov_4TWU6wDrPqRSW-ELWevjqNREWVezV51co=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/need-help-hdg-en.jpg" alt="" width="102" height="26"></td>
                         </tr>
                         <tr>
                           <td align="left" bgcolor="#E9EAEC">Call us, Send your query by e-mail or Chat Online from our Website. We answer all your questions!</td>
                         </tr>
                         <tr>
-                          <td align="center">&nbsp;</td>
+                          <td align="center"> </td>
                         </tr>
                       </tbody>
                     </table></td>
@@ -191,35 +189,35 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
               <td align="center" bgcolor="#E9EAEC"><table width="340" border="0" cellpadding="2" cellspacing="2">
                 <tbody>
                   <tr>
-                    <td width="132" rowspan="2" align="center" valign="top"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/Screenshot_1.png" alt="" width="121" height="131" /></td>
-                    <td width="194" align="left" valign="top"><em><strong>BELIZE</strong></em></td>
+                    <td width="132" rowspan="2" align="center" valign="top"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/Screenshot_1.png" alt="" width="121" height="131"></td>
+                    <td width="194" align="left" valign="top"><em><strong>SALMA MARKETS COMPANIES CORP</strong></em></td>
                   </tr>
                   <tr>
-                    <td height="100" align="left" valign="top">Salma Markets Companies, <br />
-3 ½ Miles Philip S.W. Goldson Highway, Belize City, Beliz<strong>e</strong><br />
-TEL: 03-3492-3131<br />
-support@salmaforex.com<br />
-                      <a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26" /></a></td>
+                    <td height="100" align="left" valign="top">No. 5 Cork Street P. O. Box 1708, Belize City, Beliz<strong>e</strong><br>
+TEL: 501 223 6910 / 223 1107<br>
+<a href="mailto:support@salmaforex.com" target="_blank">support@salmaforex.com</a><br>
+                      <a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26"></a></td>
                   </tr>
                 </tbody>
               </table></td>
-              <td bgcolor="#FFFFFF">&nbsp;</td>
+              <td bgcolor="#FFFFFF"> </td>
             </tr>
             <tr>
-              <td align="center" bgcolor="#E9EAEC">&nbsp;</td>
-              <td bgcolor="#FFFFFF">&nbsp;</td>
+              <td align="center" bgcolor="#E9EAEC"> </td>
+              <td bgcolor="#FFFFFF"> </td>
             </tr>
           </tbody>
         </table>
         <table width="750" border="0" cellspacing="0" cellpadding="0">
           <tbody>
             <tr>
-              <td align="center"><a href="https://www.salmaforex.com/" target="_blank"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/body_photo_button_open_account.jpg" alt="" width="193" height="41" /></a></td>
-              <td align="center"><a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci4.googleusercontent.com/proxy/9YJIHCFZpThJ3QNdDYNdwyyhcm9cC9wmIyMwDLT0aVsGS_bZWQUhUx9UQYLLMgB6_l5v-4qtM90xrPAdhM9RhnqvLWMtxxPdZeQcVHCkbRIlzZlYEy7r8hO8K1bo=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/contact-us-btn-en.jpg" alt="" width="192" height="41" /></a></td>
+              <td align="center"><a href="https://www.salmaforex.com/" target="_blank"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/body_photo_button_open_account.jpg" alt="" width="193" height="41"></a></td>
+              <td align="center"><a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci4.googleusercontent.com/proxy/9YJIHCFZpThJ3QNdDYNdwyyhcm9cC9wmIyMwDLT0aVsGS_bZWQUhUx9UQYLLMgB6_l5v-4qtM90xrPAdhM9RhnqvLWMtxxPdZeQcVHCkbRIlzZlYEy7r8hO8K1bo=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/contact-us-btn-en.jpg" alt="" width="192" height="41"></a></td>
             </tr>
           </tbody>
-        </table></td>
-    </tr>
+        </table> 
+
+	</tr>
     <tr>
       <td colspan="2" valign="bottom"><table cellpadding="0" cellspacing="0" align="center">
         <tbody>

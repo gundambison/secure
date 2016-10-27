@@ -21,8 +21,7 @@ $name=!isset($post0['name'])?$userlogin['detail']['firstname']." ".$userlogin['d
             <td><h3>Deposit </h3>
               <p>Someone Request Deposit<br />
                 </p>
- 			
-				
+
               <table align="center" id="yui_3_16_0_1_1450323941636_3312">
                 <tbody id="yui_3_16_0_1_1450323941636_3311">
 					<tr>
