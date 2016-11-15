@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+date_default_timezone_set('Asia/Jakarta');
 class Guest extends MY_Controller {
 /***
 Daftar Fungsi Yang Tersedia :
@@ -68,7 +68,7 @@ Daftar Fungsi Yang Tersedia :
 
 	public function register(){
 		$post=$this->input->post();
-		print_r($post); 
+		//print_r($post); 
 		$stat=false;
 		
 		$respon['title']='NEW LIVE ACCOUNT (CREATED)';
@@ -77,8 +77,7 @@ Daftar Fungsi Yang Tersedia :
 			}
 		$params=$post;
 		if( isset($post['accept']))$stat=true;
-		//var_dump($post);die('--');
-		logCreate(print_r($post,1));
+		logCreate('register post:'.print_r($post,1));
 		if($stat==true)
 			$stat=$this->forex->saveData($params,$message);
 		
@@ -177,7 +176,6 @@ Daftar Fungsi Yang Tersedia :
 	}
 	function __CONSTRUCT(){
 	parent::__construct();
-		date_default_timezone_set('Asia/Jakarta');
 		$this->param['today']=date('Y-m-d');
 		$this->param['folder']='guest/';
 		$this->param['baseFolder']='guest/';
@@ -211,8 +209,9 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['emailAdmin']=$this->forex->emailAdmin; 
 		logCreate('Guest Controllers','start');
 		logCreate(current_url(),'url');
-		
+/*		
 		if($this->input->post())
 			logCreate($this->input->post(),'post');
+*/
 	}
 }

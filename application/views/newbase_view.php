@@ -61,7 +61,7 @@ if(isset($footerJS)){
 	}else{}
 	
 	foreach($footerJS as $jsFile ){?>
-	  <script src="<?=base_url();?>media/<?=$jsFile;?>?12"></script>
+	  <script src="<?=base_url();?>media/<?=$jsFile;?>"></script>
 <?php 
 	}
 }else{ echo '<!--no footer js -->'; } ?>
@@ -85,6 +85,7 @@ if(!defined('LOCAL')){?>
 
 ?>
 	<script type="text/javascript">
+try{
 	ddaccordion.init({
 		headerclass: "submenuheader", //Shared CSS class name of headers group
 		contentclass: "submenu", //Shared CSS class name of contents group
@@ -105,6 +106,11 @@ if(!defined('LOCAL')){?>
 			//do nothing
 		}
 	})
+}
+catch(err) {
+    console.log(err );
+}
+	
 	</script>
 </body>
 </html>
