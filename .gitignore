@@ -8,3 +8,11 @@ application/config/config.php
 */cache/!index.html
 */cache/!.htaccess
 
+media/uploads/*
+tmp/*
+vendor/*
+media/email/*
+logs/*
+curl/*
+application/logs/*
+
