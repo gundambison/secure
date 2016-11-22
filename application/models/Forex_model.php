@@ -218,7 +218,7 @@ SEMUA dipindah ke model ACCOUNT
 		$rawAccount=dbFetchOne($sql);
 	//apabila ada reg_id yang sama maka cancel	
 		if((int)$reg_id!=0&&$rawAccount['tot']!=0){
-			logCreate("register not continue account exist:".json_encode($rawAccount));
+			logCreate("register not continue account exist:".json_encode($rawAccount)."| {$sql}");
 			return false;
 		}
 	//==============EMAIL START=======	
@@ -330,7 +330,7 @@ SEMUA dipindah ke model ACCOUNT
 
 		$param['masterpassword']=$masterPass;//.($raw['accountid']%100000 +19939);
 		$param['investorpassword']=$invPass;//.($raw['accountid'] %100000 +19919);
-//		logCreate("update detail result:".print_r($result0,1));
+		logCreate("update detail result:".print_r($result0,1));
 		$data = array(
 			'investorpassword' => md5( $param['investorpassword'] ),
 			'masterpassword'=>md5( $param['masterpassword'] )
