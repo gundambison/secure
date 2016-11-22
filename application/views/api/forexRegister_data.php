@@ -14,17 +14,20 @@ logCreate("register:".json_encode($register));
 $data=array();
 foreach($register as $row){
 	$reg_id=$row['id'];
+	echo "start reg_id:{$reg_id}";
 	$dt0=$this->forex->regisDetail($row['id']);
 	$full_name=isset($dt0['detail']['firstname'])?$dt0['detail']['firstname']:'';
 	$full_name.=" ". (isset($dt0['detail']['lastname'])?$dt0['detail']['lastname']:'');
 	$full_name=substr($full_name,0,126);
+	print_r($dt0[''];
 	if($dt0['status']!=1){
 		logCreate("register id:".$row['id']."|status:".$dt0['status'],'info');
+		echo "(failed) status reg_id:{$reg_id}. =".$dt0['status'];
 		continue;
 	}
 	else{
 		logCreate("register id:".$row['id']."|".json_encode($dt0));	
-	
+		echo "status reg_id:{$reg_id}. =".$dt0['status'];
 	}
 	
 	$email=trim($dt0['email']);
@@ -33,12 +36,15 @@ foreach($register as $row){
 	
 	if($account!==false||trim($email)==''){ //
 		logCreate("register delete ($email) (empty):".print_r($account,1));
-		$this->forex->regisDelete($dt0['email']);//die('--<pre>'.print_r($dt0,1).print_r($account,1));		
+		$this->forex->regisDelete($dt0['email']);
+		echo "status reg_id:{$reg_id}. email:".$email;
+		//die('--<pre>'.print_r($dt0,1).print_r($account,1));		
 		continue;
 		
 	}
 	else{ 
 		logCreate("register email:($email)");
+		echo "register reg_id:{$reg_id}. email:".$email;
 		if($email===NULL) logCreate("register email:(NULL)");
 	}
 //	die('email??:'.$email.print_r($account,1) );
@@ -86,7 +92,8 @@ foreach($register as $row){
 		else{
 			$result0= _runApi($url );
 		}
-*/		
+*/
+	echo "run register param total:".count($param);
 	$result0= _runApi($url );
 	if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
 		$result=(array)$result0['data'];
@@ -96,7 +103,8 @@ foreach($register as $row){
 	}
 
 	if(isset($result['responsecode'])&& ((int)$result['responsecode']==7||(int)$result['responsecode']==5||(int)$result['responsecode']==2) ){
-		logCreate("agent bermasalah?:".print_r($result ,1)); 
+		logCreate("agent bermasalah?:".print_r($result ,1));
+		echo "\nagent bermasalah?:".$result['responsecode'];
 		//=================send
 	   $url=$this->forex->forexUrl('register');
 	
@@ -125,9 +133,11 @@ foreach($register as $row){
 	   if(isset($result0['status'])&&isset($result0['code'])&&$result0['status']==1&&$result0['code']==9){
 		$result=(array)$result0['data'];
 		logCreate("agent bermasalah V1 result:".print_r($result,1)); 
+		echo "\nagent bermasalah(2)?:".$result['responsecode'];
 	   }
 	   else{
 		$result=$result0;
+		echo "\nagent bermasalah(3)?:".$result['responsecode'];
 		logCreate("agent bermasalah?"); logCreate("agent bermasalah v2 result:".print_r($result,1)); 
 	   }
 	}
@@ -140,7 +150,8 @@ foreach($register as $row){
 */	
 	if(isset($result['responsecode'])&&(int)$result['responsecode']==8){
 //		logCreate("delete Respon code 8");
-//		$this->forex->regisDelete($dt0['email'],8); 
+//		$this->forex->regisDelete($dt0['email'],8);
+		echo "\nregister bermasalah?:".$result['responsecode'];
 		continue;
 	}
 	
@@ -161,7 +172,8 @@ foreach($register as $row){
 		logCreate("update allow result:".print_r($result0,1));
 		
 		$id=$this->forex->accountActivation($row['id'],$result);
-		$arr['accountActivation']=$id; 
+		$arr['accountActivation']=$id;
+		echo "\nactivasi :".json_encode($result0);
  
 	}
 	else{ 
@@ -171,13 +183,14 @@ foreach($register as $row){
 		logCreate('register member |num:'.$num.' |message:'.lang('resApi_'.$num),'error');
 		logCreate('register member |url:'.$this->forex->forexUrl().'|respon:'.print_r($result,1).'|url:'.$url, 
 			'error');
+		echo "\nactivasi Bermasalah?:".json_encode($result);
 		
 	}
-	
+	echo "\nregister end (next)" ;
 	$arr['result']=$result;	
 	$data[]=$arr;
 }
-
+	echo "\nregister end (next)" ;
 
 $succes=true;
 
