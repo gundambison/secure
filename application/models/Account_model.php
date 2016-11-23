@@ -580,8 +580,14 @@ Daftar Fungsi Yang Tersedia :
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
 
-		$tmp= _runApi($url );
-		logCreate('account balance:'.json_encode($tmp));
+		$tmp= false;//_runApi($url );
+		if($tmp==false){			
+			logCreate('NO account balance:'.json_encode($param));
+		}
+		else{
+			logCreate('account balance:'.json_encode($tmp));
+		}
+		
 		if(!is_array($tmp))$tmp=(array)$tmp;
 		if(isset($tmp['balance'])){
 			logCreate('url:'.$url.'| respon:'.json_encode($tmp));
@@ -598,7 +604,7 @@ Daftar Fungsi Yang Tersedia :
 			return $tmp['balance'];
 		}
 		else{
-			logCreate('url:'.$url.'| Failed| respon:'.json_encode($tmp));
+		//	logCreate('url:'.$url.'| Failed| respon:'.json_encode($tmp));
 		}
 		return 0;
 		
