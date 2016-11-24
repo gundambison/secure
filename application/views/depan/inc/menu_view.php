@@ -26,6 +26,16 @@
                     <li><a href="<?=base_url('deposit-form');?>"><span class="glyphicon glyphicon-import"></span> <span class="small">Deposit</span></a></li>
                     <li><a href="<?=base_url('widtdrawal-form');?>"><span class="glyphicon glyphicon-export"></span> <span class="small">Withdrawal</span></a></li>
                 </ul>
+<script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+<div id="SkypeButton_Call_sfx.partnership_1">
+ <script type="text/javascript">
+ Skype.ui({
+ "name": "dropdown",
+ "element": "SkypeButton_Call_sfx.partnership_1",
+ "participants": ["sfx.partnership"]
+ });
+ </script>
+</div>
             </div>
         </div>
     </div>
