@@ -580,7 +580,7 @@ Daftar Fungsi Yang Tersedia :
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
 
-		$tmp= false;//_runApi($url );
+		$tmp= _runApi($url ); //request
 		if($tmp==false){			
 			logCreate('NO account balance:'.json_encode($param));
 		}
@@ -605,6 +605,15 @@ Daftar Fungsi Yang Tersedia :
 		}
 		else{
 		//	logCreate('url:'.$url.'| Failed| respon:'.json_encode($tmp));
+			$data = array(
+				'username' => $accountid,
+				'detail'  => json_encode($tmp),
+				'balance'  =>  0,
+				'expired'	=> $now_12
+			);
+
+			$sql = $this->db->set($data)->get_compiled_insert($this->tableAccountBalance);
+			dbQuery($sql);
 		}
 		return 0;
 		
