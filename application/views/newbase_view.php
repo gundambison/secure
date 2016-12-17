@@ -6,8 +6,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <?php 
 		$load_view=isset($baseFolder)?$baseFolder.'inc/head_view':'head_view';
 		$this->load->view($load_view);
+	  if(!defined('_DEV_')){
 ?>
 		<script src='https://www.google.com/recaptcha/api.js'></script>
+<?php } ?>
 		<link rel="shortcut icon" href="<?=$shortlink;?>media/img/salmaforex.png" />
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -16,9 +18,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-87922681-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
+    ga('send', 'pageview');
+ 
+ </script>
 	</head>
 <body>
 <?php 
@@ -120,6 +122,6 @@ try{
 catch(err) {
     console.log(err );
 }
-	</script>
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@ if(isset($title)){
 	echo $title;
 }
 else{
-?>HELLO WORLD<?php 
+?>Salmaforex<?php 
 } ?></title> 
 
 <?php 

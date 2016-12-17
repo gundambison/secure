@@ -367,7 +367,8 @@ Daftar Fungsi Yang Tersedia :
 		where email like '$email'";
 		$resDoc= dbFetchOne($sql);
 		$resDoc['account']=$res;
-		logCreate("account document id:$id |field:$field |FOUND:".$res['upload']);
+		if(isset($res['upload']))
+			logCreate("account document id:$id |field:$field |FOUND:".$res['upload']);
 		return $resDoc;
 	}
 
@@ -580,14 +581,8 @@ Daftar Fungsi Yang Tersedia :
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
 
-		$tmp= _runApi($url ); //request
-		if($tmp==false){			
-			logCreate('NO account balance:'.json_encode($param));
-		}
-		else{
-			logCreate('account balance:'.json_encode($tmp));
-		}
-		
+		$tmp= _runApi($url );
+		logCreate('account balance:'.json_encode($tmp));
 		if(!is_array($tmp))$tmp=(array)$tmp;
 		if(isset($tmp['balance'])){
 			logCreate('url:'.$url.'| respon:'.json_encode($tmp));
@@ -604,16 +599,7 @@ Daftar Fungsi Yang Tersedia :
 			return $tmp['balance'];
 		}
 		else{
-		//	logCreate('url:'.$url.'| Failed| respon:'.json_encode($tmp));
-			$data = array(
-				'username' => $accountid,
-				'detail'  => json_encode($tmp),
-				'balance'  =>  0,
-				'expired'	=> $now_12
-			);
-
-			$sql = $this->db->set($data)->get_compiled_insert($this->tableAccountBalance);
-			dbQuery($sql);
+			logCreate('url:'.$url.'| Failed| respon:'.json_encode($tmp));
 		}
 		return 0;
 		
