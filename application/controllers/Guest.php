@@ -38,7 +38,7 @@ Daftar Fungsi Yang Tersedia :
 			$this->param['agent']=$num!=''?$num:'';
 		}
 		$this->param['showAgent']=true;
-		$this->param['title']='LOGIN SECURE AREA';//-- 
+		$this->param['title']='Open Live Account';//-- 
 		if(!isset($this->param['formTitle'])) 
 			$this->param['formTitle']=$this->param['title'];
 		$this->param['content']=array(

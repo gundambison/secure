@@ -65,7 +65,7 @@ Daftar Fungsi Yang Tersedia :
 			//exit('file:'.$url);
 			redirect(site_url('member/profile'));
 		}
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='UPLOAD DOCUMENT'; 
 		$this->param['content']=array(
 				'detailUpload', 
 		);
@@ -285,7 +285,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	function withdrawal($status=null){
 		$this->checkLogin();
-		$this->param['title']='Secure Account | Widtdrawal ';
+		$this->param['title']='Secure Account | Withdrawal ';
 		$this->param['content']=array();
 		if($status=='done'){
 			$info=$this->session->flashdata('info');
