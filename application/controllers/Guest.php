@@ -38,7 +38,7 @@ Daftar Fungsi Yang Tersedia :
 			$this->param['agent']=$num!=''?$num:'';
 		}
 		$this->param['showAgent']=true;
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='LOGIN SECURE AREA';//-- 
 		if(!isset($this->param['formTitle'])) 
 			$this->param['formTitle']=$this->param['title'];
 		$this->param['content']=array(
@@ -57,7 +57,7 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['showAgent']=false;
 		$this->param['showForm']=false;
 		
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='OPEN PATNER ACCOUNT'; 
 		if(!isset($this->param['formTitle'])) 
 			$this->param['formTitle']=$this->param['title'];
 		$this->param['content']=array(
@@ -98,7 +98,8 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	public function recover($id=0){
-		$this->param['title']='Recover your Live Account'; 
+		$this->param['title']='Recover your Live Account';
+		$this->param['title']='Recover your Secure Account';
 		$this->param['content']=array(
 			'modal',
 			'recover', 

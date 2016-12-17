@@ -103,7 +103,7 @@ Daftar Fungsi Yang Tersedia :
 			}
 		}
 		else{ 
-			$this->param['title']='OPEN LIVE ACCOUNT'; 
+			$this->param['title']='EDIT SECURE ACCOUNT'; 
 			$this->param['content']=array(
 				'detailEdit', 
 			);
@@ -156,7 +156,7 @@ Daftar Fungsi Yang Tersedia :
 			redirect(base_url('member/logout'));//echo '<pre>';print_r($data);die();
 		}
 		
-		$this->param['title']='Edit Password'; 
+		$this->param['title']='Secure Account | PASSWORD Edit'; 
 		$this->param['content']=array(
 			'passwordEdit', 'modal'
 		);
@@ -168,7 +168,7 @@ Daftar Fungsi Yang Tersedia :
 	public function forgot(){
 		redirect('guest/forgot');
 
-		$this->param['title']='Recover your Live Account'; 
+		$this->param['title']='Recover your Secure Account'; 
 		$this->param['content']=array(
 			'modal',
 			'forgot', 
@@ -179,7 +179,7 @@ Daftar Fungsi Yang Tersedia :
 	
 	public function recover($id=0){
 		redirect('guest/recover/'.$id);
-		$this->param['title']='Recover your Live Account'; 
+		$this->param['title']='Recover your Secure Account'; 
 		$this->param['content']=array(
 			'modal',
 			'recover', 
@@ -228,7 +228,7 @@ Daftar Fungsi Yang Tersedia :
 	public function history($status='none'){	
 		$this->checkLogin();
 		$this->param['content']=array();
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='OPEN SECURE HISTORY'; 
 		$this->param['content'][]='history' ;
 		$this->param['content'][]='modal' ;
 		$this->param['footerJS'][]='js/login.js';
@@ -272,7 +272,7 @@ Daftar Fungsi Yang Tersedia :
 			exit();
 		}
 		else{ 
-			$this->param['title']='OPEN LIVE ACCOUNT'; 
+			$this->param['title']='Secure Account | Deposit '; 
 			$this->param['content'][]='deposit' ;
 		}
 		$this->param['footerJS'][]='js/login.js';
@@ -285,7 +285,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	function withdrawal($status=null){
 		$this->checkLogin();
-		$this->param['title']='OPEN LIVE ACCOUNT';
+		$this->param['title']='Secure Account | Widtdrawal ';
 		$this->param['content']=array();
 		if($status=='done'){
 			$info=$this->session->flashdata('info');
@@ -359,7 +359,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	public function login(){
 		redirect(base_url('forex'),1);
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='LOGIN SECURE ACCOUNT'; 
 		$this->param['content']=array(
 			'modal',
 			'login', 
@@ -381,7 +381,7 @@ Daftar Fungsi Yang Tersedia :
 	
 	public function profile(){
 		$this->checkLogin();
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='SECURE ACCOUNT | Profile'; 
 		$this->param['content']=array(
 			'detail', 
 		);
@@ -394,7 +394,7 @@ Daftar Fungsi Yang Tersedia :
 		logCreate('cek login');
 		$this->checkLogin();
 		logCreate('cek login OK');
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='SECURE ACCOUNT | Dashboard';
 		$this->param['content']=array( 'welcome');
 		
 		$this->param['footerJS'][]='js/login.js';
@@ -407,7 +407,7 @@ Daftar Fungsi Yang Tersedia :
 			$this->checkLogin();
 //		}
 
-		$this->param['title']='List API'; 
+		$this->param['title']='Secure Admin | '.$type; 
 		$this->param['content']=array(
 			'modal',			
 		) ;
@@ -435,7 +435,7 @@ Daftar Fungsi Yang Tersedia :
 			redirect(base_url('member/tarif'));
 			exit();
 		}else{}
-		$this->param['title']='Tarif'; 
+		$this->param['title']='Salma forex | Tarif'; 
 		$this->param['content']=array(
 			'modal',
 			'tarif', 
@@ -593,7 +593,8 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['baseFolder']='depan/';
 		$this->param['noBG']=true;
 		$this->folderUpload = 'media/uploads/';
-		logCreate('start controller member'); 
+		logCreate('start controller member');
+		$this->param['title']='Secure Area';
 		
 		/*
 		if($this->input->post())
