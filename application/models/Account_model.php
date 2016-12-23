@@ -581,7 +581,7 @@ Daftar Fungsi Yang Tersedia :
 		$url=$this->forex->forexUrl('updateBalance');
 		$url.="?".http_build_query($param);
 
-		$tmp= _runApi($url );
+		$tmp= false;//_runApi($url );
 		logCreate('account balance:'.json_encode($tmp));
 		if(!is_array($tmp))$tmp=(array)$tmp;
 		if(isset($tmp['balance'])){
