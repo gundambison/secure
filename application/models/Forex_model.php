@@ -34,6 +34,7 @@ public $tableAdmin='mujur_admin';
 public $tablePrice='mujur_price';
 public $tableFlowlog='mujur_flowlog';
 public $tableAPI='mujur_api';
+public $tablepings='site_ping';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 
@@ -627,6 +628,44 @@ email double diperbolehkan
 		return $data; 
 	}
 //=====================================
+	public function pingFailed($url, $tmp=array()){
+		$response=(array) $tmp;
+		$dt=array(
+			'url'=>trim($url),
+			'status'=>-1,
+			'detail'=>json_encode($response),
+			'error'=>isset($response['message'])?$response['message']:''
+		);
+		$sql=$this->db->insert_string($this->tablepings, $dt);
+		dbQuery($sql);
+	}
+	public function pingSuccess($url, $tmp=array() ){
+		$response=(array) $tmp;
+		$dt=array(
+			'url'=>trim($url),
+			'status'=>1,
+			'detail'=>json_encode($response),
+		//	'message'=>isset($response['message'])?$response['message']:''
+		);
+		$sql=$this->db->insert_string($this->tablepings, $dt);
+		dbQuery($sql);
+	}
+	public function userDocumentRefill(){
+		$sql="INSERT INTO  `mujur_accountdocument` (
+ 
+`email` ,
+`status` ,
+`upload` ,
+`filetype` ,
+`modified`
+)
+
+select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', '2016-01-01 17:02:50' 
+from mujur_account a left join mujur_accountdocument ad on a.email=ad.email where ad.id is null and a.email like '%@%' ";
+		dbQuery($sql);
+		return true;
+	}
+
 		public function __construct(){
             $this->load->database();
 			$this->load->dbforge();
@@ -688,6 +727,26 @@ email double diperbolehkan
 				$str = $this->db->last_query();			 
 				logConfig("create table:$str");
 				$this->db->reset_query();	
+			}
+//==========Menambah $this->tablepings
+			if(!$this->db->table_exists($this->tablepings)){
+				$fields=array(
+					'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE), 		   
+				  'url'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '250'),
+				  'detail'=>array( 'type' => 'text'),
+				  'error'=>array( 'type' => 'text'),
+				  'status'=>array( 'type' => 'int'),
+				  'created'=>array( 'type' => 'timestamp'),
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table($this->tablepings,TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();
 			}
 //==========Menambah mujur_api
 			if(!$this->db->table_exists('mujur_api')){
