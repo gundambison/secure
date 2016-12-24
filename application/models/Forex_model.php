@@ -645,6 +645,7 @@ email double diperbolehkan
 			'url'=>trim($url),
 			'status'=>1,
 			'detail'=>json_encode($response),
+			'error'=>' '
 		//	'message'=>isset($response['message'])?$response['message']:''
 		);
 		$sql=$this->db->insert_string($this->tablepings, $dt);
