@@ -55,7 +55,7 @@ if(defined('_DEV_')){
 if(!isset($db['default'])){
 	$db['default'] = array(
 		'dsn'	=> '',
-		'hostname' => '31.220.56.227',
+		'hostname' => '93.188.164.21',
 		'username' => 'mujur_salma',
 		'password' => 'mujur!salma227',
 		'database' => 'mujur_salma',
@@ -79,6 +79,11 @@ if(!isset($db['default'])){
 		'username' => 'u429780871_forex',
 		'password' => '|V4CMBo6mj',
 		'database' => 'u429780871_forex',
+//===========================
+		'hostname' => '31.220.56.227',
+		'username' => 'mujur_salma',
+		'password' => 'mujur!salma227',
+		'database' => 'mujur_salma',
 */		
 }
 
