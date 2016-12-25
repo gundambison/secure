@@ -120,8 +120,8 @@ class Runonce extends CI_Controller {
 
 		}
 				$param=array(
-		'http://lms.lkpp.sitex/',
-		'http://salmaforex.com/ping',
+		//'http://lms.lkpp.sitex/',
+		'http://salmaforex.com/',
 		'http://sukses.salmaforex.com/',
 		'http://serversaga.salmaforex.com/'
 		);
