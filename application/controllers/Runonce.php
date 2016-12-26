@@ -148,7 +148,7 @@ class Runonce extends CI_Controller {
 	}
 
 	function __CONSTRUCT(){
-	parent::__construct(); 		
+	parent::__construct();
 		date_default_timezone_set('Asia/Jakarta');
 		$this->param['today']=date('Y-m-d');
 		$this->param['folder']='depan/';
