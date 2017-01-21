@@ -18,8 +18,9 @@ Daftar Fungsi Yang Tersedia :
 *	__CONSTRUCT()
 *	fake($status='none')
 ***/
+require APPPATH.'/libraries/SmtpApi.php';
 class Forex extends CI_Controller {
-	public $param;	
+	public $param,$oApi;	
 	public function registerApi($stat=1){
 		log_message('info','register Api in session');
 		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
@@ -352,6 +353,9 @@ class Forex extends CI_Controller {
 		 
 		if($this->input->post())
 			logCreate($this->input->post(),'post');
+		
+		$sPubKey= $this->config->item('sendpulse_pubkey');
+		$this->oApi = new SmtpApi($sPubKey);
 	}
 	
 	public function fake($status='none')
@@ -401,7 +405,49 @@ class Forex extends CI_Controller {
 			echo "no respond";
 		}
 	}
+	public function test_email(){
+		$oApi = $this->oApi;
+		$from= $this->config->item('email_from');
 
+    $aEmail = array(
+        'html' => '<p>Hello world. ini cuma testing</p>',
+        'text' => 'Hello world. ini cuma testing',
+        'encoding' => 'UTF-8',
+        'subject' => 'judul ada disini',
+        'from' => array(
+            'name' => $from['name'],
+            'email' => $from['email'],
+        ),
+        'to' => array(
+            array(
+                'email' => 'gundambison@gmail.com'
+            ),
+        )
+/*		,
+        'bcc' => array(
+            array(
+                'name' => 'Recipient Name',
+                'email' => 'recipient3@example.com'
+            ),
+            array(
+                'email' => 'recipient4@example.com'
+            ),
+        ), */
+    );
+//	echo '<pre>'.print_r($aEmail,1);die();
+    $res = $oApi->send_email($aEmail);
+	var_dump($res);
+    if ($res['error']){ // check if operation succeeds
+		logCreate('email test gagal');
+        die('Error: ' . $res['text']);
+    } else {
+		logCreate('email test berhasil');
+        // success
+		echo 'berhasil<pre>'.print_r($res,1).print_r($aEmail,1);
+    }
+
+
+	}
 	function email_send(){
 		$target="media/email";
 		$max=100;
@@ -428,6 +474,7 @@ class Forex extends CI_Controller {
 							$OK=$n<$max?true:false;
 
 						if($OK){
+							
 							@mail(trim($json['to']), $json['subject'], $json['message'], $json['headers']);
 							echo '|send email';
 							$n++;
