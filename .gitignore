@@ -1,5 +1,6 @@
 application/config/database.php
 application/config/config.php
+application/config/forexConfig_new.php
 
 */config/development
 */logs/log-*.php

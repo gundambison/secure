@@ -54,3 +54,4 @@ BRI : 10700.1000.1953.04 a.n Yadi Supriyadi
 MANDIRI : 1300023231999 a.n PT. Salma Widyatama Mandiri
 BNI : 3012123020 a.n PT. Salma Widyatama Mandiri
 */
+$config['sendpulse_pubkey']='';

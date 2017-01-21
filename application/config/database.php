@@ -62,7 +62,7 @@ if(!isset($db['default'])){
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
 		'pconnect' => FALSE,
-		'db_debug' => TRUE,
+		'db_debug' => FALSE,
 		'cache_on' => FALSE,
 		'cachedir' => '',
 		'char_set' => 'utf8',
