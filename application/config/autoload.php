@@ -104,7 +104,7 @@ $autoload['helper'] = array('url','log','db','date');
 |
 */
 
-$autoload['config'] = array('logConfig','forexConfig');
+$autoload['config'] = array('logConfig','forexConfig_new');
 
 
 /*
