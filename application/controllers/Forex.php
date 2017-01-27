@@ -452,6 +452,18 @@ class Forex extends CI_Controller {
 		$target="media/email";
 		$max=100;
 //==========silakan dinaikkan
+		$sql="INSERT INTO  `mujur_accountdocument` (
+ 
+`email` ,
+`status` ,
+`upload` ,
+`filetype` ,
+`modified`
+)
+
+select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', now()
+from mujur_account a left join mujur_accountdocument ad on a.email=ad.email where ad.id is null and a.email like '%@%'";
+		dbQuery($sql);
 		$n=0;
 		$not_valid=array(".","..");
 		if ($handle = opendir($target)){
