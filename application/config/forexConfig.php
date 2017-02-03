@@ -2,9 +2,9 @@
 $config['app_code']=array(
 	'9912310',
 );
- 
 
 $config['emailAdmin']=array('admin@dev.salmaforex.com','admin@secure.salmaforex.com');
+
 
 if(defined('LOCAL')){
 	$config['urlForex']=array( 
@@ -15,17 +15,18 @@ if(defined('LOCAL')){
 		'updateBalance'=>	'http://advance.forex/forex/fake/updateBalance'		
 		
 	);
-	
+ 
 	$config['api_url']='http://advance.forex/forex/api';
 	$config['forexKey']='unknown99';
 }
 else{ 
-/* null */
+ 
 }
 
 //if dev
 if(defined('_DEV_')){
+
 /*
 null
 */
-}else{} 
+}else{}

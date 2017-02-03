@@ -166,12 +166,22 @@ ACCOUNT
 SEMUA dipindah ke model ACCOUNT
 ***/	 
 	function accountRecover($detail=false){
+<<<<<<< HEAD
 		if($detail==false){			
+=======
+		if($detail==false){
+			
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			return true;
 		}
 	}
 	
+<<<<<<< HEAD
 	function accountCreate($id,$raw=''){
+=======
+	function accountCreate($id,$raw='')
+	{
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		$reg_id=$id;
 		$detail=$this->regisDetail( $reg_id );
 		if(defined('LOCAL')){
@@ -190,16 +200,26 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("register id:$id |detail:".print_r($detail,1));
 		if(!isset($detail['detail']['statusMember']))
 			$detail['detail']['statusMember']='MEMBER';
+<<<<<<< HEAD
 			logCreate("register id:$id |raw:".print_r($raw,1));		
 		$full_name=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'';
 		$full_name.=" ". (isset($detail['detail']['lastname'])?$detail['detail']['lastname']:'');
+=======
+		logCreate("register id:$id |raw:".print_r($raw,1));
+		
+		
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		$dt=array(
 			'reg_id'=>$id,
 			'username'=> $raw['accountid'],
 			'investorpassword'=>md5( trim($raw['investorpassword']) ),
 			'masterpassword'=>md5( trim($raw['masterpassword']) ),
 			'accountid'=>$raw['accountid'],
+<<<<<<< HEAD
 			'email'=>trim($detail['email']),
+=======
+			'email'=>$detail['email'],
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			'type'=>strtoupper($detail['detail']['statusMember']),
 			//'raw'=>$raw,
 			//'activation'=>base64_encode($raw),
@@ -213,11 +233,15 @@ SEMUA dipindah ke model ACCOUNT
 		if($dt2['max'] > (int)$accid){
 			$accid=$dt2['max'];
 		}
+<<<<<<< HEAD
 */
+=======
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		$dt['id']=$acc_id=$accid+1;
 		$sql="select count(id) tot from {$this->tableAccount} where reg_id='$reg_id'";
 		$rawAccount=dbFetchOne($sql);
 	//apabila ada reg_id yang sama maka cancel	
+<<<<<<< HEAD
 		if((int)$reg_id!=0&&$rawAccount['tot']!=0){
 			logCreate("register not continue account exist:".json_encode($rawAccount)."| {$sql}");
 			return false;
@@ -248,12 +272,22 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("register accid(1):".$raw['accountid']);
 		$dataRaw = $this->account->detail($raw['accountid'],'accountid');
 		logCreate("register accid(2):".$acc_id);
+=======
+		if($rawAccount['tot']!=0){
+			logCreate("register not continue account exist:".json_encode($rawAccount));
+			return false;
+		}
+		$sql=$this->db->insert_string($this->tableAccount,$dt);
+		dbQuery($sql,1);
+		$dataRaw = $this->account->detail($raw['accountid'],'accountid');
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		$dataRaw = $this->account->detail($acc_id);
 		
 //===========Account Detail  
 		$dt=array(
 			'id'=>$accid,
 			'username'=>$dataRaw['accountid'],
+<<<<<<< HEAD
 			'detail'=>addslashes(json_encode($detail['detail'])),
 		);
 		
@@ -263,6 +297,17 @@ SEMUA dipindah ke model ACCOUNT
 		
 		$sql=$this->db->insert_string($this->tableAccountDetail, $dt);
 		$data=dbQuery($sql);
+=======
+			'detail'=>json_encode($detail['detail']), 
+		);
+		
+		logCreate("hapus detail sebelumnya:". $dataRaw['accountid']);
+		$sql="delete from $this->tableAccountDetail where username like '{$dataRaw['accountid']}'";
+		dbQuery($sql,0);
+		
+		$sql=$this->db->insert_string($this->tableAccountDetail, $dt);
+		
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		$sql="select id from {$this->tableActivation} where userid=$id and status!=1";
 		$data=dbFetch($sql);
 		logCreate('Close Old Activation:'.json_encode($data) );
@@ -274,6 +319,7 @@ SEMUA dipindah ke model ACCOUNT
 		$data = array('reg_status' => 0);
 		$where = "reg_id=$id";
 		$sql = $this->db->update_string($this->tableRegis, $data, $where);
+<<<<<<< HEAD
 		dbQuery($sql);
 		//===========UPDATE ACCOUNT
 		//===============Change Password===============		
@@ -282,10 +328,21 @@ SEMUA dipindah ke model ACCOUNT
 //		logCreate('change password :'.json_encode($data));
 		$invPass=trim($raw['investorpassword']);//$data[0]['password'];
 		$masterPass=trim($raw['masterpassword']);//$data[1]['password'];
+=======
+		dbQuery($sql,1);
+		//===========UPDATE ACCOUNT
+		//===============Change Password===============		
+		$sql="select password from {$this->tablePassword} order by rand() limit 2";
+		$data=dbFetch($sql);
+		logCreate('change password :'.json_encode($data));
+		$invPass=$data[0]['password'];
+		$masterPass=$data[1]['password'];
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		
 		$param=array( );
 		$param['privatekey']	=$this->forex->forexKey();
 		$param['accountid']=(int)$raw['accountid'];
+<<<<<<< HEAD
 //		$param['masterpassword']=$masterPass;//.($raw['accountid']%100000 +19939);
 //		$param['investorpassword']=$invPass;//.($raw['accountid'] %100000 +19919);
 		$param['allowlogin']=1;
@@ -296,6 +353,20 @@ SEMUA dipindah ke model ACCOUNT
 		$full_name=substr($full_name,0,126);
 		$param['username']= $full_name;
 //		isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?utf8_encode("{$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
+=======
+		$param['masterpassword']=$masterPass.($raw['accountid']%100000 +19939);
+		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919);
+		$param['allowlogin']=1;
+		$param['allowtrading']=1;
+		
+		$param['username']=isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?utf8_encode("{$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
+		
+		$param['address']=isset($detail['detail']['address'])?$detail['detail']['address']:"";
+		$param['country']=isset($detail['detail']['country']['name'])?$detail['detail']['country']['name']:"";
+		$param['zipcode']=isset($detail['detail']['zipcode'])?$detail['detail']['zipcode']:"";
+		$param['phone']=  isset($detail['detail']['phone'])?$detail['detail']['phone']:"";
+		$param['email']=  isset($detail['email'])?$detail['email']:"";
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		
 		$url=$this->forex->forexUrl('update');
 		$url.="?".http_build_query($param);
@@ -349,9 +420,14 @@ SEMUA dipindah ke model ACCOUNT
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
 		$param2['accountType']=$detail['detail']['statusMember'];	
+<<<<<<< HEAD
 		echo '<div>KIRIM EMAIL</div>';
 		$this->load->view('depan/email/emailRegister_view',$param2);
 		*/
+=======
+		$this->load->view('member/email/emailRegister_view',$param2);
+		
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 	}
 
 	function accountDetail($id,$field='id'){
@@ -359,7 +435,11 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("accountDetail id:$id|field:$field");
 		
 		$id=addslashes(trim($id));
+<<<<<<< HEAD
 		if($field=='email')$id=trim($id)."%";
+=======
+		if($field=='email')$id.="%";
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		
 		$sql="select count(id) c from `{$this->tableAccount}`  where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
@@ -415,6 +495,10 @@ ACTIVATION
 ***/	
 	function accountActivation($id,$raw0){
 		logCreate('create activation :'.$id." raw:".print_r($raw0,1));
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		$sql="select reg_id id from {$this->tableRegis} where reg_id like '$id'";
 		$row= $this->db->query($sql)->row_array();
 		$idActive=sprintf("%s%05s",dbId('activation', 200005),$row['id']);
@@ -533,7 +617,12 @@ REGISTER
 		dbQuery($sql,1);
 	}
 	
+<<<<<<< HEAD
 	function saveData($data, &$message){
+=======
+	function saveData($data, &$message)
+	{
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		if(isset($data['agent'])){
 			$agent=trim($data['agent']);
 			unset($data['agent']);
@@ -569,6 +658,7 @@ email double diperbolehkan
 		dbQuery($sql);
 		$message='Your account successfull registered';
 		return true;
+<<<<<<< HEAD
  
 	}
 	
@@ -626,6 +716,9 @@ email double diperbolehkan
 		$this->db->where('id',$id);
 		$data=$this->db->get($this->tableAPI)->row_array();
 		return $data; 
+=======
+		
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 	}
 //=====================================
 	public function pingFailed($url, $tmp=array()){

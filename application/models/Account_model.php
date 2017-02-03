@@ -8,8 +8,11 @@ public $tableWorld='mujur_country';
 public $tableAccount='mujur_account';
 public $tableAccountRecover='mujur_accountrecover';
 
+<<<<<<< HEAD
 public $tableAccountDocument='mujur_accountdocument';
 public $tableAccountBalance='mujur_accountbalance';
+=======
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 public $tableAccountDetail='mujur_accountdetail';
 public $tableActivation='mujur_activation';
 public $tablePassword='mujur_password';
@@ -19,6 +22,7 @@ public $tableFlowlog='mujur_flowlog';
 public $tableAPI='mujur_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
+<<<<<<< HEAD
 /***
 Daftar Fungsi Yang Tersedia :
 *	newAccountWithoutPassword()
@@ -40,6 +44,8 @@ Daftar Fungsi Yang Tersedia :
 		where masterpassword='' limit 4;";
 		return dbFetch($sql);
 	}
+=======
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 
 	function recoverId($id=0){		 
 		$now=date("Y-m-d H:i:s");
@@ -53,9 +59,13 @@ Daftar Fungsi Yang Tersedia :
 		where id='{$id}'";
 		$row=$this->db->query($sql)->row_array();
 		$raw=base64_decode($row['params']);
+<<<<<<< HEAD
 		
 		$source=isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'-';
 		$detail='click from :'.$source; 
+=======
+		$detail='click from :'.$_SERVER['HTTP_REFERER'];
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		$sql="update `{$this->tableAccountRecover}` 
 		set  detail='$detail' 
 		where id='$id'";
@@ -76,7 +86,11 @@ Daftar Fungsi Yang Tersedia :
 	
 	function recover($detail=false){
 		if($detail==false){
+<<<<<<< HEAD
 //=========Menambah Account Recover
+=======
+//=========Menambah Account Recover			
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			if(!$this->db->table_exists($this->tableAccountRecover)){
 				$fields = array(
 				  'id'=>array( 
@@ -93,6 +107,7 @@ Daftar Fungsi Yang Tersedia :
 				$str = $this->db->last_query();			 
 				logConfig("create table:$str");
 				$this->db->reset_query();	
+<<<<<<< HEAD
 			}else{}
 //==========Account Document
 			if(!$this->db->table_exists($this->tableAccountDocument)){
@@ -169,6 +184,9 @@ Daftar Fungsi Yang Tersedia :
 					$sql="ALTER TABLE `{$this->tableAccountDetail}` ADD `document` tinyint AFTER `detail`";
 					dbQuery($sql);
 				}
+=======
+			}else{}			
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			return true;
 		}
 		
@@ -275,6 +293,7 @@ Daftar Fungsi Yang Tersedia :
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
 		$param2['accountType']=$detail['accounttype'];
+<<<<<<< HEAD
 
 		$this->load->view('depan/email/emailRegister_view',$param2);
 		
@@ -400,12 +419,22 @@ Daftar Fungsi Yang Tersedia :
 		return true;
 	}
 	
+=======
+		$this->load->view('member/email/emailRegister_view',$param2);
+		
+	}
+
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 	function detail($id,$field='id'){
 	logCreate("account detail id:$id|field:$field");	
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
 		$sql="select count(id) c 
+<<<<<<< HEAD
 		from `{$this->tableAccount}`
+=======
+		from `{$this->tableAccount}`  
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
@@ -415,6 +444,7 @@ Daftar Fungsi Yang Tersedia :
 		
 		$sql="select a.* from `{$this->tableAccount}` a  		
 		where `{$field}` like '$id'";
+<<<<<<< HEAD
 		$res=dbFetchOne($sql);
 		logCreate("account detail FOUND","lokal");
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
@@ -426,25 +456,46 @@ Daftar Fungsi Yang Tersedia :
 			/*
 			if($okay2Rename){
 				logCreate("update rename:".json_encode($res));
+=======
+		$res=dbFetchOne($sql); 
+		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
+			logCreate("account detail id:$id|field:$field|update username |".json_encode($res),"info");
+			$sql="select count(id) c from `{$this->tableAccount}` where `username` = '{$res['accountid']}'";
+			$res0=dbFetchOne($sql,1);
+			$okay2Rename=$res0['c']==0?true:false;
+			if($okay2Rename){
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 				$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
 				dbQuery($sql);
 				$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);
+<<<<<<< HEAD
 				logCreate("acc_model detail update:rename [DONE]");
+=======
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			}
 			else{
 				logCreate("fail rename:".json_encode($res));
 				$sql="UPDATE {$this->tableAccount} SET `accountid` = '{$res['username']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);
 			}
+<<<<<<< HEAD
 			*/
+=======
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			$sql="select a.* from `{$this->tableAccount}` a  		
 			where `{$field}` like '$id'";
 			$res=dbFetchOne($sql); 
 		}
+<<<<<<< HEAD
 
 		$sql="select 
 		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid, a.status,
+=======
+		
+		$sql="select 
+		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid,
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
 		left join `{$this->tableAccountDetail}` ad 
 			on a.username like ad.username
@@ -453,15 +504,23 @@ Daftar Fungsi Yang Tersedia :
 		where a.`{$field}` like '$id'";
 		$data= dbFetchOne($sql);
 		if($data['accounttype']!='MEMBER'){
+<<<<<<< HEAD
 			logCreate("account detail |agent","info");
 			$agent=true;
 		}
 		else{
 			logCreate("account detail |member","info");
+=======
+			logCreate("account detail id:$id|field:$field|agent","info");
+			$agent=true;
+		}
+		else{ 
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			$agent=false;
 		}
 		
 		if($data['type']==7){
+<<<<<<< HEAD
 			logCreate("account detail |admin","info");
 			$data['type']='admin';
 		}
@@ -471,6 +530,11 @@ Daftar Fungsi Yang Tersedia :
 		}
 		else{
 			logCreate("account detail |other?","info");
+=======
+			$data['type']='admin';
+		}
+		else{
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			$data['type']=false;
 		}
 		
@@ -479,6 +543,7 @@ Daftar Fungsi Yang Tersedia :
 			$data['detail']=json_decode($data['raw'],true); 
 			unset($data['raw']);
 		}
+<<<<<<< HEAD
 //----document
 		logCreate("account document |start","info");
 		$documents=$this->document($id, $field);
@@ -608,6 +673,16 @@ Daftar Fungsi Yang Tersedia :
 	function detailRepair($data=array()){
 		$username=$data['username'];
 		$sql="select count(id) c  from `{$this->tableAccountDetail}` where `username`='$username'";
+=======
+		
+		return $data;
+	}
+	
+	function detailRepair($data=array()){
+		$username=$data['username'];
+		$sql="select count(id) c  from `{$this->tableAccountDetail}` 
+		where `username`='$username'";
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 		$res=dbFetchOne($sql);
 		if($res['c']==1){
 			return true;
@@ -615,13 +690,18 @@ Daftar Fungsi Yang Tersedia :
 		
 		if($data['reg_id']!=0){
 			$reg=$this->regisDetail($data['reg_id']);
+<<<<<<< HEAD
 			$detail=addslashes(json_encode($reg['detail']));
+=======
+			$detail=json_encode($reg['detail']);
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			$sql="insert into `{$this->tableAccountDetail}`(username,detail) 
 			values('$username','$detail')";
 			dbQuery($sql);
 		}else{}
 		return true;
 	}
+<<<<<<< HEAD
 	
 	function all_by_email($field='*'){
 		$sql="select {$field} from `{$this->tableAccount}` 
@@ -629,6 +709,8 @@ Daftar Fungsi Yang Tersedia :
 		order by modified";
 		return dbFetch($sql);
 	}
+=======
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 //=====================================
 		public function __construct()
         {

@@ -31,6 +31,7 @@ ob_start();
 			
 			$url=$this->forex->forexUrl('update');
 			$url.="?".http_build_query($param);
+<<<<<<< HEAD:application/views/depan/data/login_data.php
 			if(!defined('_DEV_')){	 
 				$result0= _runApi($url );
 				logCreate("update password result:".print_r($result0,1));
@@ -38,6 +39,15 @@ ob_start();
 			else{
 				logCreate("update password ke Sistem hanya di production");
 			}		
+=======
+		if(!defined('_DEV_')){	 
+			$result0= _runApi($url );
+			logCreate("update password result:".print_r($result0,1));
+		}
+		else{
+			logCreate("update password ke Sistem hanya di production");
+		}		
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/data/login_data.php
 			$sql = $this->db->update_string($this->forex->tableAccount, $data, $where);
 			dbQuery($sql,1); 
 			

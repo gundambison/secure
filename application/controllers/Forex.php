@@ -19,8 +19,10 @@ Daftar Fungsi Yang Tersedia :
 *	fake($status='none')
 ***/
 require APPPATH.'/libraries/SmtpApi.php';
+require APPPATH.'/libraries/phpmailer/PHPMailerAutoload.php';
+
 class Forex extends CI_Controller {
-	public $param,$oApi;	
+	public $param,$phpmailer;	
 	public function registerApi($stat=1){
 		log_message('info','register Api in session');
 		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
@@ -355,7 +357,8 @@ class Forex extends CI_Controller {
 			logCreate($this->input->post(),'post');
 		
 		$sPubKey= $this->config->item('sendpulse_pubkey');
-		$this->oApi = new SmtpApi($sPubKey);
+		//$this->oApi = new SmtpApi($sPubKey);
+		$this->phpmailer = new PHPMailer;
 	}
 	
 	public function fake($status='none')
@@ -406,46 +409,38 @@ class Forex extends CI_Controller {
 		}
 	}
 	public function test_email(){
-		$oApi = $this->oApi;
+		$mail = $this->phpmailer;
 		$from= $this->config->item('email_from');
+		$config= $this->config->item('smtp');
 
-    $aEmail = array(
-        'html' => '<p>Hello world. ini cuma testing</p>',
-        'text' => 'Hello world. ini cuma testing',
-        'encoding' => 'UTF-8',
-        'subject' => 'judul ada disini',
-        'from' => array(
-            'name' => $from['name'],
-            'email' => $from['email'],
-        ),
-        'to' => array(
-            array(
-                'email' => 'gundambison@gmail.com'
-            ),
-        )
-/*		,
-        'bcc' => array(
-            array(
-                'name' => 'Recipient Name',
-                'email' => 'recipient3@example.com'
-            ),
-            array(
-                'email' => 'recipient4@example.com'
-            ),
-        ), */
-    );
-//	echo '<pre>'.print_r($aEmail,1);die();
-    $res = $oApi->send_email($aEmail);
-	var_dump($res);
-    if ($res['error']){ // check if operation succeeds
-		logCreate('email test gagal');
-        die('Error: ' . $res['text']);
-    } else {
-		logCreate('email test berhasil');
-        // success
-		echo 'berhasil<pre>'.print_r($res,1).print_r($aEmail,1);
-    }
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = $config['host'];  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = $config['username'];                 // SMTP username
+		$mail->Password = $config['password'];                           // SMTP password
+		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = $config['port'];                                    // TCP port to connect to
 
+		$mail->setFrom('noreply@salmaforex.com', 'No Reply');
+	//	$mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
+		$mail->addAddress('gundambison@gmail.com');               // Name is optional
+		$mail->addReplyTo('noreply@salmaforex.com', 'No Reply');
+
+
+	//	$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+	//	$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = 'Here is the subject';
+		$mail->Body    = 'This is the HTML message body <b>in bold!</b>'.date("Y-m-d H:i:s");
+		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+		if(!$mail->send()) {
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			echo 'Message has been sent';
+		}
 
 	}
 	function email_send(){
@@ -461,7 +456,7 @@ class Forex extends CI_Controller {
 `modified`
 )
 
-select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', now()
+select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', '2016-01-01 17:02:50' 
 from mujur_account a left join mujur_accountdocument ad on a.email=ad.email where ad.id is null and a.email like '%@%'";
 		dbQuery($sql);
 		$n=0;

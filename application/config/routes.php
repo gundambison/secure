@@ -77,6 +77,7 @@ $route['recover/(:any)'] = "member/recover/$1";
 
 $route['send_email'] = "forex/email_send";
 
+
 $route['404_override'] = 'forex/error404';
 $route['translate_uri_dashes'] = FALSE;
 

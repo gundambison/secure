@@ -1,9 +1,15 @@
 <?php 
 ob_start();
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
 //var_dump($userlogin);
 $name=!isset($raw['name'])?$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']:$raw['name'];
 //$rate=$raw['rate'];
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+=======
+$name=!isset($post0['name'])?$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']:$post0['name'];
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -24,14 +30,15 @@ $name=!isset($raw['name'])?$userlogin['detail']['firstname']." ".$userlogin['det
               <p>Dear <?=$name;?>,</p>
               <p id="yui_3_16_0_1_1443010679159_2033">Thank you for submitting deposit form, Here your order deposit detail:.<br />
               </p>
-              <table border="1" align="center" id="yui_3_16_0_1_1450323941636_3312">
+              <table border="0" align="center" id="yui_3_16_0_1_1450323941636_3312">
                 <tbody id="yui_3_16_0_1_1450323941636_3311">
                   <tr id="yui_3_16_0_1_1450323941636_3324">
-                    <td width="363" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3323"><strong>Date</strong></td>
-                    <td width="337" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337"><strong>: <?=date("Y-m-d H:i:s");?></strong></td>
+                    <td width="276" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3323"><strong>Date</strong></td>
+                    <td width="419" bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3337"><strong>: </strong><?=date("Y-m-d H:i:s");?></td>
                   </tr>
                   <tr id="yui_3_16_0_1_1450323941636_3322">
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>Deposit to account</strong></td>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> <strong>: <?=$raw['accountid'];?></strong></td>
                   </tr>
                   <tr>
@@ -46,12 +53,19 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>: 
 					<?=$raw['phone'];?>
 					</strong></td>
+=======
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> <strong>: </strong>
+					<?=$post0['accountid'];?></td>
                   </tr>
-<?php 
-}
-?>
+                  <tr>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_"><strong>Name</strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>: </strong>
+					<?=$name;?></td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
+                  </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>Bank Name</strong></td>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: 
 					<?=$raw['bank'];?></strong></td>
                   </tr>
@@ -74,12 +88,38 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_11"><strong>Deposit Amount ( Rp )</strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_12"><strong>: Rp.
 					<?=number_format($raw['order1'],0);?></strong></td>
+=======
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_4"><strong>: </strong>
+					<?=$post0['bank'];?></td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_5"><strong>Account Bank Number</strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6"><strong>: </strong>
+					<?=$post0['norek'];?></td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_7"><strong>Account Bank Holder</strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_8"><strong>: </strong><?=$post0['namerek'];?></td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_9"><strong>Deposit Amount ( USD )</strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_10"><strong>: </strong>$ <?=number_format($post0['orderDeposit'],0);?></td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_11"><strong>Deposit Amount ( Rp )</strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_12"><strong>: </strong>Rp. <?=number_format($post0['order1'],0);?></td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
                   </tr>
                   <!--tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_13"><strong>Rate</strong></td>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_14"><strong>: Rp. 
 					<?=number_format($rate['value']);?></strong></td>
                   </tr-->
+=======
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_14"><strong>: </strong>Rp. <?=number_format($rate);?></td>
+                  </tr>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
                 </tbody>
             </table>
               <p><br />
@@ -108,6 +148,7 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
         <table width="750" border="0" cellspacing="0" cellpadding="0">
           <tbody>
             <tr>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
               <td width="373" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44"></td>
               <td width="10" bgcolor="#FFFFFF"> </td>
               <td width="367" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44"></td>
@@ -116,6 +157,16 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
               <td align="center" bgcolor="#E9EAEC"> </td>
               <td bgcolor="#FFFFFF"> </td>
               <td valign="top" bgcolor="#EAE9EE"> </td>
+=======
+              <td width="373" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44" /></td>
+              <td width="10" bgcolor="#FFFFFF"> </td>
+              <td width="367" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44" /></td>
+            </tr>
+            <tr>
+              <td align="center" bgcolor="#E9EAEC"> </td>
+              <td bgcolor="#FFFFFF"> </td>
+              <td valign="top" bgcolor="#EAE9EE"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
             </tr>
             <tr>
               <td align="center" bgcolor="#E9EAEC"><table width="340" border="0" cellpadding="2" cellspacing="2">
@@ -129,12 +180,21 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
                       <a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26"></a></td>
                   </tr>
                   <tr>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
                     <td> </td>
                     <td align="left" valign="top"> </td>
                   </tr>
                 </tbody>
               </table></td>
               <td bgcolor="#FFFFFF"> </td>
+=======
+                    <td> </td>
+                    <td align="left" valign="top"> </td>
+                  </tr>
+                </tbody>
+              </table></td>
+              <td bgcolor="#FFFFFF"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
               <td rowspan="3" align="center" valign="top" bgcolor="#E9EAEC"><table width="340" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
                   <tr>
@@ -149,23 +209,39 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
                             <a href="https://www.salmaforex.com/about-us/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26"></a></td>
                         </tr>
                         <tr>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
                           <td bgcolor="#E9EAEC"> </td>
                           <td align="left" valign="top" bgcolor="#E9EAEC"> </td>
+=======
+                          <td bgcolor="#E9EAEC"> </td>
+                          <td align="left" valign="top" bgcolor="#E9EAEC"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
                         </tr>
                       </tbody>
                     </table></td>
                   </tr>
                   <tr>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
                     <td bgcolor="#E9EAEC"> </td>
+=======
+                    <td bgcolor="#E9EAEC"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
                   </tr>
                   <tr>
                     <td bgcolor="#E9EAEC"><img src="https://ci3.googleusercontent.com/proxy/BRAZITFgWtlYXFkiXRtSaScf85waxMn_t8WFNqvNvZUVqfGBg1VQS80ESIw6ntrHO75E9t-T0SWDPrQE-2fYgmqZGHBZriQCQWFViP_fB_KVtr5kXCcB=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/red-divider.jpg" alt="" width="373" height="10"></td>
                   </tr>
                   <tr>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
                     <td bgcolor="#E9EAEC"> </td>
                   </tr>
                   <tr>
                     <td bgcolor="#E9EAEC"> </td>
+=======
+                    <td bgcolor="#E9EAEC"> </td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#E9EAEC"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
                   </tr>
                   <tr>
                     <td align="center" bgcolor="#E9EAEC"><table width="300" border="0" cellspacing="0" cellpadding="0">
@@ -177,7 +253,11 @@ if(isset($raw['phone'])&&$raw['phone']!=''){?>
                           <td align="left" bgcolor="#E9EAEC">Call us, Send your query by e-mail or Chat Online from our Website. We answer all your questions!</td>
                         </tr>
                         <tr>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
                           <td align="center"> </td>
+=======
+                          <td align="center"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
                         </tr>
                       </tbody>
                     </table></td>
@@ -200,11 +280,19 @@ TEL: 501 223 6910 / 223 1107<br>
                   </tr>
                 </tbody>
               </table></td>
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
               <td bgcolor="#FFFFFF"> </td>
             </tr>
             <tr>
               <td align="center" bgcolor="#E9EAEC"> </td>
               <td bgcolor="#FFFFFF"> </td>
+=======
+              <td bgcolor="#FFFFFF"> </td>
+            </tr>
+            <tr>
+              <td align="center" bgcolor="#E9EAEC"> </td>
+              <td bgcolor="#FFFFFF"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
             </tr>
           </tbody>
         </table>
@@ -232,6 +320,7 @@ TEL: 501 223 6910 / 223 1107<br>
 </table>
 </body>
 </html>
+ 
 <?php 
 $message = ob_get_contents();
 ob_end_clean();
@@ -262,12 +351,16 @@ if(defined('LOCAL')){
 	//die($message );
 }
 else{
+<<<<<<< HEAD:application/views/depan/email/emailDepositStatus_view.php
 	$to[]='finance@salmaforex.com';
 	if(!is_array($to))$to=array($to);
 	foreach($to as $email){
 		batchEmail($email, $subject, $message, $headers);
 	}
 
+=======
+	mail(trim($to), $subject, $message, $headers);
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositMember_view.php
 	$rawEmail=array(
 		$subject, $headers,$message,'send email'
 	);

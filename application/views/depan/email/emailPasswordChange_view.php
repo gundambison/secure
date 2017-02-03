@@ -17,9 +17,31 @@ ob_start();
       <td colspan="2" valign="bottom"><table width="750" border="0" cellspacing="10" cellpadding="10">
         <tbody>
           <tr>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
             <td><h3>Password Have been Updated</h3>
               <p>You have just made a right decision to become a client of SalmaForex and choose us as your broker. We are sure that from now on your trading experience with us will be positive and profitable. Your Account Trading Detail are as follows: <br />
                 </p>
+=======
+            <td><h3><?php 
+if($accountType!='MEMBER'){
+	?>Account Partner Detail<?php 
+}
+else{
+	?>Account Trading Detail
+<?php 
+}?></h3>
+<?php 
+if($accountType!='MEMBER'){
+	?>&nbsp;<?php 
+}
+else{
+	?>
+              <p>You have just made a right decision to become a client of SalmaForex and choose us as your broker. We are sure that from now on your trading experience with us will be positive and profitable. Your Account Trading Detail are as follows: <br />
+                </p>
+<?php 
+}
+?>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
               <table border="0" align="center" id="yui_3_16_0_1_1450323941636_3312">
                 <tbody id="yui_3_16_0_1_1450323941636_3311">
                   <tr id="yui_3_16_0_1_1450323941636_3324">
@@ -28,11 +50,20 @@ ob_start();
                   </tr>
                   <tr id="yui_3_16_0_1_1450323941636_3322">
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3321"><strong>Password Trading (password cabinet)</strong></td>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3338"> <strong>: </strong><?=trim($masterpassword);?></td>
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_"><strong>Password Investor</strong></td>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>: </strong><?=trim($investorpassword);?></td>
+=======
+                    <td bgcolor="#CCCCCC" 
+					id="yui_3_16_0_1_1450323941636_3338"> <strong>: </strong><?=trim($masterpassword);?></td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_"><strong>Password Investor</strong></td>
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_2"><strong>: </strong><?=$investorpassword;?></td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_3"><strong>Server </strong></td>
@@ -40,6 +71,7 @@ ob_start();
                   </tr>
                   <tr>
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_5"><strong>Client Cabinet</strong></td>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
                     <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6">: Secure.salmaforex.com (<a 
 					href="<?php 
 if(defined('LOCAL') || defined('_DEV_')){?>
@@ -52,11 +84,21 @@ https://secure.salmaforex.com 
 } ?>/login" target="_blank"> Login Here</a>)
 					 
 </td>
+=======
+                    <td bgcolor="#CCCCCC" id="yui_3_16_0_1_1450323941636_6">: Secure.salmaforex.com (<a href="<?php 
+if(defined('LOCAL') || defined('_DEV_')){
+	?>https://dev.salmaforex.com<?php
+}
+else{ 
+	?>https://secure.salmaforex.com<?php 
+} ?>/login" target="_blank"> Login Here</a>)</td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
                   </tr>
                 </tbody>
               </table>
               <p><br />
                 <br />
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
                 Your Personal Area at <?php 
 if(defined('LOCAL') || defined('_DEV_')){?>
 https://dev.salmaforex.com 
@@ -66,6 +108,25 @@ else{ ?>
 https://secure.salmaforex.com 
 <?php 
 } ?> is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
+=======
+<?php 
+if($accountType!='MEMBER'){
+	?>&nbsp;<?php 
+}
+else{
+	?> 
+	Your Personal Area at 
+	<?php 
+	if(defined('LOCAL') || defined('_DEV_')){?>
+	https://dev.salmaforex.com 
+	<?php
+	}
+	else{ ?>
+	https://secure.salmaforex.com 
+	<?php 
+	} ?>
+is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
                 </p>
               <p>Right now you can login to your Personal Area, deposit your account and start your trading.<br />
                 </p>
@@ -73,6 +134,9 @@ https://secure.salmaforex.com 
               <p id="yui_3_16_0_1_1443010679159_2162">In case you have any questions, please <a rel="nofollow" target="_blank" href="https://www.salmaforex.com/contact/" id="yui_3_16_0_1_1443010679159_2161">contact us</a>, we will be happy to answer them.</p>
               <p id="yui_3_16_0_1_1443010679159_2163">Wishing you luck and profitable trading! </p>
               <p><strong>Thank you for choosing SalmaForex to provide you with brokerage services on the forex market! We wish you every success in your trading!</strong></p>
+<?php 
+}
+?>
               <p>Sincerely,<br />
               Customer Service</p></td>
           </tr>
@@ -83,6 +147,7 @@ https://secure.salmaforex.com 
         <table width="750" border="0" cellspacing="0" cellpadding="0">
           <tbody>
             <tr>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
               <td width="373" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44"></td>
               <td width="10" bgcolor="#FFFFFF"> </td>
               <td width="367" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44"></td>
@@ -91,6 +156,16 @@ https://secure.salmaforex.com 
               <td align="center" bgcolor="#E9EAEC"> </td>
               <td bgcolor="#FFFFFF"> </td>
               <td valign="top" bgcolor="#EAE9EE"> </td>
+=======
+              <td width="373" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44" /></td>
+              <td width="10" bgcolor="#FFFFFF"> </td>
+              <td width="367" valign="top" bgcolor="#E7E7E7"><img src="https://www.salmaforex.com/wp-content/uploads/2016/01/123.jpg" alt="" width="373" height="44" /></td>
+            </tr>
+            <tr>
+              <td align="center" bgcolor="#E9EAEC"> </td>
+              <td bgcolor="#FFFFFF"> </td>
+              <td valign="top" bgcolor="#EAE9EE"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
             </tr>
             <tr>
               <td align="center" bgcolor="#E9EAEC"><table width="340" border="0" cellpadding="2" cellspacing="2">
@@ -104,12 +179,21 @@ https://secure.salmaforex.com 
                       <a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26"></a></td>
                   </tr>
                   <tr>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
                     <td> </td>
                     <td align="left" valign="top"> </td>
                   </tr>
                 </tbody>
               </table></td>
               <td bgcolor="#FFFFFF"> </td>
+=======
+                    <td> </td>
+                    <td align="left" valign="top"> </td>
+                  </tr>
+                </tbody>
+              </table></td>
+              <td bgcolor="#FFFFFF"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
               <td rowspan="3" align="center" valign="top" bgcolor="#E9EAEC"><table width="340" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
                   <tr>
@@ -124,23 +208,39 @@ https://secure.salmaforex.com 
                             <a href="https://www.salmaforex.com/about-us/" target="_blank"><img src="https://ci6.googleusercontent.com/proxy/mNfIncnCVMD2UsHac5t-90fnnE3KlKvMyhFa6PmA4q_BhBnFPLyzFf9JNhkawGLWcMXEuexBBYUvYpivzjzJWPASAPKnNriVohriStuasCzlX70Npxt6mSn5te0=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/read-more-btn-en.jpg" alt="" width="84" height="26"></a></td>
                         </tr>
                         <tr>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
                           <td bgcolor="#E9EAEC"> </td>
                           <td align="left" valign="top" bgcolor="#E9EAEC"> </td>
+=======
+                          <td bgcolor="#E9EAEC"> </td>
+                          <td align="left" valign="top" bgcolor="#E9EAEC"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
                         </tr>
                       </tbody>
                     </table></td>
                   </tr>
                   <tr>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
                     <td bgcolor="#E9EAEC"> </td>
+=======
+                    <td bgcolor="#E9EAEC"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
                   </tr>
                   <tr>
                     <td bgcolor="#E9EAEC"><img src="https://ci3.googleusercontent.com/proxy/BRAZITFgWtlYXFkiXRtSaScf85waxMn_t8WFNqvNvZUVqfGBg1VQS80ESIw6ntrHO75E9t-T0SWDPrQE-2fYgmqZGHBZriQCQWFViP_fB_KVtr5kXCcB=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/red-divider.jpg" alt="" width="373" height="10"></td>
                   </tr>
                   <tr>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
                     <td bgcolor="#E9EAEC"> </td>
                   </tr>
                   <tr>
                     <td bgcolor="#E9EAEC"> </td>
+=======
+                    <td bgcolor="#E9EAEC"> </td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#E9EAEC"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
                   </tr>
                   <tr>
                     <td align="center" bgcolor="#E9EAEC"><table width="300" border="0" cellspacing="0" cellpadding="0">
@@ -152,7 +252,11 @@ https://secure.salmaforex.com 
                           <td align="left" bgcolor="#E9EAEC">Call us, Send your query by e-mail or Chat Online from our Website. We answer all your questions!</td>
                         </tr>
                         <tr>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
                           <td align="center"> </td>
+=======
+                          <td align="center"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
                         </tr>
                       </tbody>
                     </table></td>
@@ -175,11 +279,19 @@ TEL: 501 223 6910 / 223 1107<br>
                   </tr>
                 </tbody>
               </table></td>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
               <td bgcolor="#FFFFFF"> </td>
             </tr>
             <tr>
               <td align="center" bgcolor="#E9EAEC"> </td>
               <td bgcolor="#FFFFFF"> </td>
+=======
+              <td bgcolor="#FFFFFF"> </td>
+            </tr>
+            <tr>
+              <td align="center" bgcolor="#E9EAEC"> </td>
+              <td bgcolor="#FFFFFF"> </td>
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
             </tr>
           </tbody>
         </table>
@@ -206,12 +318,15 @@ TEL: 501 223 6910 / 223 1107<br>
   </tbody>
 </table>
 </body>
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
 </html>
 
+=======
+</html> 
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
 <?php 
 $message = ob_get_contents();
-ob_end_clean();
-//echo  $detail;
+ob_end_clean(); 
 $to = trim($email);
 
 $subject = 'Welcome to SalmaForex ';
@@ -237,6 +352,7 @@ if(defined('LOCAL')){
 	echo $message;
 }
 else{
+<<<<<<< HEAD:application/views/depan/email/emailPasswordChange_view.php
 	if(!is_array($to))$to=array($to);
 	foreach($to as $email){
 		batchEmail($email, $subject, $message, $headers);
@@ -256,4 +372,24 @@ else{
 	}
 /*
 */
+=======
+	mail(trim($to), $subject, $message, $headers);
+	$rawEmail=array(
+		$subject, $headers,$message,'send email'
+	);
+	
+	$subject = "[SalmaForex] Register Baru ";
+	$data=array( 'url'=>$to,
+		'parameter'=>json_encode($rawEmail),
+		'error'=>2
+	);
+	
+	$this->db->insert('mujur_api',$data);
+	
+	foreach($emailAdmin as $to){
+		mail(trim($to), $subject, $message, $headers);
+	}
+	
+	
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailRegister_view.php
 }
