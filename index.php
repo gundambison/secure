@@ -1,4 +1,9 @@
 <?php
+if($_SERVER['HTTP_HOST']=='advance.forex'){
+	define('LOCAL',1);
+	ini_set('session.save_path',  dirname($_SERVER['DOCUMENT_ROOT']) . '/../session/'  );
+}
+
 	date_default_timezone_set('Asia/Jakarta');
 
 	if ( !function_exists('logFile')){

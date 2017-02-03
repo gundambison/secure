@@ -8,11 +8,9 @@ public $tableWorld='mujur_country';
 public $tableAccount='mujur_account';
 public $tableAccountRecover='mujur_accountrecover';
 
-<<<<<<< HEAD
 public $tableAccountDocument='mujur_accountdocument';
 public $tableAccountBalance='mujur_accountbalance';
-=======
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+
 public $tableAccountDetail='mujur_accountdetail';
 public $tableActivation='mujur_activation';
 public $tablePassword='mujur_password';
@@ -22,7 +20,7 @@ public $tableFlowlog='mujur_flowlog';
 public $tableAPI='mujur_api';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
-<<<<<<< HEAD
+
 /***
 Daftar Fungsi Yang Tersedia :
 *	newAccountWithoutPassword()
@@ -44,8 +42,6 @@ Daftar Fungsi Yang Tersedia :
 		where masterpassword='' limit 4;";
 		return dbFetch($sql);
 	}
-=======
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 
 	function recoverId($id=0){		 
 		$now=date("Y-m-d H:i:s");
@@ -59,13 +55,11 @@ Daftar Fungsi Yang Tersedia :
 		where id='{$id}'";
 		$row=$this->db->query($sql)->row_array();
 		$raw=base64_decode($row['params']);
-<<<<<<< HEAD
-		
+
 		$source=isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'-';
 		$detail='click from :'.$source; 
-=======
-		$detail='click from :'.$_SERVER['HTTP_REFERER'];
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+
+
 		$sql="update `{$this->tableAccountRecover}` 
 		set  detail='$detail' 
 		where id='$id'";
@@ -86,11 +80,9 @@ Daftar Fungsi Yang Tersedia :
 	
 	function recover($detail=false){
 		if($detail==false){
-<<<<<<< HEAD
+
 //=========Menambah Account Recover
-=======
-//=========Menambah Account Recover			
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+
 			if(!$this->db->table_exists($this->tableAccountRecover)){
 				$fields = array(
 				  'id'=>array( 
@@ -107,7 +99,7 @@ Daftar Fungsi Yang Tersedia :
 				$str = $this->db->last_query();			 
 				logConfig("create table:$str");
 				$this->db->reset_query();	
-<<<<<<< HEAD
+
 			}else{}
 //==========Account Document
 			if(!$this->db->table_exists($this->tableAccountDocument)){
@@ -184,20 +176,21 @@ Daftar Fungsi Yang Tersedia :
 					$sql="ALTER TABLE `{$this->tableAccountDetail}` ADD `document` tinyint AFTER `detail`";
 					dbQuery($sql);
 				}
-=======
+
 			}else{}			
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+
 			return true;
-		}
-		
-		$data=array('id'=>dbId('recover',date('Ym000'),rand(13,29)));
+/*
+		$data=array(
+                    'id'=>dbId( 'recover', date('Ym000'), rand(13,29))
+                );
 		$data['params']=base64_encode(json_encode($detail));
 		$data['detail']=defined("_DEV_")||defined("LOCAL")?json_encode($detail):'';
 		date_default_timezone_set('Asia/Jakarta');
 		$data['expired']=date("Y-m-d H:i",strtotime("+25hours"));
 		$this->db->insert($this->tableAccountRecover,$data);
 		return $data['id'];
-		
+*/
 	}
 	
 	function create($id,$raw='') //tidak di jalankan
@@ -293,7 +286,7 @@ Daftar Fungsi Yang Tersedia :
 		);
 		$param2['emailAdmin']=$this->emailAdmin;
 		$param2['accountType']=$detail['accounttype'];
-<<<<<<< HEAD
+
 
 		$this->load->view('depan/email/emailRegister_view',$param2);
 		
@@ -418,23 +411,18 @@ Daftar Fungsi Yang Tersedia :
 		}
 		return true;
 	}
-	
-=======
-		$this->load->view('member/email/emailRegister_view',$param2);
+
+/*		$this->load->view('member/email/emailRegister_view',$param2);
 		
 	}
-
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+*/
 	function detail($id,$field='id'){
 	logCreate("account detail id:$id|field:$field");	
 		$id=addslashes(trim($id));
 		if($field=='email')$id.="%";
 		$sql="select count(id) c 
-<<<<<<< HEAD
-		from `{$this->tableAccount}`
-=======
 		from `{$this->tableAccount}`  
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+
 		where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
@@ -444,7 +432,11 @@ Daftar Fungsi Yang Tersedia :
 		
 		$sql="select a.* from `{$this->tableAccount}` a  		
 		where `{$field}` like '$id'";
-<<<<<<< HEAD
+
+		$res=dbFetchOne($sql);
+		logCreate("account detail FOUND","lokal");
+
+ 
 		$res=dbFetchOne($sql);
 		logCreate("account detail FOUND","lokal");
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
@@ -458,13 +450,20 @@ Daftar Fungsi Yang Tersedia :
 				logCreate("update rename:".json_encode($res));
 =======
 		$res=dbFetchOne($sql); 
+>>>>>>> 953021efe2de3d6ed9e27fb364967e7fa1f356c7
 		if($res['username']!=$res['accountid']&&$res['reg_id']!=0){
 			logCreate("account detail id:$id|field:$field|update username |".json_encode($res),"info");
 			$sql="select count(id) c from `{$this->tableAccount}` where `username` = '{$res['accountid']}'";
-			$res0=dbFetchOne($sql,1);
-			$okay2Rename=$res0['c']==0?true:false;
+			//$res0=dbFetchOne($sql,1);
+			//$okay2Rename=$res0['c']==0?true:false;
+			logCreate("account detail FOUND","lokal");
+			/*
 			if($okay2Rename){
+<<<<<<< HEAD
+				logCreate("update rename:".json_encode($res));
+=======
 >>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+>>>>>>> 953021efe2de3d6ed9e27fb364967e7fa1f356c7
 				$sql="UPDATE `{$this->tableAccount}` SET `username` = '{$res['accountid']}' WHERE `mujur_account`.`id` = {$res['id']};";
 				dbQuery($sql);
 				$sql="UPDATE {$this->tableAccountDetail} SET `username` = '{$res['accountid']}' WHERE `username` = '{$res['username']}';";
@@ -472,30 +471,29 @@ Daftar Fungsi Yang Tersedia :
 <<<<<<< HEAD
 				logCreate("acc_model detail update:rename [DONE]");
 =======
+<<<<<<< HEAD
+				logCreate("acc_model detail update:rename [DONE]");
+=======
 >>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+>>>>>>> 953021efe2de3d6ed9e27fb364967e7fa1f356c7
 			}
 			else{
 				logCreate("fail rename:".json_encode($res));
 				$sql="UPDATE {$this->tableAccount} SET `accountid` = '{$res['username']}' WHERE `username` = '{$res['username']}';";
 				dbQuery($sql);
 			}
-<<<<<<< HEAD
+
 			*/
-=======
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+
 			$sql="select a.* from `{$this->tableAccount}` a  		
 			where `{$field}` like '$id'";
 			$res=dbFetchOne($sql); 
 		}
-<<<<<<< HEAD
+
 
 		$sql="select 
-		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid, a.status,
-=======
-		
-		$sql="select 
 		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid,
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+
 		a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
 		left join `{$this->tableAccountDetail}` ad 
 			on a.username like ad.username
@@ -504,23 +502,19 @@ Daftar Fungsi Yang Tersedia :
 		where a.`{$field}` like '$id'";
 		$data= dbFetchOne($sql);
 		if($data['accounttype']!='MEMBER'){
-<<<<<<< HEAD
+
 			logCreate("account detail |agent","info");
 			$agent=true;
 		}
 		else{
 			logCreate("account detail |member","info");
-=======
+
 			logCreate("account detail id:$id|field:$field|agent","info");
 			$agent=true;
 		}
-		else{ 
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
-			$agent=false;
-		}
 		
 		if($data['type']==7){
-<<<<<<< HEAD
+
 			logCreate("account detail |admin","info");
 			$data['type']='admin';
 		}
@@ -529,12 +523,6 @@ Daftar Fungsi Yang Tersedia :
 			$data['type']='agent';
 		}
 		else{
-			logCreate("account detail |other?","info");
-=======
-			$data['type']='admin';
-		}
-		else{
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
 			$data['type']=false;
 		}
 		
@@ -543,7 +531,7 @@ Daftar Fungsi Yang Tersedia :
 			$data['detail']=json_decode($data['raw'],true); 
 			unset($data['raw']);
 		}
-<<<<<<< HEAD
+
 //----document
 		logCreate("account document |start","info");
 		$documents=$this->document($id, $field);
@@ -564,11 +552,12 @@ Daftar Fungsi Yang Tersedia :
 		$data['balance']=$this->account->balance($res['accountid'],$time);
 		$data['balanceDate']=$time;
 		logCreate("account balace |start","info");
+
 		return $data;
 
 	}
 	
-	private function balance($username,&$time){
+	private function balance_old($username,&$time){
 //======Remove Expire
 /*
 		if(!isset($this->session)){
@@ -670,19 +659,122 @@ Daftar Fungsi Yang Tersedia :
 		
 	}
 
-	function detailRepair($data=array()){
+	function detailRepair_old($data=array()){
 		$username=$data['username'];
 		$sql="select count(id) c  from `{$this->tableAccountDetail}` where `username`='$username'";
-=======
-		
+
 		return $data;
+
 	}
 	
+	private function balance($username,&$time){
+//======Remove Expire
+/*
+		if(!isset($this->session)){
+			return 0;
+		}
+*/
+		$detail=$userlogin=$this->exist($username,'accountid');
+		if($detail!==false){
+		//OK
+			$field='accountid';
+			logCreate("account->balance |found accountid","info");
+			$sql="select 
+		a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid, a.status,
+		a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
+		left join `{$this->tableAccountDetail}` ad 
+			on a.username like ad.username
+		left join `{$this->tableAdmin}` adm 
+			on adm_username like a.username
+		where a.`{$field}` like '$username'";
+			$detail= dbFetchOne($sql);
+		
+		}
+		else{
+			$detail=$userlogin=$this->exist($username,'username');
+			if($detail!==false){
+				//OK
+				$field='accountid';
+				logCreate("account->balance |found accountid","info");
+				$sql="select 
+			a.id, a.username, a.email, a.investorpassword, a.masterpassword, a.reg_id,a.accountid, a.status,
+			a.type accounttype, ad.detail raw,adm.adm_type type from `{$this->tableAccount}` a 
+			left join `{$this->tableAccountDetail}` ad 
+				on a.username like ad.username
+			left join `{$this->tableAdmin}` adm 
+				on adm_username like a.username
+			where a.`{$field}` like '$username'";
+				$detail= dbFetchOne($sql);
+				logCreate("account->balance |found username","info");
+			}
+			else{
+				logCreate("account->balance |not found","info");
+				return 0;
+			}
+		}
+
+		$accountid=$detail['accountid'];
+		/*
+		if(isset($this->session))
+			$session=$this->session-> all_userdata();
+		*/
+		$now = date("Y-m-d H:i:s");
+		$now_12 = date("Y-m-d H:i:s", strtotime("+3 hours"));
+		$sql="delete from {$this->tableAccountBalance} where expired < '$now'";
+		logCreate("account->balance |erase expired","info");
+		dbQuery($sql);
+		$time=date("Y-m-d H:i:s");
+		$sql="select username, balance,modified from {$this->tableAccountBalance} where username like '$accountid'";
+		$row=dbFetchOne($sql);
+
+		if(isset($row['balance'])){
+			$time=$row['modified'];
+			logCreate("account->balance |still cache","info");
+			return $row['balance'];
+		}
+/*
+		if($session['username']!=$username){
+		//	logCreate('username different:'.$username);
+			return 0;
+		}
+*/
+		$param['accountid']		=	$accountid;
+		$param['volume']		=	"-0";  			 
+		$param['privatekey']	=	$this->forex->forexKey();
+		$param['description']	= 	'check balance '.date("H:i:s");
+		$url=$this->forex->forexUrl('updateBalance');
+		$url.="?".http_build_query($param);
+
+		$tmp= _runApi($url );
+		logCreate('account balance:'.json_encode($tmp));
+		if(!is_array($tmp))$tmp=(array)$tmp;
+		if(isset($tmp['balance'])){
+			logCreate('url:'.$url.'| respon:'.json_encode($tmp));
+			$data = array(
+				'username' => $accountid,
+				'detail'  => json_encode($tmp),
+				'balance'  =>  $tmp['balance'],
+				'expired'	=> $now_12
+			);
+
+			$sql = $this->db->set($data)->get_compiled_insert($this->tableAccountBalance);
+			dbQuery($sql);
+			logCreate("account->balance |update","info");
+			return $tmp['balance'];
+		}
+		else{
+			logCreate('url:'.$url.'| Failed| respon:'.json_encode($tmp));
+		}
+		return 0;
+		
+	}
+
 	function detailRepair($data=array()){
 		$username=$data['username'];
+
 		$sql="select count(id) c  from `{$this->tableAccountDetail}` 
 		where `username`='$username'";
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+                
 		$res=dbFetchOne($sql);
 		if($res['c']==1){
 			return true;
@@ -690,33 +782,39 @@ Daftar Fungsi Yang Tersedia :
 		
 		if($data['reg_id']!=0){
 			$reg=$this->regisDetail($data['reg_id']);
-<<<<<<< HEAD
+
 			$detail=addslashes(json_encode($reg['detail']));
-=======
-			$detail=json_encode($reg['detail']);
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
+
 			$sql="insert into `{$this->tableAccountDetail}`(username,detail) 
 			values('$username','$detail')";
 			dbQuery($sql);
 		}else{}
 		return true;
 	}
-<<<<<<< HEAD
-	
+
 	function all_by_email($field='*'){
 		$sql="select {$field} from `{$this->tableAccount}` 
 		group by email
 		order by modified";
 		return dbFetch($sql);
 	}
-=======
->>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164
-//=====================================
-		public function __construct()
-        {
+
+	function emailOnly($limit=0,$start=0){
+		$sql="SELECT COUNT(*) AS `Rows`, `email` FROM `{$this->tableAccount}` GROUP BY `email`";
+		$sql.=" order by email asc";
+		if($limit!=0 && $start!=0){
+			$sql.=" limit $start, $limit";
+		}
+		elseif($limit!=0){
+			$sql.=" limit $limit";
+		}
+		return dbFetch($sql);
+	}
+
+	public function __construct() {
             $this->load->database();
 			$this->load->dbforge();
 			$this->recover();
-		}
+	}
 
 }

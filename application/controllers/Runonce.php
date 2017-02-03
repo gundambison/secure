@@ -2,6 +2,45 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Runonce extends CI_Controller {
+
+	function index($pos=0){
+		$query= $this->account->emailOnly(100,$pos );
+		//echo '<pre>'.print_r($query,1);
+		
+		if($pos==0){
+			$sql="truncate reports";
+			dbQuery($sql);
+		}
+
+		$str='';
+		if(count($query)!=0){
+			foreach($query as $row){
+				$pos++;
+				$str.= '<tr><td>'.$pos.'</td><td>'.trim($row['email']).'</td></tr>';
+
+			}
+			$data=array('texts'=>$str);
+			//echo $str;die();
+			$this->db->insert('reports',$data);
+			echo "<script>window.location.href = '".site_url("runonce/index/{$pos}")."';</script>";
+			echo "pos:{$pos}";
+		}
+		else{
+			echo '<table border=1>';
+			echo '<tr><th>no</th><th>Email</th></tr>';
+			//die('ok');
+			$sql="select texts from reports order by id asc";
+			$q=$this->db->query($sql)->result_array();
+			foreach($q as $r){
+				echo "\n{$r['texts']}";
+			}
+			echo '</table>';
+		}
+		//echo '</table>';
+		
+	}
+
+
 	function close(){
 		if($this->input->post('message')){
 			$data=array('message'=>$this->input->post('message'));
@@ -148,6 +187,7 @@ class Runonce extends CI_Controller {
 	}
 
 	function __CONSTRUCT(){
+
 	parent::__construct();
 		date_default_timezone_set('Asia/Jakarta');
 		$this->param['today']=date('Y-m-d');
