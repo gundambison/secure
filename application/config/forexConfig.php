@@ -42,9 +42,16 @@ if(defined('_DEV_')){
 $config['urlForex']['local']='http://advance.forex/index.php/forex/data';
 
 $config['forexBank']=array(
-	array('name'=>'BCA', 'number'=>'8380126282','person'=>'Yadi Supriyadi'),
+	array('name'=>'BCA21', 'number'=>'8380126282','person'=>'Yadi Supriyadi'),
 	array('name'=>'BRI', 'number'=>'2202.01.000120.561','person'=>'Yadi Supriyadi'),
 	array('name'=>'MANDIRI', 'number'=>'1300014675337','person'=>'Yadi Supriyadi'),
 	array('name'=>'BNI', 'number'=>'0423851338','person'=>'Yadi Supriyadi'),
 
 );
+/*
+BCA : 2812226160 a.n PT. Salma Widyatama Mandiri 
+BRI : 2202.01.000120.561 a.n Yadi Supriyadi
+MANDIRI : 1300023231999 a.n PT. Salma Widyatama Mandiri
+BNI : 3012123020 a.n PT. Salma Widyatama Mandiri
+*/
+$config['sendpulse_pubkey']='';

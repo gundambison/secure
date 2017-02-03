@@ -5,6 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if ( ! function_exists('_runApi')){
 	function _runApi($url, $parameter=array()){
 	global $maxTime;
+	if( $maxTime==null ) $maxTime=10;
+	if(isset($parameter['maxTime'])) $maxTime=$parameter['maxTime'];
+	
 	$CI =& get_instance();
 	$dtAPI=array('url'=>$url);
 	if(count($parameter)){
@@ -44,6 +47,7 @@ if ( ! function_exists('_runApi')){
 			$response = new stdclass();
 			$response->code = '500';
 			$response->message = curl_error($curl);
+			$response->maxTime = $maxTime;
 			$dtAPI['response']=json_encode($response );
 			$dtAPI['error']=1;
 		}
@@ -82,7 +86,7 @@ if ( ! function_exists('batchEmail')){
 		$target="media/email/".$id.".txt";
 		//echo '<br>target:'.$target;
 		file_put_contents($target, $json);
-		$sql="insert into mujur_email(subject,to,header) values('".addslashes($subject)."','".addslashes($to)."','".addslashes(json_encode($headers))."')";
+		$sql="insert into mujur_email(`subject`,`to`,`header`) values('".addslashes($subject)."','".addslashes($to)."','".addslashes(json_encode($headers))."')";
 		dbQuery($sql);
 		//return true;
 	}

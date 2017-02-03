@@ -8,9 +8,9 @@ date_default_timezone_set('Asia/Jakarta');
 function logFile(){
 	return true;
 } 
-	define('ENVIRONMENT', 'production'); 
+//	define('ENVIRONMENT', 'production'); 
  
-//	define('_DEV_',1);
+	define('_DEV_',1);
 /**
  * CodeIgniter
  *
@@ -77,7 +77,7 @@ function logFile(){
 switch (ENVIRONMENT)
 {
 	case 'development':
-		error_reporting(-1);
+		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 	break;
 

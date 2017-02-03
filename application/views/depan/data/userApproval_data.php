@@ -9,17 +9,27 @@ $aOrder=array(
 $sql="select count(a.id) c from `mujur_account` a 
 join mujur_accountdocument d on d.email like a.email";
 $dt=$this->db->query($sql)->row_array();
+$respon['sql'][]=$sql;
 $respon['recordsTotal']=$dt['c'];
 $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
 
 $start=isset($post0['start'])?$post0['start']:0;
 $limit=isset($post0['length'])?$post0['length']:11;
 $data=array();
-   $orders="order by created desc";
+   $orders="order by d.modified desc";
    if(isset($post0['order'][0])){
 		$col=$post0['order'][0]['column'];
 		$order=$post0['order'][0]['dir'];
 		$col2=$post0['columns'][$col]['data'];
+		if($col==0){
+			$col2='d.modified';
+		}
+		if($col==2){
+			$col2='a.accountid';
+		}
+		if($col==3){
+			$col2='a.email';
+		}
 		if($col==5){
 			$col2='d.status';
 		}
@@ -45,9 +55,10 @@ left join mujur_accountdetail ad
 }
 else{
 	logCreate('no search :'.$search);
+	$respon['sql'][]=$sql;
 }
 
-$sql="select a.id,a.created,d.status status_document from mujur_account a 
+$sql="select a.id,a.created,d.status status_document, d.email main_email from mujur_account a 
 join mujur_accountdocument d on d.email like a.email
 	where $where 
 	$orders limit $start,$limit";
@@ -69,7 +80,7 @@ foreach($dt as $row){
 	$row['status']='Not Active';	
 	if($row['status_document']==1)$row['status']='Active';
 	if($row['status_document']==2)$row['status']='Review';
-	
+	$row['username']=$row['accountid'].".";
 	$row['action']='';
 	$data[]=$row;
 }

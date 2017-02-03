@@ -33,7 +33,9 @@ public $tablePassword='mujur_password';
 public $tableAdmin='mujur_admin';
 public $tablePrice='mujur_price';
 public $tableFlowlog='mujur_flowlog';
+public $tableInvoice='mujur_invoice';
 public $tableAPI='mujur_api';
+public $tablepings='site_ping';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 
@@ -110,6 +112,54 @@ public $emailAdmin='admin@dev.salmaforex.com';
 		$dt=array('types'=>$type);
 		$dt['param']=json_encode($data);
 		$this->db->insert($this->tableFlowlog,$dt);
+		return true;
+	}
+	function invoice($type='',$data=array() ){
+		if(!$this->db->table_exists($this->tableInvoice)){
+				$fields = array(
+				  'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE),
+				  'code'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '50'), 		   
+				  'types'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '200'),
+				  'account_id'=>array(
+					'type' => 'BIGINT' ),
+				  'amounts'=>array( 
+					'type' => 'BIGINT'),
+				  'rates'=>array( 
+					'type' => 'float'),
+				  'created'=>array( 
+					'type' => 'datetime'),
+				  'total'=>array( 
+					'type' => 'float'),
+				  'detail'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '50'),
+				  'param'=>array( 'type' => 'text'),				   
+				  'modified'=>array( 'type' => 'timestamp'),
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table($this->tableInvoice,TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();	
+				 
+		}
+		$sql="select * from {$this->tableInvoice} limit 1";
+		$row=$this->db->query($sql)->row_array();
+		if(!isset($row['status'])){
+			$sql="ALTER TABLE `{$this->tableInvoice}` ADD `status` tinyint default 0;";
+				dbQuery($sql,1);			
+		}
+		
+		if($type=='')return false;
+		$dt=array('types'=>$type);
+		$dt['param']=json_encode($data);
+		$this->db->insert($this->tableInvoice,$dt);
 		return true;
 	}
 //=================Rate	
@@ -198,7 +248,7 @@ SEMUA dipindah ke model ACCOUNT
 			'investorpassword'=>md5( trim($raw['investorpassword']) ),
 			'masterpassword'=>md5( trim($raw['masterpassword']) ),
 			'accountid'=>$raw['accountid'],
-			'email'=>$detail['email'],
+			'email'=>trim($detail['email']),
 			'type'=>strtoupper($detail['detail']['statusMember']),
 			//'raw'=>$raw,
 			//'activation'=>base64_encode($raw),
@@ -218,7 +268,7 @@ SEMUA dipindah ke model ACCOUNT
 		$rawAccount=dbFetchOne($sql);
 	//apabila ada reg_id yang sama maka cancel	
 		if((int)$reg_id!=0&&$rawAccount['tot']!=0){
-			logCreate("register not continue account exist:".json_encode($rawAccount));
+			logCreate("register not continue account exist:".json_encode($rawAccount)."| {$sql}");
 			return false;
 		}
 	//==============EMAIL START=======	
@@ -227,7 +277,7 @@ SEMUA dipindah ke model ACCOUNT
 		
 		$param2=array( 
 			'username'=>$raw['accountid'],
-			'email'=>$detail['email'],
+			'email'=>trim($detail['email']),
 			'masterpassword'=>$masterPass,
 			'investorpassword'=>$invPass
 			
@@ -311,13 +361,13 @@ SEMUA dipindah ke model ACCOUNT
 		$param['country']=isset($detail['detail']['country']['name'])?$detail['detail']['country']['name']:"";
 		$param['zipcode']=isset($detail['detail']['zipcode'])?$detail['detail']['zipcode']:"";
 		$param['phone']=  isset($detail['detail']['phone'])?$detail['detail']['phone']:"";
-		$param['email']=  isset($detail['email'])?$detail['email']:"";
+		$param['email']=  isset($detail['email'])?trim($detail['email']) :"";
 //=============LIMIT
 		$param['address']=substr($param['address'],0,95);
 		$param['country']=substr($param['country'],0,17);
 		$param['zipcode']=substr($param['zipcode'],0,15);
 		$param['phone']=substr($param['phone'],0,31);
-		$param['email']=substr($param['email'],0,47);
+		$param['email']=trim( substr($param['email'],0,47) );
 		$param['allowlogin']=1;
 		$param['allowtrading']=1;
 
@@ -330,7 +380,7 @@ SEMUA dipindah ke model ACCOUNT
 
 		$param['masterpassword']=$masterPass;//.($raw['accountid']%100000 +19939);
 		$param['investorpassword']=$invPass;//.($raw['accountid'] %100000 +19919);
-//		logCreate("update detail result:".print_r($result0,1));
+		logCreate("update detail result:".print_r($result0,1));
 		$data = array(
 			'investorpassword' => md5( $param['investorpassword'] ),
 			'masterpassword'=>md5( $param['masterpassword'] )
@@ -358,7 +408,7 @@ SEMUA dipindah ke model ACCOUNT
 		logCreate("accountDetail id:$id|field:$field");
 		
 		$id=addslashes(trim($id));
-		if($field=='email')$id.="%";
+		if($field=='email')$id=trim($id)."%";
 		
 		$sql="select count(id) c from `{$this->tableAccount}`  where `{$field}` like '{$id}';"; 
 		$res=dbFetchOne($sql);
@@ -539,8 +589,9 @@ REGISTER
 		}
 		
 		if(isset($data['email'])){
-			$email=$data['email'];
-		}else{
+			$email=trim($data['email']);
+		}
+		else{
 			$message='No email';
 			return false;
 		}
@@ -561,7 +612,7 @@ email double diperbolehkan
 			'reg_detail'=>json_encode($data),
 			'reg_agent'=>$agent,
 			'reg_created'=>date("Y-m-d H:i:s"),
-			'reg_email'=>$email,
+			'reg_email'=>trim($email),
 		);
 		$sql=$this->db->insert_string($this->tableRegis, $dt);
 		dbQuery($sql);
@@ -626,6 +677,46 @@ email double diperbolehkan
 		return $data; 
 	}
 //=====================================
+	public function pingFailed($url, $tmp=array()){
+		$response=(array) $tmp;
+		$dt=array(
+			'url'=>trim($url),
+			'status'=>-1,
+			'detail'=>json_encode($response),
+			'error'=>isset($response['message'])?$response['message']:''
+		);
+		$sql=$this->db->insert_string($this->tablepings, $dt);
+		dbQuery($sql);
+	}
+	public function pingSuccess($url, $tmp=array() ){
+		$response=(array) $tmp;
+		$dt=array(
+			'url'=>trim($url),
+			'status'=>1,
+			'detail'=>json_encode($response),
+			'error'=>' '
+		//	'message'=>isset($response['message'])?$response['message']:''
+		);
+		$sql=$this->db->insert_string($this->tablepings, $dt);
+		dbQuery($sql);
+	}
+	public function userDocumentRefill(){
+		$sql="INSERT INTO  `mujur_accountdocument` (
+ 
+`email` ,
+`status` ,
+`upload` ,
+`filetype` ,
+`modified`
+)
+
+select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', '2016-01-01 17:02:50' 
+from mujur_account a left join mujur_accountdocument ad on a.email=ad.email
+where ad.id is null and a.email like '%@%' ";
+		dbQuery($sql);
+		return true;
+	}
+
 		public function __construct(){
             $this->load->database();
 			$this->load->dbforge();
@@ -687,6 +778,26 @@ email double diperbolehkan
 				$str = $this->db->last_query();			 
 				logConfig("create table:$str");
 				$this->db->reset_query();	
+			}
+//==========Menambah $this->tablepings
+			if(!$this->db->table_exists($this->tablepings)){
+				$fields=array(
+					'id'=>array( 
+					'type' => 'BIGINT','auto_increment' => TRUE), 		   
+				  'url'=>array( 
+					'type' => 'VARCHAR',  
+					'constraint' => '250'),
+				  'detail'=>array( 'type' => 'text'),
+				  'error'=>array( 'type' => 'text'),
+				  'status'=>array( 'type' => 'int'),
+				  'created'=>array( 'type' => 'timestamp'),
+				);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table($this->tablepings,TRUE);
+				$str = $this->db->last_query();			 
+				logConfig("create table:$str");
+				$this->db->reset_query();
 			}
 //==========Menambah mujur_api
 			if(!$this->db->table_exists('mujur_api')){

@@ -14,7 +14,10 @@
             </div>
             <div class="quicklinks col-md-6">	
                 <ul class="list-inline text-right">
-<?php 
+			<?php if(isset($show_open_live)){?>
+                    <li><a href="<?=base_url('welcome');?>"><span class="glyphicon glyphicon-user"></span> <span class="small">Open Live Account</span></a></li>
+			<?php } ?>
+<?php
 	if(!isset($userlogin)){?>
                     <li><a href="<?=base_url('login');?>"><span class="glyphicon glyphicon-user"></span> <span class="small">Login</span></a></li>
 <?php 

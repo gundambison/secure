@@ -294,15 +294,25 @@ Daftar Fungsi Yang Tersedia :
 	}	
 
 	function updateDocument($username,$document=false,$type=null){
-		$data=$this->detail($username,'username');
+		$data=false;//$this->detail($username,'username');
+		if($data==false){
+			$data=$this->detail($username,'accountid');
+		}
+
 		$email=trim($data['email']);
 		$sql="select count(id) c from {$this->tableAccountDocument} where email like '$email'";
 		$res=dbFetchOne($sql);
 		if($res['c']==0){
 			$ar=array('email'=>$email);
 			$this->db->insert($this->tableAccountDocument, $ar);
-		}else{}
+			logCreate('not found email:'.$email );
+		}
+		else{
+			logCreate('found email:'.$email.'| total:'.$res['c']);
+		}
+
 		if($document!=false){
+			logCreate('found email:'.$email.'| document:'.$document);
 			$upload=addslashes($document);
 			$sql="UPDATE {$this->tableAccountDocument} SET `upload` = '{$document}' WHERE `email` = '{$email}';";
 			dbQuery($sql);
@@ -311,12 +321,18 @@ Daftar Fungsi Yang Tersedia :
 			dbQuery($sql);
 			$sql="UPDATE {$this->tableAccountDocument} SET `status` = '2' WHERE `email` = '{$email}';";
 			dbQuery($sql);
-			echo $sql;
+			//echo $sql;
+			logCreate('update document email:'.$email.'| document:'.$document);
 		}
+		else{
+			logCreate('no  document update:');
+		}
+
 		return true;
 	}
 	function updateDocumentStatus($username,$status=false){
 		$data=$this->detail($username,'username');
+		if(!$data)$data=$this->detail($username,'accountid');
 		$email=trim($data['email']);
 		$sql="select count(id) cUpdateDoc from {$this->tableAccountDocument} where email like '$email'";
 		$res=dbFetchOne($sql);
@@ -351,7 +367,8 @@ Daftar Fungsi Yang Tersedia :
 		where email like '$email'";
 		$resDoc= dbFetchOne($sql);
 		$resDoc['account']=$res;
-		logCreate("account document id:$id |field:$field |FOUND:".$res['upload']);
+		if(isset($res['upload']))
+			logCreate("account document id:$id |field:$field |FOUND:".$res['upload']);
 		return $resDoc;
 	}
 
@@ -464,7 +481,10 @@ Daftar Fungsi Yang Tersedia :
 		}
 //----document
 		logCreate("account document |start","info");
-		$data['document']=$this->document($id, $field);
+		$documents=$this->document($id, $field);
+		if(!$documents)
+			$documents=$this->document($id, 'accountid');
+		$data['document']=$documents;
 		logCreate("account document |end","info");
 //----
 
@@ -601,6 +621,25 @@ Daftar Fungsi Yang Tersedia :
 			dbQuery($sql);
 		}else{}
 		return true;
+	}
+	
+	function all_by_email($field='*'){
+		$sql="select {$field} from `{$this->tableAccount}` 
+		group by email
+		order by modified";
+		return dbFetch($sql);
+	}
+	
+	function emailOnly($limit=0,$start=0){
+		$sql="SELECT COUNT(*) AS `Rows`, `email` FROM `{$this->tableAccount}` GROUP BY `email`";
+		$sql.=" order by email asc";
+		if($limit!=0 && $start!=0){
+			$sql.=" limit $start, $limit";
+		}
+		elseif($limit!=0){
+			$sql.=" limit $limit";
+		}
+		return dbFetch($sql);
 	}
 //=====================================
 		public function __construct()

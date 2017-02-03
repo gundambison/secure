@@ -14,6 +14,9 @@
             </div>
             <div class="quicklinks col-md-6">	
                 <ul class="list-inline text-right">
+			<?php if(isset($show_open_live)){?>
+                    <li><a href="<?=base_url('welcome');?>"><span class="glyphicon glyphicon-user"></span> <span class="small">Open Live Account</span></a></li>
+			<?php } ?>
                     <li><a href="<?=base_url('login');?>"><span class="glyphicon glyphicon-user"></span> <span class="small">Login</span></a></li>
                     <li><a href="<?=base_url('deposit-form');?>"><span class="glyphicon glyphicon-import"></span> <span class="small">Deposit</span></a></li>
                     <li><a href="<?=base_url('widtdrawal-form');?>"><span class="glyphicon glyphicon-export"></span> <span class="small">Withdrawal</span></a></li>

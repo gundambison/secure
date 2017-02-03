@@ -14,7 +14,8 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	function member(){
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='Login Secure Area';
+		$this->param['show_open_live']=true;
 		$this->param['content']=array(
 			'modal',
 			'login', 

@@ -75,7 +75,7 @@ ob_start();
 		unset($responce['detail']);
 	}
 	else{ 
-		$responce['error']='Unknown account';
+		$responce['error']='Unknown account '.$post['username'];
 	}
 $warning = ob_get_contents();
 ob_end_clean();

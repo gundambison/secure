@@ -6,8 +6,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <?php 
 		$load_view=isset($baseFolder)?$baseFolder.'inc/head_view':'head_view';
 		$this->load->view($load_view);
+	  if(!defined('_DEV_')){
 ?>
 		<script src='https://www.google.com/recaptcha/api.js'></script>
+<?php } ?>
 		<link rel="shortcut icon" href="<?=$shortlink;?>media/img/salmaforex.png" />
 	</head>
 <body>
@@ -61,7 +63,7 @@ if(isset($footerJS)){
 	}else{}
 	
 	foreach($footerJS as $jsFile ){?>
-	  <script src="<?=base_url();?>media/<?=$jsFile;?>?12"></script>
+	  <script src="<?=base_url();?>media/<?=$jsFile;?>"></script>
 <?php 
 	}
 }else{ echo '<!--no footer js -->'; } ?>
@@ -85,6 +87,7 @@ if(!defined('LOCAL')){?>
 
 ?>
 	<script type="text/javascript">
+try{
 	ddaccordion.init({
 		headerclass: "submenuheader", //Shared CSS class name of headers group
 		contentclass: "submenu", //Shared CSS class name of contents group
@@ -105,6 +108,11 @@ if(!defined('LOCAL')){?>
 			//do nothing
 		}
 	})
+}
+catch(err) {
+    console.log(err );
+}
+	
 	</script>
 </body>
 </html>

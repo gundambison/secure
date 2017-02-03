@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+date_default_timezone_set('Asia/Jakarta');
 class Guest extends MY_Controller {
 /***
 Daftar Fungsi Yang Tersedia :
@@ -38,7 +38,7 @@ Daftar Fungsi Yang Tersedia :
 			$this->param['agent']=$num!=''?$num:'';
 		}
 		$this->param['showAgent']=true;
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='Open Live Account';//-- 
 		if(!isset($this->param['formTitle'])) 
 			$this->param['formTitle']=$this->param['title'];
 		$this->param['content']=array(
@@ -57,7 +57,7 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['showAgent']=false;
 		$this->param['showForm']=false;
 		
-		$this->param['title']='OPEN LIVE ACCOUNT'; 
+		$this->param['title']='OPEN PATNER ACCOUNT'; 
 		if(!isset($this->param['formTitle'])) 
 			$this->param['formTitle']=$this->param['title'];
 		$this->param['content']=array(
@@ -98,7 +98,8 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	public function recover($id=0){
-		$this->param['title']='Recover your Live Account'; 
+		$this->param['title']='Recover your Live Account';
+		$this->param['title']='Recover your Secure Account';
 		$this->param['content']=array(
 			'modal',
 			'recover', 
@@ -176,7 +177,6 @@ Daftar Fungsi Yang Tersedia :
 	}
 	function __CONSTRUCT(){
 	parent::__construct();
-		date_default_timezone_set('Asia/Jakarta');
 		$this->param['today']=date('Y-m-d');
 		$this->param['folder']='guest/';
 		$this->param['baseFolder']='guest/';
@@ -210,8 +210,9 @@ Daftar Fungsi Yang Tersedia :
 		$this->param['emailAdmin']=$this->forex->emailAdmin; 
 		logCreate('Guest Controllers','start');
 		logCreate(current_url(),'url');
-		
+/*		
 		if($this->input->post())
 			logCreate($this->input->post(),'post');
+*/
 	}
 }
