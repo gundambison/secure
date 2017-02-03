@@ -19,7 +19,7 @@ foreach($register as $row){
 	$full_name=isset($dt0['detail']['firstname'])?$dt0['detail']['firstname']:'';
 	$full_name.=" ". (isset($dt0['detail']['lastname'])?$dt0['detail']['lastname']:'');
 	$full_name=substr($full_name,0,126);
-	print_r($dt0[''];
+//	print_r($dt0['']);
 	if($dt0['status']!=1){
 		logCreate("register id:".$row['id']."|status:".$dt0['status'],'info');
 		echo "(failed) status reg_id:{$reg_id}. =".$dt0['status'];

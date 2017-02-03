@@ -9,7 +9,6 @@ $aOrder=array(
 $sql="select count(a.id) c from `mujur_account` a 
 join mujur_accountdocument d on d.email like a.email";
 $dt=$this->db->query($sql)->row_array();
-$respon['sql'][]=$sql;
 $respon['recordsTotal']=$dt['c'];
 $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
 
@@ -28,7 +27,7 @@ $data=array();
 			$col2='a.accountid';
 		}
 		if($col==3){
-			$col2='a.email';
+			$col2='d.email';
 		}
 		if($col==5){
 			$col2='d.status';
@@ -55,10 +54,10 @@ left join mujur_accountdetail ad
 }
 else{
 	logCreate('no search :'.$search);
-	$respon['sql'][]=$sql;
 }
 
-$sql="select a.id,a.created,d.status status_document, d.email main_email from mujur_account a 
+$sql="select a.id,a.created,d.status status_document, d.email main_email, d.id accdoc_id
+from mujur_account a 
 join mujur_accountdocument d on d.email like a.email
 	where $where 
 	$orders limit $start,$limit";
@@ -82,6 +81,7 @@ foreach($dt as $row){
 	if($row['status_document']==2)$row['status']='Review';
 	$row['username']=$row['accountid'].".";
 	$row['action']='';
+	$row['email']=$row['main_email'].".";
 	$data[]=$row;
 }
 

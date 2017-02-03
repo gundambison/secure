@@ -226,6 +226,7 @@ if(defined('LOCAL')){
 	$this->db->insert($this->forex->tableAPI,$data);
 }
 else{
+<<<<<<< HEAD:application/views/depan/email/emailDepositAdmin_view.php
 	$emailAdmin[]='finance@salmaforex.com';$to=$emailAdmin;
 	if(!is_array($to))$to=array($to);
 	foreach($to as $email){
@@ -237,6 +238,17 @@ else{
 	);
 	$subject = "[SalmaForex] Update Account";
 	$data=array( 'url'=>json_encode($to),
+=======
+	$emailAdmin[]='finance@salmaforex.com';
+	foreach($emailAdmin as $to){
+		mail(trim($to), $subject, $message, $headers);
+	}
+	
+	$rawEmail=array(
+		$subject, $headers,$message,'send email'
+	);
+	$data=array( 'url'=>print_r($emailAdmin,1),
+>>>>>>> 63f229f9213cd3f2dc1b1c7a689335c0890b4164:views/member/email/emailDepositAdmin_view.php
 		'parameter'=>json_encode($rawEmail),
 		'error'=>2
 	);

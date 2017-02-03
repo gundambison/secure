@@ -1,11 +1,14 @@
 <?php
+/*
+rename menjadi forexConfig_new.php
+*/
 $config['app_code']=array(
 	'9912310',
 );
  
 
 $config['emailAdmin']=array('admin@dev.salmaforex.com','admin@secure.salmaforex.com');
-
+$config['email_from']=array('name'=>'no reply','email'=>'noreply@salmaforex.com');
 if(defined('LOCAL')){
 	$config['urlForex']=array( 
 		'default'=>			'http://advance.forex/forex/fake',
@@ -54,4 +57,14 @@ BRI : 2202.01.000120.561 a.n Yadi Supriyadi
 MANDIRI : 1300023231999 a.n PT. Salma Widyatama Mandiri
 BNI : 3012123020 a.n PT. Salma Widyatama Mandiri
 */
-$config['sendpulse_pubkey']='';
+$config['sendpulse_pubkey']='
+-----BEGIN PUBLIC KEY-----
+
+-----END PUBLIC KEY-----';
+$config['smtp']=array(
+'host'=>'smtp-pulse.com',
+'port'=>465,
+'username'=>'gundambison@gmail.com',
+'password'=>'njstmAF65K'
+
+);

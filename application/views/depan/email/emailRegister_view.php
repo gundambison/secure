@@ -215,7 +215,7 @@ TEL: 501 223 6910 / 223 1107<br>
             </tr>
           </tbody>
         </table> 
-		</td>
+
     </tr>
     <tr>
       <td colspan="2" valign="bottom"><table cellpadding="0" cellspacing="0" align="center">

@@ -4,13 +4,11 @@ if($_SERVER['HTTP_HOST']=='advance.forex'){
 	ini_set('session.save_path',  dirname($_SERVER['DOCUMENT_ROOT']) . '/../session/'  );
 }
 
-date_default_timezone_set('Asia/Jakarta');
-function logFile(){
-	return true;
-} 
-//	define('ENVIRONMENT', 'production'); 
- 
-	define('_DEV_',1);
+	date_default_timezone_set('Asia/Jakarta');
+
+	if ( !function_exists('logFile')){
+		function logFile(){ return true; }
+	}
 /**
  * CodeIgniter
  *
@@ -65,7 +63,7 @@ function logFile(){
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', 'development');
+	define('ENVIRONMENT', 'production'); 
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -74,10 +72,11 @@ function logFile(){
  * Different environments will require different levels of error reporting.
  * By default development will show errors but testing and live will hide them.
  */
+
 switch (ENVIRONMENT)
 {
 	case 'development':
-		error_reporting(E_ALL);
+		error_reporting(-1);
 		ini_set('display_errors', 1);
 	break;
 
@@ -105,53 +104,9 @@ switch (ENVIRONMENT)
 
  
 	$application_folder = 'application';
+
  
 	$view_folder = '';//views';
-/*
- * --------------------------------------------------------------------
- * DEFAULT CONTROLLER
- * --------------------------------------------------------------------
- *
- * Normally you will set your default controller in the routes.php file.
- * You can, however, force a custom routing by hard-coding a
- * specific controller class/function here. For most applications, you
- * WILL NOT set your routing here, but it's an option for those
- * special instances where you might want to override the standard
- * routing in a specific front controller that shares a common CI installation.
- *
- * IMPORTANT: If you set the routing here, NO OTHER controller will be
- * callable. In essence, this preference limits your application to ONE
- * specific controller. Leave the function name blank if you need
- * to call functions dynamically via the URI.
- *
- * Un-comment the $routing array below to use this feature
- */
-	// The directory name, relative to the "controllers" folder.  Leave blank
-	// if your controller is not in a sub-folder within the "controllers" folder
-	// $routing['directory'] = '';
-
-	// The controller class file name.  Example:  mycontroller
-	// $routing['controller'] = '';
-
-	// The controller function you wish to be called.
-	// $routing['function']	= '';
-
-
-/*
- * -------------------------------------------------------------------
- *  CUSTOM CONFIG VALUES
- * -------------------------------------------------------------------
- *
- * The $assign_to_config array below will be passed dynamically to the
- * config class when initialized. This allows you to set custom config
- * items or override any default config values found in the config.php file.
- * This can be handy as it permits you to share one application between
- * multiple front controller files, with each file containing different
- * config values.
- *
- * Un-comment the $assign_to_config array below to use this feature
- */
-// $assign_to_config['name_of_config_item'] = 'value of config item';
 
 
 // --------------------------------------------------------------------

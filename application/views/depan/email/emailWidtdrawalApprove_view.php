@@ -189,7 +189,7 @@ TEL: 501 223 6910 / 223 1107<br>
             </tr>
           </tbody>
         </table> 
-		</td>
+
 
           <tbody>
             <tr>
@@ -197,8 +197,7 @@ TEL: 501 223 6910 / 223 1107<br>
               <td align="center"><a href="https://www.salmaforex.com/" target="_blank"><img src="https://ci4.googleusercontent.com/proxy/9YJIHCFZpThJ3QNdDYNdwyyhcm9cC9wmIyMwDLT0aVsGS_bZWQUhUx9UQYLLMgB6_l5v-4qtM90xrPAdhM9RhnqvLWMtxxPdZeQcVHCkbRIlzZlYEy7r8hO8K1bo=s0-d-e1-ft#http://marketing.offshorecompany.ch/images/170613/contact-us-btn-en.jpg" alt="" width="192" height="41" /></a></td>
             </tr>
           </tbody>
-        </table>
-		</td>
+        </table></td>
     </tr>
     <tr>
       <td colspan="2" valign="bottom"><table cellpadding="0" cellspacing="0" align="center">

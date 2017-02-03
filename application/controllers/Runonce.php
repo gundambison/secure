@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Runonce extends CI_Controller {
+
 	function index($pos=0){
 		$query= $this->account->emailOnly(100,$pos );
 		//echo '<pre>'.print_r($query,1);
@@ -38,6 +39,7 @@ class Runonce extends CI_Controller {
 		//echo '</table>';
 		
 	}
+
 
 	function close(){
 		if($this->input->post('message')){
@@ -185,7 +187,8 @@ class Runonce extends CI_Controller {
 	}
 
 	function __CONSTRUCT(){
-	parent::__construct(); 		
+
+	parent::__construct();
 		date_default_timezone_set('Asia/Jakarta');
 		$this->param['today']=date('Y-m-d');
 		$this->param['folder']='depan/';

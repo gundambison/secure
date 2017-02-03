@@ -1,3 +1,8 @@
+application/config/database.php
+application/config/routes.php
+application/config/config.php
+application/config/forexConfig_new.php
+*/update.bat
 */config/development
 */logs/*
 */logs/log-*.php
@@ -5,6 +10,7 @@
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
+
 media/email/*
 
 application/config/mongoci.php
@@ -22,3 +28,13 @@ new.komodoproject
 LICENSE
 license.txt
 views/*
+
+update.bat
+media/uploads/*
+tmp/*
+vendorci/*
+logs/*
+curl/*
+application/logs/*
+
+other/*
