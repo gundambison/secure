@@ -2,7 +2,7 @@
 $config['app_code']=array(
 	'9912310',
 );
- 
+// xxx
 
 $config['emailAdmin']=array('admin@dev.salmaforex.com','admin@secure.salmaforex.com');
 $config['email_from']=array('name'=>'no reply','email'=>'noreply@salmaforex.com');
