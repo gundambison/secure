@@ -18,3 +18,4 @@ logs/*
 curl/*
 application/logs/*
 
+other/*
