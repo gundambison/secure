@@ -4,6 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 if ( ! function_exists('_runApi')){
 	function _runApi($url, $parameter=array()){
+		$CI =& get_instance();
+		$res= $CI->advforex->runApi($url,$param);
+		$result0=isset($res['response'])?$res['response']:false;
+		return (array)$result0;
+	}
+
+	function _runApi_old($url, $parameter=array()){
 	global $maxTime;
 	if( $maxTime==null ) $maxTime=10;
 	if(isset($parameter['maxTime'])) $maxTime=$parameter['maxTime'];

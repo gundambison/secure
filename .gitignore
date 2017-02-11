@@ -8,6 +8,7 @@ application/config/forexConfig_new.php
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
+cache/*
 
 media/uploads/*
 tmp/*

@@ -179,12 +179,16 @@ SEMUA dipindah ke model ACCOUNT
 			$row=dbFetchOne($sql);
 			if($row['c']!=0){
 				logCreate("hapus username : {$detail['username']}");
+				echo "\n<br/>hapus akun reg:{$id}";
 				$sql="delete from {$this->tableAccount} where username like '{$detail['username']}'";
 				dbQuery($sql,1);
 				$sql="delete from {$this->tableAccount} where reg_id = '{$reg_id}'";
 				dbQuery($sql,1);
 				$sql="delete from {$this->tableAccountDetail} where username like '{$detail['username']}'";
 				dbQuery($sql,1);
+			}
+			else{
+				echo "\n<br/>akun OK reg:{$id}";
 			}
 		}
 		logCreate("register id:$id |detail:".print_r($detail,1));
@@ -219,6 +223,7 @@ SEMUA dipindah ke model ACCOUNT
 		$rawAccount=dbFetchOne($sql);
 	//apabila ada reg_id yang sama maka cancel	
 		if((int)$reg_id!=0&&$rawAccount['tot']!=0){
+			echo '<br/>account exist:'.$reg_id;
 			logCreate("register not continue account exist:".json_encode($rawAccount)."| {$sql}");
 			return false;
 		}
@@ -445,7 +450,7 @@ ACTIVATION
 		$this->accountCreate($id, $raw0);
 		return $idActive;
 	}
-	
+
 	function activationDetail($id,$field='id'){
 		$sql="select * from {$this->tableActivation} where $field='".addslashes($id)."'";
 		$res=dbFetchOne($sql);
@@ -530,6 +535,13 @@ REGISTER
 		if($email!='')$email.='%';
 		logCreate("delete regis by email:$email ");
 		$sql="update `{$this->tableRegis}` set reg_status='$status' where  `reg_email` like '{$email}'";
+		dbQuery($sql,1);
+	}
+
+	function regisErase($param,$name='email',$status=-1){
+		$param=trim($param);
+		logCreate("delete regis by {$name}:$email ");
+		$sql="update `{$this->tableRegis}` set reg_status='$status' where  `{$name}` like '{$param}'";
 		dbQuery($sql,1);
 	}
 	

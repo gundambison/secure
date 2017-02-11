@@ -1,9 +1,18 @@
 <?php
+if(is_file("../local.txt")){
+	define('LOCAL',true);
+}
+else{
+//	die('not found');
+}
+if(!is_dir("cache")){
+	mkdir("cache",777);
+}
 	date_default_timezone_set('Asia/Jakarta');
 function logFile(){
 	return true;
 } 
-	define('ENVIRONMENT', 'production'); 
+	define('ENVIRONMENT', 'production');
  
 switch (ENVIRONMENT)
 {

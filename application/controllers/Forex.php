@@ -21,12 +21,29 @@ Daftar Fungsi Yang Tersedia :
 require APPPATH.'/libraries/SmtpApi.php';
 class Forex extends CI_Controller {
 	public $param,$oApi;	
-	public function registerApi($stat=1){
+	public function registerApi_old($stat=1){
 		log_message('info','register Api in session');
 		$tmp=$this->load->view('api/forexRegister_data',$this->param,true);
 		$res=json_decode($tmp, true); 
 		if($stat==1)
 			print_r($res);
+	}
+
+	function registerApi($stat=1){
+		$this->load->driver('advforex'); /*gunakan hanya bila diperlukan*/
+		$driver_core = 'advforex';
+		$driver_name='register';
+		$func_name='execute';
+		if( !method_exists($this->{$driver_core}->{$driver_name},$func_name) ){
+			$output=array('function "'.$func_name.'" unable to declare');
+			die(json_encode($output));
+		}
+		else{
+			$row=$params=false;
+			$params=$this->{$driver_core}->{$driver_name}->{$func_name}($row);
+			echo '<pre>';print_r($params);
+		}
+		
 	}
 	
 	public function backupDb(){
