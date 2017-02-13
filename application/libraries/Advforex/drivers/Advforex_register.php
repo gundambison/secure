@@ -258,9 +258,27 @@ function execute(){
 	if($succes===true)
 		$result['succes']=true;
 
+	$result['total_users']=$this->update_login();
+
 	return $result;
 }
 
+function update_login(){
+	$CI =& get_instance();
+	return true;
+	$sql="insert into mujur_users (u_email,u_password,u_type,u_status)
+SELECT a.email, md5('salmamarket'), 1,1 
+FROM `mujur_account` a
+left join mujur_users u on a.email=u.u_email
+where u.u_email is null and a.email !=''
+ group by email";
+	dbQuery($sql);
+ $sql="alter table mujur_users order by u_email";
+	dbQuery($sql);
+ $sql="select count(*) c from mujur_users";
+	$res=dbFetchOne($sql);
+	return $res['c'];
+}
 	function example($row=false){
 		if($row==false) return false;
 		$CI =& get_instance();
