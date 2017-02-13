@@ -303,11 +303,11 @@ SEMUA dipindah ke model ACCOUNT
 //		isset($detail['detail']['firstname'])&&isset($detail['detail']['lastname'])?utf8_encode("{$detail['detail']['firstname']} {$detail['detail']['lastname']}"):"";
 		
 		$url=$this->forex->forexUrl('update');
-		$url.="?".http_build_query($param);
+		//$url.="?".http_build_query($param);
 		logCreate("update password param:".print_r($param,1)."|url:$url");
 		$arr['param']=$param;
 		$arr['url']=$url;
-		$result0= _runApi($url );
+		$result0= _runApi($url,$param );/*update new logic*/
 		logCreate("update password result:".print_r($result0,1));
 		$param=array( );
 		$param['privatekey']	=$this->forex->forexKey();
@@ -328,11 +328,11 @@ SEMUA dipindah ke model ACCOUNT
 		$param['allowtrading']=1;
 
 		$url=$this->forex->forexUrl('update');
-		$url.="?".http_build_query($param);
+		//$url.="?".http_build_query($param);
 		logCreate("update create account| detail param:".print_r($param,1)."|url:$url");
 		$arr['param']=$param;
 		$arr['url']=$url;
-		$result0= _runApi($url );
+		$result0= _runApi($url, $param ); /*update new logic*/
 
 		$param['masterpassword']=$masterPass;//.($raw['accountid']%100000 +19939);
 		$param['investorpassword']=$invPass;//.($raw['accountid'] %100000 +19919);

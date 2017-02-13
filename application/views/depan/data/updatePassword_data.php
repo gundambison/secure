@@ -25,9 +25,9 @@ $param=array( );
 			$param['privatekey']	=$this->forex->forexKey();
 			
 			$url=$this->forex->forexUrl('update');
-			$url.="?".http_build_query($param);
+		//	$url.="?".http_build_query($param);
 		if(!defined('_DEV_')){	 
-			$respon['server']= _runApi($url );
+			$respon['server']= _runApi($url,$param  ); /* tidak akan dipakai pada versi berikutnya*/
 			logCreate("update password result:".print_r($respon['server'],1));
 		}
 		else{

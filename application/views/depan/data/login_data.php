@@ -30,9 +30,9 @@ ob_start();
 			$param['privatekey']	=$this->forex->forexKey();
 			
 			$url=$this->forex->forexUrl('update');
-			$url.="?".http_build_query($param);
+			//$url.="?".http_build_query($param);
 			if(!defined('_DEV_')){	 
-				$result0= _runApi($url );
+				$result0= _runApi($url,$param );/*update logic*/
 				logCreate("update password result:".print_r($result0,1));
 			}
 			else{

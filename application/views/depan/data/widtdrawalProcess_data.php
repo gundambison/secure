@@ -30,21 +30,22 @@ if(isset($_POST['status'])){
 		$param['description']	= 	'Withdrawal '.$vol.' '.date("H:i:s");
 				
 		$url=$this->forex->forexUrl('updateBalance');
-		$url.="?".http_build_query($param);
-		$respon['server'][]=$tmp= _runApi($url );
+		//$url.="?".http_build_query($param);
+		$respon['server'][]=$tmp= _runApi($url, $param );/*not tested*/
 		$param['description']	= 	'Widthdrawal';
 		//echo $url;
  
 		if((int)$tmp['responsecode']===2){
-			$url0=$this->forex->forexUrl('update');	
+			logCreate('WD updateBalance response 2');
+			$url0=$this->forex->forexUrl('update');
 			$param2=array();
 			$param2['accountid']=$dt['raw']['accountid'];
 			$param2['allowlogin']	= 1;
 			$param2['allowtrading']	= 1;
 			$param2['privatekey']	=$this->forex->forexKey();
-			$url0.="?".http_build_query($param2);
-			$respon['server'][]=$tmp= _runApi($url0 );
-			$respon['server'][]=$tmp= _runApi($url );
+			//$url0.="?".http_build_query($param2);
+			$respon['server'][]=$tmp= _runApi($url0,$param2 );/*not tested*/
+			$respon['server'][]=$tmp= _runApi($url,$param );/*not tested*/
 		}
   
 		if((int)$tmp['responsecode']===2 ){
@@ -57,10 +58,11 @@ if(isset($_POST['status'])){
 			logCreate('widtdrawal disapprove');
 		}
 		else{ 
-			$param['volume']		=	"-".$vol; 
-			$url=$this->forex->forexUrl('updateBalance');
-			$url.="?".http_build_query($param);
-			//$respon['server'][]=$tmp= _runApi($url );
+			unset($param['volume'], $param['description']); 
+			$url=$this->forex->forexUrl('getMargin');
+			//$url.="?".http_build_query($param);
+			
+			$respon['server'][]=$tmp0= _runApi($url,$param );/*check balance 2*/
 			
 			if((int)$tmp['responsecode']===0){
 				$this->load->view('depan/email/emailWidtdrawalApprove_view',$dt);

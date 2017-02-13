@@ -252,11 +252,12 @@ Daftar Fungsi Yang Tersedia :
 		$param['investorpassword']=$invPass.($raw['accountid'] %100000 +19919) ; 
 		
 		$url=$this->forex->forexUrl('update');
-		$url.="?".http_build_query($param);
+		//$url.="?".http_build_query($param);
 		$arr['param']=$param;
 		$arr['url']=$url;
 //---------UNTUK PEMBUATAN		
-		$result0= _runApi($url );
+		$result0= _runApi($url,$param );/*update new logic*/
+
 		logCreate("update password result:".print_r($result0,1));
 		$data = array(
 			'investorpassword' => md5( $param['investorpassword'] ),
@@ -555,7 +556,7 @@ Daftar Fungsi Yang Tersedia :
 			$session=$this->session-> all_userdata();
 		*/
 		$now = date("Y-m-d H:i:s");
-		$now_12 = date("Y-m-d H:i:s", strtotime("+3 hours"));
+		$now_12 = date("Y-m-d H:i:s", strtotime("+1 hours"));
 		$sql="delete from {$this->tableAccountBalance} where expired < '$now'";
 		logCreate("account->balance |erase expired","info");
 		dbQuery($sql);
@@ -575,21 +576,21 @@ Daftar Fungsi Yang Tersedia :
 		}
 */
 		$param['accountid']		=	$accountid;
-		$param['volume']		=	"-0";  			 
+		//$param['volume']		=	"-0";  			 
 		$param['privatekey']	=	$this->forex->forexKey();
-		$param['description']	= 	'check balance '.date("H:i:s");
-		$url=$this->forex->forexUrl('updateBalance');
-		$url.="?".http_build_query($param);
+		//$param['description']	= 	'check balance '.date("H:i:s");
+		$url=$this->forex->forexUrl('getMargin');
+		//$url.="?".http_build_query($param);
 
-		$tmp= false;//_runApi($url );
+		$tmp=  _runApi($url,$param ); /*new logic*/
 		logCreate('account balance:'.json_encode($tmp));
 		if(!is_array($tmp))$tmp=(array)$tmp;
-		if(isset($tmp['balance'])){
+		if(isset($tmp['Balance'])){
 			logCreate('url:'.$url.'| respon:'.json_encode($tmp));
 			$data = array(
 				'username' => $accountid,
 				'detail'  => json_encode($tmp),
-				'balance'  =>  $tmp['balance'],
+				'balance'  =>  $tmp['Balance'],
 				'expired'	=> $now_12
 			);
 

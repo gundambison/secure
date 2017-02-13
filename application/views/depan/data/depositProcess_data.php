@@ -26,10 +26,11 @@ if(isset($_POST['status'])){
 		//$param['volume']		=	$vol; 			 
 		$param['privatekey']	=	$this->forex->forexKey();
 		$param['description']	= 	'Deposit '.$vol.' '.date("H:i:s");
+		$param['volume']	= 	"+".$vol;
 		
 		$url=$this->forex->forexUrl('updateBalance');
-		$url.="?".http_build_query($param)."&volume={$vol}+";
-		$respon['server']=$tmp= _runApi($url );
+		//$url.="?".http_build_query($param)."&volume={$vol}+";
+		$respon['server']=$tmp= _runApi($url,$param );/*not tested*/
 		if((int)$tmp['responsecode']===0){
 			logCreate('deposit Approve');
 			$this->load->view('depan/email/emailDepositApprove_view',$dt);//emailDepositStatus_view
