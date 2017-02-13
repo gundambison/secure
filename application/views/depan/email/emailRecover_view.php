@@ -190,7 +190,7 @@ if(defined('LOCAL')){
 	);
 	$this->db->insert($this->forex->tableAPI,$data);
 	//die($message );
-	echo "OK";
+	echo $message;
 }
 else{
 	if(!is_array($to))$to=array($to);

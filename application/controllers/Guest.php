@@ -98,6 +98,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	public function recover($id=0){
+	echo '<pre>'.$id;
 		$this->param['title']='Recover your Live Account';
 		$this->param['title']='Recover your Secure Account';
 		$this->param['content']=array(
@@ -109,36 +110,29 @@ Daftar Fungsi Yang Tersedia :
 		
 		if($detail!=false){ 	
 			$url=base_url("depan/data");
-			//reset 
-			$this->account->noPass($detail['id']);
-			$param=array(
-				'type'=>'login',
-				'data'=>array(
-					array('name'=>'username', 'value'=>$detail['username'])
-				),
-				'recover'=>true
-			);
+			//reset
+			//print_r($detail);die();
+			 
+			echo '<pre>';  
+			        //=================DRIVER
+                    $this->load->driver('advforex'); /*gunakan hanya bila diperlukan*/
+                    $driver_core = 'advforex';
+                    $driver_name='recover';
+                    $func_name='execute';
+                    if( !method_exists($this->{$driver_core}->{$driver_name},$func_name) ){
+                            $output=array('function "'.$func_name.'" unable to declare');
+                            die(json_encode($output));
+                    }
+                    else{
+                            $row=$params=$id;
+                            $params=$this->{$driver_core}->{$driver_name}->{$func_name}($row);
+                            echo '<pre>';
+							print_r($post);print_r($params);
+							$respon = $params['data']['result'];
+                    }
+					
+			exit();
 			
-//-----------LAKUKAN POST KE SITE UTAMA
-			$params=array(
-			  'post'=>array(
-				'username'=>$detail['username']
-			  )
-			);
-			$tmp=$this->load->view('depan/data/login_data',$params,true);
-			$respon=json_decode($tmp);
-			$this->param['raw']=array(
-			  'code'=>266,
-			  'message'=>isset($respon->message)?$respon->message:null,
-			  'respon'=>$tmp
-			);
-			$source=isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'-';
-			$detail='click from :('.$source.')';
-
-			$sql="update `{$this->account->tableAccountRecover}` 
-		set  detail='$detail' , `expired`='0000-00-00'
-		where id='$id'";
-			dbQuery($sql,1);
 		}
 		else{ 
 			$this->param['raw']=array('invalid');
@@ -152,6 +146,31 @@ Daftar Fungsi Yang Tersedia :
 		if($post){
 			echo 'proses melakukan forgot password';
 			$forgot = array('status'=>false, 'message'=>'Email tidak ditemukan');
+        //=================DRIVER
+                    $this->load->driver('advforex'); /*gunakan hanya bila diperlukan*/
+                    $driver_core = 'advforex';
+                    $driver_name='recover';
+                    $func_name='requesting';
+                    if( !method_exists($this->{$driver_core}->{$driver_name},$func_name) ){
+                            $output=array('function "'.$func_name.'" unable to declare');
+                            die(json_encode($output));
+                    }
+                    else{
+                            $row=$params=$post['email'];
+                            $params=$this->{$driver_core}->{$driver_name}->{$func_name}($row);
+                            echo '<pre>';
+							//print_r($post);print_r($params);
+							$respon = $params['data']['result'];
+                    }
+			//print_r($respon);die();
+			if($respon['status']==1){
+				$forgot = array('status'=>true, 'message'=>'Silakan periksa email anda. Terutama pada SPAM');
+			}
+			$this->session->set_flashdata('forgot', $forgot);
+			redirect($_SERVER['HTTP_REFERER'],1);
+			exit('');
+            die('stop');
+            
 			$respon=$this->load->view('guest/data/forgot_data',array('post'=>$post),true);
 			$json=@json_decode($respon,true);
 			$respon=is_array($json)?$json:$respon;
@@ -160,12 +179,7 @@ Daftar Fungsi Yang Tersedia :
 			$this->load->driver('advforex');
 			$forgotPassword=$this->advforex->member->forgot()?false:true;
 */			
-			if($respon['status']==1){
-				$forgot = array('status'=>true, 'message'=>'Silakan periksa email anda');
-			}
-			$this->session->set_flashdata('forgot', $forgot);
-			redirect($_SERVER['HTTP_REFERER'],1);
-			exit('');
+
 		}
 		$this->param['title']='Recover your Live Account'; 
 		$this->param['content']=array(

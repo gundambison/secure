@@ -63,7 +63,7 @@ Daftar Fungsi Yang Tersedia :
 		return json_decode($raw,true);
 	}
 	
-	function noPass($id){
+	function noPass($id){/* */
 		$id=addslashes($id);
 		$sql="update `{$this->tableAccount}` 
 		set 
@@ -401,6 +401,26 @@ Daftar Fungsi Yang Tersedia :
 		return true;
 	}
 	
+	function get_by_field($id,$field='id'){
+	logCreate("account detail by {$field} id:$id|field:$field");	
+		$id=addslashes(trim($id));
+		if($field!='id')$id.="%";
+		$sql="select count(id) c 
+		from `{$this->tableAccount}`
+		where `{$field}` like '{$id}';"; 
+		$res=dbFetchOne($sql);
+		if($res['c']==0){
+			logCreate("account detail id:$id|field:$field|NOT FOUND","error");
+			return array( $sql); 
+		}
+		$users=array();
+		$sql="select id from `{$this->tableAccount}`
+		where `{$field}` like '{$id}';";
+		$users=dbFetch($sql);
+		$users[]=$sql;
+		return $users;
+	}
+
 	function detail($id,$field='id'){
 	logCreate("account detail id:$id|field:$field");	
 		$id=addslashes(trim($id));
@@ -487,8 +507,7 @@ Daftar Fungsi Yang Tersedia :
 			$documents=$this->document($id, 'accountid');
 		$data['document']=$documents;
 		logCreate("account document |end","info");
-//----
-
+//----Partner
 		$sql="select count(a.id) cPatner from `{$this->tableAccount}` a left join `{$this->tableRegis}` r on a.reg_id=r.reg_id
 		where `reg_agent` like '$data[accountid]'";
 		$res0=dbFetchOne($sql);
@@ -511,6 +530,7 @@ Daftar Fungsi Yang Tersedia :
 			return 0;
 		}
 */
+		return 0; /*sementara*/
 		$detail=$userlogin=$this->exist($username,'accountid');
 		if($detail!==false){
 		//OK

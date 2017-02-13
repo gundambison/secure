@@ -179,6 +179,9 @@ Daftar Fungsi Yang Tersedia :
 	
 	public function recover($id=0){
 		redirect('guest/recover/'.$id);
+	}
+	
+	function recover_old($id=0){
 		$this->param['title']='Recover your Secure Account'; 
 		$this->param['content']=array(
 			'modal',
@@ -200,6 +203,7 @@ Daftar Fungsi Yang Tersedia :
 			);
 			
 //-----------LAKUKAN POST KE SITE UTAMA
+			
 			$params=array(
 			  'post'=>array(
 				'username'=>$detail['username']
