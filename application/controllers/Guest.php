@@ -98,7 +98,7 @@ Daftar Fungsi Yang Tersedia :
 	}
 	
 	public function recover($id=0){
-	echo '<pre>'.$id;
+//	echo '<pre>'.$id;
 		$this->param['title']='Recover your Live Account';
 		$this->param['title']='Recover your Secure Account';
 		$this->param['content']=array(
@@ -111,9 +111,7 @@ Daftar Fungsi Yang Tersedia :
 		if($detail!=false){ 	
 			$url=base_url("depan/data");
 			//reset
-			//print_r($detail);die();
-			 
-			echo '<pre>';  
+//			print_r($detail);die();
 			        //=================DRIVER
                     $this->load->driver('advforex'); /*gunakan hanya bila diperlukan*/
                     $driver_core = 'advforex';
@@ -126,12 +124,11 @@ Daftar Fungsi Yang Tersedia :
                     else{
                             $row=$params=$id;
                             $params=$this->{$driver_core}->{$driver_name}->{$func_name}($row);
-                            echo '<pre>';
-							print_r($post);print_r($params);
-							$respon = $params['data']['result'];
+                           // echo '<pre>'; print_r($params);
+							$respon = $params['api'];
                     }
 					
-			exit();
+		//	exit();
 			
 		}
 		else{ 

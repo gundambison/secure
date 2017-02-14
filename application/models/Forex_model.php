@@ -178,25 +178,26 @@ SEMUA dipindah ke model ACCOUNT
 		$sql="select count(id) c from {$this->tableAccount} where username like '{$detail['username']}'";
 			$row=dbFetchOne($sql);
 			if($row['c']!=0){
-				logCreate("hapus username : {$detail['username']}");
+				logCreate("Tidak hapus username : {$detail['username']}");
 				echo "\n<br/>hapus akun reg:{$id}";
 				$sql="delete from {$this->tableAccount} where username like '{$detail['username']}'";
-				dbQuery($sql,1);
+			//	dbQuery($sql,1);
 				$sql="delete from {$this->tableAccount} where reg_id = '{$reg_id}'";
-				dbQuery($sql,1);
+			//	dbQuery($sql,1);
 				$sql="delete from {$this->tableAccountDetail} where username like '{$detail['username']}'";
-				dbQuery($sql,1);
+			//	dbQuery($sql,1);
 			}
 			else{
 				echo "\n<br/>akun OK reg:{$id}";
 			}
 		}
+
 		logCreate("register id:$id |detail:".print_r($detail,1));
 		if(!isset($detail['detail']['statusMember']))
 			$detail['detail']['statusMember']='MEMBER';
 			logCreate("register id:$id |raw:".print_r($raw,1));		
-		$full_name=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'';
-		$full_name.=" ". (isset($detail['detail']['lastname'])?$detail['detail']['lastname']:'');
+			$full_name=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'';
+			$full_name.=" ". (isset($detail['detail']['lastname'])?$detail['detail']['lastname']:'');
 		$dt=array(
 			'reg_id'=>$id,
 			'username'=> $raw['accountid'],
@@ -221,12 +222,14 @@ SEMUA dipindah ke model ACCOUNT
 		$dt['id']=$acc_id=$accid+1;
 		$sql="select count(id) tot from {$this->tableAccount} where reg_id='$reg_id'";
 		$rawAccount=dbFetchOne($sql);
-	//apabila ada reg_id yang sama maka cancel	
+	//apabila ada reg_id yang sama maka cancel
+		/*
 		if((int)$reg_id!=0&&$rawAccount['tot']!=0){
 			echo '<br/>account exist:'.$reg_id;
 			logCreate("register not continue account exist:".json_encode($rawAccount)."| {$sql}");
 			return false;
 		}
+		*/
 	//==============EMAIL START=======	
 		$invPass=trim($raw['investorpassword']);//$data[0]['password'];
 		$masterPass=trim($raw['masterpassword']);//$data[1]['password'];

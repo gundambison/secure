@@ -29,8 +29,8 @@ function execute($id){
 		$param=array( );
 			
 		$param['accountid']=$detail['accountid'];
-		$param['masterpassword']=$masterPass.($detail['accountid']%100000 +19939);
-		$param['investorpassword']=$invPass.($detail['accountid'] %100000 +19919) ;
+		$param['masterpassword']=$masterPass.($detail['accountid']%100 );
+		$param['investorpassword']=$invPass.($detail['accountid'] %100 ) ;
 		$input = array(
 				'investorpassword' => md5( $param['investorpassword'] ),
 				'masterpassword'=>md5( $param['masterpassword'] )
@@ -79,8 +79,8 @@ function execute($id){
 			$sql="update `{$CI->account->tableAccountRecover}` 
 		set  detail='$detail' , `expired`='0000-00-00'
 		where id='$id'";
-			dbQuery($sql,1);
-	return $data;
+	//		dbQuery($sql,1);
+	return $data; 
 }
 
 function requesting($email=''){
