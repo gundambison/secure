@@ -114,3 +114,4 @@ if(isset($respon)){
 else{
 	echo json_encode(array());
 }
+exit();

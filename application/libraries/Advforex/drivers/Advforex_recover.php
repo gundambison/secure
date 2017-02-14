@@ -29,8 +29,8 @@ function execute($id){
 		$param=array( );
 			
 		$param['accountid']=$detail['accountid'];
-		$param['masterpassword']=$masterPass.($detail['accountid']%100 );
-		$param['investorpassword']=$invPass.($detail['accountid'] %100 ) ;
+		$param['masterpassword']=$masterPass.($detail['accountid']%100 )+34;
+		$param['investorpassword']=$invPass.($detail['accountid'] %100 )+43 ;
 		$input = array(
 				'investorpassword' => md5( $param['investorpassword'] ),
 				'masterpassword'=>md5( $param['masterpassword'] )

@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if ( ! function_exists('_runApi')){
 	function _runApi($url, $parameter=array()){
 		$CI =& get_instance();
+		$CI->load->driver('advforex');
 		$res= $CI->advforex->runApi($url,$parameter);
 		$result0=isset($res['response'])?$res['response']:false;
 		return (array)$result0;

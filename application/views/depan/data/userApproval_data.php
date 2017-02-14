@@ -1,16 +1,19 @@
 <?php 
 if (   function_exists('logFile')){ logFile('view/member/data','widtdrawal_data.php','data'); };
 ob_start();
+logCreate('start DATA = user approval');
 //api_data
 $respon=array( 'draw'=>isset($_POST['draw'])?$_POST['draw']:1);
 $aOrder=array(
 'created','username0','username','email'
 );
+
 $sql="select count(a.id) c from `mujur_account` a 
-join mujur_accountdocument d on d.email like a.email";
+join mujur_accountdocument d on d.email = a.email";
 $dt=$this->db->query($sql)->row_array();
 $respon['recordsTotal']=$dt['c'];
 $respon['recordsFiltered']=$dt['c']; //karena tidak ada filter?!
+logCreate('respon:'.json_encode($respon));
 
 $start=isset($post0['start'])?$post0['start']:0;
 $limit=isset($post0['length'])?$post0['length']:11;
@@ -47,10 +50,13 @@ if($search!=''&&strlen($search)>2){
 /*
 left join mujur_accountdetail ad 
 	on a.username=ad.username
-*/	
+*/
+
+
 	$res=dbFetchOne($sql,1);
 	$respon['sql'][]=$sql;
 	$respon['recordsFiltered']=$res['c'];
+	logCreate('respon:'.json_encode($respon));
 }
 else{
 	logCreate('no search :'.$search);
@@ -58,7 +64,7 @@ else{
 
 $sql="select a.id,a.created,d.status status_document, d.email main_email, d.id accdoc_id
 from mujur_account a 
-join mujur_accountdocument d on d.email like a.email
+join mujur_accountdocument d on d.email = a.email
 	where $where 
 	$orders limit $start,$limit";
 /*
@@ -68,6 +74,7 @@ left join mujur_accountdetail ad
 logCreate('sql :'.$sql);
 $respon['sql'][]=$sql;
 $dt=$this->db->query($sql)->result_array();
+logCreate('total user approval:'.count($dt)); //exit();
 foreach($dt as $row){
 	$row['raw']=$detail=$this->account->detail($row['id']);
 	$row['firstname']=isset($detail['detail']['firstname'])?$detail['detail']['firstname']:'-';

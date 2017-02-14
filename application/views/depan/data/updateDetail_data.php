@@ -86,7 +86,7 @@ else{
 //echo'<pre>';print_r($responce);die(); 
  
 $responce['result']['raw']=$responce;
-logCreate($responce);
+//logCreate($responce);
 if(isset($responce['result'])){ 
 	echo json_encode($responce['result']);
 }

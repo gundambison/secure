@@ -518,7 +518,7 @@ Daftar Fungsi Yang Tersedia :
 		logCreate("account balance |start","info");
 		$data['balance']=$this->account->balance($res['accountid'],$time);
 		$data['balanceDate']=$time;
-		logCreate("account balace |start","info");
+		logCreate("account balace |end tot:".$data['balance'],"info");
 		return $data;
 
 	}
@@ -530,7 +530,8 @@ Daftar Fungsi Yang Tersedia :
 			return 0;
 		}
 */
-		return 0; /*sementara*/
+//		return 0; 
+		/*sementara*/
 		$detail=$userlogin=$this->exist($username,'accountid');
 		if($detail!==false){
 		//OK

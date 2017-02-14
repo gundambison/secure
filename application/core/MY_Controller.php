@@ -16,32 +16,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	} 
 	
 	public function data(){
-		$this->checkLogin();
+	//	$this->checkLogin();
 	// die('check login');
-		
+	$type=$this->input->post('type','unknown'); 
+	if($type=='unknown'||$type=='')$type=$this->input->get('type','unknown');
+	logCreate('core data :'.$type);	
 		$url=$this->config->item('api_url');
 		$this->load->helper('api');
 		$this->param['session']=$this->session-> all_userdata();
 		$session=$this->param['session'];
+		logCreate('core data : checksesion' );
 		$detail=$this->account->detail($session['username'],'username');
 		if($detail==false){
+			logCreate('core data : username (username) not found' );
 			$detail=$this->account->detail($session['username'],'accountid');
 			if($detail==false){
 			logCreate('no username','error');
 			redirect(site_url("login")."?err=no_user" );
 			}
+			logCreate('core data : username found' );
 		}
-		else{}
+		else{
+			logCreate('core data : username found' );
+		}
 		$this->param['userlogin']=$detail;
 		
 		$respon=array(		
 			'html'=>print_r($_REQUEST,1), 
 		);
-
-		$type=$this->input->post('type','unknown'); 
-		if($type=='unknown'||$type=='')$type=$this->input->get('type','unknown');
+	logCreate('core data (start) :'.$type);
+		$aType=array('userDetail');
+		if(in_array($type,$aType)){
+			        //=================DRIVER
+                    $this->load->driver('advforex'); /*gunakan hanya bila diperlukan*/
+                    $driver_core = 'advforex';
+                    $driver_name='user';
+                    $func_name='detail';
+                    if( !method_exists($this->{$driver_core}->{$driver_name},$func_name) ){
+                            $output=array('function "'.$func_name.'" unable to declare');
+                            die(json_encode($output));
+                    }
+                    else{
+                   	$param=array(
+						'post'=>$this->convertData(),
+						'get'=>$this->input->get(),
+						'post0'=>$this->input->post(),
+						'userlogin'=>$this->param['userlogin'],
+						'session'=>$this->param['session'],
+					);
+                            $params=$this->{$driver_core}->{$driver_name}->{$func_name}($param);
+                           // echo '<pre>'; print_r($params);
+							$respon = $params;
+                    }
+			$this->succesMessage($respon);
+		}
 		$message='unknown data type';
 		$open= $this->param['folder']."data/".$type."_data";
+	
 		if(is_file('application/views/'.$open.".php")){
 			$param=array(
 				'post'=>$this->convertData(),
@@ -49,12 +80,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				'post0'=>$this->input->post(),
 				'userlogin'=>$this->param['userlogin']
 			);
+			logCreate('core data : '.$open );
 			$raw=$this->load->view($open, $param, true);
+			logCreate('core data : '.strlen($raw) ); 
+			
 			$ar=json_decode($raw,true);
-
+			
 			if(is_array($ar)){
 				$respon=$ar;				
-				logCreate($respon);
+			//	logCreate($respon);
 				if(!isset($respon['status'])){ 
 					echo json_encode($respon);exit(); 
 				}
@@ -66,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 			}
 			else{
-				logCreate("unknown :".htmlentities($raw));
+				logCreate("is not array? :".strlen($raw));
 				$this->errorMessage('267',$raw,$message);
 			}
 		}
@@ -177,7 +211,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	private function checkLogin(){
 		$session=$this->param['session'];
-		logCreate('controller:member |checkLogin |username:'.$session['username'] );
+	//	logCreate('controller:member |checkLogin |username:'.$session['username'] );
 		$detail=$this->account->detail($session['username'],'username');
 		logCreate('username found:'.count($detail) );
 		if($detail==false){

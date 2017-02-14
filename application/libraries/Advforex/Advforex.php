@@ -12,7 +12,7 @@ Daftar Fungsi Yang Tersedia :
         $this->CI  =& get_instance();
 		$driver_prefix='advforex_';
         $this->valid_drivers = array(
-			'api','register','recover'
+			'api','register','recover','user',
 		);
 		//log_message('info','driver:'.json_encode( $this->valid_drivers ));
     }
