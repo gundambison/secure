@@ -6,10 +6,12 @@ public $CI;
 function execute($id){
 	$CI =& get_instance();
 	$detail=$CI->account->recoverId($id);
+
 	$email = $detail['email'];
 	$param=array();
 	$users=$CI->account->get_by_field($email,'email');
-		ob_start();
+	ob_start();
+	$data['respon']=array('code'=>-1,'message'=>'unknown');
 	$data['user']=$users=$CI->account->get_by_field($email,'email');
 
 	foreach($users as $user){
@@ -25,33 +27,32 @@ function execute($id){
 		$quePass=dbFetch($sql);
 		$invPass=$quePass[0]['password'];
 		$masterPass=$quePass[1]['password'];
-		
+		//print_r($detail);die();
 		$param=array( );
-			
 		$param['accountid']=$detail['accountid'];
-		$param['masterpassword']=$masterPass.($detail['accountid']%100 )+34;
-		$param['investorpassword']=$invPass.($detail['accountid'] %100 )+43 ;
+		$param['masterpassword']="$masterPass".($id%100) ;
+		$param['investorpassword']=$invPass.($id%100)  ;
 		$input = array(
 				'investorpassword' => md5( $param['investorpassword'] ),
 				'masterpassword'=>md5( $param['masterpassword'] )
 		);
 		$where = "id=".(int)$detail['id'];
-			 
+		//print_r($param);die();	 
 			$param['privatekey']	=$CI->forex->forexKey();
 			
 			$url=$CI->forex->forexUrl('update');
-			//$url.="?".http_build_query($param);
+		//$url.="?".http_build_query($param);
 			$result0= _runApi($url,$param );/*update logic*/
 		//==========SAVE============
 			$dtAPI=array(
 				'url'=>'recover ('.$detail['accountid'] .')',
-				'param'=>json_encode($param),
+				'parameter'=>json_encode($param),
 				'response'=>json_encode($result0),
 				'error'=>'-1'
 			);
-			$sql=$CI->db->insert_string($CI->forex->tableAPI, $dtAPI);
-                        dbQuery($sql);
-                        //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
+		$sql=$CI->db->insert_string($CI->forex->tableAPI, $dtAPI);
+        dbQuery($sql);
+        //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 			
 			logCreate("update password result:".print_r($result0,1));
 			$data['api'][]=array($url,$param,$result0);
@@ -76,21 +77,21 @@ function execute($id){
 			
 			$tmp=$CI->load->view('depan/email/emailAccount_view',$param2,true);
 			$data['info']='Your password have been update. Please Check Your Email ('.$detail['email'].')';
-			
+		$change++;
 	}
- 
-
-
-
-
+	if($change!=0){
+		$data['respon']=array('code'=>266,'message'=>'Please Check you email');;
+	
+	}
 //-----------LAKUKAN POST KE SITE UTAMA
 			$source=isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'-';
 			$detail='click from :('.$source.')';
 
-			$sql="update `{$CI->account->tableAccountRecover}` 
+		$sql="update `{$CI->account->tableAccountRecover}` 
 		set  detail='$detail' , `expired`='0000-00-00'
 		where id='$id'";
-	//		dbQuery($sql,1);
+		dbQuery($sql,1);
+        $data['api']= array('code'=>266);
 	return $data; 
 }
 

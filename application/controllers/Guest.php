@@ -107,7 +107,7 @@ Daftar Fungsi Yang Tersedia :
 		);
 		$this->param['recoverId']=$id;
 		$detail=$this->account->recoverId($id);
-		
+
 		if($detail!=false){ 	
 			$url=base_url("depan/data");
 			//reset
@@ -125,15 +125,17 @@ Daftar Fungsi Yang Tersedia :
                             $row=$params=$id;
                             $params=$this->{$driver_core}->{$driver_name}->{$func_name}($row);
                            // echo '<pre>'; print_r($params);
-							$respon = $params['api'];
+						$respon = $params['respon'];
                     }
 					
 		//	exit();
-			
+			$this->param['raw']=$respon;
+			//array('code'=>266,'message'=>'Please Check you email');
 		}
 		else{ 
 			$this->param['raw']=array('invalid');
 		}
+		
 		$this->param['footerJS'][]='js/login.js';
 		$this->showView(); 
 	}

@@ -130,7 +130,7 @@ function execute(){
 			);
 			$dtAPI=array(
 				'url'=>'register new(1)',
-				'param'=>json_encode($param),
+				'parameter'=>json_encode($param),
 				'response'=>json_encode($result),
 				'error'=>'-1'
 			);
@@ -196,7 +196,7 @@ function execute(){
 
 				$dtAPI=array(
 					'url'=>'register new(2)',
-					'param'=>json_encode($param),
+					'parameter'=>json_encode($param),
 					'response'=>json_encode($result),
 					'error'=>'-1'
 				);
@@ -241,7 +241,7 @@ function execute(){
 			logCreate("update allow result:".print_r($result0,1));
 			$dtAPI=array(
 				'url'=>'update new(1)',
-				'param'=>json_encode($param),
+				'parameter'=>json_encode($param),
 				'response'=>json_encode($res),
 				'error'=>'-1'
 			);
