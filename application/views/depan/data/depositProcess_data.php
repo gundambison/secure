@@ -31,8 +31,9 @@ if(isset($_POST['status'])){
 		$url=$this->forex->forexUrl('updateBalance');
 		//$url.="?".http_build_query($param)."&volume={$vol}+";
 		$respon['server']=$tmp= _runApi($url,$param );/*not tested*/
-		if((int)$tmp['responsecode']===0){
-			logCreate('deposit Approve');
+		logCreate('respon :'.print_r($tmp,1));
+		if((int)$tmp['ResponseCode']===0){
+			logCreate('deposit Approve '.$tmp['ResponseCode']);
 			$this->load->view('depan/email/emailDepositApprove_view',$dt);//emailDepositStatus_view
 
 			$sql="update mujur_flowlog set status=1 where id=$id";

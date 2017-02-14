@@ -34,8 +34,8 @@ if(isset($_POST['status'])){
 		$respon['server'][]=$tmp= _runApi($url, $param );/*not tested*/
 		$param['description']	= 	'Widthdrawal';
 		//echo $url;
- 
-		if((int)$tmp['responsecode']===2){
+		logCreate('api:'.print_r($tmp,1));
+		if((int)$tmp['ResponseCode']===2){
 			logCreate('WD updateBalance response 2');
 			$url0=$this->forex->forexUrl('update');
 			$param2=array();
@@ -45,10 +45,12 @@ if(isset($_POST['status'])){
 			$param2['privatekey']	=$this->forex->forexKey();
 			//$url0.="?".http_build_query($param2);
 			$respon['server'][]=$tmp= _runApi($url0,$param2 );/*not tested*/
+			logCreate('update allow');
 			$respon['server'][]=$tmp= _runApi($url,$param );/*not tested*/
+			logCreate('api:'.print_r($tmp,1));
 		}
   
-		if((int)$tmp['responsecode']===2 ){
+		if((int)$tmp['ResponseCode']===2 ){
 			$sql="update mujur_flowlog set status=2 where id=$id";
 			dbQuery($sql,1);
 			$dt['statusConfirm']="Disapprove";
@@ -63,8 +65,9 @@ if(isset($_POST['status'])){
 			//$url.="?".http_build_query($param);
 			
 			$respon['server'][]=$tmp0= _runApi($url,$param );/*check balance 2*/
-			
-			if((int)$tmp['responsecode']===0){
+			logCreate('res:'.print_r($tmp0,1));
+
+			if((int)$tmp['ResponseCode']===0){
 				$this->load->view('depan/email/emailWidtdrawalApprove_view',$dt);
 				$sql="update mujur_flowlog set status=1 where id=$id";
 				dbQuery($sql,1);

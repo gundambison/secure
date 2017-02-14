@@ -618,7 +618,7 @@ Daftar Fungsi Yang Tersedia :
 			$sql = $this->db->set($data)->get_compiled_insert($this->tableAccountBalance);
 			dbQuery($sql);
 			logCreate("account->balance |update","info");
-			return $tmp['balance'];
+			return isset($tmp['Balance'])?$tmp['balance']:0;
 		}
 		else{
 			logCreate('url:'.$url.'| Failed| respon:'.json_encode($tmp));
