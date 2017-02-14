@@ -78,7 +78,6 @@ function execute(){
 				$param['email']		=substr($dt['email'],0,47);
 		}
 	//======Optional
-
 		if($dt['address']!='')
 			$param['address']	=$dt['address'];	
 		if($dt['zipcode']!='')
@@ -119,6 +118,7 @@ function execute(){
 			echo "<pre>".print_r($result0,1)."</pre>";
 			continue;
 		}
+
 		if( isset($result0['ResponseCode'])&& $result0['ResponseCode']==0){
 			echo "\nrespon=0 (OK)";
 			$result=array(
@@ -128,7 +128,13 @@ function execute(){
 				'responsecode'=>isset($result0['ResponseCode'])?$result0['ResponseCode']:-100,
 				
 			);
-
+			$dtAPI=array(
+				'url'=>'register new(1)',
+				'param'=>json_encode($param),
+				'response'=>json_encode($result),
+				'error'=>'-1'
+			);
+			$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 		}
 		else{
 			echo "\nrespon=?? (not OK)|".$result0['ResponseCode'];
@@ -186,6 +192,13 @@ function execute(){
 				echo "\nagent bermasalah(3)?:".print_r($result ,1);
 				logCreate("agent bermasalah? agent bermasalah v2 result:".print_r($result ,1)); 
 
+				$dtAPI=array(
+					'url'=>'register new(2)',
+					'param'=>json_encode($param),
+					'response'=>json_encode($result),
+					'error'=>'-1'
+				);
+				$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 		   }
 		   
 		}
@@ -222,6 +235,13 @@ function execute(){
 			$res= $CI->advforex->runApi($url,$param);
 			$result0=isset($res['response'])?$res['response']:false;
 			logCreate("update allow result:".print_r($result0,1));
+			$dtAPI=array(
+				'url'=>'update new(1)',
+				'param'=>json_encode($param),
+				'response'=>json_encode($res),
+				'error'=>'-1'
+			);
+			$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 			
 			$id=$CI->forex->accountActivation($row['id'],$result);
 			$arr['accountActivation']=$id;
@@ -279,6 +299,7 @@ where u.u_email is null and a.email !=''
 	$res=dbFetchOne($sql);
 	return $res['c'];
 }
+
 	function example($row=false){
 		if($row==false) return false;
 		$CI =& get_instance();

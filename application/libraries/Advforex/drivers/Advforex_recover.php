@@ -41,7 +41,16 @@ function execute($id){
 			
 			$url=$CI->forex->forexUrl('update');
 			//$url.="?".http_build_query($param);
-				$result0= _runApi($url,$param );/*update logic*/
+			$result0= _runApi($url,$param );/*update logic*/
+		//==========SAVE============
+			$dtAPI=array(
+				'url'=>'recover ('.$detail['accountid'] .')',
+				'param'=>json_encode($param),
+				'response'=>json_encode($result0),
+				'error'=>'-1'
+			);
+			$CI->db->insert($CI->forex->tableAPI,$dtAPI);
+			
 				logCreate("update password result:".print_r($result0,1));
 			$data['api'][]=array($url,$param,$result0);
 			$sql = $CI->db->update_string($CI->forex->tableAccount, $input, $where);
@@ -145,18 +154,17 @@ function requesting($email=''){
 
 	$result=array(
 		'data'=>$data,
-		'body'=>$content, 
-
+		'body'=>$content,
 	);
 	return $result;
 }
 
 	function __CONSTRUCT(){
-	$CI =& get_instance();
-	$CI->load->helper('api');
-	//$CI->config->load('forexConfig_new', TRUE);
-    $this->urls = $urls=$CI->config->item('apiForex_url' );
-    $this->privatekey = $CI->config->item('privatekey' );
+		$CI =& get_instance();
+		$CI->load->helper('api');
+		//$CI->config->load('forexConfig_new', TRUE);
+		$this->urls = $urls=$CI->config->item('apiForex_url' );
+		$this->privatekey = $CI->config->item('privatekey' );
 
 	}
 }

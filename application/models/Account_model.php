@@ -530,7 +530,7 @@ Daftar Fungsi Yang Tersedia :
 			return 0;
 		}
 */
-//		return 0; 
+		return 0; 
 		/*sementara*/
 		$detail=$userlogin=$this->exist($username,'accountid');
 		if($detail!==false){

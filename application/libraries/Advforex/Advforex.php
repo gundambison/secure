@@ -98,8 +98,10 @@ Daftar Fungsi Yang Tersedia :
 		curl_close($curl);
 		if(!isset($response0)) $response0='?';
 		logCreate( 'API |url:'. $url. "|raw:".(is_array($response)?'total array/obj='.count($response):$response0 ) );
-	    //$CI->db->insert($CI->forex->tableAPI,$dtAPI);	
-		return array('raw'=>$response0, 'db_data'=>$dtAPI,
+	    $CI->db->insert($CI->forex->tableAPI,$dtAPI);
+		return array(
+		'raw'=>$response0,
+		'db_data'=>$dtAPI,
 		'response'=>$response
 		) ;
 

@@ -16,9 +16,16 @@ $this->account->tableAccount, $pass2,$pass1, $member['username'] );
  dbQuery($sql,1);
 $respon['ok']=true;
 //$respon['sql']=$sql;
-
-$param=array( );
-			
+		//==========SAVE============
+			$dtAPI=array(
+				'url'=>'change password ('.$member['username'].')',
+				'param'=>json_encode($post),
+				'response'=>'done',
+				'error'=>'-1'
+			);
+			//$CI->db->insert($CI->forex->tableAPI,$dtAPI);
+		//===============================
+			$param=array( );
 			$param['accountid']=$member['accountid'];
 			$param['masterpassword']=$pass1;
 			$param['investorpassword']=$pass2; 			 
