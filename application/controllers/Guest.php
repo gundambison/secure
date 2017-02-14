@@ -107,16 +107,17 @@ Daftar Fungsi Yang Tersedia :
 		);
 		$this->param['recoverId']=$id;
 		$detail=$this->account->recoverId($id);
-
+		$this->load->driver('advforex'); /*gunakan hanya bila diperlukan*/
+                    $driver_core = 'advforex';
+                    $driver_name='recover';
+                    $func_name='execute';
+					
 		if($detail!=false){ 	
 			$url=base_url("depan/data");
 			//reset
 //			print_r($detail);die();
 			        //=================DRIVER
-                    $this->load->driver('advforex'); /*gunakan hanya bila diperlukan*/
-                    $driver_core = 'advforex';
-                    $driver_name='recover';
-                    $func_name='execute';
+                    
                     if( !method_exists($this->{$driver_core}->{$driver_name},$func_name) ){
                             $output=array('function "'.$func_name.'" unable to declare');
                             die(json_encode($output));
@@ -128,6 +129,7 @@ Daftar Fungsi Yang Tersedia :
 						$respon = $params['respon'];
                     }
 					
+					
 		//	exit();
 			$this->param['raw']=$respon;
 			//array('code'=>266,'message'=>'Please Check you email');
@@ -135,7 +137,7 @@ Daftar Fungsi Yang Tersedia :
 		else{ 
 			$this->param['raw']=array('invalid');
 		}
-		
+		$params=$this->{$driver_core}->{$driver_name}->clean( );
 		$this->param['footerJS'][]='js/login.js';
 		$this->showView(); 
 	}

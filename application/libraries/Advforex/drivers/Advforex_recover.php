@@ -161,7 +161,10 @@ function requesting($email=''){
 	);
 	return $result;
 }
-
+function clean(){
+	$CI =& get_instance();
+	$CI->account->cleanRecover();
+}
 	function __CONSTRUCT(){
 		$CI =& get_instance();
 		$CI->load->helper('api');

@@ -73,7 +73,12 @@ Daftar Fungsi Yang Tersedia :
 		logCreate("reset password |id:".$id);		
 		return true;
 	}
-	
+	function cleanRecover(){
+		$date=date("Y-m-d",strtotime("-20 days"));
+		$sql="delete from `{$this->tableAccountRecover}`
+		where expired < '$date'";
+		dbQuery($sql,1);
+	}
 	function recover($detail=false){
 		if($detail==false){
 //=========Menambah Account Recover
