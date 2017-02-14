@@ -563,15 +563,30 @@ REGISTER
 		}
 		
 		$sql="select count(reg_id) c from {$this->tableRegis} where
-		reg_email='$email'";
-		$res= $this->db->query($sql)->row_array();
+		reg_email like '$email'";
+		$res= dbFetchOne($sql);//$this->db->query($sql)->row_array();
 /*
-email double diperbolehkan
+email double tidak diperbolehkan
+ * 
+ */
 		if($res['c']!=0){
-			$message='Email already register';//.json_encode($res);
+			$message='Email ('.$email.') already register';//.json_encode($res);
 			return false;
 		}
-*/
+
+		$sql="select count(id) c from "
+                        . "{$this->tableAccount} where
+                            email like '$email'";
+		$res= dbFetchOne($sql);//$this->db->query($sql)->row_array();
+/*
+email double tidak diperbolehkan
+ * 
+ */
+		if($res['c']!=0){
+			$message='Email ('.$email.') already register';//.json_encode($res);
+			return false;
+		}
+                
 		unset($data['type']);
 		$dt=array(
 			'reg_status'=>1,

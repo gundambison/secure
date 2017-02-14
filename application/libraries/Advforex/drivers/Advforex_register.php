@@ -134,7 +134,9 @@ function execute(){
 				'response'=>json_encode($result),
 				'error'=>'-1'
 			);
-			$CI->db->insert($CI->forex->tableAPI,$dtAPI);
+			$sql=$this->db->insert_string($CI->forex->tableAPI, $dtAPI);
+                        dbQuery($sql);
+                        //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 		}
 		else{
 			echo "\nrespon=?? (not OK)|".$result0['ResponseCode'];
@@ -198,7 +200,9 @@ function execute(){
 					'response'=>json_encode($result),
 					'error'=>'-1'
 				);
-				$CI->db->insert($CI->forex->tableAPI,$dtAPI);
+			$sql=$this->db->insert_string($CI->forex->tableAPI, $dtAPI);
+                        dbQuery($sql);
+                        //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 		   }
 		   
 		}
@@ -241,7 +245,9 @@ function execute(){
 				'response'=>json_encode($res),
 				'error'=>'-1'
 			);
-			$CI->db->insert($CI->forex->tableAPI,$dtAPI);
+			$sql=$this->db->insert_string($CI->forex->tableAPI, $dtAPI);
+                        dbQuery($sql);
+                        //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 			
 			$id=$CI->forex->accountActivation($row['id'],$result);
 			$arr['accountActivation']=$id;

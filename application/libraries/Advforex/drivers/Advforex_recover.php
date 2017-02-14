@@ -49,9 +49,11 @@ function execute($id){
 				'response'=>json_encode($result0),
 				'error'=>'-1'
 			);
-			$CI->db->insert($CI->forex->tableAPI,$dtAPI);
+			$sql=$this->db->insert_string($CI->forex->tableAPI, $dtAPI);
+                        dbQuery($sql);
+                        //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 			
-				logCreate("update password result:".print_r($result0,1));
+			logCreate("update password result:".print_r($result0,1));
 			$data['api'][]=array($url,$param,$result0);
 			$sql = $CI->db->update_string($CI->forex->tableAccount, $input, $where);
 			dbQuery($sql,1);
