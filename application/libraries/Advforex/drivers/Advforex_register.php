@@ -134,7 +134,7 @@ function execute(){
 				'response'=>json_encode($result),
 				'error'=>'-1'
 			);
-			$sql=$this->db->insert_string($CI->forex->tableAPI, $dtAPI);
+			$sql=$CI->db->insert_string($CI->forex->tableAPI, $dtAPI);
                         dbQuery($sql);
                         //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 		}
@@ -200,7 +200,7 @@ function execute(){
 					'response'=>json_encode($result),
 					'error'=>'-1'
 				);
-			$sql=$this->db->insert_string($CI->forex->tableAPI, $dtAPI);
+			$sql=$CI->db->insert_string($CI->forex->tableAPI, $dtAPI);
                         dbQuery($sql);
                         //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 		   }
@@ -245,7 +245,7 @@ function execute(){
 				'response'=>json_encode($res),
 				'error'=>'-1'
 			);
-			$sql=$this->db->insert_string($CI->forex->tableAPI, $dtAPI);
+			$sql=$CI->db->insert_string($CI->forex->tableAPI, $dtAPI);
                         dbQuery($sql);
                         //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 			

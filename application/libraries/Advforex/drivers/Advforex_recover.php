@@ -49,7 +49,7 @@ function execute($id){
 				'response'=>json_encode($result0),
 				'error'=>'-1'
 			);
-			$sql=$this->db->insert_string($CI->forex->tableAPI, $dtAPI);
+			$sql=$CI->db->insert_string($CI->forex->tableAPI, $dtAPI);
                         dbQuery($sql);
                         //$CI->db->insert($CI->forex->tableAPI,$dtAPI);
 			
