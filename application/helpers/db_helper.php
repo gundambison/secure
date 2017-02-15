@@ -127,3 +127,19 @@ if ( ! function_exists('dbFetch')){
   }
   
 }else{}
+
+if ( ! function_exists('saveTableLog')){
+ function saveTableLog($controller, $func, $param){
+	$id=dbId('log',100000);
+	$CI =& get_instance();
+	$data=array(
+	'controllers'=>$controller,
+	'function'=>$func,
+	'param'=>json_encode($param)
+	);
+	$sql=$CI->db->insert_string($CI->forex->tableLog, $dtAPI);
+    dbQuery($sql);
+	return true;
+	
+ }
+}

@@ -66,6 +66,7 @@ if($responce['error']===false){
 		
 		$url=$this->forex->forexUrl('update');
 		//$url.="?".http_build_query($param);
+		saveTableLog('member','change detail',$param);
 		logCreate("update detail param:".print_r($param,1)."|url:$url");
 		$arr['param']=$param;
 		$arr['url']=$url;

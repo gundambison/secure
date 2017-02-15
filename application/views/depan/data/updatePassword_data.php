@@ -30,18 +30,15 @@ $respon['ok']=true;
 			$param['masterpassword']=$pass1;
 			$param['investorpassword']=$pass2; 			 
 			$param['privatekey']	=$this->forex->forexKey();
-			
+
 			$url=$this->forex->forexUrl('update');
 		//	$url.="?".http_build_query($param);
-		if(!defined('_DEV_')){	 
-			$respon['server']= _runApi($url,$param  ); /* tidak akan dipakai pada versi berikutnya*/
-			logCreate("update password result:".print_r($respon['server'],1));
-		}
-		else{
-			$respon['server']="only in production";
-			logCreate("update password ke Sistem hanya di production");
-		}		
-		
+		//if(!defined('_DEV_')){
+			$respon['param']=$param;
+			$respon['server']= _runApi($url, $param  ); /* tidak akan dipakai pada versi berikutnya*/
+		//	logCreate("update password result:".print_r($respon['server'],1));
+		//}
+
 $warning = ob_get_contents();
 ob_end_clean();
 if($warning!=''){

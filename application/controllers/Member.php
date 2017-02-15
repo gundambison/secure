@@ -117,14 +117,15 @@ Daftar Fungsi Yang Tersedia :
 	public function editPassword(){
 		$this->checkLogin();
 		if($this->input->post('rand')){
+
 			$post=$this->input->post();
+		//	echo '<pre>'.print_r($post,1);exit();
 			$data=array( 
 				'investor'=>$post['investor1'],
 				'trading'=>$post['trading1']
 			); 
 			
-		if( $post['expire'] > date("Y-m-d H:i:s") && $post['expire'] < date("Y-m-d H:i:s",
-		strtotime("+2 hour"))){
+			if( $post['expire'] > date("Y-m-d H:i:s") && $post['expire'] < date("Y-m-d H:i:s", strtotime("+2 hour"))){
 			$data['member']=$this->param['detail']; 
 			$data['now']=date("Y-m-d H:i:s", strtotime("+2 hour"));
 			
@@ -136,8 +137,9 @@ Daftar Fungsi Yang Tersedia :
 				'post'=> $this->input->post() 
 			);
 			$param['member']= $this->param['detail'] ; 
-			$result=$this->load->view('depan/data/updatePassword_data',$param,true);
- 
+			$result0=$this->load->view('depan/data/updatePassword_data',$param,true);
+			$result=is_array(json_decode($result0,1))?json_decode($result0,1):$result0;
+			//echo '<pre>'.print_r($result,1);exit();
 //-----------EMAIL
 			$param2=array( 
 				'username'=>	$this->param['detail']['accountid'],//$this->param['detail']['username'],
@@ -145,15 +147,17 @@ Daftar Fungsi Yang Tersedia :
 				'investorpassword'=>	$data['investor'],
 				'email'=>		$this->param['detail']['email']
 			);
+			saveTableLog('member','change pass',$param2);
 			$param2['emailAdmin']=array();//$this->forex->emailAdmin;
 			
 			$this->load->view('depan/email/emailPasswordChange_view',$param2);
-			
-			
-		}else{ 
+
+			}
+			else{ 
 			echo 'not valid';redirect(base_url("depan/editPassword"));
-		}
-			redirect(base_url('member/logout'));//echo '<pre>';print_r($data);die();
+			}
+			redirect(base_url('member/logout'));
+			//echo '<pre>';print_r($data);die();
 		}
 		
 		$this->param['title']='Secure Account | PASSWORD Edit'; 
@@ -361,6 +365,7 @@ Daftar Fungsi Yang Tersedia :
 		$txt=file_get_contents( $data['upload']);
 		echo $txt;
 	}
+
 	public function login(){
 		redirect(base_url('forex'),1);
 		$this->param['title']='LOGIN SECURE ACCOUNT'; 
