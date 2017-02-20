@@ -128,3 +128,37 @@ if ( ! function_exists('callback_submit')){
     }
 	}
 } else{}
+
+if ( ! function_exists('return_rest')){
+function return_rest($code=200,$data=array()){
+	header('Content-Type: application/json; charset=utf-8;');
+	$response=array('status_code'=>$code,
+	'data'=>$data
+	);
+	echo json_encode($response);
+	exit;
+}
+}
+
+if ( ! function_exists('save_rest')){
+function save_rest($param=array(),$result=false){
+	$CI =& get_instance();
+	$CI->load->model('forex_model');
+	$dtAPI['url']='rest ';
+	$dtAPI['url'].=isset($param['api'])?$param['api']:'???';
+	$dtAPI['url'].="/";
+	$dtAPI['url'].=isset($param['function'])?$param['function']:'???';
+
+	$dtAPI['parameter']=isset($param['data'])?json_encode($param['data']):'???';
+	$dtAPI['response']=json_encode($result);
+	$dtAPI['error']=-10;
+
+	$sql= $CI->db->insert_string($CI->forex_model->tableAPI, $dtAPI);
+	dbQuery($sql);
+}
+}
+
+function save_and_send_rest($code, $data, $param){
+	save_rest($param, $data);
+	return_rest($code, $data);
+}

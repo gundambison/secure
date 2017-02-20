@@ -12,7 +12,7 @@ if(!is_dir("cache")){
 function logFile(){
 	return true;
 } 
-	define('ENVIRONMENT', 'development');
+	define('ENVIRONMENT', 'production');
  
 switch (ENVIRONMENT)
 {
