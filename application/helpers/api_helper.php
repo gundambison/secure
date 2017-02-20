@@ -2,6 +2,19 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 /* 
 */
+if ( ! function_exists('_localApi')){
+	function _localApi($api='',$function='', $data=array()){
+		$param=array(
+		'api'=>$api,
+		'function'=>$function,
+		'data'=>$data
+		);
+		$url=site_url('rest/'.$param['api']);
+		$res= _runApi($url,$param);
+	//	echo '<br/>'.$url;var_dump($res);
+		return $res;
+	}
+}
 if ( ! function_exists('_runApi')){
 	function _runApi($url, $parameter=array()){
 		$CI =& get_instance();

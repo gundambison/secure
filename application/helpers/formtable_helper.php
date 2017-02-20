@@ -131,3 +131,7 @@ if( ! function_exists('bsButton')){
 	return $str;
 	}
 }else{}
+
+function echo_r($array){
+	echo '<pre>'.print_r($array,1).'</pre>';
+}

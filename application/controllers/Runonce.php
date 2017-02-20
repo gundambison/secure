@@ -2,6 +2,10 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Runonce extends CI_Controller {
+	function index(){
+		$res= _localApi('users','exist',array("gundambison@gmail.com"));
+		echo_r($res);die("---");
+	}
 	function close(){
 		if($this->input->post('message')){
 			$data=array('message'=>$this->input->post('message'));
