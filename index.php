@@ -11,8 +11,15 @@ if(!is_dir("cache")){
 	date_default_timezone_set('Asia/Jakarta');
 function logFile(){
 	return true;
-} 
+}
+
+if(defined('LOCAL')){
+	define('ENVIRONMENT', 'development');
+}
+else{
 	define('ENVIRONMENT', 'production');
+}
+
  
 switch (ENVIRONMENT)
 {
