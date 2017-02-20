@@ -2757,7 +2757,7 @@ a.text-light:hover {
   display: inline-block;
   margin-left: 10px;
 }
-.main-left{
+#frmLiveAccount{
 	padding:30px 40px;
 	background-color:#f5f5dc66;
 	margin:5px;
