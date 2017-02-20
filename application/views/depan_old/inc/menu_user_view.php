@@ -21,7 +21,7 @@
       <li><a href="<?=base_url('member/detail');?>#"><span class="fa fa-triangle-right"></span> Detail</a></li>
       <li><a href="<?=base_url('member/edit');?>#"><span class="fa fa-triangle-right"></span> Edit</a></li>
       <li><a href="<?=base_url('member/uploads');?>#"><span class="fa fa-triangle-right"></span> Upload Document</a></li>
-      <li><a href="<?=base_url('member/editpassword');?>#"><span class="fa fa-triangle-right"></span> Edit Password</a></li>
+      <li><a href="<a href="<?=base_url('member/editpassword');?>#"><span class="fa fa-triangle-right"></span> Edit Password</a></li>
     </ul>
   </li>
   <li> <a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i> <span class="text">Deposit</span></a> <span class="toggle fa fa-chevron-down"></span>
