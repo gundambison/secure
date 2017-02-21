@@ -2758,7 +2758,14 @@ a.text-light:hover {
   margin-left: 10px;
 }
 #frmLiveAccount{
-	padding:30px 40px;
-	background-color:#f5f5dc66;
+	padding:20px 10px;
+	background-color:#cedef8e6;
 	margin:5px;
+}
+h3.white{
+	margin:5px 0px;
+	padding:0px 5px;
+}
+.white{
+	color:white;
 }
