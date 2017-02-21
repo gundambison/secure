@@ -8,7 +8,8 @@ else{
 if(!is_dir("cache")){
 	mkdir("cache",777);
 }
-	date_default_timezone_set('Asia/Jakarta');
+
+date_default_timezone_set('Asia/Jakarta');
 function logFile(){
 	return true;
 }
@@ -19,7 +20,6 @@ if(defined('LOCAL')){
 else{
 	define('ENVIRONMENT', 'production');
 }
-
  
 switch (ENVIRONMENT)
 {
