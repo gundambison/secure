@@ -45,7 +45,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 	$rand_url=url_title("{$detail['accountid']}-{$detail['detail']['firstname']}","-");
 	$urlAffiliation=base_url("register/{$rand_url}");
 ?>		
-		<div class="main col-md-8">
+		<div class="main ">
 			<form   name="frm"  id="frmLiveAccount" method="POST"   role="form">
 		<div class="frame-form-basic">
 		<h2>Ganti Harga / Rate</h2>

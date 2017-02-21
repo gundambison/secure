@@ -38,13 +38,13 @@
   </li>
   <li> <a href="#"><i class="fa fa-server" aria-hidden="true"></i> <span class="text">Platform</span></a> <span class="toggle fa fa-chevron-down"></span>
     <ul>
-      <li><a href="#"><span class="fa fa-triangle-right"></span> (On Progress)</a></li>
-      <li><a href="#"><span class="fa fa-triangle-right"></span> (On Progress)</a></li>
+      <li><a href="#"><span class="fa fa-triangle-right"></span>MT4 (On Progress)</a></li>
+      <li><a href="#"><span class="fa fa-triangle-right"></span>Other (On Progress)</a></li>
     </ul>
   </li>
   <li> <a href="#"><i class="fa fa-shield" aria-hidden="true"></i> <span class="text">Security</span></a> <span class="toggle fa fa-chevron-down"></span>
     <ul>
-      <li><a href="<a href="<?=base_url('member/editpassword');?>#"><span class="fa fa-triangle-right"></span>Edit Password</a></li>
+      <li><a href="<?=base_url('member/editpassword');?>#"><span class="fa fa-triangle-right"></span>Edit Password</a></li>
       <li><a href="<?=base_url('history');?>#"><span class="fa fa-triangle-right"></span>History (On Progress)</a></li>
       <li><a href="#"><span class="fa fa-triangle-right"></span> (On Progress)</a></li>
     </ul>
@@ -58,5 +58,5 @@
        </ul>
      </div>
    </div>
-   <div class="panel-footer partition-blue text-right"><a href="#" class="btn btn-transparent-white btn-xs">Logout <i class="fa fa-power-off" aria-hidden="true"></i> </a></div>
+   <div class="panel-footer partition-blue text-right"><a href="<?=base_url('member/logout');?>#" class="btn btn-transparent-white btn-xs">Logout <i class="fa fa-power-off" aria-hidden="true"></i> </a></div>
  </div>

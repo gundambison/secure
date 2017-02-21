@@ -87,8 +87,8 @@ if(isset($notAllow)){
 		$this->load->view($load_view);
 	}
 ?>
-		<div class="main col-md-8">
-        <form   name="frm"  id="frmLiveAccount" method="POST"   role="form">
+		<div class="main col-md-12">
+        <form   name="frm"  id="frmLiveAccount2" method="POST"   role="form">
 			<div class="frame-form-basic">
 			<h2>Widtdrawal</h2>
 			  <div class="panel-body">

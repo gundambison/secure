@@ -47,7 +47,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 	$rand_url=url_title("{$detail['accountid']}-{$detail['detail']['firstname']}","-");
 	$urlAffiliation=base_url("register/{$rand_url}");
 ?>		
-			<div class="main col-md-8"> 
+			<div class="main col-md-12"> 
 				<h3 class="orange nomargin"><strong>Welcome to the Secure Area of SalmaForex</strong></h3>
                 <p>Dear <?=isset($userlogin['detail']['firstname'])?$userlogin['detail']['firstname']:'';?>&nbsp;<?=isset($userlogin['detail']['lastname'])?$userlogin['detail']['lastname']:'';?>,<br/>
 				Your are now logged-in the Secure Area. Here you can view all the Information from your accounts. You can also Update Your Profile before deposit and withdrawn and many more. </p>

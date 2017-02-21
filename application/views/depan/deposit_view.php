@@ -90,9 +90,9 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
 		$this->load->view($load_view);
 	}
 ?>
-		<div class="main col-md-8">
+		<div class="main col-md-12">
 			<!--form novalidate="novalidate" name="frm" id0="frm"   method="POST"  class="form-horizontal" role="form"-->
-			<form   name="frm"  id="frmLiveAccount" method="POST"   role="form">
+			<form   name="frm"  id="frmLiveAccount2" method="POST"   role="form">
 				<div class="frame-form-basic">
 				<h2>Deposit</h2>
 					  <div class="panel-body">
