@@ -3,7 +3,7 @@
 <!-- NEW MENU START-->
 <div class="glossymenu">
 	<a class="menuitem" href="<?=base_url('member');?>"><span class="glyphicon glyphicon-home"></span> Home</a>
-	<a class="menuitem submenuheader" href="#" ><span class="glyphicon glyphicon-user"></span>  PROFILE</a>
+	<a class="menuitem submenuheader" href="#" ><span class="glyphicon glyphicon-user"></span> PROFILE</a>
 	<div class="submenu">
 		<ul>
 			<li><a href="<?=base_url('member/detail');?>"> <img class="ui--icon" src="<?=base_url();?>media/img/open-account.png" alt="" data-at2x="size:14px" data-retina-auto="1" style="margin-right: 5px;" />Detail</a></li>
