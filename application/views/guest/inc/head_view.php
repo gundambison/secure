@@ -12,7 +12,7 @@ if(isset($fileCss)){
 	foreach($fileCss as $id=>$file){
 		if(intval($id)==0){ $strID='id="'.$id.'"';}else{ $strID='';}
 ?>
-	<link rel="stylesheet" <?=$strID;?> href="<?=base_url().'media/'.$file;?>?i=9"  media='all' />
+	<link rel="stylesheet" <?=$strID;?> href="<?=base_url().'media/'.$file;?>?i=10"  media='all' />
 <?php
 	}
 }
@@ -23,7 +23,7 @@ if(isset($fileCss)){
 <?php 
 if(isset($fileJs)){
 	foreach($fileJs as $file){?>
-	<script src="<?=base_url().'media/'.$file;?>"></script><?php
+	<script src="<?=base_url().'media/'.$file;?>?i=10"></script><?php
 	}
 }
 
