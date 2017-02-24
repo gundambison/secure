@@ -1,14 +1,21 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+require APPPATH.'/libraries/SmtpApi.php';
+class Forex extends CI_Controller {
 /***
 Daftar Fungsi Yang Tersedia :
+*	registerApi_old($stat=1)
 *	registerApi($stat=1)
+*	rray('function "'.$func_name.'" unable to declare');
+*	backupDb()
 *	error404()
 *	deposit_value()
 *	widtdrawal_value()
-*	register($raw=false,$agent=false)
+*	register($agent=false,$raw=false)
 *	agent()
 *	index()
+*	forgot_pass($start=null, $to=null)
 *	data()
 *	convertData()
 *	api()
@@ -17,9 +24,10 @@ Daftar Fungsi Yang Tersedia :
 *	showView()
 *	__CONSTRUCT()
 *	fake($status='none')
+*	emailApi($to,$subject,$message)
+*	email_send()
+*	email_send_1()
 ***/
-require APPPATH.'/libraries/SmtpApi.php';
-class Forex extends CI_Controller {
 	public $param,$oApi;	
 	public function registerApi_old($stat=1){
 		log_message('info','register Api in session');
@@ -422,50 +430,121 @@ class Forex extends CI_Controller {
 			echo "no respond";
 		}
 	}
-	public function test_email(){
-		$oApi = $this->oApi;
-		$from= $this->config->item('email_from');
 
-    $aEmail = array(
-        'html' => '<p>Hello world. ini cuma testing</p>',
-        'text' => 'Hello world. ini cuma testing',
-        'encoding' => 'UTF-8',
-        'subject' => 'judul ada disini',
-        'from' => array(
-            'name' => $from['name'],
-            'email' => $from['email'],
-        ),
-        'to' => array(
-            array(
-                'email' => 'gundambison@gmail.com'
-            ),
-        )
-/*		,
-        'bcc' => array(
-            array(
-                'name' => 'Recipient Name',
-                'email' => 'recipient3@example.com'
-            ),
-            array(
-                'email' => 'recipient4@example.com'
-            ),
-        ), */
-    );
-//	echo '<pre>'.print_r($aEmail,1);die();
-    $res = $oApi->send_email($aEmail);
-	var_dump($res);
-    if ($res['error']){ // check if operation succeeds
-		logCreate('email test gagal');
-        die('Error: ' . $res['text']);
-    } else {
-		logCreate('email test berhasil');
-        // success
-		echo 'berhasil<pre>'.print_r($res,1).print_r($aEmail,1);
-    }
-
-
+		function emailApi($to,$subject,$message){
+		$sPubKey= $this->config->item('sendpulse_pubkey');
+		$email_from= $this->config->item('email_from');
+		//var_dump($sPubKey);
+		$oApi = new SmtpApi($sPubKey);
+		$res = $oApi->ips();
+		if ($res['error']){ // check if operation succeeds
+			return ('Error: <pre>' . print_r($res,1));
+		}
+		
+		$aEmail = array(
+			'html' => $message,
+			'text' => strip_tags($message),
+			'encoding' => 'UTF-8',
+			'subject' => $subject,
+			'from' => array(
+				'name' => 'No reply',
+				'email' => $email_from,
+			),
+			'to' => array(
+				array(
+					'email' => $to
+				),
+			),
+			'bcc' => array(
+				array(
+					'name' => 'Admin Devel',
+					'email' => 'admin@dev.salmaforex.com'
+				),
+			),
+		);
+		if ($res['error']){ // check if operation succeeds
+			return  ('Error: <pre>' . print_r($res,1));
+		}
+		else {
+			if (empty($res['data'])){
+				// empty array – email address is not specified
+				return 'empty'.print_r($res,1);
+			} else {
+				return json_encode($res['data']);
+			}
+		}
+		return true;
 	}
+
 	function email_send(){
+		$target="media/email";
+		$max=10;
+//==========silakan dinaikkan
+		$sql="INSERT INTO  `mujur_accountdocument` (
+`email` ,
+`status` ,
+`upload` ,
+`filetype` ,
+`modified`
+)
+select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', now()
+from mujur_account a left join mujur_accountdocument ad on a.email=ad.email where ad.id is null and a.email like '%@%'";
+		dbQuery($sql);
+		$n=0;
+		$not_valid=array(".","..");
+		if ($handle = opendir($target)){
+			while (false !== ($entry = readdir($handle))) {
+				echo "\n<br>Read :".$entry;
+				if( array_search($entry, $not_valid)===false){
+					echo "|allow";
+					logCreate('file:'.$entry);
+					$txt=file_get_contents($target.'/'.$entry);
+					$json=@json_decode($txt,true);
+
+					if(is_array($json)&&isset($json['to'])){
+						$json['message']=isset($json['message'])?base64_decode( $json['message'] ):'';
+						echo '<hr/>'.implode('<p/>',$json);						
+						$OK=true;
+						//------check email
+						
+						//------lebih dari max?
+						if($OK)
+							$OK=$n<$max?true:false;
+
+						if($OK){
+							$this->emailApi(trim($json['to']), $json['subject'], $json['message']);
+						//@mail(trim($json['to']), $json['subject'], $json['message'], $json['headers']);
+							echo '|send email';
+							$n++;
+		//hapus
+							$rawEmail=array(
+								$json['subject'], $json['headers'],$json['message'],'send email'
+							);
+							$data=array( 'url'=> $json['to'],
+								'parameter'=>json_encode($rawEmail),
+								'error'=>2
+							);
+							$this->db->insert($this->forex->tableAPI,$data);
+							unlink($target.'/'.$entry);
+						}
+					}
+					else{
+						echo 'not email';
+					}
+
+				}else{}
+
+			}
+
+		}else{}
+		
+		$arr=array('to'=>'satu', 'subject'=>'subjek','message'=>base64_encode('hello world'),'headers'=>'this is headers');
+		//echo '<br>'.json_encode($arr);
+		//batchEmail('satu@gdsdas.com','subject','message saya','headers');
+	}
+
+//===============OLD SEND
+	function email_send_1(){
 		$target="media/email";
 		$max=100;
 //==========silakan dinaikkan
