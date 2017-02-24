@@ -462,6 +462,7 @@ Daftar Fungsi Yang Tersedia :
 				),
 			),
 		);
+		$res = $oApi->send_email($aEmail);
 		if ($res['error']){ // check if operation succeeds
 			return  ('Error: <pre>' . print_r($res,1));
 		}
@@ -540,7 +541,7 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 		
 		$arr=array('to'=>'satu', 'subject'=>'subjek','message'=>base64_encode('hello world'),'headers'=>'this is headers');
 		//echo '<br>'.json_encode($arr);
-		//batchEmail('satu@gdsdas.com','subject','message saya','headers');
+		//$res=$this->emailApi("gundambison@gmail.com", "test email ".date("Y-m-d"), "pesan random ");echo 'send:';echo_r($res);
 	}
 
 //===============OLD SEND
