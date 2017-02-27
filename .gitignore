@@ -13,7 +13,7 @@ cache/*
 media/uploads/*
 tmp/*
 vendor/*
-media/email/*
+media/email/*.txt
 logs/*
 curl/*
 application/logs/*

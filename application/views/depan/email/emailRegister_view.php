@@ -63,7 +63,7 @@ if(defined('LOCAL') || defined('_DEV_')){
 	?>https://dev.salmaforex.com<?php
 }
 else{ 
-	?>https://secure.salmaforex.com<?php 
+	?><?=base_url();?><?php 
 } ?>/login" target="_blank"> Login Here</a>)</td>
                   </tr>
                 </tbody>
@@ -83,7 +83,7 @@ else{
 	<?php
 	}
 	else{ ?>
-	https://secure.salmaforex.com 
+	<?=base_url();?> 
 	<?php 
 	} ?>
 is your best tool to manage your account(s). You can deposit your account, withdraw from your account, view stats, take part in contests and many more.<br />
