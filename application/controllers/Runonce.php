@@ -3,6 +3,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Runonce extends CI_Controller {
 	function index(){
+		$subject = '[SalmaForex] Testing Email ';
+		$subject.= 'sends' ;
+
+		$headers = "From: noreply@salmaforex.com\r\n";
+		$headers .= "Reply-To: noreply@salmaforex.com\r\n"; 
+		$headers .= "MIME-Version: 1.0\r\n";
+
+		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$email='gundambison@gmail.com';
+		
+		batchEmail($email, $subject, $message, $headers);
+		echo 'send to '.$email;
+	}
+	function user_check(){
 		$res= _localApi('users','exist',array("gundambison@gmail.com"));
 		echo_r($res);die("---");
 	}

@@ -5,9 +5,9 @@ require APPPATH.'/libraries/SmtpApi.php';
 class Forex extends CI_Controller {
 /***
 Daftar Fungsi Yang Tersedia :
+*	unction "'.$func_name.'" unable to declare');
 *	registerApi_old($stat=1)
 *	registerApi($stat=1)
-*	rray('function "'.$func_name.'" unable to declare');
 *	backupDb()
 *	error404()
 *	deposit_value()
@@ -477,7 +477,7 @@ Daftar Fungsi Yang Tersedia :
 		return true;
 	}
 
-	function email_send(){
+	function email_send_2(){
 		$target="media/email";
 		$max=10;
 //==========silakan dinaikkan
@@ -545,7 +545,7 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 	}
 
 //===============OLD SEND
-	function email_send_1(){
+	function email_send(){
 		$target="media/email";
 		$max=100;
 //==========silakan dinaikkan
