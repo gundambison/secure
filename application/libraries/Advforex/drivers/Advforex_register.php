@@ -118,7 +118,7 @@ function execute(){
 			echo "<pre>".print_r($result0,1)."</pre>";
 			continue;
 		}
-
+//===
 		if( isset($result0['ResponseCode'])&& $result0['ResponseCode']==0){
 			echo "\nrespon=0 (OK)";
 			$result=array(

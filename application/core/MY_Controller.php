@@ -31,8 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			logCreate('core data : username (username) not found' );
 			$detail=$this->account->detail($session['username'],'accountid');
 			if($detail==false){
-			logCreate('no username','error');
-			redirect(site_url("login")."?err=no_user" );
+				logCreate('core data: no username','error');
+				redirect(site_url("login")."?err=no_user" );
 			}
 			logCreate('core data : username found' );
 		}
@@ -44,14 +44,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$respon=array(		
 			'html'=>print_r($_REQUEST,1), 
 		);
-	logCreate('core data (start) :'.$type);
+		logCreate('core data (start) :'.$type);
 		$aType=array('userDetail');
 		if(in_array($type,$aType)){
 			        //=================DRIVER
-                    $this->load->driver('advforex'); /*gunakan hanya bila diperlukan*/
-                    $driver_core = 'advforex';
-                    $driver_name='user';
-                    $func_name='detail';
+			$this->load->driver('advforex'); /*gunakan hanya bila diperlukan*/
+            $driver_core = 'advforex';
+            $driver_name='user';
+            $func_name='detail';
                     if( !method_exists($this->{$driver_core}->{$driver_name},$func_name) ){
                             $output=array('function "'.$func_name.'" unable to declare');
                             die(json_encode($output));
@@ -70,9 +70,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     }
 			$this->succesMessage($respon);
 		}
+		
 		$message='unknown data type';
 		$open= $this->param['folder']."data/".$type."_data";
-	
+		logCreate('core load :'.$open);
 		if(is_file('application/views/'.$open.".php")){
 			$param=array(
 				'post'=>$this->convertData(),
@@ -88,9 +89,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			if(is_array($ar)){
 				$respon=$ar;				
-			//	logCreate($respon);
+				logCreate("core data:".json_encode($respon));
 				if(!isset($respon['status'])){ 
-					echo json_encode($respon);exit(); 
+					echo json_encode($respon);
+					exit(); 
 				}
 				if($respon['status']==true){
 					$ok=1;

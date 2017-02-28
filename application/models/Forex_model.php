@@ -56,7 +56,7 @@ public $emailAdmin='admin@dev.salmaforex.com';
 	function forexKey(){
 		$key=$this->config->item('forexKey');		
 		return isset($key)?$key:false;
-		
+	
 	}
 //=================FLOW LOG
 	function flowMember($id,$sort='created',$sortType='DESC', $limit=50,$start=0){
@@ -103,7 +103,8 @@ public $emailAdmin='admin@dev.salmaforex.com';
 		}
 		$sql="select * from {$this->tableFlowlog} limit 1";
 		$row=$this->db->query($sql)->row_array();
-		if(!isset($row['status'])){
+		//if(!isset($row['status'])){
+		if (!$this->db->field_exists('status', $this->tableFlowlog)){
 			$sql="ALTER TABLE `{$this->tableFlowlog}` ADD `status` tinyint default 0;";
 				dbQuery($sql,1);			
 		}

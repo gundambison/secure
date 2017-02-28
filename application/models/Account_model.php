@@ -40,7 +40,7 @@ Daftar Fungsi Yang Tersedia :
 		where masterpassword='' limit 4;";
 		return dbFetch($sql);
 	}
-
+//---
 	function recoverId($id=0){		 
 		$now=date("Y-m-d H:i:s");
 		$sql="select count(id) c from {$this->tableAccountRecover} 
