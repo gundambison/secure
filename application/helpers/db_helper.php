@@ -79,6 +79,15 @@ if ( ! function_exists('dbFetchOne')){
   
 }else{}
 
+if ( ! function_exists('dbInsert')){
+  function  dbInsert($table,$array=0){
+	$sql=$CI->db->insert_string($table, $array);
+    dbQuery($sql);
+
+  }
+  
+}else{}
+
 if ( ! function_exists('dbCleanField')){
 	function dbCleanField($data0,$erase){
 		$data=array();

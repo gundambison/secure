@@ -1,5 +1,8 @@
 <?php
-$name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname']; 
+//$name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
+$userlogin['firstname']=isset($userlogin['detail']['firstname'])?$userlogin['detail']['firstname']:'';
+$userlogin['lastname']=isset($userlogin['detail']['lastname'])?$userlogin['detail']['lastname']:'';
+
 ?>
 
   <div class="container">
@@ -40,7 +43,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
           <div class="panel-heading partition-blue"> <span class="text-bold"> Summary</span> </div>
           <div class="panel-body no-padding">
             <div class="row no-margin">
-			<?php if(defined('LOCAL')) echo '<!--pre>'.print_r($userlogin,1).'</pre-->';?>
+
              <div class="col-md-6 no-padding">
                 <table class="table no-margin" id="">
                   <tbody>
@@ -123,7 +126,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
                     </tr>
                   </tbody>
                 </table>
-
+<?php if(defined('LOCAL')) echo '<pre>'.print_r($userlogin,1).'</pre>';?>
               </div>
             </div>
           </div>
