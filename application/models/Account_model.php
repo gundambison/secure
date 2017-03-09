@@ -535,7 +535,7 @@ Daftar Fungsi Yang Tersedia :
 			return 0;
 		}
 */
-		return 0; 
+//		return 0; 
 		/*sementara*/
 		$detail=$userlogin=$this->exist($username,'accountid');
 		if($detail!==false){
@@ -584,15 +584,17 @@ Daftar Fungsi Yang Tersedia :
 		$now = date("Y-m-d H:i:s");
 		$now_12 = date("Y-m-d H:i:s", strtotime("+1 hours"));
 		$sql="delete from {$this->tableAccountBalance} where expired < '$now'";
-		logCreate("account->balance |erase expired","info");
+		//logCreate("account->balance |erase expired","info");
 		dbQuery($sql);
 		$time=date("Y-m-d H:i:s");
-		$sql="select username, balance,modified from {$this->tableAccountBalance} where username like '$accountid'";
+		$sql="select username, balance,modified from 
+		{$this->tableAccountBalance}
+		where username like '$accountid'";
 		$row=dbFetchOne($sql);
 
 		if(isset($row['balance'])){
 			$time=$row['modified'];
-			logCreate("account->balance |still cache","info");
+		//	logCreate("account->balance |still cache","info");
 			return $row['balance'];
 		}
 /*
