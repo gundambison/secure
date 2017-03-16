@@ -563,6 +563,7 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 		dbQuery($sql);
 		$n=0;
 		$not_valid=array(".","..");
+		echo "send email";
 		if ($handle = opendir($target)){
 			while (false !== ($entry = readdir($handle))) {
 				echo "\n<br>Read :".$entry;
@@ -585,7 +586,7 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 						if($OK){
 							
 							@mail(trim($json['to']), $json['subject'], $json['message'], $json['headers']);
-							echo '|send email';
+							echo '|send email :'.$json['to'];
 							$n++;
 		//hapus
 							$rawEmail=array(
