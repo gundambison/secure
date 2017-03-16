@@ -28,7 +28,8 @@ Daftar Fungsi Yang Tersedia :
 	function process(){
 		$captcha_answer = $this->input->post('g-recaptcha-response');
 		$post=$this->input->post();
-		
+//disable dahulu
+		/*
 		if(!defined('LOCAL')){
 		// Verifikasi input recaptcha dari user
 			$response = $this->recaptcha->verifyResponse($captcha_answer);
@@ -37,8 +38,9 @@ Daftar Fungsi Yang Tersedia :
 		else{
 			$response['success']=true;
 		}
+		*/
 		// Proses
- 
+		$response['success']=true;
 		if( $response['success']  ){
 			// Code jika sukses
 			echo 'CAPTCHA OK';

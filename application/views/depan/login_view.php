@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="input-group">
 <?php 
-		if(!defined('LOCAL')) echo $this->recaptcha->render(); 
+//		if(!defined('LOCAL')) echo $this->recaptcha->render(); 
 ?>
                                         </div>
                                     </div>
