@@ -801,6 +801,7 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 				logConfig("create table:$str");
 				$this->db->reset_query();	
 			}
+
 			if(!$this->db->table_exists('mujur_email')){
 				$fields = array(
 				  'id'=>array( 
@@ -819,6 +820,18 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 				logConfig("create table:$str");
 				$this->db->reset_query();	
 			}
+
+			if (!$this->db->field_exists('messages', 'mujur_email')){
+				$sql="ALTER TABLE `mujur_email` ADD `messages` text AFTER `subject`";
+				dbQuery($sql);
+				$sql="ALTER TABLE `mujur_email` ADD FULLTEXT(`messages`);";
+				dbQuery($sql);
+			}
+			if (!$this->db->field_exists('status', 'mujur_email')){
+				$sql="ALTER TABLE `mujur_email` ADD `status` tinyint AFTER `to`";
+				dbQuery($sql);
+			}
+
 			if(!$this->db->table_exists('mujur_logs')){
 				$fields = array(
 				  'id'=>array( 
