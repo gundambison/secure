@@ -547,6 +547,7 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 //===============OLD SEND
 	function email_send(){
 //===============Tarik Data dari database
+	echo 'tarik data dari table|';
 		$data = $this->forex->emailData();
 		foreach($data as $row){
 			$id=$row['id'];
@@ -554,7 +555,7 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 			$subject=$row['subject'];
 			$message= $row['messages'];
 			$headers= $row['headers'];
-
+			echo "\n: $id $to";
 			batchEmail( $to , $subject , $message , $headers, false);
 			$this->forex->emailHide($row['id']);
 		}
@@ -562,15 +563,14 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 		$target="media/email";
 		$max=20;
 //==========silakan dinaikkan
+		echo 'update mujur_accountdocument';
 		$sql="INSERT INTO  `mujur_accountdocument` (
- 
 `email` ,
 `status` ,
 `upload` ,
 `filetype` ,
 `modified`
 )
-
 select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', now()
 from mujur_account a left join mujur_accountdocument ad on a.email=ad.email 
 where ad.id is null and a.email like '%@%'
@@ -578,7 +578,7 @@ limit 10";
 		dbQuery($sql);
 		$n=0;
 		$not_valid=array(".","..");
-		echo "send email";
+		echo "<br/>\nsend email";
 		if ($handle = opendir($target)){
 			while (false !== ($entry = readdir($handle))) {
 				echo "\n<br>Read :".$entry;
@@ -590,7 +590,7 @@ limit 10";
 
 					if(is_array($json)&&isset($json['to'])){
 						$json['message']=isset($json['message'])?base64_decode( $json['message'] ):'';
-						echo '<hr/>'.implode('<p/>',$json);						
+						//echo '<hr/>'.implode('<p/>',$json);						
 						$OK=true;
 						//------check email
 						
@@ -599,7 +599,6 @@ limit 10";
 							$OK=$n<$max?true:false;
 
 						if($OK){
-							
 							@mail(trim($json['to']), $json['subject'], $json['message'], $json['headers']);
 							echo '|send email :'.$json['to'];
 							$n++;
@@ -614,6 +613,7 @@ limit 10";
 							$this->db->insert($this->forex->tableAPI,$data);
 							unlink($target.'/'.$entry);
 						}
+						else{}
 					}
 					else{
 						echo 'not email';
