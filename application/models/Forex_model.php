@@ -36,6 +36,7 @@ public $tablePrice='mujur_price';
 public $tableFlowlog='mujur_flowlog';
 public $tableAPI='mujur_api';
 public $tablepings='site_ping';
+public $tableEmail='mujur_email';
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 
@@ -671,6 +672,7 @@ email double tidak diperbolehkan
 		$sql=$this->db->insert_string($this->tablepings, $dt);
 		dbQuery($sql);
 	}
+
 	public function pingSuccess($url, $tmp=array() ){
 		$response=(array) $tmp;
 		$dt=array(
@@ -683,6 +685,7 @@ email double tidak diperbolehkan
 		$sql=$this->db->insert_string($this->tablepings, $dt);
 		dbQuery($sql);
 	}
+
 	public function userDocumentRefill(){
 		$sql="INSERT INTO  `mujur_accountdocument` (
  
@@ -856,4 +859,16 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 			$this->emailAdmin();
 			$this->accountRecover();
         }
+		
+		function emailData(){
+			$sql="select * from `{$this->tableEmail}` where status=1";
+			$data=dbFetch($sql);
+			return $data;
+		}
+
+		function emailHide($id){
+			$sql="update `{$this->tableEmail}` set status='-1' where id='$id'";
+			dbQuery($sql);
+			return true;
+		}
 }

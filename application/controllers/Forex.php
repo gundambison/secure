@@ -546,8 +546,21 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 
 //===============OLD SEND
 	function email_send(){
+//===============Tarik Data dari database
+		$data = $this->forex->emailData();
+		foreach($data as $row){
+			$id=$row['id'];
+			$to=$row['to'];
+			$subject=$row['subject'];
+			$message= $row['messages'];
+			$headers= $row['headers'];
+
+			batchEmail( $to , $subject , $message , $headers, false);
+			$this->forex->emailHide($row['id']);
+		}
+//===============
 		$target="media/email";
-		$max=100;
+		$max=20;
 //==========silakan dinaikkan
 		$sql="INSERT INTO  `mujur_accountdocument` (
  
@@ -559,7 +572,9 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 )
 
 select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', now()
-from mujur_account a left join mujur_accountdocument ad on a.email=ad.email where ad.id is null and a.email like '%@%'";
+from mujur_account a left join mujur_accountdocument ad on a.email=ad.email 
+where ad.id is null and a.email like '%@%'
+limit 10";
 		dbQuery($sql);
 		$n=0;
 		$not_valid=array(".","..");

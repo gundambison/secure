@@ -98,7 +98,7 @@ if ( ! function_exists('_runApi')){
 } else{}
 
 if ( ! function_exists('batchEmail')){
-	function batchEmail( $to='', $subject='', $message='', $headers=''){
+	function batchEmail( $to='', $subject='', $message='', $headers='',$insert_table=true){
 		$arr=array('to'=>trim($to), 'subject'=>$subject,'message'=>base64_encode($message),'headers'=>$headers);
 		$json=json_encode($arr);
 		//echo '<br>'.$json;
@@ -108,7 +108,8 @@ if ( ! function_exists('batchEmail')){
 		//echo '<br>target:'.$target;
 		file_put_contents($target, $json);
 		$sql="insert into mujur_email(`subject`,`to`,`header`) values('".addslashes($subject)."','".addslashes($to)."','".addslashes($json)."')";
-		dbQuery($sql);
+		if($insert_table) 
+			dbQuery($sql);
 		//return true;
 	}
 	
