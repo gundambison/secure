@@ -872,4 +872,9 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
 			dbQuery($sql);
 			return true;
 		}
+		function emailBatchTotal(){
+			$sql="select count(*) c from `{$this->tableBatchEmail}`";
+			$data=dbFetchOne($sql);
+			return $data['c'];
+		}
 }

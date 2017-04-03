@@ -479,7 +479,9 @@ Daftar Fungsi Yang Tersedia:
 //===============email batch ========
 	function email_batch(){
 //===============Tarik Data dari database
-	echo 'tarik data dari table|';
+	$total =  $this->forex->emailBatchTotal();
+	echo 'tarik data dari table| total all:'.$total;
+	
 		$data = $this->forex->emailData();
 		$n=0;
 		foreach($data as $row){
