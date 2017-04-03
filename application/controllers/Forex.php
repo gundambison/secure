@@ -4,8 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH.'/libraries/SmtpApi.php';
 class Forex extends CI_Controller {
 /***
-Daftar Fungsi Yang Tersedia :
-*	unction "'.$func_name.'" unable to declare');
+Daftar Fungsi Yang Tersedia:
 *	registerApi_old($stat=1)
 *	registerApi($stat=1)
 *	backupDb()
@@ -477,74 +476,26 @@ Daftar Fungsi Yang Tersedia :
 		return true;
 	}
 
-	function email_send_2(){
-		$target="media/email";
-		$max=10;
-//==========silakan dinaikkan
-		$sql="INSERT INTO  `mujur_accountdocument` (
-`email` ,
-`status` ,
-`upload` ,
-`filetype` ,
-`modified`
-)
-select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', now()
-from mujur_account a left join mujur_accountdocument ad on a.email=ad.email where ad.id is null and a.email like '%@%'";
-		dbQuery($sql);
+//===============OLD SEND
+	function email_batch(){
+//===============Tarik Data dari database
+	echo 'tarik data dari table|';
+		$data = $this->forex->emailData();
 		$n=0;
-		$not_valid=array(".","..");
-		if ($handle = opendir($target)){
-			while (false !== ($entry = readdir($handle))) {
-				echo "\n<br>Read :".$entry;
-				if( array_search($entry, $not_valid)===false){
-					echo "|allow";
-					logCreate('file:'.$entry);
-					$txt=file_get_contents($target.'/'.$entry);
-					$json=@json_decode($txt,true);
-
-					if(is_array($json)&&isset($json['to'])){
-						$json['message']=isset($json['message'])?base64_decode( $json['message'] ):'';
-						echo '<hr/>'.implode('<p/>',$json);						
-						$OK=true;
-						//------check email
-						
-						//------lebih dari max?
-						if($OK)
-							$OK=$n<$max?true:false;
-
-						if($OK){
-							$this->emailApi(trim($json['to']), $json['subject'], $json['message']);
-						//@mail(trim($json['to']), $json['subject'], $json['message'], $json['headers']);
-							echo '|send email';
-							$n++;
-		//hapus
-							$rawEmail=array(
-								$json['subject'], $json['headers'],$json['message'],'send email'
-							);
-							$data=array( 'url'=> $json['to'],
-								'parameter'=>json_encode($rawEmail),
-								'error'=>2
-							);
-							$this->db->insert($this->forex->tableAPI,$data);
-							unlink($target.'/'.$entry);
-						}
-					}
-					else{
-						echo 'not email';
-					}
-
-				}else{}
-
-			}
-
-		}else{}
-		
-		$arr=array('to'=>'satu', 'subject'=>'subjek','message'=>base64_encode('hello world'),'headers'=>'this is headers');
-		//echo '<br>'.json_encode($arr);
-		//$res=$this->emailApi("gundambison@gmail.com", "test email ".date("Y-m-d"), "pesan random ");echo 'send:';echo_r($res);
+		foreach($data as $row){
+			$id=$row['id'];
+			$to=$row['to'];
+			$subject=$row['subject'];
+			$message= $row['messages'];
+			$headers= $row['headers'];
+			echo "\n: $id $to";
+			batchEmail( $to , $subject , $message , $headers, false);
+			$this->forex->emailHide($row['id']);
+			$n++;
+		}
+		echo "\n<br/>total :".$n;
 	}
 
-//===============OLD SEND
 	function email_send(){
 //===============Tarik Data dari database
 	echo 'tarik data dari table|';
@@ -629,5 +580,72 @@ limit 10";
 		//echo '<br>'.json_encode($arr);
 		//batchEmail('satu@gdsdas.com','subject','message saya','headers');
 	}
+	function email_send_2(){
+		$target="media/email";
+		$max=10;
+//==========silakan dinaikkan
+		$sql="INSERT INTO  `mujur_accountdocument` (
+`email` ,
+`status` ,
+`upload` ,
+`filetype` ,
+`modified`
+)
+select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', now()
+from mujur_account a left join mujur_accountdocument ad on a.email=ad.email where ad.id is null and a.email like '%@%'";
+		dbQuery($sql);
+		$n=0;
+		$not_valid=array(".","..");
+		if ($handle = opendir($target)){
+			while (false !== ($entry = readdir($handle))) {
+				echo "\n<br>Read :".$entry;
+				if( array_search($entry, $not_valid)===false){
+					echo "|allow";
+					logCreate('file:'.$entry);
+					$txt=file_get_contents($target.'/'.$entry);
+					$json=@json_decode($txt,true);
+
+					if(is_array($json)&&isset($json['to'])){
+						$json['message']=isset($json['message'])?base64_decode( $json['message'] ):'';
+						echo '<hr/>'.implode('<p/>',$json);						
+						$OK=true;
+						//------check email
+						
+						//------lebih dari max?
+						if($OK)
+							$OK=$n<$max?true:false;
+
+						if($OK){
+							$this->emailApi(trim($json['to']), $json['subject'], $json['message']);
+						//@mail(trim($json['to']), $json['subject'], $json['message'], $json['headers']);
+							echo '|send email';
+							$n++;
+		//hapus
+							$rawEmail=array(
+								$json['subject'], $json['headers'],$json['message'],'send email'
+							);
+							$data=array( 'url'=> $json['to'],
+								'parameter'=>json_encode($rawEmail),
+								'error'=>2
+							);
+							$this->db->insert($this->forex->tableAPI,$data);
+							unlink($target.'/'.$entry);
+						}
+					}
+					else{
+						echo 'not email';
+					}
+
+				}else{}
+
+			}
+
+		}else{}
+		
+		$arr=array('to'=>'satu', 'subject'=>'subjek','message'=>base64_encode('hello world'),'headers'=>'this is headers');
+		//echo '<br>'.json_encode($arr);
+		//$res=$this->emailApi("gundambison@gmail.com", "test email ".date("Y-m-d"), "pesan random ");echo 'send:';echo_r($res);
+	}
+
 
 }

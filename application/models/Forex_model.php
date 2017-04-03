@@ -37,6 +37,7 @@ public $tableFlowlog='mujur_flowlog';
 public $tableAPI='mujur_api';
 public $tablepings='site_ping';
 public $tableEmail='mujur_email';
+public $tableBatchEmail='zbatch_email';//messages
 public $url="http://localhost/forex/fake";
 public $demo=1; 
 
@@ -59,7 +60,7 @@ public $emailAdmin='admin@dev.salmaforex.com';
 		return isset($key)?$key:false;
 	
 	}
-//=================FLOW LOG
+
 	function flowMember($id,$sort='created',$sortType='DESC', $limit=50,$start=0){
 		$sql="select accountid id from {$this->tableAccount} where id=$id";
 		$res = dbFetchOne($sql);
@@ -70,8 +71,8 @@ public $emailAdmin='admin@dev.salmaforex.com';
 		$sql="select count(id) c from `{$this->tableFlowlog}` where $where";
 		$sql.=" order by `{$sort}` {$sortType} limit {$start}, {$limit}";
 		$dt=dbFetchOne($sql);
-	//	echo $sql;
-		if($dt['c']==0) return false;
+		die($sql);
+		if($dt['c']==0) return $sql;//false;
 		$data['count']=$dt['c'];
 		$sql="select types, param, created, status from `{$this->tableFlowlog}` where $where";
 		$dt=dbFetch($sql);
@@ -861,13 +862,13 @@ from mujur_account a left join mujur_accountdocument ad on a.email=ad.email wher
         }
 		
 		function emailData(){
-			$sql="select * from `{$this->tableEmail}` where status=1";
+			$sql="select * from `{$this->tableBatchEmail}` where status=1";
 			$data=dbFetch($sql);
 			return $data;
 		}
 
 		function emailHide($id){
-			$sql="update `{$this->tableEmail}` set status='-1' where id='$id'";
+			$sql="update `{$this->tableBatchEmail}` set status='-1' where id='$id'";
 			dbQuery($sql);
 			return true;
 		}
