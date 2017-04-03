@@ -476,7 +476,7 @@ Daftar Fungsi Yang Tersedia:
 		return true;
 	}
 
-//===============OLD SEND
+//===============email batch ========
 	function email_batch(){
 //===============Tarik Data dari database
 	echo 'tarik data dari table|';
@@ -497,7 +497,7 @@ Daftar Fungsi Yang Tersedia:
 	}
 
 	function email_send(){
-//===============Tarik Data dari database
+//===============Tarik Data dari database (kemungkinan sudah)
 	echo 'tarik data dari table|';
 		$data = $this->forex->emailData();
 		foreach($data as $row){
