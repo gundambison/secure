@@ -60,10 +60,6 @@ $userlogin['lastname']=isset($userlogin['detail']['lastname'])?$userlogin['detai
 						<?=isset($userlogin['lastname'])?$userlogin['lastname']:'';?>
 					</td>
                     </tr>
-                    <tr class="active">
-                      <td>Leverage</td>
-                      <td class="text-right">&nbsp;</td>
-                    </tr>
                     <tr>
                       <td>Account Type</td>
                       <td class="text-right">

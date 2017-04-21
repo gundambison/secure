@@ -51,7 +51,7 @@ $name=$userlogin['detail']['firstname']." ".$userlogin['detail']['lastname'];
                 <p>Dear <?=isset($userlogin['detail']['firstname'])?$userlogin['detail']['firstname']:'';?>&nbsp;<?=isset($userlogin['detail']['lastname'])?$userlogin['detail']['lastname']:'';?>,<br/>
 				Your are now logged-in the Secure Area. Here you can view all the Information from your accounts. You can also Update Your Profile before deposit and withdrawn and many more. </p>
                 <div class="vspace-30"></div>
-				
+				<?php  callback_submit(); ?>
 				<h2>Upload Document</h2>				
 <?php
 	callback_submit();

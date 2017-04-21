@@ -110,10 +110,20 @@ public $emailAdmin='admin@dev.salmaforex.com';
 			$sql="ALTER TABLE `{$this->tableFlowlog}` ADD `status` tinyint default 0;";
 				dbQuery($sql,1);			
 		}
+		if (!$this->db->field_exists('email', $this->tableFlowlog)){
+			$sql="ALTER TABLE `{$this->tableFlowlog}` ADD `email` varchar(255) default '';"; dbQuery($sql,1);
+			$sql="ALTER TABLE `{$this->tableFlowlog}` ADD INDEX(`email`);"; dbQuery($sql,1);
+		}
+		if (!$this->db->field_exists('accountid', $this->tableFlowlog)){
+			$sql="ALTER TABLE `{$this->tableFlowlog}` ADD `accountid` varchar(255) default '';";dbQuery($sql,1);
+			$sql="ALTER TABLE `{$this->tableFlowlog}` ADD INDEX(`accountid`);"; dbQuery($sql,1);
+		}
 		
 		if($type=='')return false;
 		$dt=array('types'=>$type);
 		$dt['param']=json_encode($data);
+		$dt['email']=isset($data['userlogin']['email'])?$data['userlogin']['email']:'-';
+		$dt['accountid']=isset($data['accountid'])?$data['accountid']:'-';
 		$this->db->insert($this->tableFlowlog,$dt);
 		return true;
 	}

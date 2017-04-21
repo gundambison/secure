@@ -306,7 +306,7 @@ Daftar Fungsi Yang Tersedia :
 		if($this->input->post('orderWidtdrawal')){
 			$this->param['post0']=$post0=$this->input->post();
 			$this->param['rate']=$rate=$this->forex->rateNow('widtdrawal')['value'];
-			$this->param['post0']['order1']=$rate * $post0['orderWidtdrawal'];
+			$post0['order1'] = $this->param['post0']['order1']=$rate * $post0['orderWidtdrawal'];
 			
 			$data=array( 'url'=>'widtdrawal',
 				'parameter'=>json_encode($post0),
@@ -315,7 +315,7 @@ Daftar Fungsi Yang Tersedia :
 			);
 			$this->db->insert($this->forex->tableAPI,$data);
 			
-			$data=$post0;
+			$data=$this->param['post0'];
 			$data['userlogin']=$this->param['userlogin'];
 			$data['rate']=$rate;
 			$this->forex->flowInsert('widtdrawal', $data); 
