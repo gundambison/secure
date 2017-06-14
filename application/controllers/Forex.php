@@ -535,9 +535,13 @@ Daftar Fungsi Yang Tersedia:
 		}
 //===============
 		$target="media/email";
-		$max=20;
+		$max=100;
+		if(date("Y-m-d")>'2017-06-16'){
+			$max=20;
+		}
 //==========silakan dinaikkan
 		echo 'update mujur_accountdocument';
+
 		$sql="INSERT INTO  `mujur_accountdocument` (
 `email` ,
 `status` ,
@@ -549,7 +553,7 @@ select a.email, '0', 'media/uploads/xxxx', 'image/jpeg', now()
 from mujur_account a left join mujur_accountdocument ad on a.email=ad.email 
 where ad.id is null and a.email like '%@%'
 limit 10";
-		dbQuery($sql);
+		//dbQuery($sql);
 		$n=0;
 		$not_valid=array(".","..");
 		echo "<br/>\nsend email";
