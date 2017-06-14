@@ -58,6 +58,9 @@ Daftar Fungsi Yang Tersedia :
 	}
 	function __CONSTRUCT(){
 	parent::__construct();
+		if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+		}
 //		logCreate('controller Login','info');
 		$this->load->library('recaptcha');
 		$this->load->library('session');

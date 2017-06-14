@@ -67,6 +67,9 @@ Daftar Fungsi Yang Tersedia:
 	}
 	
 	public function error404(){
+		if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+		}
 		logCreate('error 404 link:'.current_url());
 		die('unknown link');
 		//redirect(base_url('member'));
@@ -96,6 +99,9 @@ Daftar Fungsi Yang Tersedia:
 
 	public function register($agent=false,$raw=false)
 	{
+		if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+		}
 		redirect(base_url('welcome/'.$agent.'/'.$agent),1);
 
 		$this->load->library('session');
@@ -130,6 +136,9 @@ Daftar Fungsi Yang Tersedia:
 	
 	public function agent()
 	{
+		if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+		}
 		$this->param['formTitle']="Open Patner Account";
 
 		redirect(base_url('guest/agent'),1);
@@ -139,12 +148,18 @@ Daftar Fungsi Yang Tersedia:
 	
 	public function index()
 	{
+		if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+		}
 		//if(!isset($this->session))echo 'error<pre>';var_dump($this->session);var_dump($_SESSION);die('--');
 		redirect(base_url('welcome'));
 		$this->register();
 	}
 	
 	public function forgot_pass($start=null, $to=null){
+		if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+		}
 		$iDays= 24*3600;
 		if($start==null){ 
 			$start='2016-07-02'; 
@@ -384,6 +399,9 @@ Daftar Fungsi Yang Tersedia:
 	
 	public function fake($status='none')
 	{ 
+		if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+		}
 		if(!defined('LOCAL')){
 			redirect(site_url());
 		}
@@ -430,7 +448,10 @@ Daftar Fungsi Yang Tersedia:
 		}
 	}
 
-		function emailApi($to,$subject,$message){
+	function emailApi($to,$subject,$message){
+	if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+	}
 		$sPubKey= $this->config->item('sendpulse_pubkey');
 		$email_from= $this->config->item('email_from');
 		//var_dump($sPubKey);

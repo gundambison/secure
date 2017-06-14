@@ -191,6 +191,9 @@ Daftar Fungsi Yang Tersedia :
 		$this->showView(); 
 	}
 	function __CONSTRUCT(){
+		if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+		}
 	parent::__construct();
 		$this->param['today']=date('Y-m-d');
 		$this->param['folder']='guest/';

@@ -609,6 +609,9 @@ Daftar Fungsi Yang Tersedia :
 		if($this->input->post())
 			logCreate($this->input->post(),'post');
 		*/
+		if(is_file('move.txt') ){
+			header('location:https://secure.salmamarkets.com/welcome');
+		}
 	}
 	
 }
