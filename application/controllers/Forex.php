@@ -561,7 +561,7 @@ limit 10";
 			while (false !== ($entry = readdir($handle))) {
 				echo "\n<br>Read :".$entry;
 				if( array_search($entry, $not_valid)===false){
-					echo "|allow";
+					echo "|allow" ;
 					logCreate('file:'.$entry);
 					$txt=file_get_contents($target.'/'.$entry);
 					$json=@json_decode($txt,true);
@@ -594,7 +594,7 @@ limit 10";
 						else{}
 					}
 					else{
-						echo 'not email';
+						echo 'not email';unlink($target.'/'.$entry);
 					}
 
 				}else{}
