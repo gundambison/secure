@@ -7,7 +7,7 @@ $config['app_code']=array(
 $config['emailAdmin']=array('admin@dev.salmaforex.com','admin@secure.salmaforex.com');
 $config['email_from']=array('name'=>'no reply','email'=>'noreply@salmaforex.com');
 if(defined('LOCAL')){
-	$config['urlForex']=array( 
+/*	$config['urlForex']=array( 
 		'default'=>			'http://advance.forex/forex/fake',
 		'activation'=>		'http://advance.forex/forex/fake/activation',
 		'update'=>			'http://advance.forex/forex/fake/update',
@@ -15,16 +15,27 @@ if(defined('LOCAL')){
 		'updateBalance'=>	'http://advance.forex/forex/fake/updateBalance'		
 		
 	);
+*/
+	$default='http://54.64.85.13/api/';
+	$config['urlForex']=array( 
+		'default'=>			$default,
+		'register'=>		$default.'register',
+		'update'=>			$default.'update-account',
+		'updateBalance'=>	$default.'update-balance',
+		'getMargin'=>		$default.'get-margin',
+	);
 
 	$config['api_url']='http://advance.forex/forex/api';
-	$config['forexKey']='unknown99';
+	$config['forexKey']='Ap!Dem02017';
 }
-else{ 
+else{
+	$default='http://54.64.85.13/api/';
 	$config['urlForex']=array( 
-		'default'=>			'https://www.natureforex.com/rest-api/salma' ,
-		'register'=>		'https://www.natureforex.com/rest-api/salma/register',
-		'update'=>			'https://www.natureforex.com/rest-api/salma/update-account' ,
-		'updateBalance'=>	'https://www.natureforex.com/rest-api/salma/update-balance'
+		'default'=>			$default,
+		'register'=>		$default.'register',
+		'update'=>			$default.'update-account',
+		'updateBalance'=>	$default.'update-balance',
+		'getMargin'=>		$default.'get-margin',
 	);
 	
 	$config['api_url']='http://secure.salmaforex.com/forex/api';
@@ -40,16 +51,27 @@ if(defined('_DEV_')){
 }else{} 
 
 $config['urlForex']['local']='http://advance.forex/index.php/forex/data';
-
+/*
 $config['forexBank']=array(
-	array('name'=>'BCA21', 'number'=>'-','person'=>'-'),
+	array('name'=>'BCA21', 'number'=>'8380126282','person'=>'Yadi Supriyadi'),
 	array('name'=>'BRI', 'number'=>'2202.01.000120.561','person'=>'Yadi Supriyadi'),
 	array('name'=>'MANDIRI', 'number'=>'1300014675337','person'=>'Yadi Supriyadi'),
 	array('name'=>'BNI', 'number'=>'0423851338','person'=>'Yadi Supriyadi'),
 
 );
+*/
+$config['forexBank']=array(
+	array('name'=>'BCA 3', 'number'=>'2812226160','person'=>'Bukan P.T. Salma Widyatama Mandiri'),
+	array('name'=>'BRI 1', 'number'=>'10700.1000.1953.04','person'=>'Bukan P.T. Salma Widyatama Mandiri'),
+	array('name'=>'MANDIRI 2', 'number'=>'13000.2323.1999','person'=>'Bukan P.T. Salma Widyatama Mandiri'),
+	array('name'=>'BNI 1', 'number'=>'30.1212.3020','person'=>'Bukan P.T. Salma Widyatama Mandiri'),
+
+);
 /*
--
+BCA : 2812226160 a.n PT. Salma Widyatama Mandiri 
+BRI : 2202.01.000120.561 a.n Yadi Supriyadi
+MANDIRI : 1300023231999 a.n PT. Salma Widyatama Mandiri
+BNI : 3012123020 a.n PT. Salma Widyatama Mandiri
 */
 $config['sendpulse_pubkey']='
 -----BEGIN PUBLIC KEY-----
@@ -58,8 +80,6 @@ sVqLU8tPtHcUawyPaL6QlD4MJjlxytRZIMMrpRQ/uPuR/c3o61STsBEuJ/zeqPvI
 mH1yKT5XOjfcRtedWe0MEzJOmSOPaqX394yEV5p9vwE0IvOpaT6g27TPo0j9BHXP
 eQcXNZVwGrNVyTrJSwIDAQAB
 -----END PUBLIC KEY-----';
-$config['email_from']='noreply@salmaforex.com';
-
 $config['smtp']=array(
 'host'=>'smtp-pulse.com',
 'port'=>465,
@@ -77,20 +97,16 @@ $config['smtp']=array(
 		'updatebalance'=>$default.'update-balance',
 		'updatecredit'=>$default.'update-credit',
 		'get_account'=>$default.'get-account',
-		
+		'getMargin'=> $default.'get-margin',
 	);
 /*
+
+	
 http://54.64.85.13/api/register
 http://54.64.85.13/api/update-account
 http://54.64.85.13/api/update-balance
 http://54.64.85.13/api/update-credit
 http://54.64.85.13/api/get-account
 */	
-	$config['privatekey']=$config['forexKey']='1';
-	$config['urlForex']=$config['apiForex_url']=$urls;
-	
-/*==============LINK============*/
-$config['fb_link']='https://www.facebook.com/salmaforexbroker';
-$config['twitter_link']='https://twitter.com/salmaforex';
-$config['ig_link']='https://instagram.com/salmaforex/';
-$config['email_link']='http://www.salmaforex.com/contact/';
+	$config['privatekey']='Ap!Dem02017';
+	$config['apiForex_url']=$urls;

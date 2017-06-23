@@ -1,7 +1,7 @@
 application/config/database.php
 application/config/config.php
 application/config/forexConfig_new.php
-
+/application/config/database.php
 */config/development
 */logs/log-*.php
 */logs/!index.html

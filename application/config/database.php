@@ -75,6 +75,7 @@ if(!isset($db['default'])){
 		'save_queries' => TRUE
 	);
 /*
+
 		'hostname' => 'mysql.idhostinger.com',
 		'username' => 'u429780871_forex',
 		'password' => '|V4CMBo6mj',
