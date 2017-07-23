@@ -91,7 +91,7 @@ class CI_Session_database_driver extends CI_Session_driver implements SessionHan
 		}
 		elseif ($this->_db->pconnect)
 		{
-			throw new Exception('Configured database connection is persistent. Aborting.');
+//			throw new Exception('Configured database connection is persistent. Aborting.');
 		}
 		elseif ($this->_db->cache_on)
 		{
